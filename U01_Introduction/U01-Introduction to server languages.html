@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 01. Introduction to Web Applications.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 01. Introduction to Web
+Applications.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                 <ul>
+<li><a href="#web-applications." id="toc-web-applications."><span
+class="toc-section-number">1</span> Web applications.</a>
+<ul>
+<li><a href="#web-evolution." id="toc-web-evolution."><span
+class="toc-section-number">1.1</span> Web evolution.</a>
+<ul>
+<li><a href="#web-1.0" id="toc-web-1.0"><span
+class="toc-section-number">1.1.1</span> Web 1.0</a></li>
+<li><a href="#web-2.0" id="toc-web-2.0"><span
+class="toc-section-number">1.1.2</span> Web 2.0</a></li>
+<li><a href="#web-3.0" id="toc-web-3.0"><span
+class="toc-section-number">1.1.3</span> Web 3.0</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#architecture-of-a-web-application."
+id="toc-architecture-of-a-web-application."><span
+class="toc-section-number">2</span> Architecture of a web
+application.</a>
+<ul>
+<li><a href="#client-server-model." id="toc-client-server-model."><span
+class="toc-section-number">2.1</span> Client-Server model.</a>
+<ul>
+<li><a href="#advantages-and-disadvantages"
+id="toc-advantages-and-disadvantages"><span
+class="toc-section-number">2.1.1</span> Advantages and
+disadvantages</a></li>
+<li><a href="#functions" id="toc-functions"><span
+class="toc-section-number">2.1.2</span> Functions</a></li>
+</ul></li>
+<li><a href="#front-end." id="toc-front-end."><span
+class="toc-section-number">2.2</span> Front-end.</a></li>
+<li><a href="#back-end." id="toc-back-end."><span
+class="toc-section-number">2.3</span> Back-end.</a></li>
+</ul></li>
+<li><a href="#development-of-a-web-application."
+id="toc-development-of-a-web-application."><span
+class="toc-section-number">3</span> Development of a web
+application.</a>
+<ul>
+<li><a href="#languages." id="toc-languages."><span
+class="toc-section-number">3.1</span> Languages.</a></li>
+<li><a href="#environment.-tools." id="toc-environment.-tools."><span
+class="toc-section-number">3.2</span> Environment. Tools.</a></li>
+<li><a href="#creating-a-local-web-server-in-a-linux-host"
+id="toc-creating-a-local-web-server-in-a-linux-host"><span
+class="toc-section-number">3.3</span> Creating a Local Web Server in a
+Linux host</a>
+<ul>
+<li><a href="#installing-apache-and-php"
+id="toc-installing-apache-and-php"><span
+class="toc-section-number">3.3.1</span> Installing Apache and
+PHP</a></li>
+<li><a href="#displaying-errors" id="toc-displaying-errors"><span
+class="toc-section-number">3.3.2</span> Displaying errors</a></li>
+<li><a href="#installing-mysql" id="toc-installing-mysql"><span
+class="toc-section-number">3.3.3</span> Installing MySQL</a></li>
+</ul></li>
+<li><a href="#creating-a-local-web-server-using-xampp."
+id="toc-creating-a-local-web-server-using-xampp."><span
+class="toc-section-number">3.4</span> Creating a local web server using
+XAMPP.</a>
+<ul>
+<li><a href="#windows-installation" id="toc-windows-installation"><span
+class="toc-section-number">3.4.1</span> Windows installation</a></li>
+<li><a href="#linux-installation" id="toc-linux-installation"><span
+class="toc-section-number">3.4.2</span> Linux installation</a></li>
+<li><a href="#checking-our-installation"
+id="toc-checking-our-installation"><span
+class="toc-section-number">3.4.3</span> Checking our
+installation</a></li>
+<li><a href="#our-first-web-application-using-php"
+id="toc-our-first-web-application-using-php"><span
+class="toc-section-number">3.4.4</span> Our first web application using
+PHP</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#code-editors-and-ides"
+id="toc-code-editors-and-ides"><span class="toc-section-number">4</span>
+Code editors and IDEs</a>
+<ul>
+<li><a href="#installing-vscode" id="toc-installing-vscode"><span
+class="toc-section-number">4.1</span> Installing VSCode</a></li>
+<li><a href="#installing-phpstorm" id="toc-installing-phpstorm"><span
+class="toc-section-number">4.2</span> Installing PhpStorm</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="web-applications."><span
+            class="header-section-number">1</span> Web
+            applications.</h1>
+            <p>A web application is a program that runs in a web
+            browser. The application is usually stored on a remote
+            server and delivered over the Internet to the browser. A web
+            application can be stored too in a local server and running
+            in the web browser through an intranet.</p>
+            <p>Some benefits of web applications are:</p>
+            <ul>
+            <li>Multiple users can access to the same application</li>
+            <li>Don’t need installation or additional software aside
+            from the browser</li>
+            <li>Access allowed through various platforms, browsers and
+            operating systems</li>
+            </ul>
+            <h2 data-number="1.1" id="web-evolution."><span
+            class="header-section-number">1.1</span> Web evolution.</h2>
+            <p>Let’s take a look to the historical evolution of the web,
+            in order to understand how web applications work.</p>
+            <h3 data-number="1.1.1" id="web-1.0"><span
+            class="header-section-number">1.1.1</span> Web 1.0</h3>
+            <p>Basically static pages. HTML and CSS.</p>
+            <h3 data-number="1.1.2" id="web-2.0"><span
+            class="header-section-number">1.1.2</span> Web 2.0</h3>
+            <p>Dinamic pages. PHP, ASP, JSP and other programming
+            languages. Interaction with the user.</p>
+            <h3 data-number="1.1.3" id="web-3.0"><span
+            class="header-section-number">1.1.3</span> Web 3.0</h3>
+            <p>Decentralized applications. Semantic web. Internet Of
+            Things. Blockchain technology.</p>
+            <h1 data-number="2"
+            id="architecture-of-a-web-application."><span
+            class="header-section-number">2</span> Architecture of a web
+            application.</h1>
+            <p>The most common structure of a web application contains
+            three levels: presentation, application and storage.</p>
+            <p><strong>Presentation</strong>: the web browser.
+            Interaction user-application. Interfaces.
+            <strong>Application</strong>: what the application does, the
+            dynamic level. Business logic. <strong>Storage</strong>:
+            interaction with some kind of data storing, mainly a
+            database.</p>
+            <figure>
+            <img src="images/u01-01.jpg"
+            alt="Levels of a web application" />
+            <figcaption aria-hidden="true">Levels of a web
+            application</figcaption>
+            </figure>
+            <p>This three-levels structure is usually implemented
+            through the so-called <strong><em>Client-Server
+            Model</em></strong>.</p>
+            <h2 data-number="2.1" id="client-server-model."><span
+            class="header-section-number">2.1</span> Client-Server
+            model.</h2>
+            <p>The Client-Server architecture is an application model
+            that distributes the application tasks between service
+            providers (servers) and service demand points (clients).</p>
+            <p>The client makes <strong><em>requests</em></strong> to
+            the server, and the server sends
+            <strong><em>responses</em></strong> to the client.</p>
+            <figure>
+            <img src="images/u01-02.jpg" alt="Client and server" />
+            <figcaption aria-hidden="true">Client and
+            server</figcaption>
+            </figure>
+            <p>In a web application, the client is a web browser. The
+            communication between the client and the server runs through
+            the Internet/Intranet using the HTTP protocol. Usually the
+            client is a local machine and the server is a remote
+            machine, but both the client and the server can be on the
+            same physical machine. While developing an application is
+            quite usual to work with a local installed server.</p>
+            <figure>
+            <img src="images/u01-03.jpg"
+            alt="Some clients and one server" />
+            <figcaption aria-hidden="true">Some clients and one
+            server</figcaption>
+            </figure>
+            <h3 data-number="2.1.1"
+            id="advantages-and-disadvantages"><span
+            class="header-section-number">2.1.1</span> Advantages and
+            disadvantages</h3>
+            <p><strong>Advantages:</strong></p>
+            <ul>
+            <li>Centralization: if one client turns off, everything
+            keeps working</li>
+            <li>Maintenance and scalability: is easy to change, add,
+            remove or modify machines</li>
+            <li>Security: transaction control, data encapsulation</li>
+            <li>Optimization: client programs are simple and don’t
+            require many resources</li>
+            </ul>
+            <p><strong>Disadvantages:</strong></p>
+            <ul>
+            <li>Centralization: if the server turns off, the application
+            stops working unless we have a distributed system</li>
+            <li>Traffic: large number of simultaneous communications
+            (requests and responses)</li>
+            <li>Cost: server machines are needed with some specific
+            software (application servers, database servers…)</li>
+            </ul>
+            <h3 data-number="2.1.2" id="functions"><span
+            class="header-section-number">2.1.2</span> Functions</h3>
+            <p><strong>Client functions:</strong></p>
+            <ul>
+            <li>Starting requests and send them to the server</li>
+            <li>Waiting for the server’s response</li>
+            <li>Interacting with the user through an graphic
+            interface</li>
+            </ul>
+            <p><strong>Server functions:</strong></p>
+            <ul>
+            <li>Waiting for client requests</li>
+            <li>Attending for the client requests</li>
+            <li>Interacting with data stores</li>
+            <li>Processing the results before sending them to the
+            client</li>
+            <li>Sending the results to the client in a format that the
+            client understands</li>
+            </ul>
+            <p>We tend to separate the application in two sections: one
+            for the client side (<strong><em>Front-end</em></strong>)
+            and one for the server side
+            (<strong><em>Back-end</em></strong>).</p>
+            <h2 data-number="2.2" id="front-end."><span
+            class="header-section-number">2.2</span> Front-end.</h2>
+            <p>The front-end development is the creation of the
+            graphical user interface for the web application. This
+            section is developed using code that the web browser can
+            understand and execute: mainly HTML, CSS or Javascript.</p>
+            <p>In the front-end we have the applications menus, images,
+            forms and many other visual (static or interactive)
+            components.</p>
+            <h2 data-number="2.3" id="back-end."><span
+            class="header-section-number">2.3</span> Back-end.</h2>
+            <p>In the back-end development we develop the business logic
+            of the application, the access to the databases and the
+            interaction with the front-end. In the back-end the
+            application receives the client requests and, using
+            scripting languages like PHP, Python, JSP and so on,
+            performs the necessary tasks to prepare the corresponding
+            response. This response must be provided to the client in a
+            format that the web browser can interpret, so some kind of
+            <strong><em>rendering</em></strong> is needed. Rendering
+            means that the server generate an HTML page with the
+            response to the client request.</p>
+            <h1 data-number="3"
+            id="development-of-a-web-application."><span
+            class="header-section-number">3</span> Development of a web
+            application.</h1>
+            <p>To develop a web application, we need to merge languages
+            that can be used to design both the static and dynamic part
+            of the application. Usually we have <strong><em>client
+            languages</em></strong> and <strong><em>server
+            languages</em></strong>.</p>
+            <h2 data-number="3.1" id="languages."><span
+            class="header-section-number">3.1</span> Languages.</h2>
+            <p>The <strong>client-side</strong> languages are HTML, CSS
+            and Javascript, basically. These languages can be directly
+            interpreted by the browser. We use client languages to
+            design the graphic part of the application, forms, menus and
+            so on.</p>
+            <p>The <strong>server-side</strong> languages are PHP,
+            Node.js, Phyton, ASP and others. These languages run on the
+            server-side/back-end of the application. They provide input
+            validation, database access and output encoding. We use
+            server languages to receive, validate and execute the client
+            requests, to work with databases and eventually to process
+            and generate the response to the client request. This
+            response must be codified in a client language, usually
+            HTML.</p>
+            <p>In practice we use both types (client-side and
+            server-side) languages in the same application and even in
+            the same script.</p>
+            <p>We can’t see the source code of the server languages from
+            our browser, only the client-side part and the results
+            generated by the server-side part.</p>
+            <h2 data-number="3.2" id="environment.-tools."><span
+            class="header-section-number">3.2</span> Environment.
+            Tools.</h2>
+            <p>A web application works in two environments:</p>
+            <ul>
+            <li>Development environment: while we are still developing
+            the application</li>
+            <li>Testing environment: while the final user is testing the
+            application</li>
+            <li>Production environment: when the application is
+            finished, installed and ready to use</li>
+            </ul>
+            <p>At the classroom we will work in a development
+            environment. We will need:</p>
+            <ul>
+            <li>A web server. In our case, Apache</li>
+            <li>A database server. In our case, MariaDB or MySQL</li>
+            <li>An editor ready to work with server and client
+            languages. We will work with VSCode</li>
+            <li>A browser. Whatever you have in your computer</li>
+            </ul>
+            <p>We need to choose our server language, too. We will use
+            <strong><em>PHP</em></strong>.</p>
+            <p>Although we could create a development environment in the
+            cloud or in a virtual machine or container using tools like
+            Docker, we will create a local development environment
+            including both web and database servers using
+            <strong><em>XAMPP</em></strong>.</p>
+            <h2 data-number="3.3"
+            id="creating-a-local-web-server-in-a-linux-host"><span
+            class="header-section-number">3.3</span> Creating a Local
+            Web Server in a Linux host</h2>
+            <p>We can install the local web server and the development
+            tools either in a real machine or in a virtual machine. If
+            we use a real machine we can take benefit of the speed of
+            the computer. On the other hand, a virtual machine is more
+            portable and useful in many cases (for example, using a
+            Linux VM in a Windows host).</p>
+            <p>In addition, we’re going to use a Linux operating system
+            because of their stability and security. However, you can
+            use a Windows or Mac operating system (in the next section
+            we explain how to install a XAMPP server in a Windows
+            host).</p>
+            <p>In this section we’ll explain how to install Apache, PHP
+            8.1 and MySQL in a <strong>Xubuntu Desktop 24.04</strong>,
+            but you can install it in whatever Ubuntu flavour you
+            want.</p>
+            <h3 data-number="3.3.1" id="installing-apache-and-php"><span
+            class="header-section-number">3.3.1</span> Installing Apache
+            and PHP</h3>
+            <p>First, we install the Apache server and the PHP
+            interpreter:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install apache2</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install php</span></code></pre></div>
+            <p>We can also install some common modules we’ll use
+            later:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install php-mysql php-zip php-gd php-mbstring php-curl php-xml php-bcmath php-cgi php-pear</span></code></pre></div>
+            <p>Done! We can check the status of both with:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> service apache2 status</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-v</span></span></code></pre></div>
+            <figure>
+            <img src="images/u01-21.png"
+            alt="Checking Apache and PHP installation" />
+            <figcaption aria-hidden="true">Checking Apache and PHP
+            installation</figcaption>
+            </figure>
+            <p>Now, if we want to use directly the default folder of the
+            system, we need to change permissions of the
+            <code>/var/www/html</code> folder, where the web files are
+            stored :</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> xubuntu /var/www/html</span></code></pre></div>
+            <p>Replace <em>xubuntu</em> by your username.</p>
+            <p>It is recommended to create a shortcut on the Desktop in
+            order to access faster to the server folder. In Xubuntu we
+            do that by browsing to the <code>/var/www/html</code> folder
+            and right-clicking on it, then selecting <em>Send to -&gt;
+            Desktop (create link)</em>.</p>
+            <figure>
+            <img src="images/u01-22.png" width="400"
+            alt="Creating a shortcut to /var/www/html" />
+            <figcaption aria-hidden="true">Creating a shortcut to
+            /var/www/html</figcaption>
+            </figure>
+            <p>Alternatively, we can start a PHP local server on another
+            folder, for instance in a folder in our home directory. This
+            is useful in shared computers where we don’t have full
+            access to the whole system. To do that, open a terminal in
+            your local web folder and type the next command:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-S</span> <span class="op">&lt;</span>host<span class="op">&gt;</span>:<span class="op">&lt;</span>port<span class="op">&gt;</span></span></code></pre></div>
+            <p>For example:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-S</span> localhost:8080</span></code></pre></div>
+            <p>Now, you can type localhost:8080 in your browser in order
+            to go to your webpage.</p>
+            <p>Assuming all the services are running properly, let’s
+            create our first web page with this content:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h1<span class="op">&gt;</span><span class="cn">M</span>y first web app<span class="op">&lt;/</span>h1<span class="op">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>p<span class="op">&gt;</span><span class="cn">W</span>e are working with <span class="cn">PHP</span> version</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">echo</span> <span class="fu">phpversion</span>()<span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>p<span class="op">&gt;</span></span></code></pre></div>
+            <p>Save the file as <strong>firstpage.php</strong> in the
+            root folder of the web server. Now type this URL in your
+            browser:
+            <strong><code>http://localhost/firstpage.php</code></strong>.
+            You should see your first PHP page looking like this:</p>
+            <figure>
+            <img src="images/u01-20.png"
+            alt="Your first PHP application" />
+            <figcaption aria-hidden="true">Your first PHP
+            application</figcaption>
+            </figure>
+            <h3 data-number="3.3.2" id="displaying-errors"><span
+            class="header-section-number">3.3.2</span> Displaying
+            errors</h3>
+            <p>We can configure our PHP installation to display
+            programming errors, otherwise we can only see a blank
+            page.</p>
+            <p>Edit the php configuration file that is located in
+            <em>/etc/php/8.1/apache2/php.ini</em>, search
+            <em>display_errors = Off</em> and change Off to On. If you
+            are using another version of PHP instead of the 8.1, the
+            third folder is named by the version name.</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/php/8.3/apache2/php.ini</span></code></pre></div>
+            <figure>
+            <img src="images/u01-23.png"
+            alt="php.ini display_errors configuration" />
+            <figcaption aria-hidden="true">php.ini display_errors
+            configuration</figcaption>
+            </figure>
+            <p>To apply the change, restart the Apache service:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart apache2</span></code></pre></div>
+            <h3 data-number="3.3.3" id="installing-mysql"><span
+            class="header-section-number">3.3.3</span> Installing
+            MySQL</h3>
+            <p>We don’t need the MySQL database management system until
+            further units, but you can install it now if you want.</p>
+            <p>To install the MySQL server:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install mysql-server</span></code></pre></div>
+            <p>Once installed, enter the server by typing:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mysql</span></code></pre></div>
+            <p>Now, we can create an admin user to manage the entire
+            DBMS:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">create</span> <span class="fu">user</span> <span class="st">&#39;admin&#39;</span>@<span class="st">&#39;localhost&#39;</span> <span class="kw">identified</span> <span class="kw">by</span> <span class="st">&#39;php&#39;</span>;</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">grant</span> <span class="kw">all</span> <span class="kw">privileges</span> <span class="kw">on</span> <span class="op">*</span>.<span class="op">*</span> <span class="kw">to</span> <span class="st">&#39;admin&#39;</span>@<span class="st">&#39;localhost&#39;</span> <span class="kw">with</span> <span class="kw">grant</span> <span class="kw">option</span>;</span></code></pre></div>
+            <p>With these commands, we are creating a user named
+            <em>admin</em> with the password <em>php</em></p>
+            <p>And, finally, exit the MySQL console:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>exit</span></code></pre></div>
+            <p>Optionally, you can install <strong>phpMyAdmin</strong>
+            if you want to administrate MySQL easily:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install phpmyadmin</span></code></pre></div>
+            <p>During the installation you have to choose
+            <em>apache2</em> as server and <em>dbconfig-common</em> to
+            configure the database. Remember to use the space bar to
+            select options. Enter the password for phpmyadmin of your
+            own choice or left it blank.</p>
+            <figure>
+            <img src="images/u01-24.png"
+            alt="PhpMyAdmin installation: web server" />
+            <figcaption aria-hidden="true">PhpMyAdmin installation: web
+            server</figcaption>
+            </figure>
+            <figure>
+            <img src="images/u01-25.png"
+            alt="PhpMyAdmin installation: configure with dbconfig-common" />
+            <figcaption aria-hidden="true">PhpMyAdmin installation:
+            configure with dbconfig-common</figcaption>
+            </figure>
+            <p>Once installed PhpMyAdmin, you can enter by typing on
+            your browser
+            <strong><code>http://localhost/phpmyadmin</code></strong>
+            with the user <em>admin</em> and the password
+            <em>php</em>.</p>
+            <figure>
+            <img src="images/u01-26.png" width="300"
+            alt="PhpMyAdmin login" />
+            <figcaption aria-hidden="true">PhpMyAdmin login</figcaption>
+            </figure>
+            <h2 data-number="3.4"
+            id="creating-a-local-web-server-using-xampp."><span
+            class="header-section-number">3.4</span> Creating a local
+            web server using XAMPP.</h2>
+            <p>XAMPP is a popular PHP development environment. It’s
+            free, open source and easy to install. We can get XAMPP
+            packages for Windows, Linux and OS X. XAMPP contains MariaDB
+            (a database server), PHP / Perl (server-side languages) and
+            Apache (a web server).</p>
+            <p>To install XAMPP, we just need to download and start the
+            installer. We can find XAMPP on the website
+            https://www.apachefriends.org</p>
+            <figure>
+            <img src="images/u01-04.png" alt="Downloading XAMPP" />
+            <figcaption aria-hidden="true">Downloading
+            XAMPP</figcaption>
+            </figure>
+            <h3 data-number="3.4.1" id="windows-installation"><span
+            class="header-section-number">3.4.1</span> Windows
+            installation</h3>
+            <p>Once the installer has been downloaded, we will run the
+            executable file just by double-clicking on it. First we will
+            select which components to install. All the components are
+            selected by default. We can click <strong>Next</strong> and
+            go on with the installation.</p>
+            <figure>
+            <img src="images/u01-05.jpg" alt="Selecting components" />
+            <figcaption aria-hidden="true">Selecting
+            components</figcaption>
+            </figure>
+            <p>Then we choose the folder (by default
+            <code>c:\xampp</code>) and click <strong>Next</strong>.</p>
+            <figure>
+            <img src="images/u01-06.jpg"
+            alt="Choosing the XAMPP folder" />
+            <figcaption aria-hidden="true">Choosing the XAMPP
+            folder</figcaption>
+            </figure>
+            <p>Select your preferred language, deselect the Bitnami
+            option, and finally confirm the installation.</p>
+            <p>The installation creates the folder
+            <strong><code>C:\xampp</code></strong>. In this folder we
+            can find some scripts to start and stop the different
+            services: <em>apache_start</em>, <em>apache_stop</em>,
+            <em>mysql_start</em> and <em>mysql_stop</em>, among others.
+            We will find as well the XAMPP control panel
+            (<em>xampp_control</em>) and a couple of scripts to start
+            and stop the entire XAMPP platform (<em>xampp_start</em> and
+            <em>xampp_stop</em>). If we run xampp-control we see the
+            control panel. We can start, administrate, configure and
+            stop every single service from this panel.</p>
+            <figure>
+            <img src="images/u01-07.jpg" alt="XAMPP control panel" />
+            <figcaption aria-hidden="true">XAMPP control
+            panel</figcaption>
+            </figure>
+            <p>The root folder where we will place our web applications
+            is <strong><code>c:\xampp\htdocs</code></strong>.</p>
+            <h3 data-number="3.4.2" id="linux-installation"><span
+            class="header-section-number">3.4.2</span> Linux
+            installation</h3>
+            <p>To run the installer in Linux, first we must change the
+            permissions for the installer:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 755 xampp-linux-<span class="pp">*</span>-installer.run</span></code></pre></div>
+            <p>Now we can execute the installer:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ./xampp-linux-<span class="pp">*</span>-installer.run</span></code></pre></div>
+            <p>In Linux the XAMPP folder is <strong>/opt/lampp</strong>.
+            We can launch all services by doing</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> /opt/lampp/lampp start</span></code></pre></div>
+            <p>And</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> /opt/lampp/lampp stop</span></code></pre></div>
+            <p>to stop them.</p>
+            <p>We can find the XAMPP configuration files at the folder
+            <strong><code>/etc</code></strong>.</p>
+            <p>The root folder where we will place our web applications
+            in Linux is <strong><code>/var/www/</code></strong> or
+            <strong><code>/var/www/html</code></strong>.</p>
+            <h3 data-number="3.4.3" id="checking-our-installation"><span
+            class="header-section-number">3.4.3</span> Checking our
+            installation</h3>
+            <p>To check if the web server is working, run XAMPP and
+            then, in your favourite browser, type the URL
+            <strong><code>http://localhost</code></strong>. You should
+            see the XAMPP welcome page.</p>
+            <figure>
+            <img src="images/u01-08.jpg" alt="XAMPP welcome page" />
+            <figcaption aria-hidden="true">XAMPP welcome
+            page</figcaption>
+            </figure>
+            <p>We can check if PHP is working by clicking the
+            <strong><code>PHPinfo</code></strong> link in the menu.</p>
+            <figure>
+            <img src="images/u01-09.jpg" alt="PHPinfo output" />
+            <figcaption aria-hidden="true">PHPinfo output</figcaption>
+            </figure>
+            <p>If we launch the database server, we can check if it
+            works by clicking the
+            <strong><code>phpMyAdmin</code></strong> link in the same
+            menu.</p>
+            <figure>
+            <img src="images/u01-10.jpg" alt="phpmyAdmin output" />
+            <figcaption aria-hidden="true">phpmyAdmin
+            output</figcaption>
+            </figure>
+            <p>Keep in mind that, by default, we have a
+            <strong>root</strong> user without password with admin
+            privileges to work with the database server. It’s a good
+            practice to create a password for root.</p>
+            <h3 data-number="3.4.4"
+            id="our-first-web-application-using-php"><span
+            class="header-section-number">3.4.4</span> Our first web
+            application using PHP</h3>
+            <p>Assuming all the services are running properly, let’s
+            create our first web page with this content:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!</span><span class="cn">DOCTYPE</span> html<span class="op">&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>title<span class="op">&gt;</span><span class="cn">M</span>y first <span class="cn">PHP</span> page<span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>meta charset<span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="op">&gt;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>head<span class="op">&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>body<span class="op">&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>h3<span class="op">&gt;</span><span class="cn">W</span>elcome to my web page<span class="op">!&lt;/</span>h3<span class="op">&gt;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>h4<span class="op">&gt;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        <span class="cn">W</span>e are working with <span class="cn">PHP</span> version</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">echo</span> <span class="fu">phpversion</span>()<span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>h4<span class="op">&gt;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>body<span class="op">&gt;</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>html<span class="op">&gt;</span></span></code></pre></div>
+            <p>Save the file as <strong>firstpage.php</strong> in the
+            root folder of the web server (<code>c:\xampp\htdocs</code>
+            in Windows, <code>/var/www</code> or
+            <code>/var/www/html</code> in Linux).</p>
+            <p>Now type this URL in your browser:
+            <strong><code>http://localhost/firstpage.php</code></strong>.
+            You should see your first PHP page looking like this:</p>
+            <figure>
+            <img src="images/u01-11.jpg"
+            alt="Your first PHP application" />
+            <figcaption aria-hidden="true">Your first PHP
+            application</figcaption>
+            </figure>
+            <h1 data-number="4" id="code-editors-and-ides"><span
+            class="header-section-number">4</span> Code editors and
+            IDEs</h1>
+            <p>What’s the difference within a <strong>code
+            editor</strong> and a <strong>IDE (Integrated Development
+            Environment)</strong>? A <strong>code editor</strong> is
+            basically a text editor but it is also designed to help you
+            write code. It helps you color your code and provides you
+            more advanced tools to make coding easier for you. These
+            features simplify and accelerate the process of editing and
+            help you write better software programs by identifying
+            problem areas and debugging code. There are a myriad of code
+            editors out there, such as Atom, Sublime Text, Visual Studio
+            Code, etc.</p>
+            <p>An <strong>IDE</strong>, short for <strong>Integrated
+            Development Environment</strong>, is one of the most
+            powerful programming tools that combine the different
+            aspects of a computer program into a single GUI. It is a
+            robust software environment that consolidates many of the
+            functions like code creation, building and testing, together
+            in a single framework, service or application. What it does
+            is it simplifies the whole software development process by
+            allowing management and deployment of multiple tools at
+            once. An IDE is a text editor, a code editor, a debugger,
+            compiler and more all under a single tool belt.</p>
+            <p>In this course we’ll start with a code editor,
+            <strong>Visual Studio Code</strong>, but we will introduce
+            an IDE, <strong>PhpStorm</strong>, later. However, you can
+            do the practices with the tool of your choice.</p>
+            <h2 data-number="4.1" id="installing-vscode"><span
+            class="header-section-number">4.1</span> Installing
+            VSCode</h2>
+            <p>On <strong>Linux</strong> (Xubuntu 24.04), type in a
+            terminal:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> snap install code <span class="at">--classic</span></span></code></pre></div>
+            <p>On <strong>Windows</strong>, simply download the
+            installer and run it:</p>
+            <p>https://code.visualstudio.com/download</p>
+            <p>Once installed,we’re going to install some extensions in
+            order to work better with PHP. Click on the
+            <em>Extensions</em> button in the left bar and search for
+            <em>“php”</em>. You’ll see a lot of PHP extensions. The most
+            useful are:</p>
+            <ul>
+            <li><strong>PHP Intelephense</strong>: for code completion,
+            classes navigation, methods signature help, formatting,
+            etc.</li>
+            <li><strong>PHP Namespace Resolver</strong> by Mehedi
+            Hassan: for working with namespaces.</li>
+            <li><strong>PHP Getters &amp; Setters</strong> (CV fork):
+            for adding getters and setters methods automatically.</li>
+            <li><strong>PHP Refactor Tool</strong>: allows us to
+            refactor easily our project.</li>
+            <li><strong>Project Manager</strong>: generic tool for
+            manage projects.</li>
+            </ul>
+            <figure>
+            <img src="images/u01-27.png" alt="VSCode PHP extensions" />
+            <figcaption aria-hidden="true">VSCode PHP
+            extensions</figcaption>
+            </figure>
+            <h2 data-number="4.2" id="installing-phpstorm"><span
+            class="header-section-number">4.2</span> Installing
+            PhpStorm</h2>
+            <p>The easiest way to install PhpStorm in Linux is via the
+            <a
+            href="https://www.jetbrains.com/help/phpstorm/installation-guide.html#toolbox">JetBrains
+            Toolbox App</a>. However if you want to install only the IDE
+            in a custom location, use the <a
+            href="https://www.jetbrains.com/help/phpstorm/installation-guide.html#standalone">Standalone
+            installation</a> process.</p>
+            <p>To install the Toolbox App and the desired IDE in Xubuntu
+            24.04, follow the next instructions:</p>
+            <ol type="1">
+            <li><p>Download the <strong>tarball
+            <code>.tar.gz</code></strong> from the <a
+            href="https://www.jetbrains.com/toolbox-app/">Toolbox App
+            web page</a>.</p></li>
+            <li><p>Extract the tarball to a directory that supports file
+            execution.</p>
+            <p>For example, you can extract it to the recommended
+            <code>/opt</code> directory using the following
+            command:</p></li>
+            </ol>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tar <span class="at">-xzf</span> jetbrains-toolbox-<span class="pp">*</span>.tar.gz <span class="at">-C</span> /opt</span></code></pre></div>
+            <ol start="3" type="1">
+            <li>Execute the <strong>jetbrains-toolbox</strong> binary
+            from the extracted directory to run the Toolbox App.</li>
+            </ol>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> /opt/jetbrains-toolbox-<span class="pp">*</span>/jetbrains-toolbox</span></code></pre></div>
+            <p>After you run the Toolbox App for the first time, it will
+            automatically add the Toolbox App icon Toolbox App icon to
+            the main menu.</p>
+            <ol start="4" type="1">
+            <li>Select the product that you want to install. To install
+            a specific version, click App actions more and select
+            <strong>Available versions</strong>.</li>
+            </ol>
+            <figure>
+            <img src="images/ps_toolbox_app.png" alt="Toolbox App" />
+            <figcaption aria-hidden="true">Toolbox App</figcaption>
+            </figure>
+            <p>Log in to your JetBrains Account from the Toolbox App,
+            and it will automatically activate the available licenses
+            for any IDE that you install.</p>
+            <p>To install the Toolbox App in <strong>Windows</strong>,
+            simply download the <a
+            href="https://www.jetbrains.com/toolbox-app/">installer
+            <code>.exe</code></a> and run it.</p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
