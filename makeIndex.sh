@@ -14,7 +14,7 @@ echo "<!DOCTYPE html>
 <body> 
 <div id="content">
 <header id="title-block-header">
-<h1>Server-side Web Development - IES Jaume II El Just - 2023-24</h1>
+<h1>Server-side Web Development - IES Jaume II El Just - 2024-25</h1>
 </header>
 <main>
 " > index.html
