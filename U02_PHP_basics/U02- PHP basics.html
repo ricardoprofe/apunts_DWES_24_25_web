@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 02. PHP basics. Strings, dates and arrays.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 02. PHP basics. Strings, dates and
+arrays.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                 <ul>
+<li><a href="#php-language" id="toc-php-language"><span
+class="toc-section-number">1</span> PHP language</a>
+<ul>
+<li><a href="#php-versions" id="toc-php-versions"><span
+class="toc-section-number">1.1</span> PHP versions</a>
+<ul>
+<li><a href="#php-7.x" id="toc-php-7.x"><span
+class="toc-section-number">1.1.1</span> PHP 7.x</a></li>
+<li><a href="#php-8.x" id="toc-php-8.x"><span
+class="toc-section-number">1.1.2</span> PHP 8.x</a></li>
+</ul></li>
+<li><a href="#php-first-script" id="toc-php-first-script"><span
+class="toc-section-number">1.2</span> PHP first script</a></li>
+</ul></li>
+<li><a href="#basic-php-syntax" id="toc-basic-php-syntax"><span
+class="toc-section-number">2</span> Basic PHP syntax</a>
+<ul>
+<li><a href="#keywords" id="toc-keywords"><span
+class="toc-section-number">2.1</span> Keywords</a></li>
+<li><a href="#comments" id="toc-comments"><span
+class="toc-section-number">2.2</span> Comments</a></li>
+<li><a href="#php-tags" id="toc-php-tags"><span
+class="toc-section-number">2.3</span> PHP tags</a></li>
+</ul></li>
+<li><a href="#variables" id="toc-variables"><span
+class="toc-section-number">3</span> Variables</a>
+<ul>
+<li><a href="#how-to-generate-variable-names-dynamically"
+id="toc-how-to-generate-variable-names-dynamically"><span
+class="toc-section-number">3.1</span> How to generate variable names
+dynamically</a></li>
+</ul></li>
+<li><a href="#constants" id="toc-constants"><span
+class="toc-section-number">4</span> Constants</a></li>
+<li><a href="#operators" id="toc-operators"><span
+class="toc-section-number">5</span> Operators</a>
+<ul>
+<li><a href="#arithmetic-operators" id="toc-arithmetic-operators"><span
+class="toc-section-number">5.1</span> Arithmetic operators</a></li>
+<li><a href="#comparison-operators" id="toc-comparison-operators"><span
+class="toc-section-number">5.2</span> Comparison operators</a></li>
+<li><a href="#assignment-and-combined-assignment-operators"
+id="toc-assignment-and-combined-assignment-operators"><span
+class="toc-section-number">5.3</span> Assignment and combined assignment
+operators</a></li>
+<li><a href="#increment-and-decrement-operators"
+id="toc-increment-and-decrement-operators"><span
+class="toc-section-number">5.4</span> Increment and decrement
+operators</a></li>
+<li><a href="#string-concatenation" id="toc-string-concatenation"><span
+class="toc-section-number">5.5</span> String concatenation</a></li>
+<li><a href="#logical-operators" id="toc-logical-operators"><span
+class="toc-section-number">5.6</span> Logical operators</a></li>
+</ul></li>
+<li><a href="#basic-data-types" id="toc-basic-data-types"><span
+class="toc-section-number">6</span> Basic data types</a></li>
+<li><a href="#php-and-html" id="toc-php-and-html"><span
+class="toc-section-number">7</span> PHP and HTML</a>
+<ul>
+<li><a href="#echo-and-print-statements"
+id="toc-echo-and-print-statements"><span
+class="toc-section-number">7.1</span> <code>echo</code> and
+<code>print</code> statements</a></li>
+</ul></li>
+<li><a href="#query-strings" id="toc-query-strings"><span
+class="toc-section-number">8</span> Query strings</a></li>
+<li><a href="#strings" id="toc-strings"><span
+class="toc-section-number">9</span> Strings</a>
+<ul>
+<li><a href="#heredoc-and-nowdoc" id="toc-heredoc-and-nowdoc"><span
+class="toc-section-number">9.1</span> heredoc and nowdoc</a></li>
+<li><a href="#printf-and-sprintf" id="toc-printf-and-sprintf"><span
+class="toc-section-number">9.2</span> printf and sprintf</a></li>
+<li><a href="#string-functions" id="toc-string-functions"><span
+class="toc-section-number">9.3</span> String functions</a></li>
+</ul></li>
+<li><a href="#dates-and-time" id="toc-dates-and-time"><span
+class="toc-section-number">10</span> Dates and time</a>
+<ul>
+<li><a href="#the-datetime-class" id="toc-the-datetime-class"><span
+class="toc-section-number">10.1</span> The DateTime class</a></li>
+</ul></li>
+<li><a href="#arrays" id="toc-arrays"><span
+class="toc-section-number">11</span> Arrays</a>
+<ul>
+<li><a href="#numeric-arrays" id="toc-numeric-arrays"><span
+class="toc-section-number">11.1</span> Numeric arrays</a></li>
+<li><a href="#associative-arrays" id="toc-associative-arrays"><span
+class="toc-section-number">11.2</span> Associative arrays</a></li>
+<li><a href="#arrays-operations" id="toc-arrays-operations"><span
+class="toc-section-number">11.3</span> Arrays operations</a></li>
+<li><a href="#some-other-functions-on-arrays"
+id="toc-some-other-functions-on-arrays"><span
+class="toc-section-number">11.4</span> Some other functions on
+arrays</a></li>
+<li><a href="#implode-and-explode" id="toc-implode-and-explode"><span
+class="toc-section-number">11.5</span> Implode and explode</a></li>
+<li><a href="#multidimensional-arrays"
+id="toc-multidimensional-arrays"><span
+class="toc-section-number">11.6</span> Multidimensional arrays</a></li>
+<li><a href="#arrays-in-strings" id="toc-arrays-in-strings"><span
+class="toc-section-number">11.7</span> Arrays in strings</a></li>
+</ul></li>
+<li><a href="#references" id="toc-references"><span
+class="toc-section-number">12</span> References</a></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="php-language"><span
+            class="header-section-number">1</span> PHP language</h1>
+            <p><strong>PHP</strong> is an recursive acronym for
+            <strong><em>PHP Hypertext Prepocessor</em></strong>. PHP is
+            a widely used open source scripting language for web
+            delevopment that works on the server-side (back-end). The
+            best PHP feature for web delevoping is that PHP code can be
+            embedded into HTML tags.</p>
+            <p><strong>W3Techs</strong> reports that <em>“PHP is used by
+            75.8% of all the websites whose server-side programming
+            language we know.”</em> PHP version 7.4 is still the most
+            used version.</p>
+            <p><a
+            href="https://w3techs.com/technologies/overview/programming_language">W3Techs
+            server-side languages statistics</a></p>
+            <p><a
+            href="https://w3techs.com/technologies/details/pl-php">W3Techs
+            PHP statistics</a></p>
+            <h2 data-number="1.1" id="php-versions"><span
+            class="header-section-number">1.1</span> PHP versions</h2>
+            <p>PHP, of course, has been improving and adapting since it
+            was conceived in 1994.</p>
+            <table>
+            <thead>
+            <tr class="header">
+            <th>PHP Version</th>
+            <th>Release Date</th>
+            <th>Support EOL</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td>5.6</td>
+            <td>28 August 2014</td>
+            <td>31 December 2018</td>
+            </tr>
+            <tr class="even">
+            <td>7.3</td>
+            <td>28 November 2019</td>
+            <td>6 December 2021</td>
+            </tr>
+            <tr class="odd">
+            <td>7.4</td>
+            <td>28 August 2014</td>
+            <td>28 November 2022</td>
+            </tr>
+            <tr class="even">
+            <td>8.0</td>
+            <td>26 November 2020</td>
+            <td>26 November 2023</td>
+            </tr>
+            <tr class="odd">
+            <td>8.1</td>
+            <td>25 November 2021</td>
+            <td>31 December 2025</td>
+            </tr>
+            <tr class="even">
+            <td>8.2</td>
+            <td>8 December 2022</td>
+            <td>31 December 2026</td>
+            </tr>
+            <tr class="odd">
+            <td>8.3</td>
+            <td>23 November 2023</td>
+            <td>31 December 2027</td>
+            </tr>
+            <tr class="even">
+            <td>8.4</td>
+            <td>21 November 2024</td>
+            <td>31 December 2028</td>
+            </tr>
+            </tbody>
+            </table>
+            <h3 data-number="1.1.1" id="php-7.x"><span
+            class="header-section-number">1.1.1</span> PHP 7.x</h3>
+            <p><strong>PHP 7</strong> was the next version after
+            <strong>PHP 5.6</strong>.</p>
+            <p><strong>PHP 7.x</strong> versions brought enormous
+            improvements in PHP engine performance. It also introduced a
+            variety of new features that made it quickly adopted.</p>
+            <p>On <strong>November 28, 2022</strong>, the last PHP 7
+            version, PHP 7.4, went end of life.</p>
+            <p><a
+            href="https://en.wikipedia.org/wiki/PHP#PHP_7">Wikipedia:
+            PHP 7</a></p>
+            <h3 data-number="1.1.2" id="php-8.x"><span
+            class="header-section-number">1.1.2</span> PHP 8.x</h3>
+            <p><strong>PHP 8</strong> was released on November 26th,
+            2020. This version is a <strong>JIT (Just-in-time)
+            compiler</strong>, that can provide substantial performance
+            improvements for some use cases. Another notable changes are
+            the addition of the match expression, types and other new
+            features.</p>
+            <p><strong>PHP 8.1</strong> was released on November 25,
+            2021. It included several improvements, such as enumerations
+            (also called “enums”), readonly properties and array
+            unpacking with string keys.</p>
+            <p><strong>PHP 8.2</strong> was released on December 8,
+            2022. It includes a number of new features and improvements,
+            such as Improved Type Variance, readonly classes, a new
+            random extension and various performance improvements.</p>
+            <p><strong>PHP 8.3</strong> has been released on August, 29
+            2024. According to the website “It contains many new
+            features, such as explicit typing of class constants,
+            deep-cloning of readonly properties and additions to the
+            randomness functionality. As always it also includes
+            performance improvements, bug fixes, and general cleanup”.
+            It also includes a very useful function to validate a Json
+            string, <strong><code>json_validate()</code></strong>;</p>
+            <p><a
+            href="https://en.wikipedia.org/wiki/PHP#PHP_8">Wikipedia:
+            PHP 8</a></p>
+            <p><a href="https://stitcher.io/blog/new-in-php-82">What’s
+            new in PHP 8.2</a></p>
+            <p><a href="https://www.php.net/releases/8.3/en.php">Php 8.3
+            released</a></p>
+            <h2 data-number="1.2" id="php-first-script"><span
+            class="header-section-number">1.2</span> PHP first
+            script</h2>
+            <p>Let’s see an example. Imagine that we have a folder
+            <strong><code>curs2425</code></strong> in our Apache root
+            folder (in Windows <code>c:\xampp\htdocs</code>, in Linux
+            <code>/var/www</code> or <code>/var/www/html</code>). Now
+            let’s create a file named <code>ud02-01.php</code> with this
+            content:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!</span><span class="cn">DOCTYPE</span> html<span class="op">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>title<span class="op">&gt;</span><span class="cn">E</span>xample<span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>head<span class="op">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>body<span class="op">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>h2<span class="op">&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span><span class="ot">?</span>php</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="st">&quot;Hi, I&#39;m a PHP script!&quot;</span><span class="ot">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">?&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>h2<span class="op">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>body<span class="op">&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>html<span class="op">&gt;</span></span></code></pre></div>
+            <p>The file will be saved in the <code>curs2425</code>
+            subfolder. Now, if we type in our browser</p>
+            <p><code>http://localhost/curs2425/ud02-01.php</code></p>
+            <p>we will get this result:</p>
+            <figure>
+            <img src="images/u02-01.jpg" alt="My first PHP script" />
+            <figcaption aria-hidden="true">My first PHP
+            script</figcaption>
+            </figure>
+            <blockquote>
+            <p>A file with PHP content always needs to have the
+            <strong>.PHP</strong> extension at the end of the name.</p>
+            </blockquote>
+            <p>As we can see in the image, the content generated by the
+            PHP code has been merged with the HTML code to create a
+            final content that our browser can understand and display on
+            the screen. The PHP code embedded in the HTML code must be
+            enclosed between the <code>&lt;?php</code> and
+            <code>?&gt;</code> tags.</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hi, I&#39;m a PHP script!&quot;</span><span class="ot">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>The PHP command <code>echo</code> outputs the given
+            content to the screen. Actually, <code>echo</code>
+            transforms the PHP content into HTML to be merged with the
+            original HTML content.</p>
+            <h1 data-number="2" id="basic-php-syntax"><span
+            class="header-section-number">2</span> Basic PHP syntax</h1>
+            <p>Every PHP instruction ends with a semicolon
+            (<code>;</code>).</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span><span class="op">=</span><span class="st">&quot;Hello, world&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <h2 data-number="2.1" id="keywords"><span
+            class="header-section-number">2.1</span> Keywords</h2>
+            <p>These words have special meaning in PHP. The following
+            words cannot be used as variables, constants, class names,
+            or function names:</p>
+            <figure>
+            <img src="images/u02-05.png" alt="List of PHP keywords" />
+            <figcaption aria-hidden="true">List of PHP
+            keywords</figcaption>
+            </figure>
+            <p>Don’t try to learn them all now! We’ll learn the most
+            important ones gradually.</p>
+            <h2 data-number="2.2" id="comments"><span
+            class="header-section-number">2.2</span> Comments</h2>
+            <p>Comments are used to insert notes into the code. They
+            have no effect on the parsing of the script. PHP has two
+            standard notations for comments:</p>
+            <ul>
+            <li>single-line comments: <code>//</code> or even the PERL
+            notation <code>#</code></li>
+            <li>multiline comments: <code>/*</code> at the beggining of
+            the coment, <code>*/</code> at the end.</li>
+            </ul>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">// this is a single-line comment</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># this is another single-line comment</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hi, I&#39;m a PHP script!&quot;</span><span class="ot">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">/* this is </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">   a multiline</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">   comment */</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <figure>
+            <img src="images/u02-02.jpg"
+            alt="Some punctuation marks in English" />
+            <figcaption aria-hidden="true">Some punctuation marks in
+            English</figcaption>
+            </figure>
+            <figure>
+            <img src="images/types-brackets.png"
+            alt="Types of brackets" />
+            <figcaption aria-hidden="true">Types of
+            brackets</figcaption>
+            </figure>
+            <h2 data-number="2.3" id="php-tags"><span
+            class="header-section-number">2.3</span> PHP tags</h2>
+            <p>When PHP parses a file, it looks for
+            <strong>opening</strong> and <strong>closing tags</strong>,
+            which are <strong><code>&lt;?php</code></strong> and
+            <strong><code>?&gt;</code></strong> which tell PHP to start
+            and stop interpreting the code between them. Parsing in this
+            manner allows PHP to be embedded in HTML documents, as
+            everything outside of a pair of opening and closing tags is
+            ignored by the PHP parser.</p>
+            <p>PHP includes a <strong>short echo tag</strong>
+            <strong><code>&lt;?=</code></strong> which is a short-hand
+            to the more verbose <code>&lt;?php echo</code>.</p>
+            <p><strong>Short tags</strong>,
+            <strong><code>&lt;?</code></strong> and
+            <strong><code>&gt;</code></strong> (example three), are
+            available by default but can be disabled either via the
+            <strong><em>short_open_tag</em></strong>
+            <strong>php.ini</strong> configuration file directive, or
+            are disabled by default if PHP is built with the
+            <strong><em>–disable-short-tags</em></strong>
+            configuration.</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Example 1</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">echo</span> <span class="st">&#39;if you want to serve PHP code in XHTML or XML documents, use these tags&#39;</span><span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">//Example 2</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cn">Y</span>ou can <span class="kw">use</span> the short <span class="kw">echo</span> tag to <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="st">&#39;print this string&#39;</span> <span class="kw">?&gt;</span><span class="op">.</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cn">I</span>t<span class="st">&#39;s equivalent to &lt;?php echo &#39;</span>print this string<span class="st">&#39; ?&gt;.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">//Example 3</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;? echo &#39;</span>this code is within short tags<span class="ot">,</span> but will only work <span class="st">&#39;. &#39;</span>if short_open_tag is enabled<span class="st">&#39;; ?&gt;</span></span></code></pre></div>
+            <blockquote>
+            <p>As short tags can be disabled, it is recommended to use
+            only the normal tags (<?php ?> and &lt;?= ?&gt;) to maximise
+            compatibility. In this course we will use preferably the
+            standard <strong><code>&lt;?php</code></strong> and
+            <strong><code>?&gt;</code></strong> tags.</p>
+            </blockquote>
+            <p>If a file contains only PHP code, it is preferable to
+            omit the PHP closing tag at the end of the file. This
+            prevents accidental whitespace or new lines being added
+            after the PHP closing tag, which may cause unwanted
+            effects.</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hello world&quot;</span><span class="ot">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">// ... more code</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Last statement&quot;</span><span class="ot">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">// the script ends here with no PHP closing tag</span></span></code></pre></div>
+            <p>A PHP file can have multiple PHP tags merged with HTML
+            content. The variables defined in a PHP tag already closed
+            are visibles in the following tags.</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="va">$a</span> <span class="op">=</span> <span class="st">&quot;world&quot;</span> <span class="kw">?&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>p<span class="op">&gt;</span> <span class="cn">H</span>ello </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">echo</span> <span class="va">$a</span> <span class="kw">?&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>p<span class="op">&gt;</span></span></code></pre></div>
+            <h1 data-number="3" id="variables"><span
+            class="header-section-number">3</span> Variables</h1>
+            <p>In PHP language, a variable name starts with a dollar
+            sign ( <code>$</code> ) followed by the identifier of the
+            variable. PHP is a loosely typed language, so we don’t need
+            to specify the data type of the variable.</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span> <span class="op">=</span> <span class="dv">1</span><span class="ot">;</span></span></code></pre></div>
+            <p>It is not necessary to initialize variables in PHP,
+            however it is a very good practice.</p>
+            <p>PHP strings can be delimited in some different ways.
+            There are two common notations: double quote
+            (<code>" "</code>) and single quote (<code>' '</code>).
+            Variables within double quotes are changed by their value.
+            Variables within single quotes are not changed by their
+            value and their name will be literally shown.</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span><span class="op">=</span><span class="st">&quot;John&quot;</span><span class="ot">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hello, </span><span class="va">$name</span><span class="st"> &lt;br/&gt;&quot;</span><span class="ot">;</span> <span class="co">// Will show Hello, John</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;Hello, $name &lt;br/&gt;&#39;</span><span class="ot">;</span> <span class="co">// Will show Hello, $name</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>Keep in mind that variable names are <strong>case
+            sensitive</strong>. They can include underscores, characters
+            and numbers, but they cannot start with a number. They also
+            cannot contain spaces or special characters, and the
+            identifier must not be a reserved keyword.</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="va">$var</span> <span class="op">=</span> <span class="st">&#39;Bob&#39;</span><span class="ot">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">$Var</span> <span class="op">=</span> <span class="st">&#39;Joe&#39;</span><span class="ot">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="va">$VAR</span> <span class="op">=</span> <span class="st">&#39;Mary&#39;</span><span class="ot">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$var</span><span class="st">, </span><span class="va">$Var</span><span class="st">, </span><span class="va">$VAR</span><span class="st">&quot;</span><span class="ot">;</span>      <span class="co">// outputs &quot;Bob, Joe, Mary&quot;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>$<span class="dv">4</span>site <span class="op">=</span> <span class="st">&#39;not yet&#39;</span><span class="ot">;</span>     <span class="co">// invalid; starts with a number</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="va">$_4site</span> <span class="op">=</span> <span class="st">&#39;not yet&#39;</span><span class="ot">;</span>    <span class="co">// valid; starts with an underscore</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <h2 data-number="3.1"
+            id="how-to-generate-variable-names-dynamically"><span
+            class="header-section-number">3.1</span> How to generate
+            variable names dynamically</h2>
+            <p>A variable name can be set and used dynamically. This
+            feature adds flexibility to our code when is properly used.
+            Let’s see an example:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span><span class="op">=</span><span class="st">&quot;Hello&quot;</span><span class="ot">;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="va">$$a</span><span class="op">=</span><span class="st">&quot; world!&quot;</span><span class="ot">;</span>  <span class="co">// we are declaring the variable $Hello</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$a</span><span class="st"> </span><span class="va">$</span>{<span class="va">$a</span>}<span class="st">&quot;</span><span class="ot">;</span> <span class="co">// the output will be Hello world!</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$a</span><span class="st"> </span><span class="va">$Hello</span><span class="st">&quot;</span><span class="ot">;</span> <span class="co">// the output will be Hello world!</span></span></code></pre></div>
+            <p>Dynamically generated variables can be useful for
+            creating dynamic code, generate automatic forms, etc. We’ll
+            be using this feature in the future.</p>
+            <h1 data-number="4" id="constants"><span
+            class="header-section-number">4</span> Constants</h1>
+            <p>A <strong>constant</strong> is a identifier with a value
+            that can’t be changed while the application is running. In
+            PHP constants names are usually written in uppercase and
+            without the <code>$</code> symbol. To declare a constant we
+            must use the <code>define</code> function:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">define</span>(<span class="st">&quot;PI&quot;</span><span class="ot">,</span> <span class="fl">3.14159</span>)<span class="ot">;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">PI</span><span class="ot">;</span> <span class="co">// 3.14159</span></span></code></pre></div>
+            <blockquote>
+            <p>Constants are case-sensitive by default. By convention,
+            the names of constants are written in uppercase. Constants
+            can be defined without being case-sensitive by setting the
+            third parameter of the <code>define()</code> function to
+            <code>true</code>.</p>
+            </blockquote>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">define</span>(<span class="st">&quot;PI&quot;</span><span class="ot">,</span> <span class="fl">3.14159</span><span class="ot">,</span> <span class="kw">true</span>)<span class="ot">;</span>    <span class="co">// case-insensitive</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">pi</span><span class="ot">;</span> <span class="co">// 3.14159</span></span></code></pre></div>
+            <blockquote>
+            <p>The constants <strong><code>true</code></strong>,
+            <strong><code>false</code></strong> and
+            <strong><code>null</code></strong> are case_insensitive.
+            Exemple: <code>True</code>, <code>TRUE</code>,
+            <code>tRuE</code>, etc. are valid.</p>
+            </blockquote>
+            <p>PHP language provides some <strong>predefined
+            constants</strong>. Many of them only are available when
+            using certain PHP extensions. Follow <a
+            href="https://www.php.net/manual/en/math.constants.php">this
+            link</a> to get a list of the constants available as part of
+            the PHP core (without extensions). <code>M_PI</code> is one
+            of them, so we don’t need to declare the <code>PI</code>
+            constant like seen in the previous example.</p>
+            <p>We can use predefined constants to get information about
+            the PHP environment, like the version of PHP we are
+            using.</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cn">PHP_VERSION</span><span class="ot">;</span> <span class="co">// 8.0.0</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cn">PHP_OS</span><span class="ot">;</span> <span class="co">// WINNT</span></span></code></pre></div>
+            <p>Some of the predefined constants are called <strong>magic
+            constants</strong> because their value can change depending
+            on where they are used. For example,
+            <strong><code>__LINE__</code></strong> returns the current
+            line number of the file. More magic constants following <a
+            href="https://www.php.net/manual/en/language.constants.magic.php">this
+            link</a>.</p>
+            <p><strong>Magic constants</strong> are useful for debugging
+            and logging.</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cn">__LINE__</span><span class="ot">;</span> <span class="co">// 3</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cn">__FILE__</span><span class="ot">;</span> <span class="co">// C:\xampp\htdocs\curs2425\ud02-01.php</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cn">__DIR__</span><span class="ot">;</span> <span class="co">// C:\xampp\htdocs\curs2425</span></span></code></pre></div>
+            <p>Some other <strong>Magic constants</strong> are: -
+            <code>__FUNCTION__</code>: The function name (only if used
+            inside a function) - <code>__CLASS__</code>: The class name
+            (only if used inside a class) - <code>__METHOD__</code>: The
+            class method name (only if used inside a class) -
+            <code>__NAMESPACE__</code>: The name of the current
+            namespace (only if used inside a namespace) -
+            <code>__TRAIT__</code>: The trait name (only if used inside
+            a trait)</p>
+            <h1 data-number="5" id="operators"><span
+            class="header-section-number">5</span> Operators</h1>
+            <p>Operators are used to perform operations on variables and
+            values. PHP supports a wide range of operators, including
+            arithmetic, comparison, assignment, logical, and string
+            operators.</p>
+            <h2 data-number="5.1" id="arithmetic-operators"><span
+            class="header-section-number">5.1</span> Arithmetic
+            operators</h2>
+            <p>The arithmetic operators include the four basic
+            arithmetic operations (addition, substraction,
+            multiplication and division), as well as the modulus
+            operator (<code>%</code>), which is used to obtain the
+            division remainder, and the exponentiation operator
+            (<code>**</code>, from PHP 5.6), that can be replaced by the
+            function <code>pow()</code>.</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dv">4</span> <span class="op">+</span> <span class="dv">2</span><span class="ot">;</span> <span class="co">// 6 // addition</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dv">4</span> <span class="op">-</span> <span class="dv">2</span><span class="ot">;</span> <span class="co">// 2 // subtraction</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dv">4</span> <span class="op">*</span> <span class="dv">2</span><span class="ot">;</span> <span class="co">// 8 // multiplication</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dv">4</span> <span class="op">/</span> <span class="dv">2</span><span class="ot">;</span> <span class="co">// 2 // division</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dv">4</span> <span class="op">%</span> <span class="dv">2</span><span class="ot">;</span> <span class="co">// 0 // modulus (division remainder)</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dv">4</span> <span class="op">**</span> <span class="dv">2</span><span class="ot">;</span> <span class="co">// 16 // exponentiation, equals to $x=pow(4,2);</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="op">-</span><span class="va">$x</span><span class="ot">;</span> <span class="co">//Negation, an inversion of the sign, so positive numbers become negative and negative numbers become positive.</span></span></code></pre></div>
+            <h2 data-number="5.2" id="comparison-operators"><span
+            class="header-section-number">5.2</span> Comparison
+            operators</h2>
+            <p>The comparison operators compare two values and return
+            either <strong>true</strong> or <strong>false</strong>. They
+            are mainly used to specify conditions, which are expressions
+            that evaluate to either true or false.</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">==</span> <span class="dv">3</span>)<span class="ot">;</span> <span class="co">// false // equal to</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">!=</span> <span class="dv">3</span>)<span class="ot">;</span> <span class="co">// true // not equal to</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">&lt;&gt;</span> <span class="dv">3</span>)<span class="ot">;</span> <span class="co">// true // not equal to (alternative)</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">===</span> <span class="dv">3</span>)<span class="ot">;</span> <span class="co">// false // identical (type and content)</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">!==</span> <span class="dv">3</span>)<span class="ot">;</span> <span class="co">// true // not identical</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">&gt;</span> <span class="dv">3</span>)<span class="ot">;</span> <span class="co">// false // greater than</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">&lt;</span> <span class="dv">3</span>)<span class="ot">;</span> <span class="co">// true // less than</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">&gt;=</span> <span class="dv">3</span>)<span class="ot">;</span> <span class="co">// false // greater than or equal to</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">&lt;=</span> <span class="dv">3</span>)<span class="ot">;</span> <span class="co">// true // less than or equal to</span></span></code></pre></div>
+            <blockquote>
+            <p>The strict equality operators, <code>===</code> and
+            <code>!==</code>, are used for comparing both type and
+            value.</p>
+            </blockquote>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">==</span> <span class="dv">2</span>)<span class="ot">;</span> <span class="co">// true</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">==</span> <span class="st">&#39;2&#39;</span>)<span class="ot">;</span> <span class="co">// true</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">===</span> <span class="dv">2</span>)<span class="ot">;</span> <span class="co">// true</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="dv">2</span> <span class="op">===</span> <span class="st">&#39;2&#39;</span>)<span class="ot">;</span> <span class="co">// false</span></span></code></pre></div>
+            <h2 data-number="5.3"
+            id="assignment-and-combined-assignment-operators"><span
+            class="header-section-number">5.3</span> Assignment and
+            combined assignment operators</h2>
+            <p>The basic assignment operator is <code>"="</code>. It
+            means that the left operand gets set to the value of the
+            expression on the right.</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dv">5</span><span class="ot">;</span> <span class="co">// the value of $x is 5</span></span></code></pre></div>
+            <p>A common use of the assignment and arithmetic operators
+            is to operate on a variable and then save the result back
+            into that same variable. These operations can be shortened
+            with the <strong>combined assignment operators</strong>.</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">+=</span> <span class="dv">5</span><span class="ot">;</span>    <span class="co">// equals to $x = $x+5;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">-=</span> <span class="dv">5</span><span class="ot">;</span>    <span class="co">// equals to $x = $x-5;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">*=</span> <span class="dv">5</span><span class="ot">;</span>    <span class="co">// equals to $x = $x*5;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">/=</span> <span class="dv">5</span><span class="ot">;</span>    <span class="co">// equals to $x = $x/5;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">%=</span> <span class="dv">5</span><span class="ot">;</span>    <span class="co">// equals to $x = $x%5;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">**=</span> <span class="dv">5</span><span class="ot">;</span>   <span class="co">// equals to $x = $x**5;</span></span></code></pre></div>
+            <h2 data-number="5.4"
+            id="increment-and-decrement-operators"><span
+            class="header-section-number">5.4</span> Increment and
+            decrement operators</h2>
+            <p>Another common operation is to increment or decrement a
+            variable by one. This can be simplified with the increment
+            (<code>++</code>) and decrement (<code>--</code>)
+            operators.</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span><span class="op">++</span><span class="ot">;</span> <span class="co">// equals to $x += 1;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span><span class="op">--</span><span class="ot">;</span> <span class="co">// equals to $x -= 1;</span></span></code></pre></div>
+            <h2 data-number="5.5" id="string-concatenation"><span
+            class="header-section-number">5.5</span> String
+            concatenation</h2>
+            <p>PHP has two string operators. The dot symbol is known as
+            the <strong><em>concatenation operator</em></strong>
+            (<code>.</code>). It combines two strings into one.</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span> <span class="op">=</span> <span class="st">&quot;Hello&quot;</span><span class="ot">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="va">$b</span> <span class="op">=</span> <span class="va">$a</span> <span class="op">.</span> <span class="st">&quot; World&quot;</span><span class="ot">;</span> <span class="co">// the value of $b is Hello World</span></span></code></pre></div>
+            <p>A numeric variable can be concatenated with a string.</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span> <span class="op">=</span> <span class="dv">1</span><span class="ot">;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="va">$b</span> <span class="op">=</span> <span class="dv">2</span><span class="ot">;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;a variable is &quot;</span><span class="op">.</span><span class="va">$a</span><span class="op">.</span><span class="st">&quot; and b variable is &quot;</span><span class="op">.</span><span class="va">$b</span><span class="ot">;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Result: a variable is 1 and b variable is 2</span></span></code></pre></div>
+            <p>Combined assignment operator can be used in this case
+            too.</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span> <span class="op">=</span> <span class="st">&quot;Hello&quot;</span><span class="ot">;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span><span class="op">.</span> <span class="op">=</span> <span class="st">&quot; world&quot;</span><span class="ot">;</span> <span class="co">// the value of $a is &quot;Hello world&quot;</span></span></code></pre></div>
+            <h2 data-number="5.6" id="logical-operators"><span
+            class="header-section-number">5.6</span> Logical
+            operators</h2>
+            <p>Logical operators are often used together with the
+            comparison operators.</p>
+            <ul>
+            <li><p><strong>and - &amp;&amp;</strong>: logical and (
+            <code>&amp;&amp;</code> ) evaluates to true if both the left
+            and right side of the expression are true</p></li>
+            <li><p><strong>or - ||</strong>: logical or
+            (<code>||</code>) evaluates to true if either the left or
+            right side is true. And, of course, if both are
+            true.</p></li>
+            <li><p><strong>!: Logical not</strong>: inverts the logical
+            value of the expression from true to false, or from false to
+            true</p></li>
+            </ul>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="kw">true</span> <span class="op">&amp;&amp;</span> <span class="kw">false</span>)<span class="ot">;</span>   <span class="co">// Value of $x: false // logical and</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="kw">true</span> <span class="op">and</span> <span class="kw">false</span>)<span class="ot">;</span>  <span class="co">// Value of $x: false // logical and</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="kw">true</span> <span class="op">||</span> <span class="kw">false</span>)<span class="ot">;</span>   <span class="co">// Value of $x: true  // logical or</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> (<span class="kw">true</span> <span class="op">or</span> <span class="kw">false</span>)<span class="ot">;</span>   <span class="co">// Value of $x: true  // logical or</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="op">!</span>(<span class="kw">true</span>)<span class="ot">;</span>           <span class="co">// Value of $x: false // logical not</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="va">$y</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="op">!</span><span class="va">$y</span><span class="ot">;</span>               <span class="co">// Value of $x: false // logical not</span></span></code></pre></div>
+            <h1 data-number="6" id="basic-data-types"><span
+            class="header-section-number">6</span> Basic data types</h1>
+            <p>PHP, as well as many other interpreted languages, is a
+            loosely-typed programming language. That means that we can
+            create variables by simply assigning a value without
+            explicitly declaring a type. The type of the variable is
+            determined by the value assigned to it.</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span><span class="op">=</span><span class="st">&quot;Hello, world!&quot;</span><span class="ot">;</span> <span class="co">// string</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span><span class="op">=</span><span class="dv">10</span><span class="ot">;</span> <span class="co">// integer</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span><span class="op">=</span><span class="fl">10.5</span><span class="ot">;</span> <span class="co">// float</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span><span class="op">=</span><span class="kw">true</span><span class="ot">;</span> <span class="co">// boolean</span></span></code></pre></div>
+            <p>However, since the version 7.0, PHP allows us to declare
+            the type of a variable inside functions, classes or methods.
+            This is called <strong>type hinting</strong>. PHP includes
+            some data types that can be used to declare the types in
+            these situations.</p>
+            <p>Let’s take a look to some of most used scalar data
+            types:</p>
+            <ul>
+            <li><strong>int</strong> / <strong>integer</strong> (integer
+            numbers)</li>
+            <li><strong>float</strong> / <strong>double</strong> (real
+            numbers)</li>
+            <li><strong>string</strong> (strings)</li>
+            <li><strong>bool</strong> (boolean)</li>
+            <li><strong>null</strong> (null value)</li>
+            </ul>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sum(<span class="dt">int</span> <span class="va">$a</span><span class="ot">,</span> <span class="dt">int</span> <span class="va">$b</span>)<span class="ot">:</span> <span class="dt">int</span> {  <span class="co">// the function can only receive integers and return an integer</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$a</span> <span class="op">+</span> <span class="va">$b</span><span class="ot">;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>From 7.4. we can use the
+            <strong><code>mixed</code></strong> type, which can be any
+            type. This is useful when a function can accept multiple
+            data types or when the exact type cannot be determined
+            beforehand.</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sum(<span class="dt">mixed</span> <span class="va">$a</span><span class="ot">,</span> <span class="dt">mixed</span> <span class="va">$b</span>)<span class="ot">:</span> <span class="dt">mixed</span> { </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$a</span> <span class="op">+</span> <span class="va">$b</span><span class="ot">;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">// the function can be used to sum two integers, two floats or a float and an integer</span></span></code></pre></div>
+            <p>The operator ? before a type means that the variable can
+            be of that type or null.</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> operation(<span class="ot">?</span><span class="dt">int</span> <span class="va">$a</span><span class="ot">,</span> <span class="ot">?</span><span class="dt">int</span> <span class="va">$b</span>)<span class="ot">:</span> <span class="ot">?</span><span class="dt">int</span> { </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>...<span class="ot">;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">// the function can be used to operate with two integers or two null values</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">// and can return an integer or null</span></span></code></pre></div>
+            <p>We can use the operator <strong><code>|</code></strong>
+            to indicate that a variable can be of one type or
+            another.</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> operation(<span class="dt">int</span> <span class="op">|</span> <span class="dt">float</span> <span class="va">$a</span><span class="ot">,</span> <span class="dt">int</span> <span class="op">|</span> <span class="dt">float</span> <span class="va">$b</span>)<span class="ot">:</span> <span class="dt">int</span> <span class="op">|</span> <span class="dt">float</span> { </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>...<span class="ot">;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">// the function can be used to operate with two integers, two floats or an integer and a float, and can return an integer or a float</span></span></code></pre></div>
+            <p>The <strong><code>void</code></strong> type means that
+            the function doesn’t return anything.</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sayHello()<span class="ot">:</span> <span class="dt">void</span> {</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Hello, world!&quot;</span><span class="ot">;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>To ask for the type of a variable or expression, we can
+            use the <strong>gettype()</strong> function. Let’s see some
+            examples:</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="va">$variable1</span><span class="op">=</span><span class="st">&quot;Hello, world!&quot;</span><span class="ot">;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="va">$variable2</span><span class="op">=</span><span class="st">&quot;10&quot;</span><span class="ot">;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="va">$variable3</span><span class="op">=</span><span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="va">$variable4</span><span class="op">=</span><span class="fl">10.5</span><span class="ot">;</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Type of variable1: &quot;</span><span class="op">.</span><span class="fu">gettype</span>(<span class="va">$variable1</span>)<span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Type of variable2: &quot;</span><span class="op">.</span><span class="fu">gettype</span>(<span class="va">$variable2</span>)<span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Type of variable3: &quot;</span><span class="op">.</span><span class="fu">gettype</span>(<span class="va">$variable3</span>)<span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Type of variable4: &quot;</span><span class="op">.</span><span class="fu">gettype</span>(<span class="va">$variable4</span>)<span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>The output of the previous code:</p>
+            <figure>
+            <img src="images/u02-03.jpg" alt="Data types" />
+            <figcaption aria-hidden="true">Data types</figcaption>
+            </figure>
+            <p>We can ask if a variable belongs to a certain type by
+            using functions like:</p>
+            <ul>
+            <li><strong>is_bool($var)</strong>: returns true if the
+            variable is boolean</li>
+            <li><strong>is_float($var)</strong>: returns true if the
+            variable is float</li>
+            <li><strong>is_integer($var)</strong>: returns true if the
+            variable is integer</li>
+            <li><strong>is_numeric($var)</strong>: returns true if the
+            variable is numeric</li>
+            <li><strong>is_string($var)</strong>: returns true if the
+            variable is string</li>
+            <li><strong>is_null($var)</strong>: returns true if the
+            variable is null</li>
+            </ul>
+            <blockquote>
+            <p>In case we have a declaration like
+            <code>$variable="100"</code>, both functions
+            <code>is_numeric($variable)</code> and
+            <code>is_string($variable)</code> will return true. However,
+            the function <code>is_integer($variable)</code> will return
+            false.</p>
+            </blockquote>
+            <p>While debugging we can use the <code>var_dump()</code>
+            function to show the type and value of a variable. This
+            function should be deleted in production. It’s easier to
+            search and delete <code>var_dump</code> than
+            <code>echo</code> or <code>print</code>.</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span> <span class="op">=</span> <span class="dv">32</span><span class="ot">;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">var_dump</span>(<span class="va">$a</span>) <span class="op">.</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> <span class="co">//prints int(32) </span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="va">$b</span> <span class="op">=</span> <span class="st">&quot;Hello world!&quot;</span><span class="ot">;</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">var_dump</span>(<span class="va">$b</span>) <span class="op">.</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> <span class="co">//prints string(12) &quot;Hello world!&quot; </span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="va">$c</span> <span class="op">=</span> <span class="fl">32.5</span><span class="ot">;</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">var_dump</span>(<span class="va">$c</span>) <span class="op">.</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> <span class="co">//prints float(32.5) </span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Dump two variables</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">var_dump</span>(<span class="va">$a</span><span class="ot">,</span> <span class="va">$b</span>) <span class="op">.</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> <span class="co">//prints int(32) string(12) &quot;Hello world!&quot; </span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span> </span></code></pre></div>
+            <h1 data-number="7" id="php-and-html"><span
+            class="header-section-number">7</span> PHP and HTML</h1>
+            <p>As we have seen in the previous examples, we can merge
+            PHP code and HTML tags. We can do it in two different
+            ways.</p>
+            <p><strong>PHP code inside HTML tags</strong></p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h2<span class="op">&gt;</span><span class="cn">T</span>his line shows the value of a <span class="cn">PHP</span> expression <span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">echo</span> <span class="va">$expression</span><span class="ot">;</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>h2<span class="op">&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">// or, using the short echo tag,</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h2<span class="op">&gt;</span><span class="cn">T</span>his line shows the value of a <span class="cn">PHP</span> expression <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$expression</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>h2<span class="op">&gt;</span></span></code></pre></div>
+            <p><strong>HTML tags inside PHP code</strong></p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt; This line shows the value of a PHP expression </span><span class="va">$expression</span><span class="st"> &lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>We will decide which one works best in every single
+            situation.</p>
+            <blockquote>
+            <p><strong>Important:</strong> the <code>echo</code>
+            statement doesn’t add a line break unless we include tags as
+            HTML <code>&lt;br&gt;</code>, headings
+            (<code>&lt;h1&gt;...&lt;h6&gt;</code>) or similar.</p>
+            </blockquote>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hello, world!&quot;</span><span class="ot">;</span> <span class="co">// doesn&#39;t jumps to the next line</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hello, world!&lt;br&gt;&quot;</span><span class="ot">;</span> <span class="co">// jumps to the next line</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h3&gt;Hello, world!&lt;/h3&gt;&quot;</span><span class="ot">;</span> <span class="co">// jumps to the next line</span></span></code></pre></div>
+            <p>Sometimes, when the PHP code is a little more complex, we
+            will need to concatenate the HTML and PHP sections of the
+            expression.</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">define</span>(<span class="st">&quot;PI&quot;</span><span class="ot">,</span><span class="fl">3.14159</span>)<span class="ot">;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="va">$radius</span><span class="op">=</span><span class="dv">5</span><span class="ot">;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;The length of the circumference with radius </span><span class="va">$radius</span><span class="st"> is &quot;</span><span class="op">.</span>(<span class="dv">2</span><span class="op">*</span><span class="fu">PI</span><span class="op">*</span><span class="va">$radius</span>)<span class="ot">;</span></span></code></pre></div>
+            <figure>
+            <img src="images/u02-04.jpg"
+            alt="Length of the circumference" />
+            <figcaption aria-hidden="true">Length of the
+            circumference</figcaption>
+            </figure>
+            <h2 data-number="7.1" id="echo-and-print-statements"><span
+            class="header-section-number">7.1</span> <code>echo</code>
+            and <code>print</code> statements</h2>
+            <p>In PHP we have two ways to get output: <code>echo</code>
+            and <code>print</code>. They are more or less the same. They
+            are both used to output data to the screen.</p>
+            <p>The differences between <code>echo</code> and
+            <code>print</code> are:</p>
+            <ul>
+            <li><code>echo</code> has no return value while
+            <code>print</code> has a return value of 1 so it can be used
+            in expressions</li>
+            <li><code>echo</code> can take multiple parameters (although
+            such usage is rare) while <code>print</code> can take one
+            argument</li>
+            <li><code>echo</code> is a little bit faster than
+            <code>print</code></li>
+            </ul>
+            <p>Both can be used with or without parentheses:
+            <code>echo</code> or <code>echo()</code>, <code>print</code>
+            or <code>print()</code>.</p>
+            <p><strong>Examples:</strong></p>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;PHP is Fun!&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span>(<span class="st">&quot;Hello world!&lt;br&gt;&quot;</span>)<span class="ot">;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;This &quot;</span><span class="ot">,</span> <span class="st">&quot;string &quot;</span><span class="ot">,</span> <span class="st">&quot;was &quot;</span><span class="ot">,</span> <span class="st">&quot;made &quot;</span><span class="ot">,</span> <span class="st">&quot;with multiple parameters.&quot;</span><span class="ot">;</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span> </span></code></pre></div>
+            <div class="sourceCode" id="cb39"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="va">$value</span> <span class="op">=</span> <span class="kw">print</span>(<span class="st">&quot;Hello world!&lt;br&gt;&quot;</span>)<span class="ot">;</span> <span class="co">// This will output &quot;Hello world!&quot; and return 1</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="kw">print</span> <span class="st">&quot;&lt;p&gt; Value returned by print(): </span><span class="va">$value</span><span class="st"> &lt;/p&gt;&quot;</span><span class="ot">;</span> <span class="co">// Value returned by print(): 1</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="kw">print</span> <span class="st">&quot;This &quot;</span><span class="ot">,</span> <span class="st">&quot;will &quot;</span><span class="ot">,</span> <span class="st">&quot;fail &quot;</span><span class="ot">;</span> <span class="co">// Error</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span> </span></code></pre></div>
+            <h1 data-number="8" id="query-strings"><span
+            class="header-section-number">8</span> Query strings</h1>
+            <p>A query string is a part of a uniform resource locator
+            (URL) that assigns values to specified parameters.</p>
+            <p>Typical URL containing a query string is as follows:</p>
+            <p><code>https://example.com/script.php?name=Jane</code></p>
+            <p>The question mark <strong><code>?</code></strong> is used
+            as a separator, and is not part of the query string. It
+            marks the beginning of the query string.</p>
+            <p>If we want to pass multiple params, we use the ampersand
+            <strong><code>&amp;</code></strong>:</p>
+            <p><code>https://example.com/script.php?name=Jane&amp;surname=Doe</code></p>
+            <p>We can read the values of the query string in a PHP
+            script via the predefined array <code>$_GET</code>:</p>
+            <div class="sourceCode" id="cb40"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&quot;name&quot;</span>]<span class="ot">;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="va">$surname</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&quot;surname&quot;</span>]<span class="ot">;</span></span></code></pre></div>
+            <p>This is a simple way to pass parameters to PHP scripts
+            before we learn how to do it via forms. Create in your
+            <code>provesPHP</code> folder a file named
+            <code>proves.php</code> with the following content:</p>
+            <div class="sourceCode" id="cb41"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&quot;name&quot;</span>]<span class="ot">;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="va">$surname</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&quot;surname&quot;</span>]<span class="ot">;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hello, </span><span class="va">$name</span><span class="st"> </span><span class="va">$surname</span><span class="st">!&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>Call the previous script from the URL by typing in your
+            browser:</p>
+            <p><code>http://localhost/provesPHP/proves.php?name=YourName&amp;surname=Yoursurname</code></p>
+            <figure>
+            <img src="images/u02-04bis.jpg"
+            alt="Script with query strings" />
+            <figcaption aria-hidden="true">Script with query
+            strings</figcaption>
+            </figure>
+            <h1 data-number="9" id="strings"><span
+            class="header-section-number">9</span> Strings</h1>
+            <p>We don’t need to declare something as a “string” in PHP.
+            Any variable which content is enclosed in double or single
+            quotes is a string.</p>
+            <div class="sourceCode" id="cb42"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span><span class="op">=</span><span class="st">&quot;Hello&quot;</span><span class="ot">;</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span><span class="op">=</span><span class="st">&#39;Hello&#39;</span><span class="ot">;</span></span></code></pre></div>
+            <p>If a string is delimited by double quotes, there can be
+            any number of single quotes inside it, and vice versa.</p>
+            <p>Just remember that variables in double quotes are changed
+            by its value, but variables in single quotes don’t.</p>
+            <div class="sourceCode" id="cb43"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span> <span class="op">=</span> <span class="st">&quot;world&quot;</span><span class="ot">;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;p&gt;Hello </span><span class="va">$variable</span><span class="st">&lt;/p&gt;&quot;</span><span class="ot">;</span> <span class="co">//Outputs &quot;Hello world&quot;</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;&lt;p&gt;Hello $variable&lt;/p&gt;&#39;</span><span class="ot">;</span> <span class="co">//Outputs &quot;Hello $variable&quot;</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>The only escape sequences that work in <strong>single
+            quotes</strong> are <strong><code>\'</code></strong> (for
+            escape a single quote) and <strong><code>\\</code></strong>
+            (for escape a backslash).</p>
+            <p>There are many escape sequences for <strong>double
+            quotes</strong>:</p>
+            <table>
+            <thead>
+            <tr class="header">
+            <th>Sequence</th>
+            <th>Meaning</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>\n</code></td>
+            <td>line break</td>
+            </tr>
+            <tr class="even">
+            <td><code>\t</code></td>
+            <td>horizontal tab</td>
+            </tr>
+            <tr class="odd">
+            <td><code>\\</code></td>
+            <td>backslash</td>
+            </tr>
+            <tr class="even">
+            <td><code>\$</code></td>
+            <td>dollar sign</td>
+            </tr>
+            <tr class="odd">
+            <td><code>\"</code></td>
+            <td>double-quote</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>If we want that the generated HTML page had a readable
+            format, with indentations and line breaks, we must use
+            escape sequences such as <code>\n</code>.</p>
+            <p>For example, the next PHP code generates the HTML code
+            below:</p>
+            <div class="sourceCode" id="cb44"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;ul&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;li&gt;One&lt;/li&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;li&gt;Two&lt;/li&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;/ul&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb45"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>One<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Two<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>The next two PHP codes generate a well formatted HTML
+            code:</p>
+            <div class="sourceCode" id="cb46"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;ul&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;li&gt;One&lt;/li&gt;</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;li&gt;Two&lt;/li&gt;</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/ul&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb47"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;ul&gt;</span><span class="sc">\n</span><span class="st">  &lt;li&gt;One&lt;/li&gt;</span><span class="sc">\n</span><span class="st">  &lt;li&gt;Two&lt;/li&gt;</span><span class="sc">\n</span><span class="st">&lt;/ul&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb48"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>One<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Two<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>As we have already seen, we can print strings using the
+            instruction <strong><code>echo</code></strong> or
+            <strong><code>print</code></strong>. With
+            <strong>echo</strong> we can combine variables and text
+            using commas <code>(,)</code>. But with
+            <strong>print</strong> we can’t.</p>
+            <div class="sourceCode" id="cb49"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span><span class="op">=</span><span class="st">&quot;David&quot;</span><span class="ot">;</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hello, &quot;</span><span class="ot">,</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hello, &quot;</span><span class="op">.</span><span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="kw">print</span> <span class="st">&quot;Hello, &quot;</span><span class="op">.</span><span class="va">$name</span><span class="ot">;</span> <span class="co">//Ok</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="kw">print</span> <span class="st">&quot;Hello, &quot;</span><span class="ot">,</span> <span class="va">$name</span><span class="ot">;</span> <span class="co">//Error</span></span></code></pre></div>
+            <p>When the name of a variable inside a string is followed
+            by characters that can be part of the name, the PHP
+            interpreter takes these characters as part of the variable
+            name:</p>
+            <div class="sourceCode" id="cb50"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="va">$fontSize</span> <span class="op">=</span> <span class="dv">40</span><span class="ot">;</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;p style=&#39;font-size: </span><span class="va">$fontSizepx</span><span class="st">;&#39;&gt; Parsing variables test&lt;/p&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co">//Doesn&#39;t work because the variable $fontSizepx is not defined</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span> </span></code></pre></div>
+            <p>We need to wrap the variable’s name with curly brackets
+            <strong><code>{}</code></strong> in order to parse the
+            variable correctly:</p>
+            <div class="sourceCode" id="cb51"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="va">$fontSize</span> <span class="op">=</span> <span class="dv">40</span><span class="ot">;</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;p style=&#39;font-size: </span>{<span class="va">$fontSize</span>}<span class="st">px;&#39;&gt; Parsing variables test&lt;/p&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co">//It works!</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span> </span></code></pre></div>
+            <blockquote>
+            <p>We can wrap the whole variable including the
+            <code>$</code>, like in <code>{$fontSize}</code>, or only
+            the variable’s name, like in <code>${fontSize}</code>.</p>
+            </blockquote>
+            <h2 data-number="9.1" id="heredoc-and-nowdoc"><span
+            class="header-section-number">9.1</span> heredoc and
+            nowdoc</h2>
+            <p>Another way to create long strings is by using
+            <strong>heredoc</strong> and <strong>nowdoc</strong>
+            notations.</p>
+            <p><strong>Heredoc</strong> syntax consists of the
+            <code>&lt;&lt;&lt;</code> operator followed by an identifier
+            and a new line. The string is then included followed by a
+            new line containing the identifier to close the string.
+            <strong>Variables are parsed</strong> inside of a heredoc
+            string, just as with double-quoted strings.</p>
+            <div class="sourceCode" id="cb52"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span> <span class="op">=</span> <span class="ss">&lt;&lt;&lt;LABEL</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="st">Heredoc (with parsing)</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="ss">LABEL</span>;</span></code></pre></div>
+            <p><strong>Nowdoc</strong> syntax is very similar, but
+            <strong>the initial identifier is enclosed in single
+            quotes</strong> instead of double quotes. <strong>Variables
+            are not parsed</strong> inside a nowdoc string.</p>
+            <div class="sourceCode" id="cb53"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="va">$variable</span> <span class="op">=</span> <span class="vs">&lt;&lt;&lt;&#39;LABEL&#39;</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="st">Nowdoc (without parsing)</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="vs">LABEL</span>;</span></code></pre></div>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb54"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span><span class="op">=</span><span class="st">&quot;David&quot;</span><span class="ot">;</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="va">$variable1</span> <span class="op">=</span> <span class="ss">&lt;&lt;&lt;LABEL</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="st">Heredoc (with parsing)</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="st">This </span><span class="va">$name</span><span class="st"> will be parsed</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="ss">LABEL</span>;</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="va">$variable2</span> <span class="op">=</span> <span class="vs">&lt;&lt;&lt;&#39;LABEL&#39;</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="st">Nowdoc (without parsing)</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="st">This $name won&#39;t be parsed</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="vs">LABEL</span>;</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;With Heredoc&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$variable1</span><span class="ot">;</span></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;With Nowdoc&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$variable2</span><span class="ot">;</span></span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>The result, as shown on screen, is:</p>
+            <figure>
+            <img src="images/u02-06.jpg"
+            alt="Strings with Heredoc and Nowdoc" />
+            <figcaption aria-hidden="true">Strings with Heredoc and
+            Nowdoc</figcaption>
+            </figure>
+            <p><strong>nowdoc</strong> is ideal for embedding PHP code
+            or other large blocks of text without the need for escaping.
+            It’s similar to the XML
+            <strong><code>&lt;![CDATA[ ]]&gt;</code></strong> construct,
+            in that it declares a block of text which is not for
+            parsing.</p>
+            <h2 data-number="9.2" id="printf-and-sprintf"><span
+            class="header-section-number">9.2</span> printf and
+            sprintf</h2>
+            <p>The functions <strong><code>printf</code></strong> and
+            <strong><code>sprintf</code></strong> can be used with
+            strings to output a formatted string to the screen
+            (<code>printf</code>) or to another variable
+            (<code>sprintf</code>).</p>
+            <div class="sourceCode" id="cb55"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span><span class="op">=</span><span class="st">&quot;John&quot;</span><span class="ot">;</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="va">$age</span><span class="op">=</span><span class="dv">33</span><span class="ot">;</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co">// with echo</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Hello, </span><span class="va">$name</span><span class="st">, you are </span><span class="va">$age</span><span class="st"> years old &lt;br/&gt; &quot;</span><span class="ot">;</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="co">// with printf</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a><span class="fu">printf</span>(<span class="st">&quot;Hello, %s, you are %d years old&lt;br/&gt;&quot;</span><span class="ot">,</span> <span class="va">$name</span><span class="ot">,</span> <span class="va">$age</span>)<span class="ot">;</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a><span class="co">// with sprintf</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a><span class="va">$newString</span><span class="op">=</span><span class="fu">sprintf</span>(<span class="st">&quot;Hello, %s, you are %d years old&lt;br/&gt;&quot;</span><span class="ot">,</span> <span class="va">$name</span><span class="ot">,</span> <span class="va">$age</span>)<span class="ot">;</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$newString</span><span class="ot">;</span></span></code></pre></div>
+            <figure>
+            <img src="images/u02-07.jpg"
+            alt="Strings with echo, printf and sprintf" />
+            <figcaption aria-hidden="true">Strings with echo, printf and
+            sprintf</figcaption>
+            </figure>
+            <p>The result is the same in each case.</p>
+            <p>A conversion specification follows this prototype:</p>
+            <p>**<code>%[argnum$][flags][width][.precision]specifier</code></p>
+            <p>The most common format values are:</p>
+            <ul>
+            <li><strong><code>%%</code></strong> - Returns a percent
+            sign</li>
+            <li><strong><code>%b</code></strong> - Binary number</li>
+            <li><strong><code>%c</code></strong> - The character
+            according to the ASCII value</li>
+            <li><strong><code>%d</code></strong> - Signed decimal number
+            (negative, zero or positive)</li>
+            <li><strong><code>%e</code></strong> - Scientific notation
+            using a lowercase (e.g. 1.2e+2)</li>
+            <li><strong><code>%u</code></strong> - Unsigned decimal
+            number (equal to or greater than zero)</li>
+            <li><strong><code>%f</code></strong> - Floating-point number
+            (local settings aware)</li>
+            <li><strong><code>%F</code></strong> - Floating-point number
+            (not local settings aware)</li>
+            <li><strong><code>%s</code></strong> - String</li>
+            <li><strong><code>%x</code></strong> - Hexadecimal number
+            (lowercase letters)</li>
+            </ul>
+            <p>An example:</p>
+            <div class="sourceCode" id="cb56"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="va">$number</span><span class="op">=</span><span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">printf</span>(<span class="st">&quot;The binary representation of %d is %b&quot;</span><span class="ot">,</span> <span class="va">$number</span><span class="ot">,</span> <span class="va">$number</span>)<span class="ot">;</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co">// The binary representation of 10 is 1010</span></span></code></pre></div>
+            <p>More about sprintf and printf formats: <a
+            href="https://www.php.net/manual/en/function.sprintf.php">https://www.php.net/manual/en/function.sprintf.php</a></p>
+            <blockquote>
+            <p>The <strong>nl2br()</strong> function can be used to
+            convert special newline characters (<code>\n</code>) to
+            actual newlines on the system we are working on
+            (<code>&lt;br&gt;</code> label in HTML). An exception
+            happens if the text is enclosed in single quotes because the
+            <code>\n</code> will not be parsed.</p>
+            </blockquote>
+            <div class="sourceCode" id="cb57"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="va">$text</span><span class="op">=</span><span class="st">&quot;Hello</span><span class="sc">\n</span><span class="st">world!&quot;</span><span class="ot">;</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Without nl2br():&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$text</span><span class="ot">;</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;hr&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;With nl2br():&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">nl2br</span>(<span class="va">$text</span>)<span class="ot">;</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <figure>
+            <img src="images/u02-08.jpg"
+            alt="Same text with and without nl2br()" />
+            <figcaption aria-hidden="true">Same text with and without
+            nl2br()</figcaption>
+            </figure>
+            <h2 data-number="9.3" id="string-functions"><span
+            class="header-section-number">9.3</span> String
+            functions</h2>
+            <p>In PHP we have a lot of functions to manipulate strings.
+            Some of them are shown in the next table.</p>
+            <table>
+            <colgroup>
+            <col style="width: 15%" />
+            <col style="width: 38%" />
+            <col style="width: 46%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th style="text-align: left;">Function</th>
+            <th style="text-align: left;">Utility</th>
+            <th style="text-align: left;">Example</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>substr</code></strong></td>
+            <td style="text-align: left;">Returns a section of a
+            string</td>
+            <td
+            style="text-align: left;"><code>$sub=substr($mainString,initPos,length)</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>substr_replace</code></strong></td>
+            <td style="text-align: left;">Replace text within a
+            string</td>
+            <td
+            style="text-align: left;"><code>$newString=substr_replace($mainString,$newText, init, length);</code></td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>str_replace</code></strong></td>
+            <td style="text-align: left;">Replace all occurrences of the
+            search string in the main string with the replace
+            string</td>
+            <td
+            style="text-align: left;"><code>$new=str_replace($search,$replace,$mainString);</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>strlen</code></strong></td>
+            <td style="text-align: left;">Returns the length of a
+            string</td>
+            <td
+            style="text-align: left;"><code>$len=strlen($string);</code></td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>strpos</code></strong></td>
+            <td style="text-align: left;">Finds the position of the
+            first occurrence of a substring in a string. Since the first
+            position of a string is 0, strpos returns FALSE if the
+            substring is not found</td>
+            <td
+            style="text-align: left;"><code>$pos=strpos($mainString,$subString);</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>strrpos</code></strong></td>
+            <td style="text-align: left;">Finds the position of the last
+            occurrence of a substring in a string (returns FALSE if not
+            found)</td>
+            <td
+            style="text-align: left;"><code>$lastPos=strrpos($mainString,$subString);</code></td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>ltrim</code></strong></td>
+            <td style="text-align: left;">Strip left whitespaces from a
+            string</td>
+            <td
+            style="text-align: left;"><code>$newString=ltrim($oldString);</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>rtrim</code></strong></td>
+            <td style="text-align: left;">Strip right whitespaces from a
+            string</td>
+            <td
+            style="text-align: left;"><code>$newString=rtrim($oldString);</code></td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>trim</code></strong></td>
+            <td style="text-align: left;">Strip both left and right
+            whitespaces from a string</td>
+            <td
+            style="text-align: left;"><code>$newString=trim($oldString);</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>strtolower</code></strong></td>
+            <td style="text-align: left;">Converts a string to
+            lowercase</td>
+            <td
+            style="text-align: left;"><code>$lowString=strtolower($mainString);</code></td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>strtoupper</code></strong></td>
+            <td style="text-align: left;">Converts a string to
+            uppercase</td>
+            <td
+            style="text-align: left;"><code>$upperString=strtoupper($mainString);</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>strchr</code></strong>
+            / <strong><code>strstr</code></strong></td>
+            <td style="text-align: left;">Finds the first occurrence of
+            a substring inside a string and returns the left or right
+            (depends on the third parameter of the function) part of the
+            main string from the substring position (or FALSE if not
+            found)</td>
+            <td
+            style="text-align: left;"><code>$returnedString=strchr($mainString,$search,TRUE/FALSE);</code></td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>strrchr</code></strong></td>
+            <td style="text-align: left;">Finds the last ocurrence of a
+            character on a string and returns the portion from the
+            position where the character has been found until the end of
+            the string (or FALSE if not found)</td>
+            <td
+            style="text-align: left;"><code>$returnedString=strrchr($mainString,$char);</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>strrev</code></strong></td>
+            <td style="text-align: left;">Returns a string reversed</td>
+            <td
+            style="text-align: left;"><code>$reversedString=strrev($originalString);</code></td>
+            </tr>
+            </tbody>
+            </table>
+            <p>Some other string functions are:</p>
+            <ul>
+            <li><strong><code>str_word_count()</code></strong>: Counts
+            the number of words in a string.</li>
+            <li><strong><code>str_repeat()</code></strong>: Repeats a
+            string a specified number of times.</li>
+            </ul>
+            <p>For a more detailed explanation of these functions and
+            for a lot of other string functions, follow this link:</p>
+            <p><a
+            href="https://www.php.net/manual/en/ref.strings.php">String
+            functions in PHP</a></p>
+            <h1 data-number="10" id="dates-and-time"><span
+            class="header-section-number">10</span> Dates and time</h1>
+            <p>Dates are a very common data type used in applications
+            and databases. For that reason PHP has a lot of functions to
+            handle dates. To avoid confusion, we will use the
+            <strong>DateTime class</strong> to work with dates.</p>
+            <p>Before entering into the DateTime class, let’s see some
+            functions to get the current date and time.</p>
+            <p>The <strong><code>date()</code></strong> function is used
+            to format a Unix timestamp according to the given format.
+            The first parameter is the format and the second one is the
+            timestamp. If the second parameter is omitted, the current
+            date and time will be used.</p>
+            <div class="sourceCode" id="cb58"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Returns a formatted date string</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>(<span class="dt">string</span> <span class="va">$format</span><span class="ot">,</span> <span class="ot">?</span><span class="dt">int</span> <span class="va">$timestamp</span> <span class="op">=</span> <span class="kw">null</span>)<span class="ot">:</span> <span class="dt">string</span></span></code></pre></div>
+            <p>Example:</p>
+            <div class="sourceCode" id="cb59"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Today is &quot;</span><span class="op">.</span><span class="fu">date</span>(<span class="st">&quot;l, d-m-Y&quot;</span>)<span class="ot">;</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co">// Today is Monday, 29-08-2022</span></span></code></pre></div>
+            <ul>
+            <li>d: month day</li>
+            <li>m: month (numeric)</li>
+            <li>Y: year (4 digits)</li>
+            <li>l: day of week (text)</li>
+            </ul>
+            <p>More date formats in the next link: <a
+            href="https://www.php.net/manual/en/datetime.format.php">Date
+            formats</a></p>
+            <h2 data-number="10.1" id="the-datetime-class"><span
+            class="header-section-number">10.1</span> The DateTime
+            class</h2>
+            <p>The <strong>DateTime class</strong> is a built-in class
+            in PHP that allows us to work with dates and times. It
+            provides a lot of methods to manipulate dates and times.</p>
+            <p>A <strong>DateTime object</strong> is an instance of the
+            <strong>DateTime class</strong> which represents a date and
+            time. We can create a new <strong>DateTime</strong> object
+            using the <strong><code>new</code></strong> keyword followed
+            by the <strong>DateTime class</strong> name.</p>
+            <p>The constructor of <strong>DateTime</strong> accepts a
+            string parameter which defaults to “now”, the current time
+            and date. To create an object for a specific date, you
+            should pass the specific date and time to it.</p>
+            <div class="sourceCode" id="cb60"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="va">$today</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>()<span class="ot">;</span> <span class="co">// Objeto DateTime with current date/time</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="va">$tomorrow</span><span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>(<span class="st">&#39;tomorrow&#39;</span>)<span class="ot">;</span> <span class="co">// Objeto DateTime with tomorrow date</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="va">$theDayAfterTomorrow</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>(<span class="st">&#39;+2 days&#39;</span>)<span class="ot">;</span> <span class="co">//DateTime representing 2 days from now on.</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="va">$day1</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>(<span class="st">&#39;2024, September 13&#39;</span>)<span class="ot">;</span> <span class="co">//DateTime representing 2024, September 13 </span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="va">$day2</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>(<span class="st">&#39;2024-09-13&#39;</span>)<span class="ot">;</span> <span class="co">//DateTime representing 2024, September 13 </span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>To get the current date and time, we can use the
+            <strong><code>format()</code></strong> method. This method
+            accepts a string parameter with the format we want to use to
+            display the date and time.</p>
+            <div class="sourceCode" id="cb61"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$today</span>-&gt;format(<span class="st">&#39;l, d-m-Y H:i:s&#39;</span>)<span class="ot">;</span> <span class="co">// Friday 13-09-2024 16:19:33</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">date_format</span>(<span class="va">$today</span><span class="ot">,</span> <span class="st">&#39;l, d-m-Y H:i:s&#39;</span>)<span class="ot">;</span> <span class="co">// Friday 13-09-2024 16:19:33 </span></span></code></pre></div>
+            <p>We can create a date object with any other date and
+            format using the <strong>date_create_from_format()</strong>
+            function.</p>
+            <div class="sourceCode" id="cb62"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Returns a new DateTime object representing the date and time specified by the datetime string, which was formatted in the given format. </span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">date_create_from_format</span>(<span class="dt">string</span> <span class="va">$format</span><span class="ot">,</span> <span class="dt">string</span> <span class="va">$datetime</span><span class="ot">,</span> <span class="ot">?</span><span class="bu">DateTimeZone</span> <span class="va">$timezone</span> <span class="op">=</span> <span class="kw">null</span>)<span class="ot">:</span> <span class="bu">DateTime</span></span></code></pre></div>
+            <p>Example:</p>
+            <div class="sourceCode" id="cb63"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="va">$newDate</span> <span class="op">=</span> <span class="fu">date_create_from_format</span>(<span class="st">&#39;d-M-Y&#39;</span><span class="ot">,</span> <span class="st">&#39;12-Sep-2024&#39;</span>)<span class="ot">;</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">date_format</span>(<span class="va">$newDate</span><span class="ot">,</span> <span class="st">&#39;l, d-m-Y&#39;</span>)<span class="ot">;</span> <span class="co">// Thursday, 12-09-2024</span></span></code></pre></div>
+            <p>We can create a DateTime object using a timestamp. A
+            timestamp is a sequence of characters or encoded information
+            identifying when a certain event occurred, usually giving
+            date and time of day, sometimes accurate to a small fraction
+            of a second.</p>
+            <div class="sourceCode" id="cb64"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="va">$timestamp</span> <span class="op">=</span> <span class="dv">1631520000</span><span class="ot">;</span> <span class="co">// 13-09-2021 00:00:00</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="va">$date</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>()<span class="ot">;</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="va">$date</span>-&gt;setTimestamp(<span class="va">$timestamp</span>)<span class="ot">;</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$date</span>-&gt;format(<span class="st">&#39;l, d-m-Y H:i:s&#39;</span>)<span class="ot">;</span> <span class="co">// Monday, 13-09-2021 00:00:00</span></span></code></pre></div>
+            <p>We can also use the
+            <strong><code>mktime()</code></strong> function to create a
+            date. It creates a <strong>timestamp</strong>.</p>
+            <div class="sourceCode" id="cb65"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Returns the Unix timestamp (long integer) corresponding to the arguments given.</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mktime</span>(</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> <span class="va">$hour</span><span class="ot">,</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">?</span><span class="dt">int</span> <span class="va">$minute</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">,</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>    <span class="ot">?</span><span class="dt">int</span> <span class="va">$second</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">,</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>    <span class="ot">?</span><span class="dt">int</span> <span class="va">$month</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">,</span></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>    <span class="ot">?</span><span class="dt">int</span> <span class="va">$day</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">,</span></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">?</span><span class="dt">int</span> <span class="va">$year</span> <span class="op">=</span> <span class="kw">null</span></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>)<span class="ot">:</span> <span class="dt">int</span></span></code></pre></div>
+            <p>Example:</p>
+            <div class="sourceCode" id="cb66"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="va">$date</span><span class="op">=</span><span class="fu">mktime</span>(<span class="dv">0</span><span class="ot">,</span><span class="dv">0</span><span class="ot">,</span><span class="dv">0</span><span class="ot">,</span><span class="dv">0</span><span class="er">9</span><span class="ot">,</span><span class="dv">10</span><span class="ot">,</span><span class="dv">2024</span>)<span class="ot">;</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co">// hours, minutes, seconds, month, day, year</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">date</span>(<span class="st">&quot;l, d-m-Y H:i:s&quot;</span><span class="ot">,</span><span class="va">$date</span>)<span class="ot">;</span> <span class="co">// Tuesday, 10-09-2024 00:00:00</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="va">$day04</span><span class="op">=</span><span class="kw">new</span> <span class="bu">DateTime</span>()<span class="ot">;</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="va">$day04</span>-&gt;setTimestamp(<span class="fu">mktime</span>(<span class="dv">0</span><span class="ot">,</span><span class="dv">0</span><span class="ot">,</span><span class="dv">0</span><span class="ot">,</span><span class="dv">9</span><span class="ot">,</span><span class="dv">10</span><span class="ot">,</span><span class="dv">2024</span>))<span class="ot">;</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$day04</span>-&gt;format(<span class="st">&#39;l, d-m-Y H:i:s&#39;</span>)<span class="ot">;</span> <span class="co">// Tuesday, 10-09-2024 00:00:00</span></span></code></pre></div>
+            <p>Once the date is created with <strong>mktime()</strong>,
+            the function <strong>getdate()</strong> can be used to
+            extract some information. This function returns an
+            <strong>associative array</strong> with these indexes:
+            <strong><em>seconds</em></strong>,
+            <strong><em>minutes</em></strong>,
+            <strong><em>hours</em></strong>,
+            <strong><em>mday</em></strong> (day of month),
+            <strong><em>wday</em></strong> (day of week in number),
+            <strong><em>mon</em></strong> (month in number),
+            <strong><em>year</em></strong>,
+            <strong><em>weekday</em></strong> (day of week in letters)
+            and <strong><em>month</em></strong> (month in letters).</p>
+            <div class="sourceCode" id="cb67"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Returns an associative array containing the date information of the timestamp, or the current local time if timestamp is omitted or null. </span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getdate</span>(<span class="ot">?</span><span class="dt">int</span> <span class="va">$timestamp</span> <span class="op">=</span> <span class="kw">null</span>)<span class="ot">:</span> <span class="dt">array</span></span></code></pre></div>
+            <p>Example:</p>
+            <div class="sourceCode" id="cb68"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="va">$date</span><span class="op">=</span><span class="fu">mktime</span>(<span class="dv">21</span><span class="ot">,</span><span class="dv">58</span><span class="ot">,</span><span class="dv">40</span><span class="ot">,</span><span class="dv">8</span><span class="ot">,</span><span class="dv">31</span><span class="ot">,</span><span class="dv">2022</span>)<span class="ot">;</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="va">$info</span><span class="op">=</span><span class="fu">getdate</span>(<span class="va">$date</span>)<span class="ot">;</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$info</span>[<span class="st">&quot;year&quot;</span>]<span class="ot">;</span> <span class="co">// Output: 2022</span></span></code></pre></div>
+            <p>Some methods we can use with <strong>DateTime
+            objects</strong> are:</p>
+            <ul>
+            <li><strong><code>add()</code></strong>: Adds an amount of
+            days, months, years, hours, minutes and seconds to a
+            DateTime object.</li>
+            <li><strong><code>sub()</code></strong>: Subtracts an amount
+            of days, months, years, hours, minutes and seconds from a
+            DateTime object.</li>
+            <li><strong><code>diff()</code></strong>: Returns the
+            difference between two DateTime objects.</li>
+            <li><strong><code>format()</code></strong>: Returns date
+            formatted according to given format.</li>
+            <li><strong><code>modify()</code></strong>: Alters the
+            timestamp of a DateTime object.</li>
+            <li><strong><code>setDate()</code></strong>: Sets the
+            date.</li>
+            <li><strong><code>setTime()</code></strong>: Sets the
+            time.</li>
+            <li><strong><code>setTimestamp()</code></strong>: Sets the
+            date and time based on a Unix timestamp.</li>
+            <li><strong><code>getTimestamp()</code></strong>: Gets the
+            Unix timestamp.</li>
+            </ul>
+            <p>Example:</p>
+            <div class="sourceCode" id="cb69"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="va">$today</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>()<span class="ot">;</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="va">$today</span>-&gt;add(<span class="kw">new</span> <span class="bu">DateInterval</span>(<span class="st">&#39;P10D&#39;</span>))<span class="ot">;</span> <span class="co">// adds 10 days</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$today</span>-&gt;format(<span class="st">&#39;l, d-m-Y H:i:s&#39;</span>)<span class="ot">;</span> <span class="co">// Monday, 23-09-2024 16:19:33</span></span></code></pre></div>
+            <blockquote>
+            <p>PHP also has the
+            <strong><code>DateTimeImmutable</code></strong> class, that
+            behaves the same as DateTime except new objects are returned
+            when modification methods such as
+            <code>DateTime::modify()</code> are called. Both classes
+            inherited from
+            <strong><code>DateTimeInterface</code></strong>
+            interface.</p>
+            </blockquote>
+            <p>To extract a single information of a DateTime object, we
+            can use the <strong><code>format()</code></strong>
+            method.</p>
+            <div class="sourceCode" id="cb70"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="va">$today</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>()<span class="ot">;</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="va">$dayOfTheWeek</span> <span class="op">=</span> <span class="va">$today</span>-&gt;format(<span class="st">&#39;l&#39;</span>)<span class="ot">;</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Today is &quot;</span><span class="op">.</span><span class="va">$dayOfTheWeek</span><span class="ot">;</span>  <span class="co">// Today is Friday</span></span></code></pre></div>
+            <p>In order to calculate differences between dates, we can
+            use the <strong><code>date_diff()</code></strong> function.
+            This function returns a <strong>DateInterval
+            object</strong>.</p>
+            <p>An example:</p>
+            <div class="sourceCode" id="cb71"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="va">$todayDate</span><span class="op">=</span><span class="kw">new</span> <span class="bu">DateTime</span>()<span class="ot">;</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="va">$inTenDays</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>(<span class="st">&#39;+10 days&#39;</span>)<span class="ot">;</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="va">$difference</span><span class="op">=</span><span class="fu">date_diff</span>(<span class="va">$todayDate</span><span class="ot">,</span><span class="va">$inTenDays</span>)<span class="ot">;</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="co">// or $difference = $todayDate-&gt;diff($inTenDays);</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="va">$differenceInDays</span><span class="op">=</span><span class="va">$difference</span>-&gt;format(<span class="st">&quot;%a&quot;</span>)<span class="ot">;</span></span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h3&gt;</span><span class="va">$differenceInDays</span><span class="st"> days left to &quot;</span><span class="op">.</span><span class="va">$inTenDays</span>-&gt;format(<span class="st">&quot;d/m/Y&quot;</span>)<span class="op">.</span><span class="st">&quot;&lt;/h3&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="co">// 10 days left to 23/09/2024</span></span></code></pre></div>
+            <p>We can also work with differences between dates with the
+            <strong><code>diff()</code></strong> method:</p>
+            <div class="sourceCode" id="cb72"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="va">$mary</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>(<span class="st">&#39;May 20th, 1980&#39;</span>)<span class="ot">;</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="va">$john</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateTime</span>(<span class="st">&#39;March 11th, 1962&#39;</span>)<span class="ot">;</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="va">$diff</span> <span class="op">=</span> mary-&gt;diff(john)<span class="ot">;</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="fu">var_dump</span>(<span class="va">$diff</span>)<span class="ot">;</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="co">//Outputs: DateInterval Object ( [y] =&gt; 18 [m] =&gt; 2 [d] =&gt; 9 [h] =&gt; 0 [i] =&gt; 0 [s] =&gt; 0 [f] =&gt; 0 [invert] =&gt; 1 [days] =&gt; 6645 [from_string] =&gt; ) </span></span></code></pre></div>
+            <p>The <code>diff</code> method returns a
+            <strong>DateInterval</strong> object. You can generate a
+            friendly output from a DateInterval object:</p>
+            <div class="sourceCode" id="cb73"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="va">$diff</span> <span class="op">=</span> <span class="va">$mary</span>-&gt;diff(<span class="va">$john</span>)<span class="ot">;</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$diff</span>-&gt;format(<span class="st">&#39;John is older by %Y years and %m months&#39;</span>)<span class="ot">;</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="co">//Outputs: John is older by 18 years and 2 months</span></span></code></pre></div>
+            <p>A very interesting thing is that you can apply a interval
+            to another DateTime object:</p>
+            <div class="sourceCode" id="cb74"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="va">$john</span>-&gt;sub(<span class="va">$diff</span>)<span class="ot">;</span> <span class="co">//John&#39;s birthday changed to Mary&#39;s</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$john</span>-&gt;format(<span class="st">&#39;d-m-Y&#39;</span>)<span class="ot">;</span> <span class="co">//20-05-1980</span></span></code></pre></div>
+            <p>And you can create a new DateInterval form the
+            constructor (see the <a
+            href="https://www.php.net/manual/en/dateinterval.construct.php">constructor’s
+            documentation</a>):</p>
+            <div class="sourceCode" id="cb75"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="va">$new_diff</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">DateInterval</span>(<span class="st">&#39;P2Y&#39;</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>More about date and time features and functions in this
+            <a
+            href="https://www.php.net/manual/en/ref.datetime.php">link</a>.</p>
+            <p>More about the <a
+            href="https://www.php.net/manual/es/class.datetime.php">DateTime
+            class</a>.</p>
+            <h1 data-number="11" id="arrays"><span
+            class="header-section-number">11</span> Arrays</h1>
+            <p>An <strong>array</strong> is a collection of values
+            stored in a single variable. Arrays in PHP consist of
+            key-value pairs. The <strong>key</strong> (or
+            <strong>index</strong>) can either be an integer
+            (<strong><em>numeric array</em></strong>), a string
+            (<strong><em>associative array</em></strong>), or a
+            combination of both (<strong>mixed array</strong>). The
+            value can be of any data type.</p>
+            <p>In the PHP language, arrays are <strong>dynamic</strong>
+            because their size can change during the execution of the
+            script. In addition, an array in PHP can contain different
+            data types.</p>
+            <h2 data-number="11.1" id="numeric-arrays"><span
+            class="header-section-number">11.1</span> Numeric
+            arrays</h2>
+            <p>Arrays with numeric index or <strong>Numeric
+            arrays</strong> store each element in the array with a
+            numeric index. An array is created using the array
+            constructor. This constructor takes a list of values, which
+            are assigned to elements of the array.</p>
+            <div class="sourceCode" id="cb76"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayOne</span> <span class="op">=</span> <span class="dt">array</span>(<span class="dv">1</span><span class="ot">,</span><span class="dv">2</span><span class="ot">,</span><span class="dv">3</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>In this filled numeric arrays, <strong>the first position
+            of the array is 0</strong>. Thus, in this case the element 1
+            is stored in the position 0, the element 2 is stored in the
+            position 1, and the element 3 is stored in the position
+            2.</p>
+            <p>As of PHP 5.4, a shorter syntax is available, where the
+            array constructor is replaced with square brackets.</p>
+            <div class="sourceCode" id="cb77"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayTwo</span> <span class="op">=</span> [<span class="dv">1</span><span class="ot">,</span><span class="dv">2</span><span class="ot">,</span><span class="dv">3</span>]<span class="ot">;</span></span></code></pre></div>
+            <p>We can declare an array without a predefined content and
+            fill it later. If we don’t indicate a position, the new item
+            will be added at the end of the array.</p>
+            <div class="sourceCode" id="cb78"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span> <span class="op">=</span> <span class="dt">array</span>()<span class="ot">;</span> <span class="co">// creates an empty array</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span>[] <span class="op">=</span> <span class="dv">1</span><span class="ot">;</span> <span class="co">// as the array is empty, this value will be stored in position 0</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span>[] <span class="op">=</span> <span class="dv">2</span><span class="ot">;</span> <span class="co">// stored in position 1</span></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span>[] <span class="op">=</span> <span class="dv">3</span><span class="ot">;</span> <span class="co">// stored in position 2</span></span></code></pre></div>
+            <p>Once the array is created, its elements can be referenced
+            by placing the index of the desired element in square
+            brackets. Remember that the index begins with zero.</p>
+            <div class="sourceCode" id="cb79"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$arrayThree</span>[<span class="dv">1</span>]<span class="ot">;</span> <span class="co">// shows a 2</span></span></code></pre></div>
+            <p>Positions and values can be added at any time.</p>
+            <div class="sourceCode" id="cb80"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span>[<span class="dv">5</span>] <span class="op">=</span> <span class="dv">4</span><span class="ot">;</span> <span class="co">// stored in position 5 even if the last position is currently 2</span></span></code></pre></div>
+            <p>The function <strong><code>count()</code></strong> can be
+            used to find out the number of elements of a given array. It
+            works in numeric and no numeric arrays.</p>
+            <div class="sourceCode" id="cb81"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">count</span>(<span class="va">$arrayThree</span>)<span class="ot">;</span> <span class="co">// shows a 4 (positions 0, 1, 2 and 5)</span></span></code></pre></div>
+            <p>The functions <strong><code>print_r()</code></strong> and
+            <strong><code>var_dump()</code></strong> show the content of
+            the array.</p>
+            <div class="sourceCode" id="cb82"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span> <span class="op">=</span> <span class="dt">array</span>()<span class="ot">;</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span>[] <span class="op">=</span> <span class="dv">1</span><span class="ot">;</span> <span class="co">// as the array is empty, this value will be stored in position 0</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span>[] <span class="op">=</span> <span class="dv">2</span><span class="ot">;</span> <span class="co">// stored in position 1</span></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span>[] <span class="op">=</span> <span class="dv">3</span><span class="ot">;</span> <span class="co">// stored in position 2</span></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayThree</span>[<span class="dv">5</span>] <span class="op">=</span> <span class="dv">4</span><span class="ot">;</span> <span class="co">// stored in position 5</span></span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;With print_r()&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print_r</span>(<span class="va">$arrayThree</span>)<span class="ot">;</span></span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;With var_dump()&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a><span class="fu">var_dump</span>(<span class="va">$arrayThree</span>)<span class="ot">;</span></span></code></pre></div>
+            <figure>
+            <img src="images/u02-09.jpg"
+            alt="An array as shows with print_r and var_dump" />
+            <figcaption aria-hidden="true">An array as shows with
+            print_r and var_dump</figcaption>
+            </figure>
+            <h2 data-number="11.2" id="associative-arrays"><span
+            class="header-section-number">11.2</span> Associative
+            arrays</h2>
+            <p>In associative arrays, <strong>the key can be an integer
+            or a string</strong>. When creating the array the
+            <strong>double arrow operator ( <code>=&gt;</code>
+            )</strong> is used to tell which key refers to what value.
+            Elements in associative arrays are referenced using the
+            element keys as in numeric arrays.</p>
+            <div class="sourceCode" id="cb83"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Associative array with strings as keys</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="va">$phones</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&quot;John&quot;</span>=&gt;<span class="st">&quot;911111111&quot;</span><span class="ot">,</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;Carl&quot;</span>=&gt;<span class="st">&quot;912222222&quot;</span>)<span class="ot">;</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$phones</span>[<span class="st">&quot;John&quot;</span>]<span class="ot">;</span> <span class="co">// 911111111</span></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$phones</span>[<span class="st">&quot;Carl&quot;</span>]<span class="ot">;</span> <span class="co">// 912222222</span></span></code></pre></div>
+            <div class="sourceCode" id="cb84"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Associative array with ints as keys</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="va">$squares</span> <span class="op">=</span> [<span class="dv">3</span> =&gt; <span class="dv">9</span><span class="ot">,</span> <span class="dv">5</span> =&gt; <span class="dv">25</span><span class="ot">,</span> <span class="dv">10</span> =&gt; <span class="dv">100</span>]<span class="ot">;</span></span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="kw">print</span> <span class="st">&quot;&lt;p&gt;The square of 3 is </span><span class="va">$squares</span>[<span class="dv">3</span>]<span class="st">&lt;/p&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span> <span class="co">//The square fo 3 is 9</span></span></code></pre></div>
+            <p>When we add an element to an associative array without a
+            specified position, the new item will be added at the end of
+            the array. The key will follow the order of the positions
+            defined as numeric, beginning with 0 if no numeric position
+            has been previously defined.</p>
+            <div class="sourceCode" id="cb85"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="va">$phones</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&quot;John&quot;</span>=&gt;<span class="st">&quot;911111111&quot;</span><span class="ot">,</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;Carl&quot;</span>=&gt;<span class="st">&quot;912222222&quot;</span>)<span class="ot">;</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="va">$phones</span>[]<span class="op">=</span><span class="st">&quot;913333333&quot;</span><span class="ot">;</span> <span class="co">// position 0</span></span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$phones</span>[<span class="st">&quot;John&quot;</span>]<span class="ot">;</span>  <span class="co">// 911111111</span></span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$phones</span>[<span class="st">&quot;Carl&quot;</span>]<span class="ot">;</span>  <span class="co">// 912222222</span></span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$phones</span>[<span class="dv">0</span>]<span class="ot">;</span>       <span class="co">// 913333333</span></span></code></pre></div>
+            <h2 data-number="11.3" id="arrays-operations"><span
+            class="header-section-number">11.3</span> Arrays
+            operations</h2>
+            <p>The operators <strong><code>+</code></strong> and
+            <strong><code>+=</code></strong> can be used to join two
+            arrays. The union of two arrays contains all the items of
+            the first array and the items of the second array whose
+            index is not in the first array:</p>
+            <div class="sourceCode" id="cb86"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;red&quot;</span><span class="ot">,</span> <span class="st">&quot;green&quot;</span>)<span class="ot">;</span>  </span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="va">$y</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;brown&quot;</span><span class="ot">,</span> <span class="st">&quot;blue&quot;</span><span class="ot">,</span> <span class="st">&quot;yellow&quot;</span>)<span class="ot">;</span>  </span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print_r</span>(<span class="va">$x</span> <span class="op">+</span> <span class="va">$y</span>)<span class="ot">;</span> <span class="co">// Array ( [0] =&gt; red [1] =&gt; green [2] =&gt; yellow ) </span></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb87"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;a&quot;</span> =&gt; <span class="st">&quot;red&quot;</span><span class="ot">,</span> <span class="st">&quot;b&quot;</span> =&gt; <span class="st">&quot;green&quot;</span>)<span class="ot">;</span>  </span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="va">$y</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;b&quot;</span> =&gt; <span class="st">&quot;brown&quot;</span><span class="ot">,</span> <span class="st">&quot;c&quot;</span> =&gt;<span class="st">&quot;blue&quot;</span><span class="ot">,</span> <span class="st">&quot;d&quot;</span> =&gt; <span class="st">&quot;yellow&quot;</span>)<span class="ot">;</span>  </span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print_r</span>(<span class="va">$x</span> <span class="op">+</span> <span class="va">$y</span>)<span class="ot">;</span> <span class="co">// Array ( [a] =&gt; red [b] =&gt; green [c] =&gt; blue [d] =&gt; yellow ) </span></span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span> </span></code></pre></div>
+            <p>We can copy the content of one array into a new variable
+            using the <strong><code>=</code></strong> operator. The two
+            arrays are independent.</p>
+            <div class="sourceCode" id="cb88"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;red&quot;</span><span class="ot">,</span> <span class="st">&quot;green&quot;</span>)<span class="ot">;</span></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="va">$y</span> <span class="op">=</span> <span class="va">$x</span><span class="ot">;</span></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print_r</span>(<span class="va">$y</span>)<span class="ot">;</span> <span class="co">// Array ( [0] =&gt; red [1] =&gt; green )</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span> </span></code></pre></div>
+            <p>We can use the <strong>comparison operators</strong> with
+            arrays:</p>
+            <table>
+            <colgroup>
+            <col style="width: 19%" />
+            <col style="width: 23%" />
+            <col style="width: 23%" />
+            <col style="width: 33%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th style="text-align: center;">Operator</th>
+            <th style="text-align: center;">Name</th>
+            <th style="text-align: center;">Example</th>
+            <th style="text-align: left;">Result</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td style="text-align: center;"><strong>==</strong></td>
+            <td style="text-align: center;">Equality</td>
+            <td style="text-align: center;"><code>$x==$y</code></td>
+            <td style="text-align: left;">Returns <code>true</code> if
+            <code>$x</code> and <code>$y</code> have the same key/value
+            pairs</td>
+            </tr>
+            <tr class="even">
+            <td style="text-align: center;"><strong>===</strong></td>
+            <td style="text-align: center;">Identity</td>
+            <td style="text-align: center;"><code>$x===$y</code></td>
+            <td style="text-align: left;">Returns <code>true</code> if
+            <code>$x</code> and <code>$y</code> have the same key/value
+            pairs in the same order and of the same types</td>
+            </tr>
+            <tr class="odd">
+            <td style="text-align: center;"><strong>!=</strong></td>
+            <td style="text-align: center;">Inequality</td>
+            <td style="text-align: center;"><code>$x!=$y</code></td>
+            <td style="text-align: left;">Returns <code>true</code> if
+            <code>$x</code> is not equal to <code>$y</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: center;"><strong>&lt;&gt;</strong></td>
+            <td style="text-align: center;">Inequality</td>
+            <td
+            style="text-align: center;"><code>$x&lt;&gt;$y</code></td>
+            <td style="text-align: left;">Returns <code>true</code> if
+            <code>$x</code> is not equal to <code>$y</code></td>
+            </tr>
+            <tr class="odd">
+            <td style="text-align: center;"><strong>!==</strong></td>
+            <td style="text-align: center;">Non-identity</td>
+            <td style="text-align: center;"><code>$x!==$y</code></td>
+            <td style="text-align: left;">Returns <code>true</code> if
+            <code>$x</code> is not identical to <code>$y</code></td>
+            </tr>
+            </tbody>
+            </table>
+            <h2 data-number="11.4"
+            id="some-other-functions-on-arrays"><span
+            class="header-section-number">11.4</span> Some other
+            functions on arrays</h2>
+            <table>
+            <colgroup>
+            <col style="width: 21%" />
+            <col style="width: 35%" />
+            <col style="width: 42%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th style="text-align: left;">Function</th>
+            <th style="text-align: left;">Utility</th>
+            <th style="text-align: left;">Example</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td style="text-align: left;"><strong>unset()</strong></td>
+            <td style="text-align: left;">Deletes an element of the
+            array or even the whole array</td>
+            <td
+            style="text-align: left;"><code>unset($array[$position]) unset($array)</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong>array_values()</strong></td>
+            <td style="text-align: left;">Returns a numeric array with
+            the values of other array</td>
+            <td
+            style="text-align: left;"><code>$newArray=array_values($oldArray)</code></td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong>array_diff()</strong></td>
+            <td style="text-align: left;">Returns and array with the
+            differences between two arrays</td>
+            <td
+            style="text-align: left;"><code>$diffArray=array_diff($array1,$array2)</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong>array_fill()</strong></td>
+            <td style="text-align: left;">Fills a whole array with a
+            single value</td>
+            <td
+            style="text-align: left;"><code>$array=array_fill($init,$positions,$value)</code></td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong>array_search()</strong></td>
+            <td style="text-align: left;">Checks if a value exists in
+            the array</td>
+            <td
+            style="text-align: left;"><code>$key=array_search($value,$array)</code></td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong>array_key_exists()</strong></td>
+            <td style="text-align: left;">Checks if a key exists in the
+            array</td>
+            <td
+            style="text-align: left;"><code>if (array_key_exists($key,$array))</code></td>
+            </tr>
+            <tr class="odd">
+            <td style="text-align: left;"><strong>sort()</strong></td>
+            <td style="text-align: left;">Sorts an indexed (numeric)
+            array using the values in ascending order without keeping
+            the association key-&gt;value</td>
+            <td style="text-align: left;"><code>sort($array)</code></td>
+            </tr>
+            <tr class="even">
+            <td style="text-align: left;"><strong>rsort()</strong></td>
+            <td style="text-align: left;">Sorts an indexed (numeric)
+            array using the values in descending order without keeping
+            the association key-&gt;value</td>
+            <td
+            style="text-align: left;"><code>rsort($array)</code></td>
+            </tr>
+            <tr class="odd">
+            <td style="text-align: left;"><strong>asort()</strong></td>
+            <td style="text-align: left;">Sorts an associative array
+            using the values in ascending order and keeping the
+            association key-&gt;value</td>
+            <td
+            style="text-align: left;"><code>asort($array)</code></td>
+            </tr>
+            <tr class="even">
+            <td style="text-align: left;"><strong>arsort()</strong></td>
+            <td style="text-align: left;">Sorts an associative array
+            using the values in descending order and keeping the
+            association key-&gt;value</td>
+            <td
+            style="text-align: left;"><code>arsort($array)</code></td>
+            </tr>
+            <tr class="odd">
+            <td style="text-align: left;"><strong>ksort()</strong></td>
+            <td style="text-align: left;">Sorts an array using the keys
+            in ascending order</td>
+            <td
+            style="text-align: left;"><code>ksort($array)</code></td>
+            </tr>
+            <tr class="even">
+            <td style="text-align: left;"><strong>krsort()</strong></td>
+            <td style="text-align: left;">Sorts an array using the keys
+            in descending order</td>
+            <td
+            style="text-align: left;"><code>krsort($array)</code></td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong>array_slice()</strong></td>
+            <td style="text-align: left;">Returns a section from another
+            array</td>
+            <td
+            style="text-align: left;"><code>$newArray=array_slice($array,$init,$positions)</code></td>
+            </tr>
+            </tbody>
+            </table>
+            <h2 data-number="11.5" id="implode-and-explode"><span
+            class="header-section-number">11.5</span> Implode and
+            explode</h2>
+            <p>The <strong>implode()</strong> function returns a string
+            with the elements of a given array and the given string as a
+            separator.</p>
+            <div class="sourceCode" id="cb89"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="va">$string</span><span class="op">=</span><span class="fu">implode</span>(<span class="va">$separator</span><span class="ot">,</span> <span class="va">$array</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>The <strong>explode()</strong> function slices a string
+            using the given separator string and puts the resulting
+            elements into an array.</p>
+            <div class="sourceCode" id="cb90"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="va">$array</span><span class="op">=</span><span class="fu">explode</span>(<span class="va">$separator</span><span class="ot">,</span> <span class="va">$string</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb91"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co">// replacing a separator character in a string with blanks</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="va">$string</span><span class="op">=</span><span class="st">&quot;A:string:with:a:separator:character&quot;</span><span class="ot">;</span></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;strong&gt;The original string:&lt;/strong&gt; </span><span class="va">$string</span><span class="st"> &lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="va">$array</span><span class="op">=</span><span class="fu">explode</span>(<span class="st">&quot;:&quot;</span><span class="ot">,</span><span class="va">$string</span>)<span class="ot">;</span></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;strong&gt;The array:&lt;/strong&gt; &quot;</span><span class="ot">;</span></span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print_r</span>(<span class="va">$array</span>)<span class="ot">;</span></span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="va">$newString</span><span class="op">=</span><span class="fu">implode</span>(<span class="st">&quot; &quot;</span><span class="ot">,</span><span class="va">$array</span>)<span class="ot">;</span></span>
+<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;strong&gt;The new string:&lt;/strong&gt; </span><span class="va">$newString</span><span class="st">&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <figure>
+            <img src="images/u02-10.jpg" alt="Implode and explode" />
+            <figcaption aria-hidden="true">Implode and
+            explode</figcaption>
+            </figure>
+            <h2 data-number="11.6" id="multidimensional-arrays"><span
+            class="header-section-number">11.6</span> Multidimensional
+            arrays</h2>
+            <p>A multidimensional array is an array which elements can
+            contain another array. A typical example is a matrix.</p>
+            <figure>
+            <img src="images/u02-11.jpg"
+            alt="A matrix (Two-dimensional array)" />
+            <figcaption aria-hidden="true">A matrix (Two-dimensional
+            array)</figcaption>
+            </figure>
+            <p>To create the two-dimensional array of the figure, we
+            will create an array of 3 positions where each position
+            contains an array with 3 elements.</p>
+            <div class="sourceCode" id="cb92"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="va">$matrix</span><span class="op">=</span><span class="dt">array</span>(<span class="dt">array</span>(<span class="dv">1</span><span class="ot">,</span><span class="dv">2</span><span class="ot">,</span><span class="dv">3</span>)<span class="ot">,</span></span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>              <span class="dt">array</span>(<span class="dv">4</span><span class="ot">,</span><span class="dv">5</span><span class="ot">,</span><span class="dv">6</span>)<span class="ot">,</span></span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>              <span class="dt">array</span>(<span class="dv">7</span><span class="ot">,</span><span class="dv">8</span><span class="ot">,</span><span class="dv">9</span>))<span class="ot">;</span></span></code></pre></div>
+            <p>The same technique works for associative arrays with
+            multiple dimensions:</p>
+            <div class="sourceCode" id="cb93"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="va">$friends</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&quot;John&quot;</span>=&gt;<span class="dt">array</span>(<span class="st">&quot;phone&quot;</span>=&gt;<span class="st">&quot;91111111&quot;</span><span class="ot">,</span><span class="st">&quot;email&quot;</span>=&gt;<span class="st">&quot;john@gmail.com&quot;</span>)<span class="ot">,</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Mary&quot;</span>=&gt;<span class="dt">array</span>(<span class="st">&quot;phone&quot;</span>=&gt;<span class="st">&quot;92222222&quot;</span><span class="ot">,</span><span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;mary@gmail.com&quot;</span>)<span class="ot">,</span></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;David&quot;</span>=&gt;<span class="dt">array</span>(<span class="st">&quot;phone&quot;</span>=&gt;<span class="st">&quot;93333333&quot;</span><span class="ot">,</span><span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;david@hotmail.com&quot;</span>))<span class="ot">;</span></span></code></pre></div>
+            <p>In the next unit we will learn how to work with arrays
+            using loops.</p>
+            <h2 data-number="11.7" id="arrays-in-strings"><span
+            class="header-section-number">11.7</span> Arrays in
+            strings</h2>
+            <p>Indexed arrays can be inserted directly on strings:</p>
+            <div class="sourceCode" id="cb94"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="va">$cars</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;Volvo&quot;</span><span class="ot">,</span> <span class="st">&quot;BMW&quot;</span><span class="ot">,</span> <span class="st">&quot;Toyota&quot;</span>)<span class="ot">;</span></span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;I like </span><span class="va">$cars</span>[<span class="dv">0</span>]<span class="st">, </span><span class="va">$cars</span>[<span class="dv">1</span>]<span class="st"> and </span><span class="va">$cars</span>[<span class="dv">2</span>]<span class="st">.&quot;</span><span class="ot">;</span></span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>In the case of multidimensional arrays, we need to wrap
+            the array with curly brackets:</p>
+            <div class="sourceCode" id="cb95"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="st">&quot;Jon Doe&quot;</span><span class="ot">;</span></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="va">$greetings</span> <span class="op">=</span> [[<span class="st">&quot;Hello&quot;</span><span class="ot">,</span> <span class="st">&quot;Hola&quot;</span>]<span class="ot">,</span> [<span class="st">&quot;Goodbye&quot;</span><span class="ot">,</span> <span class="st">&quot;Adios&quot;</span>]]<span class="ot">;</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="kw">print</span> <span class="st">&quot;&lt;p&gt; </span>{<span class="va">$greetings</span>[<span class="dv">0</span>][<span class="dv">0</span>]}<span class="st">, </span><span class="va">$name</span><span class="st">! How are you?&lt;/p&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>And the same with associative arrays, using single quotes
+            for the key’s name if the string is inside double
+            quotes:</p>
+            <div class="sourceCode" id="cb96"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="va">$age</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;Peter&quot;</span>=&gt;<span class="st">&quot;35&quot;</span><span class="ot">,</span> <span class="st">&quot;Ben&quot;</span>=&gt;<span class="st">&quot;37&quot;</span><span class="ot">,</span> <span class="st">&quot;Joe&quot;</span>=&gt;<span class="st">&quot;43&quot;</span>)<span class="ot">;</span></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Peter is </span>{<span class="va">$age</span>[<span class="st">&#39;Peter&#39;</span>]}<span class="st">  years old.&quot;</span><span class="ot">;</span></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>Remember that we can always use the concatenation
+            operator.</p>
+            <div class="sourceCode" id="cb97"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="va">$age</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;Peter&quot;</span>=&gt;<span class="st">&quot;35&quot;</span><span class="ot">,</span> <span class="st">&quot;Ben&quot;</span>=&gt;<span class="st">&quot;37&quot;</span><span class="ot">,</span> <span class="st">&quot;Joe&quot;</span>=&gt;<span class="st">&quot;43&quot;</span>)<span class="ot">;</span></span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Peter is &quot;</span> <span class="op">.</span> <span class="va">$age</span>[<span class="st">&#39;Peter&#39;</span>] <span class="op">.</span> <span class="st">&quot; years old.&quot;</span><span class="ot">;</span></span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <h1 data-number="12" id="references"><span
+            class="header-section-number">12</span> References</h1>
+            <ul>
+            <li><a href="https://www.php.net/manual/en/index.php">PHP
+            Manual</a></li>
+            <li><a
+            href="https://www.w3schools.com/php/default.asp">W3Schools</a></li>
+            <li><a href="https://books.goalkicker.com/PHPBook/">PHP
+            notes for professionals (book)</a></li>
+            </ul>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
