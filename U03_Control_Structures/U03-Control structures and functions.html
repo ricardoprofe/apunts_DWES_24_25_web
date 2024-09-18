@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 03. Control structures. Functions.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 03. Control structures.
+Functions.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#control-structures" id="toc-control-structures"><span
+class="toc-section-number">1</span> Control structures</a>
+<ul>
+<li><a href="#conditional-structures."
+id="toc-conditional-structures."><span
+class="toc-section-number">1.1</span> Conditional structures.</a>
+<ul>
+<li><a href="#if" id="toc-if"><span
+class="toc-section-number">1.1.1</span> If</a></li>
+<li><a href="#the-null-coalescing-operator"
+id="toc-the-null-coalescing-operator"><span
+class="toc-section-number">1.1.2</span> The null coalescing
+operator</a></li>
+<li><a href="#switch" id="toc-switch"><span
+class="toc-section-number">1.1.3</span> Switch</a></li>
+</ul></li>
+<li><a href="#looping-structures" id="toc-looping-structures"><span
+class="toc-section-number">1.2</span> Looping structures</a>
+<ul>
+<li><a href="#while" id="toc-while"><span
+class="toc-section-number">1.2.1</span> While</a></li>
+<li><a href="#dowhile" id="toc-dowhile"><span
+class="toc-section-number">1.2.2</span> Do…while</a></li>
+<li><a href="#for" id="toc-for"><span
+class="toc-section-number">1.2.3</span> For</a></li>
+<li><a href="#foreach" id="toc-foreach"><span
+class="toc-section-number">1.2.4</span> Foreach</a></li>
+<li><a href="#break-continue" id="toc-break-continue"><span
+class="toc-section-number">1.2.5</span> Break, continue</a></li>
+</ul></li>
+<li><a href="#control-structures-shorthands"
+id="toc-control-structures-shorthands"><span
+class="toc-section-number">1.3</span> Control structures shorthands</a>
+<ul>
+<li><a href="#if-else-shorthand" id="toc-if-else-shorthand"><span
+class="toc-section-number">1.3.1</span> if-else shorthand</a></li>
+<li><a href="#loop-shorthands" id="toc-loop-shorthands"><span
+class="toc-section-number">1.3.2</span> Loop shorthands</a></li>
+</ul></li>
+<li><a href="#exit-die-and-return-statements"
+id="toc-exit-die-and-return-statements"><span
+class="toc-section-number">1.4</span> Exit, die and return
+statements</a></li>
+</ul></li>
+<li><a href="#functions-in-php" id="toc-functions-in-php"><span
+class="toc-section-number">2</span> Functions in PHP</a>
+<ul>
+<li><a href="#creating-a-function" id="toc-creating-a-function"><span
+class="toc-section-number">2.1</span> Creating a function</a></li>
+<li><a href="#parameters" id="toc-parameters"><span
+class="toc-section-number">2.2</span> Parameters</a>
+<ul>
+<li><a href="#default-parameters" id="toc-default-parameters"><span
+class="toc-section-number">2.2.1</span> Default parameters</a></li>
+<li><a href="#variable-parameters-list"
+id="toc-variable-parameters-list"><span
+class="toc-section-number">2.2.2</span> Variable parameters
+list</a></li>
+<li><a href="#named-arguments" id="toc-named-arguments"><span
+class="toc-section-number">2.2.3</span> Named Arguments</a></li>
+<li><a href="#the-return-statement" id="toc-the-return-statement"><span
+class="toc-section-number">2.2.4</span> The return statement</a></li>
+<li><a href="#some-examples" id="toc-some-examples"><span
+class="toc-section-number">2.2.5</span> Some examples</a></li>
+</ul></li>
+<li><a href="#scope-and-life-of-variables"
+id="toc-scope-and-life-of-variables"><span
+class="toc-section-number">2.3</span> Scope and life of
+variables</a></li>
+<li><a href="#passing-parameters-by-value-or-by-reference"
+id="toc-passing-parameters-by-value-or-by-reference"><span
+class="toc-section-number">2.4</span> Passing parameters by value or by
+reference</a>
+<ul>
+<li><a href="#passing-parameters-by-value"
+id="toc-passing-parameters-by-value"><span
+class="toc-section-number">2.4.1</span> Passing parameters by
+value</a></li>
+<li><a href="#passing-parameters-by-reference"
+id="toc-passing-parameters-by-reference"><span
+class="toc-section-number">2.4.2</span> Passing parameters by
+reference</a></li>
+</ul></li>
+<li><a href="#type-in-functions" id="toc-type-in-functions"><span
+class="toc-section-number">2.5</span> Type in functions</a>
+<ul>
+<li><a href="#nullable-types" id="toc-nullable-types"><span
+class="toc-section-number">2.5.1</span> Nullable types</a></li>
+<li><a href="#union-types" id="toc-union-types"><span
+class="toc-section-number">2.5.2</span> Union types</a></li>
+</ul></li>
+<li><a href="#variable-functions" id="toc-variable-functions"><span
+class="toc-section-number">2.6</span> Variable functions</a></li>
+<li><a href="#recursive-functions" id="toc-recursive-functions"><span
+class="toc-section-number">2.7</span> Recursive functions</a></li>
+<li><a href="#anonymous-functions" id="toc-anonymous-functions"><span
+class="toc-section-number">2.8</span> Anonymous functions</a>
+<ul>
+<li><a href="#callbacks-with-anonymous-functions"
+id="toc-callbacks-with-anonymous-functions"><span
+class="toc-section-number">2.8.1</span> Callbacks with anonymous
+functions</a></li>
+<li><a href="#arrow-functions" id="toc-arrow-functions"><span
+class="toc-section-number">2.8.2</span> Arrow functions</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#include-and-require-statements"
+id="toc-include-and-require-statements"><span
+class="toc-section-number">3</span> Include and require statements</a>
+<ul>
+<li><a href="#include" id="toc-include"><span
+class="toc-section-number">3.1</span> Include</a></li>
+<li><a href="#require" id="toc-require"><span
+class="toc-section-number">3.2</span> Require</a></li>
+<li><a href="#include_once" id="toc-include_once"><span
+class="toc-section-number">3.3</span> Include_once</a></li>
+<li><a href="#require_once" id="toc-require_once"><span
+class="toc-section-number">3.4</span> Require_once</a></li>
+<li><a href="#include-or-require" id="toc-include-or-require"><span
+class="toc-section-number">3.5</span> Include or require?</a></li>
+<li><a href="#the-__dir__-magic-constant"
+id="toc-the-__dir__-magic-constant"><span
+class="toc-section-number">3.6</span> The <code>__DIR__</code> magic
+constant</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="control-structures"><span
+            class="header-section-number">1</span> Control
+            structures</h1>
+            <p>Like every programming language, PHP has its code control
+            structures. These code structures control the flow of the
+            application. As you know, there are two types of control
+            structures:</p>
+            <ul>
+            <li>Conditional structures</li>
+            <li>Looping structures</li>
+            </ul>
+            <h2 data-number="1.1" id="conditional-structures."><span
+            class="header-section-number">1.1</span> Conditional
+            structures.</h2>
+            <p>Conditional statements allow for conditional execution of
+            code sections depending on one or more conditions.</p>
+            <h3 data-number="1.1.1" id="if"><span
+            class="header-section-number">1.1.1</span> If</h3>
+            <p>The <strong>IF</strong> statement only executes if the
+            condition inside the parentheses is evaluated to true. The
+            condition can include any of the comparison and logical
+            operators, as well as multiple logical expressions.</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(condition) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>For handling other cases there can be one
+            <strong>else</strong> clause, which executes if the
+            <strong>if</strong> condition is evaluated to false.</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(condition) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">// the else clause is optional</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>To evaluate more than one situations, we can use the
+            <strong>elseif</strong> clause. Multiple
+            <strong>elseif</strong> clauses can be attached to an
+            <strong>if…else</strong> section.</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(condition01) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elseif</span>(condition02) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">elseif</span>(condition03) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// if no previous condition evaluates to true</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>In addition, the ternary conditional operator can be used
+            in simple <strong><em>if/else</em></strong> statements.</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$condition</span> <span class="ot">?</span> true_statement <span class="ot">:</span> false_statement<span class="ot">;</span></span></code></pre></div>
+            <p>An example: let’s check if a number is odd or pair.</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">$number</span><span class="op">=</span><span class="dv">100</span><span class="ot">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">// with if...else</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$number</span> <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The number </span><span class="va">$number</span><span class="st"> is pair &lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The number </span><span class="va">$number</span><span class="st"> is odd &lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">// with the ternary operator</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;The number </span><span class="va">$number</span><span class="st"> is &quot;</span><span class="op">.</span>(<span class="va">$number</span><span class="op">%</span><span class="dv">2</span><span class="op">==</span><span class="dv">0</span> <span class="ot">?</span> <span class="st">&quot;pair&quot;</span> <span class="ot">:</span> <span class="st">&quot;odd&quot;</span>)<span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p><strong>If</strong> statements can be nested infinitely
+            within other <strong>if</strong> statements. This feature
+            provides us with total flexibility for conditional execution
+            of our application. This is an example:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(condition01) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(condition <span class="bn">02</span>) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(condition03) {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(condition04) {</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            <span class="co">// statements;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> {</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            <span class="co">// statements;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h3 data-number="1.1.2"
+            id="the-null-coalescing-operator"><span
+            class="header-section-number">1.1.2</span> The null
+            coalescing operator</h3>
+            <p>The <strong>null coalescing operator</strong> is a sort
+            of simplified ternary operator used to check if a value is
+            null or doesn’t exists.</p>
+            <p>For example, if we get a value from a form or from a
+            query string with <code>$_GET</code>, we can check if the
+            value exists or is null.</p>
+            <p>For example, instead of doing:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="kw">isset</span>(<span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>]) <span class="ot">?</span> <span class="va">$_GET</span>[<span class="st">&#39;name]: &#39;&#39;;</span></span></code></pre></div>
+            <p>We can simply do:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>] <span class="op">??</span> <span class="st">&#39;John&#39;</span><span class="ot">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">// if $_GET[&#39;name&#39;] exists, $name = the value of &#39;name&#39;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">// if $_GET[&#39;name&#39;] doesn&#39;t exist, $name = &#39;Jhon&#39;</span></span></code></pre></div>
+            <p>If fits perfectly with the simplified <code>echo</code>
+            tag:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?</span><span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>] <span class="op">??</span> <span class="st">&#39;John&#39;</span><span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
+            <p>We can also use a shorthand for the assignment with the
+            null coalescing operator. Instead of:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">$value</span> <span class="op">=</span> <span class="va">$value</span> <span class="op">??</span> <span class="dv">0</span><span class="ot">;</span></span></code></pre></div>
+            <p>we can simplify it with:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">$value</span> <span class="op">??=</span> <span class="dv">0</span><span class="ot">;</span></span></code></pre></div>
+            <p>which means that if <code>$value</code> is null or
+            doesn’t exists, assign the <code>0</code> value to it.</p>
+            <h3 data-number="1.1.3" id="switch"><span
+            class="header-section-number">1.1.3</span> Switch</h3>
+            <p>The <strong>switch</strong> statement checks for equality
+            between an integer, float, or string and a series of case
+            labels. It then passes execution to the matching case. The
+            <strong>switch</strong> statement is similar to a series of
+            <strong>if</strong> statements evaluating the same
+            expression.</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// With if</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(expression<span class="op">==</span><span class="dv">1</span>) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">elseif</span>(expression<span class="op">==</span><span class="dv">2</span>) {</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="cf">elseif</span>(expression<span class="op">==</span><span class="dv">3</span>) {</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">// With switch</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span>(expression) {</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="dv">1</span><span class="ot">:</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="ot">;</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="dv">2</span><span class="ot">:</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="ot">;</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="dv">3</span><span class="ot">:</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="ot">;</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">default</span><span class="ot">:</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div>
+            <p>The <strong>switch</strong> statement can contain any
+            number of case clauses and optionally can end with a
+            <strong>default</strong> label to handle all other cases.
+            Every case statement ends with the <strong>break</strong>
+            keyword. Without it, the execution falls through to the next
+            case. Unlike other languages, the
+            <strong><em>expression</em></strong> can be a string.</p>
+            <p>Switch allows you to combine multiple cases into one:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span>(expression) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="dv">1</span><span class="ot">:</span> <span class="cf">case</span> <span class="dv">3</span><span class="ot">:</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements for both cases 1 and 3;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="ot">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="dv">2</span><span class="ot">:</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="ot">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">default</span><span class="ot">:</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// statements;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div>
+            <p>An alternative introduced in PHP 8 is the structure
+            <strong>match</strong></p>
+            <p><a
+            href="https://en.wikipedia.org/wiki/PHP_syntax_and_semantics#Match_expression">PHP
+            Match in Wikipedia</a></p>
+            <p>The basic structure:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="va">$return_value</span> <span class="op">=</span> <span class="cf">match</span> (subject_expression) {</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    single_conditional_expression =&gt; return_expression<span class="ot">,</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    conditional_expression1<span class="ot">,</span> conditional_expression2 =&gt; return_expression<span class="ot">,</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>The <strong>match</strong> structure has some advantages
+            when comparing single values. The syntax is more simple than
+            that of other structures. Therefore, you can assign the
+            result of the assertion to a variable or even send it to the
+            screen. Let’s compare this three structures using
+            <strong>if..elseif</strong>, <strong>switch</strong> and
+            <strong>match</strong>:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">//</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">// with if...elseif</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">//</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$language</span><span class="op">==</span><span class="st">&quot;English&quot;</span>) {</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$langLabel</span><span class="op">=</span><span class="st">&quot;en&quot;</span><span class="ot">;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">elseif</span>(<span class="va">$language</span><span class="op">==</span><span class="st">&quot;Spanish&quot;</span>) {</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$langLabel</span><span class="op">=</span><span class="st">&quot;es&quot;</span><span class="ot">;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">elseif</span>(<span class="va">$language</span><span class="op">==</span><span class="st">&quot;French&quot;</span>) {</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$langLabel</span><span class="op">=</span><span class="st">&quot;fr&quot;</span><span class="ot">;</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$langLabel</span><span class="op">=</span><span class="st">&quot;others&quot;</span><span class="ot">;</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$langLabel</span><span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">//</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">//with switch</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">//</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span>(<span class="va">$language</span>) {</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">&quot;English&quot;</span><span class="ot">:</span> <span class="va">$langLabel</span><span class="op">=</span><span class="st">&quot;en&quot;</span><span class="ot">;</span> <span class="cf">break</span><span class="ot">;</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">&quot;Spanish&quot;</span><span class="ot">:</span> <span class="va">$langLabel</span><span class="op">=</span><span class="st">&quot;es&quot;</span><span class="ot">;</span> <span class="cf">break</span><span class="ot">;</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">&quot;French&quot;</span><span class="ot">:</span> <span class="va">$langLabel</span><span class="op">=</span><span class="st">&quot;fr&quot;</span><span class="ot">;</span> <span class="cf">break</span><span class="ot">;</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">default</span><span class="ot">:</span> <span class="st">&quot;others&quot;</span><span class="ot">;</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$langLabel</span><span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co">//</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co">//with match</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="co">//</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cf">match</span>(<span class="va">$language</span>) {  <span class="co">// or $langLabel = match($language) if we want to store the result</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;English&quot;</span> =&gt; <span class="st">&quot;en&quot;</span><span class="ot">,</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Spanish&quot;</span> =&gt; <span class="st">&quot;es&quot;</span><span class="ot">,</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;French&quot;</span> =&gt; <span class="st">&quot;fr&quot;</span><span class="ot">,</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">default</span> =&gt; <span class="st">&quot;others&quot;</span><span class="ot">,</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>With <strong>match</strong> there’s no need to worry
+            about the <strong>break</strong> clause. Therefore, we can
+            output the result directly.</p>
+            <h2 data-number="1.2" id="looping-structures"><span
+            class="header-section-number">1.2</span> Looping
+            structures</h2>
+            <p>Looping structures allow a program to repeat the
+            execution of some code pieces depending of one of more
+            conditions, or for a specified number of repetitions.</p>
+            <h3 data-number="1.2.1" id="while"><span
+            class="header-section-number">1.2.1</span> While</h3>
+            <p>When the condition (or conditions) is evaluated at the
+            beginning of the loop, the
+            <strong><code>while</code></strong> loop runs through the
+            code only if the <strong><em>condition</em></strong> is
+            evaluated to true, and then it keeps repeating while the
+            condition remains true.</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (condition) {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// statements;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>This way, the code inside the <strong>while</strong> may
+            never be executed if the condition is false before the first
+            evaluation.</p>
+            <p>Of course, we must add some statement inside the
+            <strong>while</strong> block that changes the condition to
+            false in order to avoid an infinite loop.</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="va">$counter</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="va">$counter</span> <span class="op">&lt;</span> <span class="dv">5</span>) {</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// do something;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$counter</span><span class="op">++</span><span class="ot">;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h3 data-number="1.2.2" id="dowhile"><span
+            class="header-section-number">1.2.2</span> Do…while</h3>
+            <p>The <strong>Do…While</strong> loop works in the same way
+            as the while loop, except that it checks the condition after
+            the execution of the code block. That means that the loop
+            runs through the code block at least once.</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="va">$counter</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// do something;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$counter</span><span class="op">++</span><span class="ot">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">while</span> (<span class="va">$counter</span> <span class="op">&lt;</span> <span class="dv">5</span>)<span class="ot">;</span> <span class="co">// only after having executed once the do while section</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                      <span class="co">// the condition will be evaluated</span></span></code></pre></div>
+            <h3 data-number="1.2.3" id="for"><span
+            class="header-section-number">1.2.3</span> For</h3>
+            <p>The <strong>FOR</strong> is normally used to go through a
+            code block a specific number of times. Three parameters are
+            needed: - The first parameter initializes one or more
+            variables. This will be done once before running through the
+            loop. - The second parameter holds the condition for the
+            loop. That condition will be checked before each iteration.
+            - The third parameter sets the increment of the counter for
+            each iteration.</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(counter <span class="op">=</span> initial_value<span class="ot">;</span> condition<span class="ot">;</span> increment) {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">// instructions;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">// An example: let&#39;s count from 1 to 10</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>( <span class="va">$i</span> <span class="op">=</span> <span class="dv">1</span><span class="ot">;</span> <span class="va">$i</span> <span class="op">&lt;=</span> <span class="dv">10</span><span class="ot">;</span> <span class="va">$i</span><span class="op">++</span>) {</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Iteration number </span><span class="va">$i</span><span class="st">&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>To count from 10 to 1, the increment must be negative</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Let&#39;s count from 10 to 1</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>( <span class="va">$i</span> <span class="op">=</span> <span class="dv">10</span><span class="ot">;</span> <span class="va">$i</span> <span class="op">&gt;=</span> <span class="dv">1</span><span class="ot">;</span> <span class="va">$i</span><span class="op">--</span>) {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Number: </span><span class="va">$i</span><span class="st">&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The increment can be any value besides 1.</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Let&#39;s show the odd numbers betweeh 1 and 10</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>( <span class="va">$i</span> <span class="op">=</span><span class="dv">1</span> <span class="ot">;</span> <span class="va">$i</span> <span class="op">&lt;=</span> <span class="dv">10</span><span class="ot">;</span> <span class="va">$i</span> <span class="op">+=</span> <span class="dv">2</span>) {</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">echo</span> <span class="st">&quot;Number: </span><span class="va">$i</span><span class="st">&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>In fact we can add more instructions in any section of
+            the for. The instructions in the first section will be
+            executed only once before running the loop. The instructions
+            in the middle section will be executed at every iteration
+            before running through the loop. Finally, the instructions
+            in the last section will be executed at every iteration but
+            at the end of the loop. You can check it in the example
+            below.</p>
+            <p>The <strong>for</strong> loop can iterate through strings
+            of dates. Let’s see an example:</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="va">$today</span> <span class="op">=</span> <span class="fu">date</span>(<span class="st">&quot;d-m-Y&quot;</span>)<span class="ot">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="va">$day</span> <span class="op">=</span> <span class="fu">strtotime</span>(<span class="va">$today</span>)<span class="ot">,</span> <span class="va">$counter</span> <span class="op">=</span><span class="dv">1</span><span class="ot">;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$counter</span> <span class="op">&lt;=</span> <span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$day</span> <span class="op">=</span> <span class="fu">strtotime</span>(<span class="st">&quot;+1day&quot;</span><span class="ot">,</span> <span class="va">$day</span>)<span class="ot">,</span> <span class="va">$counter</span><span class="op">++</span>) {</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="fu">date</span>(<span class="st">&quot;d-m-Y&quot;</span><span class="ot">,</span> <span class="va">$day</span>)<span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The code outputs the next 10 days from today.</p>
+            <figure>
+            <img src="images/u04-01.jpg"
+            alt="Iterating dates with for" />
+            <figcaption aria-hidden="true">Iterating dates with
+            for</figcaption>
+            </figure>
+            <h3 data-number="1.2.4" id="foreach"><span
+            class="header-section-number">1.2.4</span> Foreach</h3>
+            <p>The <strong>foreach</strong> loop provides an easy way to
+            iterate through an array or other list types. At each
+            iteration, the current element in the array is assigned to
+            the specified value (the iterator). The loops keeps
+            executing until it reaches the end of the list.</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayName</span> <span class="op">=</span> <span class="dt">array</span>(<span class="dv">10</span><span class="ot">,</span><span class="dv">7</span><span class="ot">,</span><span class="dv">4</span><span class="ot">,</span><span class="dv">8</span><span class="ot">,</span><span class="dv">9</span><span class="ot">,</span><span class="dv">21</span><span class="ot">,</span><span class="dv">14</span><span class="ot">,</span><span class="dv">3</span>)<span class="ot">;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span>(<span class="va">$arrayName</span> <span class="kw">as</span> <span class="va">$value</span>) {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="va">$value</span><span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> <span class="co">// will show 10 in the 1st iteration, 7 in the 2nd, 4 in the 3rd and so on</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The <strong>foreach</strong> loop can go through the key
+            values as well.</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$arrayName</span> <span class="op">=</span> <span class="dt">array</span>(<span class="dv">10</span><span class="ot">,</span><span class="dv">7</span><span class="ot">,</span><span class="dv">4</span><span class="ot">,</span><span class="dv">8</span><span class="ot">,</span><span class="dv">9</span><span class="ot">,</span><span class="dv">21</span><span class="ot">,</span><span class="dv">14</span><span class="ot">,</span><span class="dv">3</span>)<span class="ot">;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span>(<span class="va">$arrayName</span> <span class="kw">as</span> <span class="va">$key</span> =&gt; <span class="va">$value</span>) {</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">echo</span> <span class="st">&quot;Position: </span><span class="va">$key</span><span class="st"> Value: </span><span class="va">$value</span><span class="st"> &lt;br&gt;&quot;</span><span class="ot">;</span>  </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Position: 0 Value 10, Position: 1 Value 7, and so on</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>}    </span></code></pre></div>
+            <p>This is especially interesting with associative arrays,
+            where keys can be any other thing than correlative
+            numbers.</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">$phones</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&quot;John&quot;</span>=&gt;<span class="st">&quot;9999999&quot;</span><span class="ot">,</span><span class="st">&quot;Diana&quot;</span>=&gt;<span class="st">&quot;83434343&quot;</span><span class="ot">,</span><span class="st">&quot;Helen&quot;</span>=&gt;<span class="st">&quot;77737373&quot;</span>)<span class="ot">;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span>(<span class="va">$phones</span> <span class="kw">as</span> <span class="va">$name</span>=&gt;<span class="va">$phone</span>) {</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;strong&gt;Name:&lt;/strong&gt;</span><span class="va">$name</span><span class="st"> &lt;strong&gt;Phone:&lt;/strong&gt;</span><span class="va">$phone</span><span class="st">&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The output:</p>
+            <figure>
+            <img src="images/u04-02.jpg"
+            alt="Iterating keys and values with foreach" />
+            <figcaption aria-hidden="true">Iterating keys and values
+            with foreach</figcaption>
+            </figure>
+            <h3 data-number="1.2.5" id="break-continue"><span
+            class="header-section-number">1.2.5</span> Break,
+            continue</h3>
+            <p>Although is not very recommended, we can use the
+            <strong>break</strong> and <strong>continue</strong> clauses
+            to change the normal looping flow.</p>
+            <p>The <strong>break</strong> clause forces the end of the
+            loop. The <strong>continue</strong> clause forces the jump
+            to the next iteration without executing the rest of the
+            loop</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(counter<span class="op">=</span>initial_value<span class="ot">;</span>condition<span class="ot">;</span>increment) {</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// instructions;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(condition) { <span class="cf">break</span><span class="ot">;</span> } <span class="co">// ends the loop</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// instructions;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(condition) { <span class="cf">continue</span><span class="ot">;</span> } <span class="co">// goes to the next iteration</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// instructions;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p><strong>Break</strong> and <strong>continue</strong> work
+            in <strong>do…while</strong> and <strong>while</strong>
+            loops too.</p>
+            <h2 data-number="1.3"
+            id="control-structures-shorthands"><span
+            class="header-section-number">1.3</span> Control structures
+            shorthands</h2>
+            <p>Sometimes we need to show a lot of HTML contents inside a
+            control structure. For that purpose PHP has some shorthands
+            to facilitate the writing of code.</p>
+            <h3 data-number="1.3.1" id="if-else-shorthand"><span
+            class="header-section-number">1.3.1</span> if-else
+            shorthand</h3>
+            <p>The <strong>if-else</strong> shorthand is:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condition)<span class="ot">:</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># HTML code</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elseif</span> (condition)<span class="ot">:</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># HTML code</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span><span class="ot">:</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># HTML code</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="cf">endif</span><span class="ot">;</span></span></code></pre></div>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span> <span class="op">=</span> <span class="dv">6</span><span class="ot">;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$a</span> <span class="op">&lt;</span> <span class="dv">0</span>)<span class="ot">:</span> <span class="kw">?&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>p<span class="op">&gt;</span> a is negative <span class="op">&lt;/</span>p<span class="op">&gt;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="cf">elseif</span> (<span class="va">$a</span> <span class="op">==</span> <span class="dv">0</span>)<span class="ot">:</span> <span class="kw">?&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>p<span class="op">&gt;</span> a is equal to zero <span class="op">&lt;/</span>p<span class="op">&gt;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="cf">else</span><span class="ot">:</span> <span class="kw">?&gt;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>p<span class="op">&gt;</span> a is positive <span class="op">&lt;/</span>p<span class="op">&gt;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="cf">endif</span><span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
+            <p>We also have a shorthand for the <strong>ternary
+            operator</strong>:</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?</span><span class="op">=</span> <span class="va">$a</span> <span class="ot">?</span> <span class="st">&#39;a is true&#39;</span> <span class="ot">:</span> <span class="st">&#39;a is false&#39;</span><span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
+            <h3 data-number="1.3.2" id="loop-shorthands"><span
+            class="header-section-number">1.3.2</span> Loop
+            shorthands</h3>
+            <p>In PHP, the shorthand for a <strong>for</strong> loop
+            is:</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (condition)<span class="ot">:</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code block</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">endfor</span><span class="ot">;</span></span></code></pre></div>
+            <p>For instance:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>br<span class="op">&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="cf">for</span> (<span class="va">$i</span><span class="op">=</span><span class="dv">0</span><span class="ot">;</span> <span class="va">$i</span> <span class="op">&lt;</span> <span class="dv">10</span><span class="ot">;</span> <span class="va">$i</span><span class="op">++</span>)<span class="ot">:</span> <span class="kw">?&gt;</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>p<span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$i</span><span class="ot">;</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>p<span class="op">&gt;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="cf">endfor</span><span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
+            <p>And for the <strong>while</strong> loop:</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (condition)<span class="ot">:</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code block</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">endwhile</span><span class="ot">;</span></span></code></pre></div>
+            <p>As we can see in the next example:</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="va">$j</span> <span class="op">=</span> <span class="dv">2</span><span class="ot">;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="va">$j</span> <span class="op">&lt;=</span> <span class="dv">10</span>)<span class="ot">:</span> <span class="kw">?&gt;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>p<span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$j</span><span class="op">++</span><span class="ot">;</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>p<span class="op">&gt;</span>   </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="cf">endwhile</span><span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
+            <p>PHP also has shorthands for the <strong>foreach</strong>
+            loop:</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span> (<span class="va">$array</span> <span class="kw">as</span> <span class="va">$value</span>)<span class="ot">:</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code block</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="cf">endforeach</span><span class="ot">;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span> (<span class="va">$array</span> <span class="kw">as</span> <span class="va">$key</span> =&gt; <span class="va">$value</span>)<span class="ot">:</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># code block</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="cf">endforeach</span><span class="ot">;</span></span></code></pre></div>
+            <p>Let’s see an example for simple
+            <strong>arrays</strong>:</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>ul<span class="op">&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="va">$fruits</span> <span class="op">=</span> [<span class="st">&#39;lemon&#39;</span><span class="ot">,</span> <span class="st">&#39;orange&#39;</span><span class="ot">,</span> <span class="st">&#39;tomato&#39;</span>]<span class="ot">;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span> (<span class="va">$fruits</span> <span class="kw">as</span> <span class="va">$fruit</span>)<span class="ot">:</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>li<span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$fruit</span><span class="ot">;</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>li<span class="op">&gt;</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="cf">endforeach</span><span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>ul<span class="op">&gt;</span></span></code></pre></div>
+            <p>And for <strong>associative arrays</strong>:</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>ul<span class="op">&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="va">$persons</span> <span class="op">=</span> [<span class="dv">55</span> =&gt; <span class="st">&quot;Martha&quot;</span><span class="ot">,</span> <span class="dv">68</span> =&gt; <span class="st">&quot;Michael&quot;</span>]<span class="ot">;</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span> (<span class="va">$persons</span> <span class="kw">as</span> <span class="va">$key</span>=&gt;<span class="va">$value</span>) <span class="ot">:</span> </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>li<span class="op">&gt;&lt;</span>strong<span class="op">&gt;&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$key</span><span class="ot">;</span> <span class="kw">?&gt;</span><span class="ot">:</span> <span class="op">&lt;/</span>strong<span class="op">&gt;&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$value</span><span class="ot">;</span> <span class="kw">?&gt;</span><span class="op">&lt;/</span>li<span class="op">&gt;</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="cf">endforeach</span><span class="ot">;</span> <span class="kw">?&gt;</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>ul<span class="op">&gt;</span></span></code></pre></div>
+            <h2 data-number="1.4"
+            id="exit-die-and-return-statements"><span
+            class="header-section-number">1.4</span> Exit, die and
+            return statements</h2>
+            <p>The <strong>exit</strong> statement ends the script’s
+            execution at any moment that it’s reached.</p>
+            <p><code>exit</code> can take an argument, an integer or a
+            <code>string</code>. If the argument is a
+            <code>string</code>, this function prints its content just
+            before exiting.</p>
+            <p>If it is an <code>int</code>, that value will be used as
+            the exit status and not printed. Exit statuses should be in
+            the range 0 to 254. The status 0 is used to terminate the
+            program successfully. Other status different from 0 should
+            be considered error status.</p>
+            <p>Exit codes are used for command line programming. They
+            have no significance when writing PHP to be invoked by a web
+            server.</p>
+            <p><strong><code>die</code></strong> is equivalent to
+            <code>exit</code>.</p>
+            <p>Examples:</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">exit</span>(<span class="dv">0</span>)<span class="ot">;</span> <span class="co">//terminates the program</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">exit</span>()<span class="ot">;</span> <span class="co">// the same as above</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="cf">exit</span><span class="ot">;</span> <span class="co">// the same as above</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="cf">die</span><span class="ot">;</span> <span class="co">// the same as above</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="cf">exit</span>(<span class="st">&quot;Error&quot;</span>)<span class="ot">;</span> <span class="co">// prints &quot;Error&quot; and terminates the program</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="cf">exit</span>(<span class="dv">1</span>)<span class="ot">;</span> <span class="co">//terminates the program with the status code 1</span></span></code></pre></div>
+            <p>The <strong>return</strong> statement ends the function
+            returning (or not) a value. If the <strong>return</strong>
+            statement is reached in the main program, it ends the
+            execution as well.</p>
+            <h1 data-number="2" id="functions-in-php"><span
+            class="header-section-number">2</span> Functions in PHP</h1>
+            <p>You are surely familiar with the concept of
+            <strong>function</strong>. A function is a reusable piece of
+            code that is only executed when it’s called.</p>
+            <p>As in other computer languages, functions in PHP can
+            receive parameters, and can return a result. In this unit we
+            will go over functions in general, but particularly we will
+            consider how to work with functions in PHP.</p>
+            <h2 data-number="2.1" id="creating-a-function"><span
+            class="header-section-number">2.1</span> Creating a
+            function</h2>
+            <p>Functions are defined with the keyword
+            <code>function</code> and then the name, the parameters (if
+            there are any) and the sentences inside curly brackets.</p>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myFunc() {</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Hello world&quot;</span><span class="ot">;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Once defined, the function can be called (invoked) from
+            anywhere on the page where it has been declared (by now) by
+            typing its name followed by a set of parenthesis.</p>
+            <div class="sourceCode" id="cb39"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>myFunc()<span class="ot">;</span> <span class="co">// will display &quot;Hello world&quot;</span></span></code></pre></div>
+            <h2 data-number="2.2" id="parameters"><span
+            class="header-section-number">2.2</span> Parameters</h2>
+            <p>The parentheses that follow the function name are used to
+            pass arguments to the function. In the function definition
+            we declare a comma-separated list of variables. The
+            parameters can then be used in the function when it’s
+            called.</p>
+            <div class="sourceCode" id="cb40"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myFunc(<span class="va">$x</span><span class="ot">,</span> <span class="va">$y</span>)  {</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$x</span><span class="st"> </span><span class="va">$y</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Once the parameters have been specified, the function can
+            be called with the same number of arguments.</p>
+            <div class="sourceCode" id="cb41"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>myFunc(<span class="st">&#39;Hello&#39;</span><span class="ot">,</span> <span class="st">&#39;world&#39;</span>)<span class="ot">;</span> <span class="co">// will display &quot;Hello world&quot;</span></span></code></pre></div>
+            <h3 data-number="2.2.1" id="default-parameters"><span
+            class="header-section-number">2.2.1</span> Default
+            parameters</h3>
+            <p>It is possible to specify default values for parameters
+            by assigning them a value inside the parameter list while
+            declaring the function.</p>
+            <div class="sourceCode" id="cb42"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myFunc(<span class="va">$x</span><span class="ot">,</span> <span class="va">$y</span> <span class="op">=</span> <span class="st">&#39;Earth&#39;</span>) {</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$x</span><span class="st"> </span><span class="va">$y</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>myFunc(<span class="st">&#39;Hello&#39;</span><span class="ot">,</span><span class="st">&#39;world&#39;</span>)<span class="ot">;</span> <span class="co">// displays &quot;Hello world&quot;</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>myFunc(<span class="st">&#39;Hello&#39;</span>)<span class="ot">;</span> <span class="co">// displays &quot;Hello Earth&quot;</span></span></code></pre></div>
+            <p>The parameters without default values should be place at
+            the beginning of the parameters list to avoid errors.</p>
+            <div class="sourceCode" id="cb43"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myFunc(<span class="va">$y</span><span class="op">=</span><span class="st">&#39;Earth&#39;</span><span class="ot">,</span><span class="va">$x</span>) {</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$x</span><span class="st"> </span><span class="va">$y</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>myFunc(<span class="st">&#39;world&#39;</span><span class="ot">,</span><span class="st">&#39;Hello&#39;</span>)<span class="ot">;</span> <span class="co">// we&#39;ll get Hello world</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>myFunc(<span class="st">&#39;Hello&#39;</span>)<span class="ot">;</span> <span class="co">// we&#39;ll get an error: &#39;Too few arguments&#39;</span></span></code></pre></div>
+            <h3 data-number="2.2.2" id="variable-parameters-list"><span
+            class="header-section-number">2.2.2</span> Variable
+            parameters list</h3>
+            <p>A function cannot be called with fewer parameters than
+            specified in its declaration, but it can be called with more
+            parameters. This allows for the passing of a variable number
+            of arguments, which can then be accessed using a couple of
+            built-in functions:
+            <strong><code>func_get_arg()</code></strong>,
+            <strong><code>func_get_args()</code></strong> and
+            <strong><code>func_num_args()</code></strong>.</p>
+            <p>The function <code>func_num_args()</code> returns the
+            actual amount of parameters passed to the function.</p>
+            <p>The function <code>func_get_arg($position)</code> returns
+            the parameter passed in the <code>$position</code>
+            position.</p>
+            <p>The function <code>func_get_args()</code> returns an
+            array containing all the parameters that the function
+            receives.</p>
+            <div class="sourceCode" id="cb44"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myArgs() {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$x</span> <span class="op">=</span> <span class="fu">func_get_arg</span>(<span class="dv">0</span>)<span class="ot">;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$y</span> <span class="op">=</span> <span class="fu">func_get_arg</span>(<span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$z</span> <span class="op">=</span> <span class="fu">func_get_arg</span>(<span class="dv">2</span>)<span class="ot">;</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$x</span><span class="st"> </span><span class="va">$y</span><span class="st"> </span><span class="va">$z</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>myArgs(<span class="st">&#39;One&#39;</span><span class="ot">,</span><span class="st">&#39;Two&#39;</span><span class="ot">,</span><span class="st">&#39;Three&#39;</span>)<span class="ot">;</span> <span class="co">// displays &quot;One Two Three&quot;</span></span></code></pre></div>
+            <p>If we are not sure of how many parameters the function
+            will receive, we can iterate the parameters list and work
+            with them.</p>
+            <p>Example: a function that receives a variable list of
+            parameters and returns their sum.</p>
+            <div class="sourceCode" id="cb45"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> fsum() {</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">func_num_args</span>()<span class="op">==</span><span class="dv">0</span>) { <span class="co">// no parameters</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="ot">;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$totalsum</span><span class="op">=</span><span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// we iterate through the parameters list</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="va">$i</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">;</span> <span class="va">$i</span> <span class="op">&lt;</span> <span class="fu">func_num_args</span>()<span class="ot">;</span> <span class="va">$i</span><span class="op">++</span> ) {</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>            <span class="va">$totalsum</span> <span class="op">=</span> <span class="va">$totalsum</span> <span class="op">+</span> <span class="fu">func_get_arg</span>(<span class="va">$i</span>)<span class="ot">;</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$totalsum</span><span class="ot">;</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>In newer versions of PHP we can use the
+            <strong><code>...</code></strong> token to access variable
+            arguments as an array.</p>
+            <div class="sourceCode" id="cb46"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> add(...<span class="va">$numbers</span>) {</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$result</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span> (<span class="va">$numbers</span> <span class="kw">as</span> <span class="va">$n</span>) {</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$result</span> <span class="op">+=</span> <span class="va">$n</span><span class="ot">;</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$result</span><span class="ot">;</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We can use the <strong><code>...</code></strong> token to
+            unpack arrays passed as arguments.</p>
+            <div class="sourceCode" id="cb47"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> add(<span class="va">$a</span><span class="ot">,</span> <span class="va">$b</span>) {</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$a</span> <span class="op">+</span> <span class="va">$b</span><span class="ot">;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="va">$array</span><span class="op">=</span>[<span class="dv">5</span><span class="ot">,</span><span class="dv">6</span>]<span class="ot">;</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> add(...<span class="va">$array</span>)<span class="ot">;</span> <span class="co">// returns 11</span></span></code></pre></div>
+            <h3 data-number="2.2.3" id="named-arguments"><span
+            class="header-section-number">2.2.3</span> Named
+            Arguments</h3>
+            <p>PHP 8.0.0 introduced <strong>named arguments</strong> as
+            an extension of the existing positional parameters. Named
+            arguments allow passing arguments to a function based on the
+            parameter name.</p>
+            <p>Named arguments are passed by prefixing the value with
+            the parameter name followed by a colon:</p>
+            <p>Example:</p>
+            <div class="sourceCode" id="cb48"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> showName(<span class="va">$name</span><span class="ot">,</span> <span class="va">$surname</span>) {</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Hello &quot;</span> <span class="op">.</span> <span class="va">$name</span> <span class="op">.</span> <span class="st">&quot; &quot;</span> <span class="op">.</span> <span class="va">$surname</span><span class="ot">;</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>showName(surname<span class="ot">:</span> <span class="st">&quot;Smith&quot;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&quot;John&quot;</span>)<span class="ot">;</span> <span class="co">// can change the order</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co">// prints &quot;Hello John Smith&quot;</span></span></code></pre></div>
+            <h3 data-number="2.2.4" id="the-return-statement"><span
+            class="header-section-number">2.2.4</span> The return
+            statement</h3>
+            <p><strong>Return</strong> is a jump statement that causes
+            the function to end its execution and return to the location
+            where it was called from.</p>
+            <div class="sourceCode" id="cb49"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myFunc() {</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="ot">;</span> <span class="co">// exit from the function</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&#39;Hi&#39;</span><span class="ot">;</span> <span class="co">// this statement never executes</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We can optionally use the <code>return</code> sentence to
+            return a value to the place where the function had been
+            called from.</p>
+            <div class="sourceCode" id="cb50"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myFunc() {</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&#39;Hello&#39;</span><span class="ot">;</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> myFunc()<span class="ot">;</span> <span class="co">// will display &quot;Hello&quot;</span></span></code></pre></div>
+            <blockquote>
+            <p>A function without a return value automatically returns
+            <strong><code>null</code></strong>.</p>
+            </blockquote>
+            <h3 data-number="2.2.5" id="some-examples"><span
+            class="header-section-number">2.2.5</span> Some
+            examples</h3>
+            <ul>
+            <li>A function that receives two strings as arguments, and
+            then shows the result of their concatenation:</li>
+            </ul>
+            <div class="sourceCode" id="cb51"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> showConcat(<span class="va">$cad1</span><span class="ot">,</span> <span class="va">$cad2</span>) {</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$cad1</span><span class="st"> </span><span class="va">$cad2</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co">// calling the function</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>showConcat(<span class="st">&quot;Hello&quot;</span><span class="ot">,</span><span class="st">&quot;world&quot;</span>)<span class="ot">;</span> <span class="co">// will display Hello world</span></span></code></pre></div>
+            <ul>
+            <li>A function that receives two strings as arguments, and
+            then returns the result of their concatenation:</li>
+            </ul>
+            <div class="sourceCode" id="cb52"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> getConcat(<span class="va">$cad1</span><span class="ot">,</span> <span class="va">$cad2</span>) {</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$cad3</span> <span class="op">=</span> <span class="va">$cad1</span><span class="op">.</span><span class="st">&quot; &quot;</span><span class="op">.</span><span class="va">$cad2</span><span class="ot">;</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$cad3</span><span class="ot">;</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> getConcat(<span class="st">&quot;Hello&quot;</span><span class="ot">,</span><span class="st">&quot;world&quot;</span>)<span class="ot">;</span> <span class="co">// will display Hello world</span></span></code></pre></div>
+            <h2 data-number="2.3" id="scope-and-life-of-variables"><span
+            class="header-section-number">2.3</span> Scope and life of
+            variables</h2>
+            <p>By default, any variable created inside a function is
+            limited to this local scope. Once the scope of the function
+            ends, the local variable is destroyed.</p>
+            <div class="sourceCode" id="cb53"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">// variable defined outside the function</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="st">&quot;Global&quot;</span><span class="ot">;</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> test() {</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we try to display the value of $x</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The value of x is </span><span class="va">$x</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we define a new variable $y</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">$y</span><span class="op">=</span><span class="st">&quot;Local&quot;</span><span class="ot">;</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="co">// let&#39;s call the function</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>test()<span class="ot">;</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="co">// let&#39;s try to access the local variable</span></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;The value of y is </span><span class="va">$y</span><span class="st">&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>If we run the script above, we’ll get:</p>
+            <figure>
+            <img src="images/u06-01.jpg" alt="Variables scope" />
+            <figcaption aria-hidden="true">Variables scope</figcaption>
+            </figure>
+            <p>Variables defined outside a user-defined function are not
+            available within the function. Similarly, variables defined
+            within a function exist just inside that function. That’s
+            why we get a warning when we try to echo the value of
+            <code>$y</code> outside our <code>test()</code>
+            function.</p>
+            <p>Global variables can be accessed and modified inside the
+            function if they are declared locally as
+            <code>global</code>.</p>
+            <div class="sourceCode" id="cb54"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="st">&#39;Hello&#39;</span><span class="ot">;</span> <span class="co">// global $x</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myFunc() {</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> <span class="va">$x</span><span class="ot">;</span> <span class="co">// use global $x: it&#39;s not a new variable</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$x</span> <span class="op">.=</span> <span class="st">&#39; World&#39;</span><span class="ot">;</span> <span class="co">// we can change the value of the global $x</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>myFunc()<span class="ot">;</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$x</span><span class="ot">;</span> <span class="co">// show global $x: &quot;Hello World&quot;</span></span></code></pre></div>
+            <p>An alternative way to access variables from the global
+            scope is by using the predefined
+            <strong><code>$GLOBALS</code></strong> array. In this case
+            the variable is referenced by its name, specified as a
+            string without the dollar sign.</p>
+            <div class="sourceCode" id="cb55"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myFunc() {</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$GLOBALS</span>[<span class="st">&#39;x&#39;</span>] <span class="op">.=</span> <span class="st">&#39; World&#39;</span><span class="ot">;</span> <span class="co">// change the value of global $x</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <blockquote>
+            <p>It’s a good practice to avoid using globals whenever
+            possible.</p>
+            </blockquote>
+            <h2 data-number="2.4"
+            id="passing-parameters-by-value-or-by-reference"><span
+            class="header-section-number">2.4</span> Passing parameters
+            by value or by reference</h2>
+            <p>As in other languages, parameters can be passed to a
+            function in two ways: <strong>by value</strong> of
+            <strong>by reference</strong>.</p>
+            <h3 data-number="2.4.1"
+            id="passing-parameters-by-value"><span
+            class="header-section-number">2.4.1</span> Passing
+            parameters by value</h3>
+            <p>In PHP, parameters are usually passed by value. That
+            means that a copy of the variable passed as parameter, not
+            the original variable, is used in the function. Thus, if we
+            change the value of the parameter inside the function the
+            change is only valid inside the function, and will be lost
+            once the function ends.</p>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb56"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="st">&#39;Hello&#39;</span><span class="ot">;</span> <span class="co">// global $x</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myFunc(<span class="va">$x</span>) {</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$x</span> <span class="op">.=</span> <span class="st">&#39; World&#39;</span><span class="ot">;</span> <span class="co">// we change the value of the local copy of $x</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&#39;Inside the function the value of $x is &#39;</span><span class="op">.</span><span class="va">$x</span><span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;Before the function the value of $x is &#39;</span><span class="op">.</span><span class="va">$x</span><span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>myFunc(<span class="va">$x</span>)<span class="ot">;</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;Outside the function the value of $x is &#39;</span><span class="op">.</span><span class="va">$x</span><span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> </span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="co">// show global $x: &quot;Hello&quot;</span></span></code></pre></div>
+            <p>If we run the script, we’ll get:</p>
+            <figure>
+            <img src="images/u06-02.jpg"
+            alt="Parameter passed by value" />
+            <figcaption aria-hidden="true">Parameter passed by
+            value</figcaption>
+            </figure>
+            <h3 data-number="2.4.2"
+            id="passing-parameters-by-reference"><span
+            class="header-section-number">2.4.2</span> Passing
+            parameters by reference</h3>
+            <p>When a function argument is passed by reference, changes
+            to the argument also change the variable that was passed in.
+            To turn a function argument into a reference, we can use the
+            <code>&amp;</code> operator before the name of the
+            parameter.</p>
+            <div class="sourceCode" id="cb57"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> addString(<span class="op">&amp;</span><span class="va">$cad1</span><span class="ot">,</span> <span class="va">$cad2</span>) { <span class="co">// the &amp; means by reference</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$cad1</span> <span class="op">=</span> <span class="va">$cad1</span><span class="op">.</span><span class="va">$cad2</span><span class="ot">;</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="va">$cad1</span><span class="op">=</span><span class="st">&#39;hello &#39;</span><span class="ot">;</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="va">$cad2</span><span class="op">=</span><span class="st">&#39; world&#39;</span><span class="ot">;</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;The value of $cad1 before the function: &#39;</span><span class="op">.</span><span class="va">$cad1</span><span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>addString(<span class="va">$cad1</span><span class="ot">,</span><span class="va">$cad2</span>)<span class="ot">;</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;The value of $cad1 after the function: &#39;</span><span class="op">.</span><span class="va">$cad1</span><span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> </span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="co">//hello world: The change remains</span></span></code></pre></div>
+            <p>When we run the script, we’ll get:</p>
+            <figure>
+            <img src="images/u06-03.jpg"
+            alt="Parameter passed by reference" />
+            <figcaption aria-hidden="true">Parameter passed by
+            reference</figcaption>
+            </figure>
+            <h2 data-number="2.5" id="type-in-functions"><span
+            class="header-section-number">2.5</span> Type in
+            functions</h2>
+            <p>To allow functions to be more robust, PHP in its version
+            5 began to introduce argument type declarations, permitting
+            the type of a function parameter to be specified. In the
+            next script we’ll get an error message because the value of
+            the parameter passed to the function doesn’t match the
+            declared type.</p>
+            <div class="sourceCode" id="cb58"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> myPrint(<span class="dt">array</span> <span class="va">$a</span>) {</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span> (<span class="va">$a</span> <span class="kw">as</span> <span class="va">$v</span>) { <span class="kw">echo</span> <span class="va">$v</span><span class="ot">;</span> }</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>myPrint( <span class="dt">array</span>(<span class="dv">1</span><span class="ot">,</span><span class="dv">2</span><span class="ot">,</span><span class="dv">3</span>) )<span class="ot">;</span> <span class="co">// &quot;123&quot; </span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>myPrint(<span class="st">&#39;Test&#39;</span>)<span class="ot">;</span> <span class="co">// error!!! (because the parameter is not an array)</span></span></code></pre></div>
+            <p>Support for return type declarations was added in PHP 7
+            as a way to prevent unintended return values.</p>
+            <div class="sourceCode" id="cb59"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> f()<span class="ot">:</span> <span class="dt">array</span> {</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// the function must return an array</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>To specify strict types we need to set
+            <code>declare(strict_types=1);</code>. This must be on the
+            very first line of the PHP file.</p>
+            <div class="sourceCode" id="cb60"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>In this example, inside the function is made a cast of
+            the variable <code>$j</code> from <code>string</code> to
+            <code>int</code>:</p>
+            <div class="sourceCode" id="cb61"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sum(<span class="dt">int</span> <span class="va">$i</span><span class="ot">,</span> <span class="dt">int</span> <span class="va">$j</span>){</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$i</span> <span class="op">+</span> <span class="va">$j</span><span class="ot">;</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> sum(<span class="dv">5</span><span class="ot">,</span> <span class="st">&quot;6&quot;</span>)<span class="ot">;</span> <span class="co">//Outputs 11</span></span></code></pre></div>
+            <p>The same function, with strict types, throws a fatal
+            error:</p>
+            <div class="sourceCode" id="cb62"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sum(<span class="dt">int</span> <span class="va">$i</span><span class="ot">,</span> <span class="dt">int</span> <span class="va">$j</span>){</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$i</span> <span class="op">+</span> <span class="va">$j</span><span class="ot">;</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> sum(<span class="dv">5</span><span class="ot">,</span> <span class="st">&quot;6&quot;</span>)<span class="ot">;</span> <span class="co">//Fatal error: Uncaught TypeError: sum(): Argument #2 ($j) must be of type int, string given</span></span></code></pre></div>
+            <h3 data-number="2.5.1" id="nullable-types"><span
+            class="header-section-number">2.5.1</span> Nullable
+            types</h3>
+            <p>Since PHP 7.1 type declarations for parameters and return
+            values can now be marked as <strong>nullable</strong> by
+            prefixing the type name with a question mark
+            (<strong><code>?</code></strong>). This signifies that as
+            well as the specified type,
+            <strong><code>null</code></strong> can be passed as an
+            argument, or returned as a value, respectively.</p>
+            <p>The function:</p>
+            <div class="sourceCode" id="cb63"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> test(<span class="ot">?</span><span class="dt">int</span> <span class="va">$var</span>)<span class="ot">:</span> <span class="ot">?</span><span class="dt">string</span></span></code></pre></div>
+            <p>can accept as parameter an integer or <code>null</code>
+            and can return a string or <code>null</code>.</p>
+            <h3 data-number="2.5.2" id="union-types"><span
+            class="header-section-number">2.5.2</span> Union types</h3>
+            <p>A <strong>union type</strong> declaration accepts values
+            of multiple different simple types, rather than a single
+            one. Union types are specified using the syntax
+            type1|type2|….</p>
+            <p>Union types are available as of PHP 8.0.0.</p>
+            <div class="sourceCode" id="cb64"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">E</span>xample {</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span><span class="op">|</span><span class="dt">float</span> <span class="va">$var</span><span class="ot">;</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> squareAndAdd(<span class="dt">float</span><span class="op">|</span><span class="dt">int</span> <span class="va">$bar</span>)<span class="ot">:</span> <span class="dt">int</span><span class="op">|</span><span class="dt">float</span> </span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$bar</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> <span class="va">$var</span><span class="ot">;</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>In this example the property <code>$var</code>, the
+            parameter <code>$bar</code> and the return value of the
+            function <code>squareAndAdd</code> can be integer or
+            float.</p>
+            <h2 data-number="2.6" id="variable-functions"><span
+            class="header-section-number">2.6</span> Variable
+            functions</h2>
+            <p>We can have the name of a function in a variable. The
+            function can be executed by calling it with the name of the
+            variable.</p>
+            <p>Let’s see an example. Compare this code:</p>
+            <div class="sourceCode" id="cb65"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> add(<span class="va">$x</span><span class="ot">,</span><span class="va">$y</span>) {</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$x</span> <span class="op">+</span> <span class="va">$y</span><span class="ot">;</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sub(<span class="va">$x</span><span class="ot">,</span><span class="va">$y</span>) {</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$x</span> <span class="op">-</span> <span class="va">$y</span><span class="ot">;</span></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="va">$operation</span><span class="op">=</span><span class="st">&quot;sum&quot;</span><span class="ot">;</span></span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span><span class="op">=</span><span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a><span class="va">$b</span><span class="op">=</span><span class="dv">7</span><span class="ot">;</span></span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$operation</span><span class="op">==</span><span class="st">&quot;sum&quot;</span>) {</span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> add(<span class="va">$a</span><span class="ot">,</span><span class="va">$b</span>)<span class="ot">;</span></span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb65-17"><a href="#cb65-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> sub(<span class="va">$a</span><span class="ot">,</span><span class="va">$b</span>)<span class="ot">;</span></span>
+<span id="cb65-18"><a href="#cb65-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>with this one:</p>
+            <div class="sourceCode" id="cb66"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> add(<span class="va">$x</span><span class="ot">,</span><span class="va">$y</span>) {</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$x</span> <span class="op">+</span> <span class="va">$y</span><span class="ot">;</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sub(<span class="va">$x</span><span class="ot">,</span><span class="va">$y</span>) {</span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$x</span> <span class="op">-</span> <span class="va">$y</span><span class="ot">;</span></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="va">$operation</span><span class="op">=</span><span class="st">&quot;add&quot;</span><span class="ot">;</span></span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span><span class="op">=</span><span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a><span class="va">$b</span><span class="op">=</span><span class="dv">7</span><span class="ot">;</span></span>
+<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$operation</span>(<span class="va">$a</span><span class="ot">,</span><span class="va">$b</span>)<span class="ot">;</span> <span class="co">// we run the function which name</span></span>
+<span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a>                        <span class="co">// matches the value of $operation</span></span></code></pre></div>
+            <h2 data-number="2.7" id="recursive-functions"><span
+            class="header-section-number">2.7</span> Recursive
+            functions</h2>
+            <p>As in other languages, we can define <strong>recursive
+            functions</strong>. A recursive function calls itself until
+            a certain condition is reached.</p>
+            <div class="sourceCode" id="cb67"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co">// the factorial of a number n is n*(n-1)*(n-2)...*1</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co">// for example, the factorial of 4 is 4*3*2*1 = 24</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> factorial(<span class="va">$n</span>) {</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$result</span><span class="op">=</span><span class="va">$n</span><span class="ot">;</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$n</span><span class="op">==</span><span class="dv">1</span>) {</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$result</span><span class="ot">;</span> <span class="co">// we have reached the end, return the result</span></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$result</span><span class="op">*</span>factorial(<span class="va">$n</span><span class="op">-</span><span class="dv">1</span>)<span class="ot">;</span> <span class="co">// next multiplication</span></span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> factorial(<span class="dv">4</span>)<span class="ot">;</span> <span class="co">// 24</span></span></code></pre></div>
+            <h2 data-number="2.8" id="anonymous-functions"><span
+            class="header-section-number">2.8</span> Anonymous
+            functions</h2>
+            <p>Anonymous functions, also known as
+            <strong>closures</strong>, allow the creation of functions
+            which have no specified name. They can be used as callable
+            parameters (<strong>callbacks</strong>) for other functions,
+            to assign a function to a variable, and for other many
+            uses.</p>
+            <p>An example of an anonymous function assigned to a
+            variable:</p>
+            <div class="sourceCode" id="cb68"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="va">$hello</span> <span class="op">=</span> <span class="kw">function</span>(<span class="va">$name</span>) {</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">printf</span>(<span class="st">&quot;Hello </span><span class="va">$name</span><span class="st">&quot;</span>)<span class="ot">;</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="va">$hello</span>(<span class="st">&#39;Mary&#39;</span>)<span class="ot">;</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="va">$hello</span>(<span class="st">&#39;John&#39;</span>)<span class="ot">;</span></span></code></pre></div>
+            <h3 data-number="2.8.1"
+            id="callbacks-with-anonymous-functions"><span
+            class="header-section-number">2.8.1</span> Callbacks with
+            anonymous functions</h3>
+            <p>One of the most common uses of anonymous functions is as
+            callbacks. Callback functions are called by the main
+            function to do a task based on logic you supply:</p>
+            <div class="sourceCode" id="cb69"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="va">$numbers</span> <span class="op">=</span> [<span class="dv">12</span><span class="ot">,</span> <span class="dv">18</span><span class="ot">,</span> <span class="dv">5</span><span class="ot">,</span> <span class="dv">11</span><span class="ot">,</span> <span class="dv">10</span><span class="ot">,</span> <span class="dv">95</span><span class="ot">,</span> <span class="dv">3</span>]<span class="ot">;</span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="va">$multiple_five</span> <span class="op">=</span> <span class="fu">array_filter</span>(<span class="va">$numbers</span><span class="ot">,</span> <span class="kw">function</span>(<span class="va">$n</span>) {</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$n</span><span class="op">%</span><span class="dv">5</span> <span class="op">==</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>})<span class="ot">;</span></span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print_r</span>(<span class="va">$multiple_five</span>)<span class="ot">;</span></span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a><span class="co">/* OUTPUT:</span></span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a><span class="co">Array</span></span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a><span class="co">(</span></span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a><span class="co">    [2] =&gt; 5</span></span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a><span class="co">    [4] =&gt; 10</span></span>
+<span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a><span class="co">    [5] =&gt; 95</span></span>
+<span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a><span class="co">)</span></span>
+<span id="cb69-17"><a href="#cb69-17" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
+            <p>In the code above, we simply return multiples of five
+            from a given array of numbers. The second parameter to
+            <code>array_filter()</code> is our callback function. It
+            performs the trivial task of checking if a number is
+            divisible by five. Without anonymous functions, we would
+            have to define this function somewhere else with the risk of
+            having an exiting name.</p>
+            <p>You can use the special <strong><code>use</code></strong>
+            keyword that allows you to access variables from the parent
+            scope inside an anonymous function:</p>
+            <div class="sourceCode" id="cb70"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="va">$hello</span> <span class="op">=</span> <span class="st">&quot;Hello World!&quot;</span><span class="ot">;</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="va">$cut</span> <span class="op">=</span> <span class="kw">function</span>(<span class="dt">int</span> <span class="va">$numChars</span>) <span class="kw">use</span> (<span class="va">$hello</span>){</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$hello</span> <span class="op">=</span> <span class="fu">substr</span>(<span class="va">$hello</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="va">$numChars</span>)<span class="ot">;</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$hello</span><span class="ot">;</span></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$cut</span>(<span class="dv">4</span>) <span class="op">.</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> <span class="co">//Outputs Hell</span></span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$hello</span><span class="ot">;</span> <span class="co">//Outputs Hello World!</span></span></code></pre></div>
+            <p>In this sample the function <code>$cut</code> is
+            accessing the global variable <code>$hello</code> with
+            <strong><code>use</code></strong>, but unlike accessing with
+            <code>global</code>, the global variable is not modified
+            inside the function.</p>
+            <h3 data-number="2.8.2" id="arrow-functions"><span
+            class="header-section-number">2.8.2</span> Arrow
+            functions</h3>
+            <p><strong>Arrow functions</strong> are basically a shorter
+            way of writing simple anonymous functions. They were
+            introduced in PHP 7.4.</p>
+            <ul>
+            <li>The keyword <code>function</code> is replaced with
+            <strong><code>fn</code></strong>.</li>
+            <li>The <code>return</code> keyword is omitted. The function
+            only can contain one expression and that expression is the
+            return value of the arrow function.</li>
+            <li>Global variables are implicitly available inside arrow
+            functions without using the <code>use</code> keyword.</li>
+            </ul>
+            <p>We can rewrite the previous <code>$cut</code> function as
+            an arrow function:</p>
+            <div class="sourceCode" id="cb71"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="va">$cut</span> <span class="op">=</span> <span class="kw">fn</span>(<span class="dt">int</span> <span class="va">$numChars</span>) =&gt; <span class="fu">substr</span>(<span class="va">$hello</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="va">$numChars</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>As anonymous functions use can be very complex and
+            varied, it’s recommended to check the PHP manual entries
+            related with them:</p>
+            <ul>
+            <li><a
+            href="https://www.php.net/manual/en/functions.anonymous.php">Anonymous
+            functions in PHP</a></li>
+            <li><a
+            href="https://www.php.net/manual/en/language.types.callable.php">Callable
+            parameters</a></li>
+            <li><a
+            href="https://www.php.net/manual/en/functions.arrow.php">Arrow
+            functions</a></li>
+            </ul>
+            <h1 data-number="3"
+            id="include-and-require-statements"><span
+            class="header-section-number">3</span> Include and require
+            statements</h1>
+            <p>Usually, a function can only be invoked from the same
+            script when has been declared. Nevertheless, we can use a
+            function in any script by using the <strong>include</strong>
+            / <strong>require</strong> statements.</p>
+            <h2 data-number="3.1" id="include"><span
+            class="header-section-number">3.1</span> Include</h2>
+            <p>This statement takes all the text in the specified file
+            and includes it in the script, just as if the code had been
+            copied to that location.</p>
+            <p>We can use <strong><code>include</code></strong> to have
+            a library of functions and include them in our pages.</p>
+            <p>The <strong><code>include</code></strong> statement works
+            with functions, but not only with functions. Any piece of
+            code can be added to a script using this clause. We can use
+            <strong><code>include</code></strong> to include headers,
+            footers or other sections that are repeated from one
+            document to another.</p>
+            <p>A <code>functions.php</code> document:</p>
+            <div class="sourceCode" id="cb72"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> add(<span class="va">$x</span><span class="ot">,</span><span class="va">$y</span>) {</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$x</span> <span class="op">+</span> <span class="va">$y</span><span class="ot">;</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> sub(<span class="va">$x</span><span class="ot">,</span><span class="va">$y</span>) {</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$x</span> <span class="op">-</span> <span class="va">$y</span><span class="ot">;</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>and now, in our previous script:</p>
+            <div class="sourceCode" id="cb73"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="st">&quot;functions.php&quot;</span><span class="ot">;</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="va">$operation</span><span class="op">=</span><span class="st">&quot;add&quot;</span><span class="ot">;</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="va">$a</span><span class="op">=</span><span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="va">$b</span><span class="op">=</span><span class="dv">7</span><span class="ot">;</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$operation</span>(<span class="va">$a</span><span class="ot">,</span><span class="va">$b</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>This way we can use the functions in any script without
+            copying and pasting them, only including them by using the
+            <code>include</code> clause.</p>
+            <h2 data-number="3.2" id="require"><span
+            class="header-section-number">3.2</span> Require</h2>
+            <p>The <strong><code>require</code></strong> statement
+            includes and evaluates the specified file the same way that
+            <strong><code>include</code></strong> does. There is one
+            exception: when a file import fails,
+            <strong><code>require</code> halts the script with an
+            error</strong>, whereas
+            <strong><code>include</code></strong> only displays a
+            warning. So, with <strong><code>require</code></strong> is
+            obligatory for the required file to exist.</p>
+            <p>In any case, if we use
+            <strong><code>include | require</code></strong> the invoked
+            file should exist in order to avoid warnings or errors when
+            the functions are called and they’re not found.</p>
+            <h2 data-number="3.3" id="include_once"><span
+            class="header-section-number">3.3</span> Include_once</h2>
+            <p>The <strong><code>include_once</code></strong> statement
+            behaves like <strong><code>include</code></strong>, except
+            that if the specified file has already been included, it is
+            not included again.</p>
+            <div class="sourceCode" id="cb74"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="kw">include_once</span> <span class="st">&#39;myfile.php&#39;</span><span class="ot">;</span> <span class="co">// include the file only once</span></span></code></pre></div>
+            <h2 data-number="3.4" id="require_once"><span
+            class="header-section-number">3.4</span> Require_once</h2>
+            <p>The <strong><code>require_once</code></strong> statement
+            works like <strong><code>require</code></strong>, but it
+            does not import a file if it has already been imported.</p>
+            <h2 data-number="3.5" id="include-or-require"><span
+            class="header-section-number">3.5</span> Include or
+            require?</h2>
+            <p>Usually, we can think of using
+            <strong><code>include</code></strong> when the file to be
+            inserted is not decisive regarding the operation of our
+            program. We will use <strong><code>require</code></strong>
+            when the file is necessary for the correct operation of our
+            program.</p>
+            <p>Finally, the variants with
+            <strong><code>_once</code></strong> should be used when our
+            program has considerable dimensions and it may be the case
+            that the inclusion of the file occurs several times.</p>
+            <h2 data-number="3.6" id="the-__dir__-magic-constant"><span
+            class="header-section-number">3.6</span> The
+            <code>__DIR__</code> magic constant</h2>
+            <p>PHP 5.3 introduced a new magic constant called
+            <code>__DIR__</code>. When you reference the
+            <code>__DIR__</code> inside a file, it returns the directory
+            of the file. The <code>__DIR__</code> doesn’t include a
+            trailing slash e.g., <code>/</code> or <code>\</code> except
+            it’s a root directory.</p>
+            <p>It is recommended to use this constant on includes and
+            requires because PHP scripts run relative to the current
+            path, not to the path of their own file. Using
+            <code>__DIR__</code> forces the include to happen relative
+            to their own path.</p>
+            <p>For example, in the next files structure:</p>
+            <div class="sourceCode" id="cb75"><pre
+            class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> file1.php</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> dir/</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> file2.php</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> file3.php</span></span></code></pre></div>
+            <p>If <code>file2.php</code> includes <code>file3.php</code>
+            like this:</p>
+            <div class="sourceCode" id="cb76"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="st">`file3.php`</span><span class="ot">;</span></span></code></pre></div>
+            <p>It will work fine if you call <code>file2.php</code>
+            directly. However, if <code>file1.php</code> includes
+            <code>file2.php</code>, the current directory will be wrong
+            for <code>file2.php</code>, so file3.php cannot be included.
+            It will work fine if the include code is:</p>
+            <div class="sourceCode" id="cb77"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">`/file3.php`</span><span class="ot">;</span></span></code></pre></div>
+            <p>Note how we add the slash to the start of the file
+            name.</p>
+            <p>Therefore, it’s a good practice to use the
+            <code>__DIR__</code> constant when you include a file.</p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
