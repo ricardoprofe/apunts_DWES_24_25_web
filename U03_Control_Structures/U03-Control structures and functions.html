@@ -346,7 +346,7 @@ constant</a></li>
             <p>For example, instead of doing:</p>
             <div class="sourceCode" id="cb7"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="kw">isset</span>(<span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>]) <span class="ot">?</span> <span class="va">$_GET</span>[<span class="st">&#39;name]: &#39;&#39;;</span></span></code></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="kw">isset</span>(<span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>]) <span class="ot">?</span> <span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>]<span class="ot">:</span> <span class="st">&#39;&#39;</span><span class="ot">;</span></span></code></pre></div>
             <p>We can simply do:</p>
             <div class="sourceCode" id="cb8"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
@@ -551,7 +551,7 @@ constant</a></li>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>The increment can be any value besides 1.</p>
             <div class="sourceCode" id="cb21"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Let&#39;s show the odd numbers betweeh 1 and 10</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Let&#39;s show the odd numbers between 1 and 10</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>( <span class="va">$i</span> <span class="op">=</span><span class="dv">1</span> <span class="ot">;</span> <span class="va">$i</span> <span class="op">&lt;=</span> <span class="dv">10</span><span class="ot">;</span> <span class="va">$i</span> <span class="op">+=</span> <span class="dv">2</span>) {</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">echo</span> <span class="st">&quot;Number: </span><span class="va">$i</span><span class="st">&lt;br&gt;&quot;</span><span class="ot">;</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
