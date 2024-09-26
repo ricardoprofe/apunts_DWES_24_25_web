@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 04. PHP and Forms.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 04. PHP and Forms.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#reading-data-from-a-form"
+id="toc-reading-data-from-a-form"><span
+class="toc-section-number">1</span> Reading data from a Form</a>
+<ul>
+<li><a href="#post-method" id="toc-post-method"><span
+class="toc-section-number">1.1</span> POST method</a></li>
+<li><a href="#get-method" id="toc-get-method"><span
+class="toc-section-number">1.2</span> GET method</a></li>
+<li><a href="#reading-some-special-form-fields"
+id="toc-reading-some-special-form-fields"><span
+class="toc-section-number">1.3</span> Reading some special form
+fields</a>
+<ul>
+<li><a href="#reading-a-checkbox" id="toc-reading-a-checkbox"><span
+class="toc-section-number">1.3.1</span> Reading a checkbox</a></li>
+<li><a href="#reading-a-radio-group"
+id="toc-reading-a-radio-group"><span
+class="toc-section-number">1.3.2</span> Reading a radio group</a></li>
+<li><a href="#simple-and-multiple-select"
+id="toc-simple-and-multiple-select"><span
+class="toc-section-number">1.3.3</span> Simple and multiple
+SELECT</a></li>
+</ul></li>
+<li><a href="#using-get-or-post" id="toc-using-get-or-post"><span
+class="toc-section-number">1.4</span> Using GET or POST?</a></li>
+</ul></li>
+<li><a href="#validating-a-form" id="toc-validating-a-form"><span
+class="toc-section-number">2</span> Validating a Form</a></li>
+<li><a href="#security-and-form-handling"
+id="toc-security-and-form-handling"><span
+class="toc-section-number">3</span> Security and form handling</a>
+<ul>
+<li><a href="#cross-site-scripting-xss-attacks"
+id="toc-cross-site-scripting-xss-attacks"><span
+class="toc-section-number">3.1</span> Cross-Site Scripting (XSS)
+attacks</a></li>
+<li><a href="#data-validation" id="toc-data-validation"><span
+class="toc-section-number">3.2</span> Data validation</a></li>
+<li><a href="#data-sanitization" id="toc-data-sanitization"><span
+class="toc-section-number">3.3</span> Data sanitization</a>
+<ul>
+<li><a href="#strip_tags-function" id="toc-strip_tags-function"><span
+class="toc-section-number">3.3.1</span> strip_tags() function</a></li>
+<li><a href="#htmlspecialchars-function"
+id="toc-htmlspecialchars-function"><span
+class="toc-section-number">3.3.2</span> htmlspecialchars()
+function</a></li>
+<li><a href="#sanitization-filters" id="toc-sanitization-filters"><span
+class="toc-section-number">3.3.3</span> Sanitization filters</a></li>
+</ul></li>
+<li><a href="#header" id="toc-header"><span
+class="toc-section-number">3.4</span> Header</a></li>
+</ul></li>
+<li><a href="#sessions" id="toc-sessions"><span
+class="toc-section-number">4</span> Sessions</a></li>
+<li><a href="#partials" id="toc-partials"><span
+class="toc-section-number">5</span> Partials</a></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <p>So far, we have only worked with static pages, without
+            any interaction with the users. Now we want to add dynamism
+            to our web. The main way to do this is by allowing the users
+            to enter information using <strong>HTML Forms</strong>.</p>
+            <h1 data-number="1" id="reading-data-from-a-form"><span
+            class="header-section-number">1</span> Reading data from a
+            Form</h1>
+            <p>The data from the HTML form are sent to the script
+            specified in the
+            <strong><em><code>action</code></em></strong> label of the
+            form. In that script, data are available in an associative
+            array called <strong><code>$_GET</code></strong> or
+            <strong><code>$_POST</code></strong> depending on the method
+            used in the form.</p>
+            <p>In addition, they are available in the
+            <strong><code>$_REQUEST</code></strong> array too,
+            regardless of the method used in the form.</p>
+            <h2 data-number="1.1" id="post-method"><span
+            class="header-section-number">1.1</span> POST method</h2>
+            <p>If we have this form:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;destination.php&quot;</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;POST&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    Name: <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    1st Surname: <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;surname1&quot;</span><span class="dt">&gt;&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    2nd Surname: <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;surname2&quot;</span><span class="dt">&gt;&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Send&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>In the script
+            <strong><code>destination.php</code></strong> we will read
+            the form attributes using the <code>$_POST</code> or the
+            <code>$_REQUEST</code> arrays:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="va">$_POST</span>[<span class="st">&#39;name&#39;</span>]<span class="ot">;</span>  <span class="co">// or $name=$_REQUEST[&#39;name&#39;]</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">$surname1</span> <span class="op">=</span> <span class="va">$_POST</span>[<span class="st">&#39;surname1&#39;</span>]<span class="ot">;</span> <span class="co">// or $surname1=$_REQUEST[&#39;surname1&#39;]</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">$surname2</span> <span class="op">=</span> <span class="va">$_POST</span>[<span class="st">&#39;surname2&#39;</span>]<span class="ot">;</span> <span class="co">// or $surname2=$_REQUEST[&#39;surname2&#39;]</span></span></code></pre></div>
+            <h2 data-number="1.2" id="get-method"><span
+            class="header-section-number">1.2</span> GET method</h2>
+            <p>If the GET method is used in the form, everything works
+            in similar ways except that the data sent by the form are
+            attached to the URL.</p>
+            <p>If we modify the example above replacing POST with
+            GET:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;destination.php&quot;</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;GET&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>]<span class="ot">;</span>  </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">$surname1</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;surname1&#39;</span>]<span class="ot">;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">$surname2</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;surname2&#39;</span>]<span class="ot">;</span> </span></code></pre></div>
+            <p>We won’t find any difference with one exception. Let’s
+            take a look to our address bar when we send the data with
+            POST.</p>
+            <figure>
+            <img src="images/ud05-01.jpg"
+            alt="FORM sent with POST method" />
+            <figcaption aria-hidden="true">FORM sent with POST
+            method</figcaption>
+            </figure>
+            <p>And now, let’s compare the URL above with that with the
+            GET method.</p>
+            <figure>
+            <img src="images/ud05-02.jpg"
+            alt="FORM sent with GET method" />
+            <figcaption aria-hidden="true">FORM sent with GET
+            method</figcaption>
+            </figure>
+            <p>As you can see, the data sent by the form have been
+            attached to the URL of the destination page. That way, the
+            data are visible to the final user. We should decide whether
+            that’s important or not.</p>
+            <p>The advantage of this feature is that we can send data to
+            a script without using a form, just by attaching the
+            variables to the URL in a link.</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;test.php?name=Marta&quot;</span><span class="dt">&gt;</span>link<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> </span></code></pre></div>
+            <h2 data-number="1.3"
+            id="reading-some-special-form-fields"><span
+            class="header-section-number">1.3</span> Reading some
+            special form fields</h2>
+            <h3 data-number="1.3.1" id="reading-a-checkbox"><span
+            class="header-section-number">1.3.1</span> Reading a
+            checkbox</h3>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">fieldset</span><span class="dt">&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">legend</span><span class="dt">&gt;</span>Please select which sports do you like<span class="dt">&lt;/</span><span class="kw">legend</span><span class="dt">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        Baseball</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;baseball&quot;</span><span class="dt">&gt;&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        Basketball</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;basketball&quot;</span><span class="dt">&gt;&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">fieldset</span><span class="dt">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_REQUEST</span>[<span class="st">&#39;baseball&#39;</span>])) { … }</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_REQUEST</span>[<span class="st">&#39;basketball&#39;</span>])) { … }</span></code></pre></div>
+            <h3 data-number="1.3.2" id="reading-a-radio-group"><span
+            class="header-section-number">1.3.2</span> Reading a radio
+            group</h3>
+            <p>A radio group is defined by giving the same name to some
+            radio button elements. Only one radio button in a group can
+            be selected.</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;radio&quot;</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;html&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;fav_language&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;HTML&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;html&quot;</span><span class="dt">&gt;</span>HTML<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;radio&quot;</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;css&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;fav_language&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;CSS&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;css&quot;</span><span class="dt">&gt;</span>CSS<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;radio&quot;</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;javascript&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;fav_language&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ot">value</span><span class="op">=</span><span class="st">&quot;JavaScript&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;javascript&quot;</span><span class="dt">&gt;</span>JavaScript<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fav_language</span> <span class="op">=</span> <span class="va">$_REQUEST</span>[<span class="st">&#39;fav_language&#39;</span>]<span class="ot">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$fav_language</span><span class="ot">;</span></span></code></pre></div>
+            <h3 data-number="1.3.3"
+            id="simple-and-multiple-select"><span
+            class="header-section-number">1.3.3</span> Simple and
+            multiple SELECT</h3>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;cars&quot;</span><span class="dt">&gt;</span>Choose a car:<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">select</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;cars&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;cars&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">option</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;volvo&quot;</span><span class="dt">&gt;</span>Volvo<span class="dt">&lt;/</span><span class="kw">option</span><span class="dt">&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">option</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;saab&quot;</span><span class="dt">&gt;</span>Saab<span class="dt">&lt;/</span><span class="kw">option</span><span class="dt">&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">option</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;fiat&quot;</span><span class="dt">&gt;</span>Fiat<span class="dt">&lt;/</span><span class="kw">option</span><span class="dt">&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">option</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;audi&quot;</span><span class="dt">&gt;</span>Audi<span class="dt">&lt;/</span><span class="kw">option</span><span class="dt">&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">select</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>Use the <strong>multiple</strong> attribute to allow the
+            user to select more than one value. The PHP script will
+            receive the data as an <strong>array</strong>.</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">select</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;cars&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;cars[]&quot;</span><span class="ot"> size</span><span class="op">=</span><span class="st">&quot;4&quot;</span><span class="ot"> multiple</span><span class="dt">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">$cars</span> <span class="op">=</span> <span class="va">$_REQUEST</span>[<span class="st">&#39;cars&#39;</span>]<span class="ot">;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span> (<span class="va">$cars</span> <span class="kw">as</span> <span class="va">$car</span>) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$car</span><span class="st">&lt;br&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We can do the same with checkbox type inputs.</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;likes[]&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Sports&quot;</span><span class="dt">/&gt;</span>Sports<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;likes[]&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Music&quot;</span><span class="dt">/&gt;</span>Music<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;likes[]&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Reading&quot;</span><span class="dt">/&gt;</span>Reading<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;likes[]&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Movies&quot;</span><span class="dt">/&gt;</span>Movies<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span></code></pre></div>
+            <p>And then, in the PHP script:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="op">!</span><span class="kw">empty</span>(<span class="va">$_POST</span>[<span class="st">&#39;likes&#39;</span>])) {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;You like: &quot;</span><span class="ot">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$_POST</span>[<span class="st">&#39;likes&#39;</span>] <span class="kw">as</span> <span class="va">$like</span>) {</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="fu">strip_tags</span>(<span class="va">$like</span>)<span class="op">.</span><span class="st">&quot; &quot;</span><span class="ot">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="1.4" id="using-get-or-post"><span
+            class="header-section-number">1.4</span> Using GET or
+            POST?</h2>
+            <p>It’s always better to use the <code>POST</code> method,
+            because <code>GET</code> parameters are passed through the
+            URL and they become more exposed to an attack.</p>
+            <p>As a rule, we only should use <code>GET</code> in a form
+            when, once the form is submitted, nothing on the server
+            changes. Avoid using <code>GET</code> when the data sent by
+            the form are used to update a database, delete files,
+            include passwords and so on.</p>
+            <h1 data-number="2" id="validating-a-form"><span
+            class="header-section-number">2</span> Validating a
+            Form</h1>
+            <p>We need to validate the received data before using them.
+            It’s important to confirm if the data exist and if their
+            content is in the expected format. We have some functions in
+            PHP to check the status of a variable:</p>
+            <ul>
+            <li><strong><code>isset($variable)</code></strong> returns
+            true if the variable exists and is not null</li>
+            <li><strong><code>is_null($variable)</code></strong> returns
+            true if the variable has a null value</li>
+            <li><strong><code>empty($variable)</code></strong> returns
+            true if the variable has an empty value (<code>null</code>,
+            empty, <code>0</code>, <code>false</code>) or if the
+            variable doesn’t exist.</li>
+            <li><strong>Null coalescing operator</strong>, used to store
+            a value if exists and a default value otherwise.</li>
+            </ul>
+            <p>Let’s see an example. In the form above, enter the name
+            and the surnames, press the <strong>Send</strong> button and
+            see what happens.</p>
+            <figure>
+            <img src="images/ud05-03.jpg" alt="Valid data" />
+            <figcaption aria-hidden="true">Valid data</figcaption>
+            </figure>
+            <p>Now, return to the form and leave the surnames empty.</p>
+            <figure>
+            <img src="images/ud05-04.jpg" alt="Empty data" />
+            <figcaption aria-hidden="true">Empty data</figcaption>
+            </figure>
+            <p>As the surnames have been sent empty, they’re not
+            displayed. In this case this is not a big problem for us,
+            but in other circumstances it may be dangerous: we can get
+            an error or an unexpected operation.</p>
+            <p>And what happens if we try to go directly to the
+            destination page without having filled the form? Enter the
+            destination URL directly in your address bar (without the
+            parameters, just in case you are using the GET method).
+            You’ll get some warnings like these:</p>
+            <figure>
+            <img src="images/ud05-05.jpg" alt="No data received" />
+            <figcaption aria-hidden="true">No data received</figcaption>
+            </figure>
+            <p>In this case the data have not been sent empty, they
+            haven’t been sent at all.</p>
+            <p>We can use the function empty to check both if the data
+            exist and if they’re not empty. Thus, in the
+            <strong><em>destination.php</em></strong> page we should
+            do:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="op">!</span><span class="kw">empty</span>(<span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>])</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="kw">empty</span>(<span class="va">$_GET</span>[<span class="st">&#39;surname1&#39;</span>])</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="kw">empty</span>(<span class="va">$_GET</span>[<span class="st">&#39;surname2&#39;</span>])) {</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$name</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>]<span class="ot">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$surname1</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;surname1&#39;</span>]<span class="ot">;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$surname2</span> <span class="op">=</span> <span class="va">$_GET</span>[<span class="st">&#39;surname2&#39;</span>]<span class="ot">;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Your name is </span><span class="va">$name</span><span class="st"> </span><span class="va">$surname1</span><span class="st"> </span><span class="va">$surname2</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Please, get back to the form and fill all the fields&quot;</span><span class="ot">;</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>And now, wether the data are empty or not sent, we will
+            get the same result:</p>
+            <figure>
+            <img src="images/ud05-06.jpg"
+            alt="Data empty or not sent" />
+            <figcaption aria-hidden="true">Data empty or not
+            sent</figcaption>
+            </figure>
+            <p>We can add a link to return to the homepage and attach a
+            message to the link. We will be able to read the message
+            using <code>$_GET</code> in the homepage.</p>
+            <p>In the <strong><em>destination.php</em></strong>
+            page:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">$message</span><span class="op">=</span><span class="st">&quot;Please, fill all the fields&quot;</span><span class="ot">;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;a href=&#39;form.php?message=</span><span class="va">$message</span><span class="st">&#39;&gt;Go back to the form&lt;/a&gt;&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>And in the script where the form is:</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="op">!</span><span class="kw">empty</span>(<span class="va">$_GET</span>[<span class="st">&#39;message&#39;</span>])) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$message</span><span class="op">=</span><span class="va">$_GET</span>[<span class="st">&#39;message&#39;</span>]<span class="ot">;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h3&gt;</span><span class="va">$message</span><span class="st">&lt;/h3&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h1 data-number="3" id="security-and-form-handling"><span
+            class="header-section-number">3</span> Security and form
+            handling</h1>
+            <p>We should be aware of the security aspects of our
+            application when there is a exchange of information with the
+            user.</p>
+            <h2 data-number="3.1"
+            id="cross-site-scripting-xss-attacks"><span
+            class="header-section-number">3.1</span> Cross-Site
+            Scripting (XSS) attacks</h2>
+            <p>XSS occurs when an attacker is capable of injecting a
+            script, often Javascript or SQL code, into the output of a
+            web application.</p>
+            <p>Example: we have this form:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;post.php&quot;</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;post&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;comment&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Submit&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>And the page <code>post.php</code>:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$_POST</span>[<span class="st">&#39;comment&#39;</span>]<span class="ot">;</span></span></code></pre></div>
+            <p>If we type in the “comment” field of the form the
+            text:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span><span class="fu">alert</span>(<span class="st">&quot;hacked&quot;</span>)<span class="op">&lt;/</span>script<span class="op">&gt;</span></span></code></pre></div>
+            <p>This is what will happen:</p>
+            <figure>
+            <img src="images/ud05-08.jpg" alt="Hacked!" />
+            <figcaption aria-hidden="true">Hacked!</figcaption>
+            </figure>
+            <p>This is just an alert, but it could have been a dangerous
+            code!!</p>
+            <p>To avoid XSS attacks, we can employ some measures:</p>
+            <h2 data-number="3.2" id="data-validation"><span
+            class="header-section-number">3.2</span> Data
+            validation</h2>
+            <p>We must validate that the entered data match the required
+            type.</p>
+            <p>We can do the validation in the same HTML Form using
+            input features as <strong>type</strong> (type=number),
+            <code>max</code> &amp; <code>min</code>,
+            <code>maxlength</code> and <code>pattern</code>.</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Month (1-12):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;number&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;month&quot;</span><span class="ot"> min</span><span class="op">=</span><span class="st">&quot;1&quot;</span><span class="ot"> max</span><span class="op">=</span><span class="st">&quot;12&quot;</span><span class="dt">/&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>DNI: 8 numbers 1 capital letter</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> pattern</span><span class="op">=</span><span class="st">&quot;[0-9]{8}[A-Z]{1}&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;dni&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span></code></pre></div>
+            <p><a
+            href="https://www.w3schools.com/html/html_form_attributes.asp">More
+            information about HTML form attributes</a></p>
+            <p>Anyway, as someone can put <code>$_GET</code> parameters
+            directly in a URL, it’s a good practice to validate the data
+            in the PHP script too. We can use functions like
+            <code>is_numeric()</code>, <code>is_integer()</code>,
+            <code>is_double()</code> and so on.</p>
+            <figure>
+            <img src="images/ud05-07.jpg" alt="Type functions" />
+            <figcaption aria-hidden="true">Type functions</figcaption>
+            </figure>
+            <p>We can also use PHP patterns and the
+            <code>preg_match()</code> function.</p>
+            <p><a
+            href="https://www.w3schools.com/php/php_regex.asp">Info
+            about PHP patterns</a></p>
+            <p><a href="https://regex101.com/">RegEx101, to test regular
+            expressions</a></p>
+            <p>Let’s see how to validate a USA phone number and a
+            spanish DNI using patterns.</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">// phone number USA:</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="va">$phone1</span> <span class="op">=</span> <span class="st">&quot;1-909-466-4344&quot;</span><span class="ot">;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">// another phone</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="va">$phone2</span> <span class="op">=</span> <span class="st">&quot;992222222&quot;</span><span class="ot">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">preg_match</span>(<span class="st">&#39;/^((1-)?\d{3})-\d{3}-\d{4}/&#39;</span><span class="ot">,</span> <span class="va">$phone1</span>)) {</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$phone1</span><span class="st">: Valid USA phone number&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$phone1</span><span class="st">: Invalid USA phone number&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">preg_match</span>(<span class="st">&#39;/^((1-)?\d{3})-\d{3}-\d{4}/&#39;</span><span class="ot">,</span> <span class="va">$phone2</span>)) {</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$phone2</span><span class="st">: Valid USA phone number&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$phone2</span><span class="st">: Invalid USA phone number&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co">// A Spanish DNI</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="va">$dni1</span><span class="op">=</span><span class="st">&quot;11222333Y&quot;</span><span class="ot">;</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="va">$dni2</span><span class="op">=</span><span class="st">&quot;2jlkd9234&quot;</span><span class="ot">;</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">preg_match</span>(<span class="st">&#39;/^(\d{8})[A-Z]/&#39;</span><span class="ot">,</span> <span class="va">$dni1</span>)) {</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$dni1</span><span class="st">: Valid Spanish DNI&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$dni1</span><span class="st">: Invalid Spanish DNI&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">preg_match</span>(<span class="st">&#39;/^(\d{8})[A-Z]/&#39;</span><span class="ot">,</span> <span class="va">$dni2</span>)) {</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$dni2</span><span class="st">: Valid Spanish DNI&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$dni2</span><span class="st">: Invalid Spanish DNI&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Another validation method: using <strong>filters</strong>
+            and <strong>filter functions</strong>.</p>
+            <p>PHP offers some useful predefined filters. You can find
+            them at <a
+            href="https://www.php.net/manual/en/filter.filters.php">this
+            link</a></p>
+            <p>We can use the <strong><code>filter_var()</code></strong>
+            function to check if a expression or variable matches the
+            filter. For example, let’s see how to validate an email and
+            an IP address.</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="op">!</span><span class="fu">filter_var</span>(<span class="va">$email</span><span class="ot">,</span> <span class="cn">FILTER_VALIDATE_EMAIL</span>)) {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Invalid email address&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="op">!</span><span class="fu">filter_var</span>(<span class="va">$number</span><span class="ot">,</span> <span class="cn">FILTER_VALIDATE_IP</span>)) {</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Invalid IP address&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p><a
+            href="https://www.php.net/manual/en/ref.filter.php">Other
+            filter functions</a></p>
+            <h2 data-number="3.3" id="data-sanitization"><span
+            class="header-section-number">3.3</span> Data
+            sanitization</h2>
+            <p><strong>Data sanitization</strong> means check if the
+            data are secure and change or remove the bad portions of the
+            data to match our requirements. PHP offers different methods
+            to sanitize data. Basically, all of them remove HTML and PHP
+            tags from a string.</p>
+            <h3 data-number="3.3.1" id="strip_tags-function"><span
+            class="header-section-number">3.3.1</span> strip_tags()
+            function</h3>
+            <p>The <strong><code>strip_tags()</code></strong> function
+            receives two parameters. The first is the string to
+            sanitize. The second, optional, contains the allowed HTML
+            and PHP characters we want to keep in the string.</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$comment</span> <span class="op">=</span> <span class="fu">strip_tags</span>(<span class="va">$_POST</span>[<span class="st">&quot;comment&quot;</span>])<span class="ot">;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">// remove every HTML and PHP tag</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="va">$comment</span> <span class="op">=</span> <span class="fu">strip_tags</span>(<span class="va">$_POST</span>[<span class="st">&quot;comment&quot;</span>]<span class="ot">,</span><span class="st">&#39;&lt;br&gt;&#39;</span>)<span class="ot">;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">// remove every HTML and PHP tag except &lt;br&gt;</span></span></code></pre></div>
+            <h3 data-number="3.3.2" id="htmlspecialchars-function"><span
+            class="header-section-number">3.3.2</span>
+            htmlspecialchars() function</h3>
+            <p>The function
+            <strong><code>htmlspecialchars()</code></strong> prevents
+            code HTML execution, and just shows the HTML characters
+            literally. It replaces <code>&lt;</code> by
+            <code>&amp;lt;</code>, <code>&gt;</code> by
+            <code>&amp;gt;</code>, etc.</p>
+            <p>An example:</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">$htmlCode</span><span class="op">=</span><span class="st">&quot;&lt;a href=&#39;test&#39;&gt;Test&lt;/a&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Not sanitized: </span><span class="va">$htmlCode</span><span class="st"> &lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Sanitized: &quot;</span><span class="op">.</span><span class="fu">htmlspecialchars</span>(<span class="va">$htmlCode</span><span class="ot">,</span> <span class="cn">ENT_QUOTES</span>)<span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>The output:</p>
+            <figure>
+            <img src="images/ud05-09.jpg"
+            alt="Using htmlspecialchars" />
+            <figcaption aria-hidden="true">Using
+            htmlspecialchars</figcaption>
+            </figure>
+            <p><a
+            href="https://www.php.net/manual/en/function.htmlspecialchars.php">More
+            info about htmlspecialchars</a></p>
+            <h3 data-number="3.3.3" id="sanitization-filters"><span
+            class="header-section-number">3.3.3</span> Sanitization
+            filters</h3>
+            <p>In PHP we have some sanitization filters to be used with
+            the <code>filter_var()</code> function seen above. Some of
+            them are <code>FILTER_SANITIZE_EMAIL</code>,
+            <code>FILTER_SANITIZE_URL</code>,
+            <code>FILTER_SANITIZE_STRING</code>,
+            <code>FILTER_SANITIZE_NUMBER_FLOAT</code> or
+            <code>FILTER_SANITIZE_NUMBER_INT</code>.</p>
+            <p>When we use <code>filter_var()</code> with sanitization
+            filters, the functions returns the sanitized string instead
+            of TRUE/FALSE. An example:</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="va">$email1</span><span class="op">=</span><span class="st">&quot;(something@domain.com)&quot;</span><span class="ot">;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h4&gt;Before sanitization&lt;/h4&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">filter_var</span>(<span class="va">$email1</span><span class="ot">,</span><span class="cn">FILTER_VALIDATE_EMAIL</span>)) {</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The </span><span class="va">$email1</span><span class="st"> email is valid&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The </span><span class="va">$email1</span><span class="st"> email is not valid&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">// now we sanitize the email</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h4&gt;After sanitization&lt;/h4&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="va">$email1</span><span class="op">=</span><span class="fu">filter_var</span>(<span class="va">$email1</span><span class="ot">,</span><span class="cn">FILTER_SANITIZE_EMAIL</span>)<span class="ot">;</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="co">// and we try again</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">filter_var</span>(<span class="va">$email1</span><span class="ot">,</span><span class="cn">FILTER_VALIDATE_EMAIL</span>)) {</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The </span><span class="va">$email1</span><span class="st"> email is valid&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The </span><span class="va">$email1</span><span class="st"> email is not valid&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The output:</p>
+            <figure>
+            <img src="images/ud05-10.jpg" alt="Sanitizing an email" />
+            <figcaption aria-hidden="true">Sanitizing an
+            email</figcaption>
+            </figure>
+            <h2 data-number="3.4" id="header"><span
+            class="header-section-number">3.4</span> Header</h2>
+            <p>Sometimes we need to validate the form data before doing
+            anything else. Usually, if the data are no valid we want to
+            redirect the user to the main page.</p>
+            <p>With the <strong><code>header</code></strong> function we
+            can redirect the execution to any other page, and in
+            addition we can send parameters attached to the url that
+            will be read using the <code>$_GET</code> array.</p>
+            <p>The idea is to have a specific script for validation, and
+            then redirect the execution to the corresponding page
+            without the user having to click a link or a button.</p>
+            <blockquote>
+            <p>Another way of sending information to a page without user
+            intervention is using the <code>hidden</code> fields of a
+            form</p>
+            </blockquote>
+            <p><code>Header</code> works like this:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">header</span>(<span class="st">&quot;Location:index.html&quot;</span>)<span class="ot">;</span></span></code></pre></div>
+            <blockquote>
+            <p>It’s important that the redirection page (where the
+            <code>header</code> function is used) does not show anything
+            on the screen.</p>
+            </blockquote>
+            <p>Using <code>header</code> we can do something like
+            this:</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;validation.php&quot;</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;POST&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="er">...</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>and then, in the validation script:</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">// validation.php</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">empty</span>(<span class="va">$_POST</span>[<span class="st">&#39;name&#39;</span>])) {</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">header</span>(<span class="st">&quot;Location:error.php&quot;</span>)<span class="ot">:</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">header</span>(<span class="st">&quot;Location:follow.php&quot;</span>)<span class="ot">;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>If any data is invalid, we can redirect to the form again
+            instead of redirecting to an error page.</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">// validation.php</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">empty</span>(<span class="va">$_POST</span>[<span class="st">&#39;name&#39;</span>]) {</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">header</span>(<span class="st">&quot;Location:form.html&quot;</span>)<span class="ot">:</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">header</span>(<span class="st">&quot;Location: follow.php&quot;</span>)<span class="ot">;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We can attach parameters to the URL so send some
+            information to the destination page.</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">// validation.php</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">empty</span>(<span class="va">$_POST</span>[<span class="st">&#39;name&#39;</span>]) {</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">header</span>(<span class="st">&quot;Location:form.html?message=&#39;Please fill the form&#39;&quot;</span>)<span class="ot">:</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">header</span>(<span class="st">&quot;Location: follow.php?message=&#39;Welcome, user&#39;&quot;</span>)<span class="ot">;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>This information is read using <code>$_GET</code> in the
+            page referred by the URL.</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="op">!</span><span class="kw">empty</span>(<span class="va">$_GET</span>[<span class="st">&#39;message&#39;</span>])) {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Message: &quot;</span><span class="op">.</span><span class="fu">strip_tags</span>(<span class="va">$_GET</span>[<span class="st">&#39;message&#39;</span>])<span class="ot">;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>If we jump to a third page from the validation page, the
+            original <code>$_GET / $_POST</code> arrays are no longer
+            available. If we need to transfer some form data to a third
+            script from the validation page, we can use two methods. The
+            first one is, as we have seen above, to attach the data to
+            the URL in the <code>header</code> function.</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span><span class="op">=</span><span class="fu">strip_tags</span>(<span class="va">$_POST</span>[<span class="st">&#39;name&#39;</span>])<span class="ot">;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">header</span>(“<span class="cn">L</span>ocation<span class="ot">:</span>thirdpage<span class="op">.</span>php<span class="ot">?</span>name<span class="op">=</span><span class="va">$name</span>”)<span class="ot">;</span></span></code></pre></div>
+            <p>In the third page:</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="op">!</span><span class="kw">empty</span>(<span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>])) {</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$name</span><span class="op">=</span><span class="fu">strip_tags</span>(<span class="va">$_GET</span>[<span class="st">&#39;name&#39;</span>])<span class="ot">;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The second method is to use
+            <strong>sessions</strong>.</p>
+            <h1 data-number="4" id="sessions"><span
+            class="header-section-number">4</span> Sessions</h1>
+            <p>A <strong>session</strong> provides a way to make
+            variables available across multiple pages. In addition,
+            sessions provide control of the user activity.</p>
+            <p>To begin a session, we will use the function
+            <strong><code>session_start()</code></strong>. This function
+            must appear before any output is sent to the web page.</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="fu">session_start</span>()<span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
+            <p>Once the session is started, a
+            <strong><code>$_SESSION</code></strong> array can be used to
+            store session data. This session data will be available in
+            any other page as long as the session is running.</p>
+            <p>Let’s create a session variable called “username”:</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="va">$_SESSION</span>[<span class="st">&quot;password&quot;</span>]<span class="op">=</span><span class="va">$password</span><span class="ot">;</span></span></code></pre></div>
+            <p>To read the session variable we will do:</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&quot;password&quot;</span>])) {</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$_SESSION</span>[<span class="st">&quot;password&quot;</span>]<span class="op">==</span><span class="st">&quot;...&quot;</span>)</span></code></pre></div>
+            <p>We can remove all the session variables using the
+            <strong><code>session_destroy</code></strong> function.</p>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">session_destroy</span>()<span class="ot">;</span></span></code></pre></div>
+            <p>The function <code>session_destroy()</code> closes the
+            session, too. Therefore, sometimes the session information
+            is stored in cookies. In this case we will need to delete
+            the cookies as well. We can prevent the session information
+            being stored in cookies in the PHP configuration, changing
+            the <em>session.use_cookies</em> from 1 to 0.</p>
+            <p>The session duration can be fixed as well in the PHP
+            configuration (<em>session.cookie_lifetime</em> and
+            <em>session.gc.maxlifetime</em>) or manually checking the
+            time between interactions.</p>
+            <p>If we only want to delete one session variable, we can do
+            it with
+            <strong><code>unset($_SESSION[...])</code></strong>.</p>
+            <p>Session variables can be used to keep values on forms.
+            That way we can prevent the correct values from being lost
+            if we call again the form because of some invalid data.</p>
+            <div class="sourceCode" id="cb39"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="fu">session_start</span>()<span class="ot">;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;month&#39;</span>])<span class="op">&amp;&amp;</span><span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;year&#39;</span>])){</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$month</span><span class="op">=</span><span class="va">$_SESSION</span>[<span class="st">&#39;month&#39;</span>]<span class="ot">;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$year</span><span class="op">=</span><span class="va">$_SESSION</span>[<span class="st">&#39;year&#39;</span>]<span class="ot">;</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>form action<span class="op">=</span><span class="st">&quot;validation.php&quot;</span> method<span class="op">=</span><span class="st">&quot;POST&quot;</span><span class="op">&gt;</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="cn">M</span>onth<span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;text&quot;</span> name<span class="op">=</span><span class="st">&quot;month&quot;</span> value<span class="op">=</span><span class="st">&quot;&lt;?= </span><span class="va">$month</span><span class="st">;?&gt;&quot;</span><span class="op">/&gt;</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="cn">Y</span>ear<span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;text&quot;</span> name<span class="op">=</span><span class="st">&quot;year&quot;</span> value<span class="op">=</span><span class="st">&quot;&lt;?= </span><span class="va">$year</span><span class="st">;?&gt;&quot;</span><span class="op">/&gt;</span></span></code></pre></div>
+            <h1 data-number="5" id="partials"><span
+            class="header-section-number">5</span> Partials</h1>
+            <p>Typically, all pages of a web application have a common
+            part (header, footer, navigation bar, etc.). A good practice
+            consists in extracting these common parts to partial
+            files.</p>
+            <p>It is convenient to put them inside a partials’ folder.
+            Then we will include the partials in the main pages using
+            the <code>include</code> function.</p>
+            <p>In this example we will do 3 parts: for the beginning of
+            all pages, for the header, and for the end.</p>
+            <p>For instance, if we have the next basic template:</p>
+            <div class="sourceCode" id="cb40"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!</span><span class="cn">DOCTYPE</span> html<span class="op">&gt;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>title<span class="op">&gt;</span> <span class="cn">P</span>age <span class="cn">T</span>itle <span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta charset<span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="op">&gt;</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta name<span class="op">=</span><span class="st">&quot;author&quot;</span> content<span class="op">=</span><span class="st">&quot;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;!--</span> <span class="cn">O</span>ther head data<span class="ot">,</span> <span class="kw">as</span> stylesheets <span class="op">-</span>-&gt;</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>head<span class="op">&gt;</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>body<span class="op">&gt;</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="fu">header</span><span class="op">&gt;</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>h1<span class="op">&gt;</span><span class="cn">P</span>age <span class="fu">header</span><span class="op">&lt;/</span>h1<span class="op">&gt;</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span><span class="fu">header</span><span class="op">&gt;</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="cn">P</span>age<span class="op">-</span>content <span class="op">-</span>-&gt;</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>footer<span class="op">&gt;</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>p<span class="op">&gt;</span><span class="cn">D</span>eveloped by author<span class="st">&#39;s name, year&lt;/p&gt;</span></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/footer&gt;</span></span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/body&gt;</span></span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;</span></span></code></pre></div>
+            <p>We can split it in 3 parts: head, header and footer:</p>
+            <div class="sourceCode" id="cb41"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> head<span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!</span><span class="cn">DOCTYPE</span> html<span class="op">&gt;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>title<span class="op">&gt;</span> <span class="cn">P</span>age <span class="cn">T</span>itle <span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta charset<span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="op">&gt;</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta name<span class="op">=</span><span class="st">&quot;author&quot;</span> content<span class="op">=</span><span class="st">&quot;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;!--</span> <span class="cn">O</span>ther head data<span class="ot">,</span> <span class="kw">as</span> stylesheets <span class="op">-</span>-&gt;</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>head<span class="op">&gt;</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>body<span class="op">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb42"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="fu">header</span><span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="fu">header</span><span class="op">&gt;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>h1<span class="op">&gt;</span><span class="cn">P</span>age <span class="fu">header</span><span class="op">&lt;/</span>h1<span class="op">&gt;</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span><span class="fu">header</span><span class="op">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb43"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer.part.php --&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">footer</span><span class="dt">&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Developed by author&#39;s name, year<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">footer</span><span class="dt">&gt;</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>And then include them in each page we make:</p>
+            <div class="sourceCode" id="cb44"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co">//main.php</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/head.part.php&#39;</span><span class="ot">;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/header.part.php&#39;</span><span class="ot">;</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Main content</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/footer.part.php&#39;</span><span class="ot">;</span></span></code></pre></div>
+            <p>An improvement is to create variables for the title,
+            author, etc. in the main file and use them in the partial
+            files:</p>
+            <div class="sourceCode" id="cb45"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co">//main.php</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co">//Template variables</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="va">$pageTitle</span> <span class="op">=</span> <span class="st">&quot;My Page Title&quot;</span><span class="ot">;</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="va">$authorName</span> <span class="op">=</span> <span class="st">&quot;My name&quot;</span><span class="ot">;</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="va">$pageHeader</span> <span class="op">=</span> <span class="st">&quot;My page header&quot;</span><span class="ot">;</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/head.part.php&#39;</span><span class="ot">;</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/header.part.php&#39;</span><span class="ot">;</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Main content</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/footer.part.php&#39;</span><span class="ot">;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb46"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> head<span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!</span><span class="cn">DOCTYPE</span> html<span class="op">&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>title<span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$pageTitle</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta charset<span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="op">&gt;</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta name<span class="op">=</span><span class="st">&quot;author&quot;</span> content<span class="op">=</span><span class="st">&quot;&lt;?= </span><span class="va">$authorName</span><span class="st"> ?&gt;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;!--</span> <span class="cn">O</span>ther head data<span class="ot">,</span> <span class="kw">as</span> stylesheets <span class="op">-</span>-&gt;</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>head<span class="op">&gt;</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>body<span class="op">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb47"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="fu">header</span><span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="fu">header</span><span class="op">&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>h1<span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$pageHeader</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>h1<span class="op">&gt;</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span><span class="fu">header</span><span class="op">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb48"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- footer.part.php --&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">footer</span><span class="dt">&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Developed by <span class="kw">&lt;?</span>= $authorName <span class="kw">?&gt;</span>, year<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">footer</span><span class="dt">&gt;</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>These variables (or constants) can go on a separate file
+            which we can include in our page.</p>
+            <p>If we want to add more data to the <code>head</code>,
+            such as stylesheets, we can generate or include them in the
+            main page, assign it to a variable and then use it in the
+            <code>head.part.php</code> file. Let’s do it with a
+            function:</p>
+            <div class="sourceCode" id="cb49"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co">//main.php</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co">//Template variables</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="va">$pageTitle</span> <span class="op">=</span> <span class="st">&quot;My Page Title&quot;</span><span class="ot">;</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="va">$authorName</span> <span class="op">=</span> <span class="st">&quot;My name&quot;</span><span class="ot">;</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="va">$pageHeader</span> <span class="op">=</span> <span class="st">&quot;My page header&quot;</span><span class="ot">;</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="va">$sheet</span> <span class="op">=</span> <span class="st">&quot;css/main.css&quot;</span><span class="ot">;</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> linkStylesheet(<span class="va">$sheet</span>) {</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;&lt;link rel=&#39;stylesheet&#39; href=&#39;</span><span class="va">$sheet</span><span class="st">&#39;&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/head.part.php&#39;</span><span class="ot">;</span></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/header.part.php&#39;</span><span class="ot">;</span></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Main content</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/footer.part.php&#39;</span><span class="ot">;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb50"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> head<span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!</span><span class="cn">DOCTYPE</span> html<span class="op">&gt;</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>title<span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$pageTitle</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta charset<span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="op">&gt;</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta name<span class="op">=</span><span class="st">&quot;author&quot;</span> content<span class="op">=</span><span class="st">&quot;&lt;?= </span><span class="va">$authorName</span><span class="st"> ?&gt;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;!--</span> <span class="cn">O</span>ther head data<span class="ot">,</span> <span class="kw">as</span> stylesheets <span class="op">-</span>-&gt;</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> linkStylesheet(<span class="va">$sheet</span>) <span class="kw">?&gt;</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>head<span class="op">&gt;</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>body<span class="op">&gt;</span></span></code></pre></div>
+            <p>We can replace the <code>linkStylesheet</code> function
+            with an arrow function, to make it shorter:</p>
+            <div class="sourceCode" id="cb51"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">//main.php</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="va">$linkStylesheet</span> <span class="op">=</span> <span class="kw">fn</span>() =&gt; <span class="st">&quot;&lt;link rel=&#39;stylesheet&#39; href=&#39;</span><span class="va">$sheet</span><span class="st">&#39;&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb52"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> head<span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$linkStylesheet</span>()<span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
+            <p>And finally, we can generate automatically the year in
+            the footer:</p>
+            <div class="sourceCode" id="cb53"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> footer<span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>footer<span class="op">&gt;</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>p<span class="op">&gt;</span><span class="cn">D</span>eveloped by <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$authorName</span> <span class="kw">?&gt;</span><span class="ot">,</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="fu">date</span>(<span class="st">&quot;Y&quot;</span>)<span class="ot">;</span><span class="kw">?&gt;</span><span class="op">&lt;/</span>p<span class="op">&gt;</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>footer<span class="op">&gt;</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>body<span class="op">&gt;</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>html<span class="op">&gt;</span></span></code></pre></div>
+            <p>With the previous parts and the below main script:</p>
+            <div class="sourceCode" id="cb54"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co">//main.php</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co">//Template variables</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="va">$pageTitle</span> <span class="op">=</span> <span class="st">&quot;My Page Title&quot;</span><span class="ot">;</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="va">$authorName</span> <span class="op">=</span> <span class="st">&quot;My name&quot;</span><span class="ot">;</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="va">$pageHeader</span> <span class="op">=</span> <span class="st">&quot;My page header&quot;</span><span class="ot">;</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="va">$sheet</span> <span class="op">=</span> <span class="st">&quot;css/main.css&quot;</span><span class="ot">;</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/functions.php&#39;</span><span class="ot">;</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/head.part.php&#39;</span><span class="ot">;</span></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/header.part.php&#39;</span><span class="ot">;</span></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Main content</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/parts/footer.part.php&#39;</span><span class="ot">;</span></span></code></pre></div>
+            <p>the generated code should be:</p>
+            <div class="sourceCode" id="cb55"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> head<span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!</span><span class="cn">DOCTYPE</span> html<span class="op">&gt;</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>title<span class="op">&gt;</span> <span class="cn">M</span>y <span class="cn">P</span>age <span class="cn">T</span>itle <span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta charset<span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="op">&gt;</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>meta name<span class="op">=</span><span class="st">&quot;author&quot;</span> content<span class="op">=</span><span class="st">&quot;My name&quot;</span><span class="op">&gt;</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;!--</span> <span class="cn">O</span>ther head data<span class="ot">,</span> <span class="kw">as</span> stylesheets <span class="op">-</span>-&gt;</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span><span class="fu">link</span> rel<span class="op">=</span><span class="st">&#39;stylesheet&#39;</span> href<span class="op">=</span><span class="st">&#39;css/main.css&#39;</span><span class="op">&gt;</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>head<span class="op">&gt;</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>body<span class="op">&gt;</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="fu">header</span><span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="fu">header</span><span class="op">&gt;</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>h1<span class="op">&gt;</span> <span class="cn">M</span>y page <span class="fu">header</span> <span class="op">&lt;/</span>h1<span class="op">&gt;</span></span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span><span class="fu">header</span><span class="op">&gt;</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a><span class="cn">M</span>ain content</span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> footer<span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>footer<span class="op">&gt;</span></span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>p<span class="op">&gt;</span><span class="cn">D</span>eveloped by <span class="cn">M</span>y name<span class="ot">,</span> <span class="dv">2022</span><span class="op">&lt;/</span>p<span class="op">&gt;</span></span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>footer<span class="op">&gt;</span></span>
+<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>body<span class="op">&gt;</span></span>
+<span id="cb55-24"><a href="#cb55-24" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>html<span class="op">&gt;</span></span></code></pre></div>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
