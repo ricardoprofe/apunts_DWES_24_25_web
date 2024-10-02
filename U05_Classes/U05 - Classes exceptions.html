@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 05. Classes in PHP. Exceptions.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 05. Classes in PHP. Exceptions.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#object-oriented-programming"
+id="toc-object-oriented-programming"><span
+class="toc-section-number">1</span> Object-Oriented Programming</a></li>
+<li><a href="#classes-in-php" id="toc-classes-in-php"><span
+class="toc-section-number">2</span> Classes in PHP</a>
+<ul>
+<li><a href="#access-modifiers" id="toc-access-modifiers"><span
+class="toc-section-number">2.1</span> Access modifiers</a></li>
+<li><a href="#creating-objects" id="toc-creating-objects"><span
+class="toc-section-number">2.2</span> Creating objects</a></li>
+<li><a href="#comparing-objects" id="toc-comparing-objects"><span
+class="toc-section-number">2.3</span> Comparing objects</a></li>
+<li><a href="#constructor-method" id="toc-constructor-method"><span
+class="toc-section-number">2.4</span> Constructor method</a></li>
+<li><a href="#destructor-method" id="toc-destructor-method"><span
+class="toc-section-number">2.5</span> Destructor method</a></li>
+<li><a href="#extends-and-inheritance"
+id="toc-extends-and-inheritance"><span
+class="toc-section-number">2.6</span> Extends and inheritance</a>
+<ul>
+<li><a href="#constructor-method-and-inheritance"
+id="toc-constructor-method-and-inheritance"><span
+class="toc-section-number">2.6.1</span> Constructor method and
+inheritance</a></li>
+<li><a href="#method-overriding" id="toc-method-overriding"><span
+class="toc-section-number">2.6.2</span> Method overriding</a></li>
+<li><a href="#final-keyword" id="toc-final-keyword"><span
+class="toc-section-number">2.6.3</span> Final keyword</a></li>
+</ul></li>
+<li><a href="#const-keyword" id="toc-const-keyword"><span
+class="toc-section-number">2.7</span> Const keyword</a></li>
+<li><a href="#static-modifier" id="toc-static-modifier"><span
+class="toc-section-number">2.8</span> Static modifier</a></li>
+<li><a href="#implements-and-interfaces"
+id="toc-implements-and-interfaces"><span
+class="toc-section-number">2.9</span> Implements and interfaces</a></li>
+<li><a href="#traits" id="toc-traits"><span
+class="toc-section-number">2.10</span> Traits</a></li>
+<li><a href="#abstract-classes-and-methods"
+id="toc-abstract-classes-and-methods"><span
+class="toc-section-number">2.11</span> Abstract classes and
+methods</a></li>
+<li><a href="#traits-vs-interfaces-vs-abstract-classes"
+id="toc-traits-vs-interfaces-vs-abstract-classes"><span
+class="toc-section-number">2.12</span> Traits vs Interfaces vs Abstract
+Classes</a></li>
+<li><a href="#polymorphism-in-php" id="toc-polymorphism-in-php"><span
+class="toc-section-number">2.13</span> Polymorphism in PHP</a></li>
+<li><a href="#anonymous-classes" id="toc-anonymous-classes"><span
+class="toc-section-number">2.14</span> Anonymous classes</a></li>
+<li><a href="#magic-methods" id="toc-magic-methods"><span
+class="toc-section-number">2.15</span> Magic methods</a></li>
+<li><a href="#serializing-objects" id="toc-serializing-objects"><span
+class="toc-section-number">2.16</span> Serializing objects</a></li>
+<li><a href="#some-useful-class-functions"
+id="toc-some-useful-class-functions"><span
+class="toc-section-number">2.17</span> Some useful class
+functions</a></li>
+<li><a href="#some-useful-object-functions"
+id="toc-some-useful-object-functions"><span
+class="toc-section-number">2.18</span> Some useful object
+functions</a></li>
+</ul></li>
+<li><a href="#namespaces" id="toc-namespaces"><span
+class="toc-section-number">3</span> Namespaces</a></li>
+<li><a href="#handling-errors-and-exceptions-in-php"
+id="toc-handling-errors-and-exceptions-in-php"><span
+class="toc-section-number">4</span> Handling errors and exceptions in
+PHP</a>
+<ul>
+<li><a href="#exceptions" id="toc-exceptions"><span
+class="toc-section-number">4.1</span> Exceptions</a>
+<ul>
+<li><a href="#how-to-handle-exceptions"
+id="toc-how-to-handle-exceptions"><span
+class="toc-section-number">4.1.1</span> How to handle
+exceptions</a></li>
+<li><a href="#finally-section" id="toc-finally-section"><span
+class="toc-section-number">4.1.2</span> Finally section</a></li>
+<li><a href="#some-exceptions-handling-methods"
+id="toc-some-exceptions-handling-methods"><span
+class="toc-section-number">4.1.3</span> Some exceptions handling
+methods</a></li>
+<li><a href="#extending-the-exception-class"
+id="toc-extending-the-exception-class"><span
+class="toc-section-number">4.1.4</span> Extending the Exception
+class</a></li>
+<li><a href="#specific-exceptions" id="toc-specific-exceptions"><span
+class="toc-section-number">4.1.5</span> Specific exceptions</a></li>
+<li><a href="#throwing-an-exception"
+id="toc-throwing-an-exception"><span
+class="toc-section-number">4.1.6</span> Throwing an exception</a></li>
+</ul></li>
+<li><a href="#warnings" id="toc-warnings"><span
+class="toc-section-number">4.2</span> Warnings</a>
+<ul>
+<li><a href="#how-to-handle-a-warning"
+id="toc-how-to-handle-a-warning"><span
+class="toc-section-number">4.2.1</span> How to handle a
+warning?</a></li>
+<li><a href="#using-a-error-log-file"
+id="toc-using-a-error-log-file"><span
+class="toc-section-number">4.2.2</span> Using a error log file</a></li>
+</ul></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="object-oriented-programming"><span
+            class="header-section-number">1</span> Object-Oriented
+            Programming</h1>
+            <p>In this unit we assume that you are already familiar with
+            the concepts of <strong>Object-Oriented Programming</strong>
+            (<strong>OOP</strong>): classes, objectes, methods,
+            inheritance and so on.</p>
+            <p>So, instead of explaining these theoretical concepts, we
+            will focus on practice: how to work with classes and objects
+            in PHP? Let’s see it.</p>
+            <h1 data-number="2" id="classes-in-php"><span
+            class="header-section-number">2</span> Classes in PHP</h1>
+            <p>A class is defined by using the keyword
+            <strong><code>class</code></strong> followed by its
+            name.</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> myClass {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ...properties</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    ...methods</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>As you can see, the properties and methods of the class
+            are declared inside curly brackets (<code>{}</code>).</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>erson {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$address</span><span class="ot">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The methods are declared inside the brackets too. Methods
+            are declared using the keyword
+            <strong><code>function</code></strong> followed by its
+            name.</p>
+            <p>Inside the methods, the properties of the class are
+            referenced using
+            <strong><code>$this-&gt;propertyName</code></strong>.</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>erson {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$address</span><span class="ot">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// get methods</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> getName() { <span class="cf">return</span> <span class="va">$this</span>-&gt;name<span class="ot">;</span> }</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> getAddress() { <span class="cf">return</span> <span class="va">$this</span>-&gt;address<span class="ot">;</span> }</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// set methods</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> setName(<span class="va">$name</span>) { <span class="va">$this</span>-&gt;name <span class="op">=</span> <span class="va">$name</span><span class="ot">;</span> }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> setAddress(<span class="va">$address</span>) { <span class="va">$this</span>-&gt;address <span class="op">=</span> <span class="va">$address</span><span class="ot">;</span> }</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="2.1" id="access-modifiers"><span
+            class="header-section-number">2.1</span> Access
+            modifiers</h2>
+            <p>Properties and methods can be <strong>private</strong>,
+            <strong>protected</strong> or <strong>public</strong>.</p>
+            <p>We can’t access directly to a private method or property
+            outside the class. So we must implement <strong>get</strong>
+            and <strong>set</strong> methods like seen in the example
+            above.</p>
+            <p>Properties and methods declared as
+            <strong>protected</strong> can only be invoked directly
+            inside the class and inside its child classes.</p>
+            <p>Properties and method declared <strong>public</strong>
+            can be used directly outside the class and its child
+            classes.</p>
+            <p><strong>Properties</strong> and <strong>methods</strong>
+            declared without any explicit visibility keyword are defined
+            as <strong>public</strong>.</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>erson {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="va">$address</span><span class="ot">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">protected</span> <span class="va">$birthDate</span><span class="ot">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$age</span><span class="ot">;</span> <span class="co">//this is public</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="va">$onePerson</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>erson()<span class="ot">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="va">$onePerson</span>-&gt;name <span class="op">=</span> <span class="st">&quot;John Smith&quot;</span><span class="ot">;</span> <span class="co">// FAILS</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="va">$onePerson</span>-&gt;address <span class="op">=</span> <span class="st">&quot;Trafalgar Square&quot;</span><span class="ot">;</span> <span class="co">// IT WORKS</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="va">$onePerson</span>-&gt;birthDate <span class="op">=</span> <span class="st">&quot;2000-03-03&quot;</span><span class="ot">;</span> <span class="co">// FAILS</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="va">$onePerson</span>-&gt;age <span class="op">=</span> <span class="dv">23</span><span class="ot">;</span> <span class="co">// IT WORKS</span></span></code></pre></div>
+            <h2 data-number="2.2" id="creating-objects"><span
+            class="header-section-number">2.2</span> Creating
+            objects</h2>
+            <p>An object is created using the keyword
+            <strong><code>new</code></strong> followed by the name of
+            the class and a pair of parenthesis (with or without
+            parameters).</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">$someone</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>erson()<span class="ot">;</span></span></code></pre></div>
+            <p>We have instantiated the class in order to create the
+            object <strong><code>$someone</code></strong>.</p>
+            <p>Properties and methods are referenced using
+            <strong><code>-&gt;</code></strong>.</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>erson {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> getName() { <span class="cf">return</span> <span class="va">$this</span>-&gt;name<span class="ot">;</span> }</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> setName(<span class="va">$name</span>) { <span class="va">$this</span>-&gt;name <span class="op">=</span> <span class="va">$name</span><span class="ot">;</span> }</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="va">$someone</span><span class="op">=</span><span class="kw">new</span> <span class="cn">P</span>erson()<span class="ot">;</span> <span class="co">// we create the object</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="va">$someone</span>-&gt;name<span class="op">=</span><span class="st">&quot;John Smith&quot;</span><span class="ot">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">// we assign a value to the property $name</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">// this will only work if the property $name is public</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="va">$someone</span>-&gt;setName(<span class="st">&quot;John Smith&quot;</span>)<span class="ot">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">// this assigns a value to the $name property using the public method</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">// this is how we do it when the property is defined as private</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="va">$someone</span>-&gt;name<span class="ot">;</span> </span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">// this only works if the property name is public</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="va">$someone</span>-&gt;getName()<span class="ot">;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">// this is how we get the value of a private property</span></span></code></pre></div>
+            <p>We can check if an object belongs to a certain class
+            using the operator
+            <strong><code>instanceof</code></strong>.</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$onePerson</span> <span class="kw">instanceof</span> <span class="cn">P</span>erson) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot; The object belongs to the Person class&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot; The object doesn&#39;t belong to the Person class&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="2.3" id="comparing-objects"><span
+            class="header-section-number">2.3</span> Comparing
+            objects</h2>
+            <p>The equal operator (<code>==</code>) returns
+            <strong>True</strong> if the two compared objects are
+            instances of the same class and their properties have the
+            same values and types.</p>
+            <p>The identity operator <code>(===</code>) returns
+            <strong>True</strong> if the two compared objects reference
+            the same instance of the class.</p>
+            <p>Let’s see an example with this class:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">R</span>ectangle {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$base</span><span class="ot">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$height</span><span class="ot">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="bu">__construct</span>(<span class="va">$base</span><span class="ot">,</span><span class="va">$height</span>) {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;base<span class="op">=</span><span class="va">$base</span><span class="ot">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;height<span class="op">=</span><span class="va">$height</span><span class="ot">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We declare two objects with the same values for base and
+            height:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rectObject01</span><span class="op">=</span><span class="kw">new</span> <span class="cn">R</span>ectangle(<span class="dv">5</span><span class="ot">,</span><span class="dv">10</span>)<span class="ot">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">$rectObject02</span><span class="op">=</span><span class="kw">new</span> <span class="cn">R</span>ectangle(<span class="dv">5</span><span class="ot">,</span><span class="dv">10</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>Now, let’s compare the objects:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$rectObject01</span><span class="op">==</span><span class="va">$rectObject02</span>) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The two objects are equal&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The two objects are not equal&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$rectObject01</span><span class="op">===</span><span class="va">$rectObject02</span>) {</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The two objects are identical&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;The two objects are not identical&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We will get:</p>
+            <figure>
+            <img src="images/ud07-03.jpg" alt="Comparing objects" />
+            <figcaption aria-hidden="true">Comparing
+            objects</figcaption>
+            </figure>
+            <p>Now, let’s try again defining one object as a copy of the
+            other.</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rectObject01</span><span class="op">=</span><span class="kw">new</span> <span class="cn">R</span>ectangle(<span class="dv">5</span><span class="ot">,</span><span class="dv">10</span>)<span class="ot">;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="va">$rectObject02</span><span class="op">=</span><span class="va">$rectObject01</span><span class="ot">;</span></span></code></pre></div>
+            <p>Now, if we compare the two objects with == and === we
+            will get:</p>
+            <figure>
+            <img src="images/ud07-04.jpg"
+            alt="Comparing identical objects" />
+            <figcaption aria-hidden="true">Comparing identical
+            objects</figcaption>
+            </figure>
+            <p>In this case, <code>rectObject02</code> is not an exact
+            copy of <code>rectObject01</code>, it is a reference to the
+            same object. If we change any property of
+            <code>rectObject02</code>, we are changing the same property
+            of <code>rectObject01</code>.</p>
+            <h2 data-number="2.4" id="constructor-method"><span
+            class="header-section-number">2.4</span> Constructor
+            method</h2>
+            <p>A <strong>constructor method</strong> is a method that,
+            if exists, is invoked every time we create an object. In
+            some languages, the constructor method must have the same
+            name as the class. In PHP we can declare a constructor
+            method defining a method with the name
+            <strong><code>__construct</code></strong> with or without
+            parameters.</p>
+            <p>Unlike other languages, in PHP we’re not allowed to
+            create two or more <strong><code>__construct</code></strong>
+            methods with different parameters.</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>erson {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> <span class="bu">__construct</span>(<span class="va">$name</span>) {</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;name<span class="op">=</span><span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    …</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="va">$onePerson</span><span class="op">=</span><span class="kw">new</span> <span class="cn">P</span>erson(<span class="st">&quot;John&quot;</span>)<span class="ot">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">// the constructor is automatically invoked when the object</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">// is created assigning &quot;John&quot; to $name</span></span></code></pre></div>
+            <h2 data-number="2.5" id="destructor-method"><span
+            class="header-section-number">2.5</span> Destructor
+            method</h2>
+            <p>A <strong>destructor method</strong> is automatically
+            called when the last instance of an object is destructed, or
+            when we stop/abandon the script where it has been
+            created.</p>
+            <p>In PHP we can create a method
+            <strong><code>__destruct()</code></strong> in order to force
+            the destructor to do any task other than just “garbage
+            collecting”.</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>erson {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="bu">__destruct</span>() {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// the code goes here</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// this code will be executed when the object is destroyed</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We can manually remove all the references to an object
+            using the <strong><code>unset</code></strong> function (like
+            we did with session variables).</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">unset</span>(<span class="va">$onePerson</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>Once the <code>unset</code> function destroys all the
+            instances of the object, the destructor method of the class
+            will be invoked.</p>
+            <h2 data-number="2.6" id="extends-and-inheritance"><span
+            class="header-section-number">2.6</span> Extends and
+            inheritance</h2>
+            <p>A class can be an extension of another class. In this
+            case, the extended class will inherit the properties and
+            methods of the main class.</p>
+            <p>We define an extended class using the
+            <strong><code>extends</code></strong> clause.</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> mySubclass <span class="kw">extends</span> myClass {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    ...own properties</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    ...own methods</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The <strong><code>mySubClass</code></strong> is a child
+            class of <strong><code>myClass</code></strong>. Thus,
+            <strong><code>mySubClass</code></strong> inherits the
+            methods and properties of
+            <strong><code>myClass</code></strong>. Let’s see an
+            example:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Parent class </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">F</span>igure {</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">protected</span> <span class="va">$x</span><span class="ot">,</span> <span class="va">$y</span><span class="ot">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="bu">__construct</span>(<span class="va">$a</span><span class="ot">,</span> <span class="va">$b</span>) {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;x <span class="op">=</span> <span class="va">$a</span><span class="ot">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;y <span class="op">=</span> <span class="va">$b</span><span class="ot">;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Child class </span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">S</span>quare <span class="kw">extends</span> <span class="cn">F</span>igure {</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    ... <span class="co">// we don&#39;t define the $x and $y properties</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    ... <span class="co">// but they&#39;re inherited from the parent class</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="va">$figObject</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">F</span>igure(<span class="dv">10</span><span class="ot">,</span><span class="dv">5</span>)<span class="ot">;</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="va">$squObject</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">S</span>quare(<span class="dv">10</span><span class="ot">,</span><span class="dv">5</span>)<span class="ot">;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">// as $x and $y have been declared as protected in the</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">// parent class, they can be directly accessed from the </span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co">// child class using -&gt;, but they&#39;re not accessible outside</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">// the parent and child classes</span></span></code></pre></div>
+            <p>A class in PHP can only inherit from one parent class,
+            although we have methods to implement something similar to
+            multiple inheritance.</p>
+            <p>The parent class must be defined before the child class
+            in the script.</p>
+            <h3 data-number="2.6.1"
+            id="constructor-method-and-inheritance"><span
+            class="header-section-number">2.6.1</span> Constructor
+            method and inheritance</h3>
+            <p>A child class inherits the constructor method from its
+            parent class. The constructor is automatically invoked when
+            an object (both of parent or child classes) is created.</p>
+            <p>Therefore, <strong>the child class can have its own
+            constructor method</strong>. In that case, <strong>when an
+            object of the child class is created, only the child class
+            constructor will be invoked</strong> automatically.</p>
+            <p>If we want to invoke the parent constructor in addition
+            to the child constructor, we can do it by explicitly calling
+            the parent constructor with
+            <strong><code>parent::__construct</code></strong>.</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">T</span>eacher <span class="kw">extends</span> <span class="cn">P</span>erson {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$specialty</span><span class="ot">;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="bu">__construct</span>(<span class="va">$name</span><span class="ot">,</span> <span class="va">$surname</span><span class="ot">,</span> <span class="va">$specialty</span>) {</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">parent</span>::<span class="bu">__construct</span>(<span class="va">$name</span><span class="ot">,</span> <span class="va">$surname</span>)<span class="ot">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;specialty <span class="op">=</span> <span class="va">$specialty</span><span class="ot">;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>When we create a <strong>Teacher</strong> object
+            with:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="va">$teacher</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">T</span>eacher(<span class="st">&quot;Fidel&quot;</span><span class="ot">,</span><span class="st">&quot;Oltra&quot;</span><span class="ot">,</span><span class="st">&quot;Informàtica&quot;</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>The <code>__construct</code> of the
+            <strong>Teacher</strong> class will be executed. Then,
+            with:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">parent</span>::<span class="bu">__construct</span>(<span class="va">$name</span><span class="ot">,</span> <span class="va">$surname</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>the parent constructor will be invoked and the name and
+            surname are saved into the object. After that, with:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="va">$this</span>-&gt;specialty <span class="op">=</span> <span class="va">$specialty</span><span class="ot">;</span></span></code></pre></div>
+            <p>The third parameter of the <strong>Teacher</strong>
+            constructor, the specialty (“Informàtica”), will be saved
+            into the object as well.</p>
+            <h3 data-number="2.6.2" id="method-overriding"><span
+            class="header-section-number">2.6.2</span> Method
+            overriding</h3>
+            <p><strong>Method overriding</strong> consists of declaring
+            a method in the child class with the same name, parameters
+            and return type as a method in the parent class. The code in
+            the <strong>overriding method</strong> (the child method)
+            replaces the code in the <strong>overridden method</strong>
+            (the parent method with the same name, parameters and return
+            type).</p>
+            <p>Thus, we have two methods that will be invoked exactly in
+            the same way. If the method is invoked by a parent class
+            object, the parent method will be called. If the method is
+            invoked by a child class object, the child method will be
+            called.</p>
+            <p>If we want to execute both the parent and the child
+            methods, we can call the parent method from the child method
+            using again
+            <strong><code>parent::method_name</code></strong>.</p>
+            <p>Let’s see an example. First, without calling the parent
+            method:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>erson {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">protected</span> <span class="kw">function</span> greetings() {</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Hello, I&#39;m a person&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">T</span>eacher <span class="kw">extends</span> <span class="cn">P</span>erson {</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> greetings() {</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Hello, I&#39;m a teacher&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="va">$p</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">T</span>eacher()<span class="ot">;</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="va">$p</span>-&gt;greetings()<span class="ot">;</span></span></code></pre></div>
+            <p>Result:</p>
+            <figure>
+            <img src="images/ud07-01.jpg" alt="Child method" />
+            <figcaption aria-hidden="true">Child method</figcaption>
+            </figure>
+            <p>Now, we call the parent class method from the child class
+            method.</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">T</span>eacher <span class="kw">extends</span> <span class="cn">P</span>erson {</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> greetings() {</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">parent</span>::greetings()<span class="ot">;</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Hello, I&#39;m a teacher&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We will get:</p>
+            <figure>
+            <img src="images/ud07-02.jpg"
+            alt="Child method calling the parent method" />
+            <figcaption aria-hidden="true">Child method calling the
+            parent method</figcaption>
+            </figure>
+            <h3 data-number="2.6.3" id="final-keyword"><span
+            class="header-section-number">2.6.3</span> Final
+            keyword</h3>
+            <p>By using the keyword <strong><code>final</code></strong>
+            we prevent a class from being extended, or a method from
+            being overridden.</p>
+            <p>A final method:</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">M</span>yNormalClass {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">final</span> <span class="kw">function</span> dontOverrideMe() {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">// the class can be extended, but this method</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        <span class="co">// can&#39;t be overriden. If we try, we&#39;ll get an error</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>A final class:</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">final</span> <span class="kw">class</span> <span class="cn">M</span>yFinalClass {</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">M</span>yChildClass <span class="kw">extends</span> <span class="cn">M</span>yFinalClass {</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">// we&#39;ll get an error, because the MyFinalClass class can&#39;t be extended</span></span></code></pre></div>
+            <blockquote>
+            <p><strong>Note</strong>: Properties cannot be declared
+            final: only classes, methods, and constants (as of PHP
+            8.1.0) may be declared as final. As of PHP 8.0.0, private
+            methods may not be declared final except for the
+            constructor.</p>
+            </blockquote>
+            <h2 data-number="2.7" id="const-keyword"><span
+            class="header-section-number">2.7</span> Const keyword</h2>
+            <p>By using the keyword <strong><code>const</code></strong>
+            we can declare constants within a class.</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>roduct {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> <span class="cn">IVA</span> <span class="op">=</span> <span class="dv">21</span><span class="ot">;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Class constants are <strong>case-sensitive</strong>.
+            However, is highly recommended to use uppercase letters to
+            name constants.</p>
+            <p>Class constants are accessed from outside the class by
+            using the <strong>class name</strong> followed by the
+            operator <strong><code>::</code></strong> and the constant
+            name.</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cn">P</span>roduct::<span class="cn">IVA</span><span class="ot">;</span></span></code></pre></div>
+            <p>Constants declared without any explicit visibility
+            keyword are defined as public.</p>
+            <blockquote>
+            <p>We don’t need to create an object to access a public
+            class constant property.</p>
+            </blockquote>
+            <blockquote>
+            <p>As of PHP 8.3.0, constants can be typed:</p>
+            </blockquote>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">interface</span> <span class="cn">I</span> {</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> <span class="dt">string</span> <span class="cn">PHP</span> <span class="op">=</span> <span class="st">&#39;PHP 8.3&#39;</span><span class="ot">;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> <span class="cn">F</span>oo <span class="kw">implements</span> <span class="cn">I</span> {</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> <span class="dt">string</span> <span class="cn">PHP</span> <span class="op">=</span> []<span class="ot">;</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Fatal error: Cannot use array as value for class constant</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Foo::PHP of type string</span></span></code></pre></div>
+            <h2 data-number="2.8" id="static-modifier"><span
+            class="header-section-number">2.8</span> Static
+            modifier</h2>
+            <p><strong>Static</strong> properties and methods can be
+            called without creating an object. They are defined by using
+            the modifier <strong><code>static</code></strong>.</p>
+            <p>Static properties are useful when every instance (every
+            object) of the class share the same value for a property.
+            Unlike constants, the values of static properties can be
+            modified: the new value will spread to all instances.</p>
+            <p>Outside the class static properties and methods are
+            accessed by using the name of the class followed by the
+            operator <code>::</code> and then the name of the property
+            or method. If the static property is private, it must be
+            modified through a <strong>static public method</strong>. If
+            a method uses the value but don’t change it, it doesn’t need
+            to be static. Anyway, if we want to use the syntax
+            <code>Class::method</code>, the method should be declared as
+            static.</p>
+            <p>Inside a static method, static properties are referenced
+            using
+            <strong><code>$self::property_name</code></strong>.</p>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>roduct {</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="kw">static</span> <span class="va">$iva</span> <span class="op">=</span> <span class="dv">21</span><span class="ot">;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">public</span> <span class="kw">function</span> getIva() { <span class="cf">return</span> <span class="kw">self</span>::<span class="va">$iva</span><span class="ot">;</span>}</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">public</span> <span class="kw">function</span> setIva(<span class="va">$iva</span>) { <span class="kw">self</span>::<span class="va">$iva</span> <span class="op">=</span> <span class="va">$iva</span><span class="ot">;</span> }</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="va">$prodObject1</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>roduct()<span class="ot">;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="va">$prodObject2</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>roduct()<span class="ot">;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cn">P</span>roduct::<span class="va">$iva</span><span class="ot">;</span> <span class="co">//this won&#39;t work because $iva is private</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cn">P</span>roduct::getIva()<span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span> <span class="co">// this works</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$prodObject1</span>-&gt;getIva()<span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span> <span class="co">// 21</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="va">$prodObject1</span>-&gt;setIva(<span class="dv">22</span>)<span class="ot">;</span> <span class="co">// we change the iva value from one object</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$prodObject2</span>-&gt;getIVA()<span class="ot">;</span> <span class="co">// 22, the iva has changed in both objects</span></span></code></pre></div>
+            <p>In child classes, if we need to access a parent static
+            property, we will use the keyword
+            <strong><code>parent</code></strong> instead of
+            <strong><code>self</code></strong>.</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">M</span>athThings {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="va">$valueOfPi</span> <span class="op">=</span> <span class="fl">3.14159</span><span class="ot">;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">public</span> <span class="kw">function</span> getPI() {</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">self</span>::<span class="va">$valueOfPi</span><span class="ot">;</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>hildMathThings <span class="kw">extends</span> <span class="cn">M</span>athThings {</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">public</span> <span class="kw">function</span> getPI() {</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">parent</span>::<span class="va">$valueOfPi</span><span class="ot">;</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="2.9" id="implements-and-interfaces"><span
+            class="header-section-number">2.9</span> Implements and
+            interfaces</h2>
+            <p>By using the <strong><code>implements</code></strong>
+            clause, we declare that the class must implement a certain
+            <strong><code>interface</code></strong>. An interface
+            specifies which methods a class must implement, but without
+            developing that methods.</p>
+            <p>Interfaces are defined in the same way as classes, but
+            with the <strong><code>interface</code></strong> keyword
+            instead of <strong><code>class</code></strong>, and without
+            defining the contents of any method.</p>
+            <p>When a class implements an interface, it’s mandatory to
+            develop all its methods because they are not developed in
+            the interface. <strong>All the methods in the interface must
+            be public</strong>.</p>
+            <blockquote>
+            <p><strong>Abstract classes</strong> can implement only some
+            methods of the interface, but then classes that extend the
+            abstract class must implement the rest of the methods. We
+            will learn about abstract classes a little later.</p>
+            </blockquote>
+            <p>A class can implement two or more interfaces. To do so,
+            we will separate each interface name with a comma in the
+            class declaration.</p>
+            <blockquote>
+            <p>Interfaces can be extended by other interfaces using the
+            <code>extends</code> operator, as classes do.</p>
+            </blockquote>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> <span class="cn">W</span>orkTable {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> jumpLine()<span class="ot">;</span> <span class="co">// function without code</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">M</span>yTable <span class="kw">implements</span> <span class="cn">W</span>orkTable {</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> jumpLine() {</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// here goes the code</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="2.10" id="traits"><span
+            class="header-section-number">2.10</span> Traits</h2>
+            <p>As we said before, PHP (like Java and other languages)
+            only supports <strong>single inheritance</strong>. Thus, a
+            class can’t extend two (or more) parent classes.</p>
+            <p>By using <strong>traits</strong>, we can implement
+            something very similar to multiple inheritance: one class
+            (or more classes) can use methods from multiple traits.</p>
+            <p>A Trait is similar to a class, but only has one or more
+            functions. It is not possible to instantiate or use a Trait
+            on its own.</p>
+            <p>To use a trait inside a class, we must declare the trait
+            with the keyword <strong><code>use</code></strong>.</p>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">trait</span> <span class="cn">E</span>nglishMessages {</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="cn">W</span>elcomeEnglish() {</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Welcome!&quot;</span><span class="ot">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="kw">trait</span> <span class="cn">S</span>panishMessages {</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="cn">W</span>elcomeSpanish() {</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Bienvenido!&quot;</span><span class="ot">;</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">M</span>essages {</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">use</span> <span class="cn">E</span>nglishMessages<span class="ot">;</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">use</span> <span class="cn">S</span>panishMessages<span class="ot">;</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="va">$message</span><span class="op">=</span><span class="kw">new</span> <span class="cn">M</span>essages()<span class="ot">;</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="va">$message</span>-&gt;<span class="cn">W</span>elcomeEnglish()<span class="ot">;</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a><span class="va">$message</span>-&gt;<span class="cn">W</span>elcomeSpanish()<span class="ot">;</span></span></code></pre></div>
+            <p>The object <code>$message</code> can use functions both
+            from <strong>EnglishMessages</strong> and
+            <strong>SpanishMessages</strong>. So the output will be:</p>
+            <figure>
+            <img src="images/ud07-05.jpg" alt="Using traits" />
+            <figcaption aria-hidden="true">Using traits</figcaption>
+            </figure>
+            <h2 data-number="2.11"
+            id="abstract-classes-and-methods"><span
+            class="header-section-number">2.11</span> Abstract classes
+            and methods</h2>
+            <p>PHP has <strong>abstract</strong> classes and methods. An
+            abstract class is kind of mix between interfaces and normal
+            classes. In an abstract class we can define abstract and
+            non-abstract methods, while in the interface all the methods
+            are actually abstract.</p>
+            <p><strong>Classes defined as abstract cannot be
+            instantiated</strong> (we can’t create an object of an
+            abstract class). Any class that contains at least one
+            abstract method must defined as abstract.</p>
+            <p>When inheriting from an abstract class, all methods
+            marked abstract in the parent’s class declaration must be
+            defined by the child class (just like we do with the
+            interfaces, but only with the methods declared as
+            abstract).</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">abstract</span> <span class="kw">class</span> <span class="cn">W</span>orkTable {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">abstract</span> <span class="kw">function</span> jumpALine()<span class="ot">;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> nonAbstract() {</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">// here goes the code</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">M</span>yTable <span class="kw">extends</span> <span class="cn">W</span>orkTable {</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> jumpALine(){</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">// the code goes here</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we don&#39;t need to redefine the nonAbstract method</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// because is alredy implemented in the parent class</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="2.12"
+            id="traits-vs-interfaces-vs-abstract-classes"><span
+            class="header-section-number">2.12</span> Traits vs
+            Interfaces vs Abstract Classes</h2>
+            <table>
+            <colgroup>
+            <col style="width: 33%" />
+            <col style="width: 33%" />
+            <col style="width: 33%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>TRAIT</th>
+            <th>INTERFACE</th>
+            <th>ABSTRACT CLASS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td>Contains only developed methods that can be called in
+            the class that uses the trait</td>
+            <td>Contains only empty methods that must be developed in
+            the class that implements the interface</td>
+            <td>Can contain both developed and abstract (non-developed)
+            methods</td>
+            </tr>
+            </tbody>
+            </table>
+            <h2 data-number="2.13" id="polymorphism-in-php"><span
+            class="header-section-number">2.13</span> Polymorphism in
+            PHP</h2>
+            <p>The OOP offers us a useful feature named
+            <strong>polymorphism</strong>. By using it, we can make that
+            objects of different classes give a different answer to the
+            same message (method invoked, basically). We can implement
+            polymorphism with <strong>abstract classes</strong> or
+            <strong>interfaces</strong>.</p>
+            <p>Polymorphism is very useful when we have a collection of
+            objects of different classes that implements / extends the
+            same interface / abstract class.</p>
+            <p>Let’s see an example.</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">abstract</span> <span class="kw">class</span> <span class="cn">P</span>erson {</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">abstract</span> <span class="kw">public</span> <span class="kw">function</span> welcome()<span class="ot">;</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> setName(<span class="va">$name</span>) {</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;name<span class="op">=</span><span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getName() {</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;name<span class="ot">;</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">E</span>nglishPerson <span class="kw">extends</span> <span class="cn">P</span>erson {</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we must implement the abstract method in Person class</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> welcome() {</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;Hello &quot;</span><span class="op">.</span><span class="va">$this</span>-&gt;getName()<span class="op">.</span><span class="st">&quot;!&quot;</span><span class="ot">;</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">S</span>panishPerson <span class="kw">extends</span> <span class="cn">P</span>erson {</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we must implement the abstract method in Person class</span></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> welcome() {</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;Hola &quot;</span><span class="op">.</span><span class="va">$this</span>-&gt;getName()<span class="op">.</span><span class="st">&quot;!&quot;</span><span class="ot">;</span></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a><span class="va">$persons</span><span class="op">=</span><span class="dt">array</span>()<span class="ot">;</span></span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a><span class="va">$person1</span><span class="op">=</span><span class="kw">new</span> <span class="cn">E</span>nglishPerson()<span class="ot">;</span></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a><span class="va">$person1</span>-&gt;setName(<span class="st">&quot;James&quot;</span>)<span class="ot">;</span></span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a><span class="va">$person2</span><span class="op">=</span><span class="kw">new</span> <span class="cn">S</span>panishPerson()<span class="ot">;</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a><span class="va">$person2</span>-&gt;setName(<span class="st">&quot;Antonio&quot;</span>)<span class="ot">;</span></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a><span class="fu">array_push</span>(<span class="va">$persons</span><span class="ot">,</span><span class="va">$person1</span>)<span class="ot">;</span></span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a><span class="fu">array_push</span>(<span class="va">$persons</span><span class="ot">,</span><span class="va">$person2</span>)<span class="ot">;</span></span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span>(<span class="va">$persons</span> <span class="kw">as</span> <span class="va">$person</span>) {</span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="va">$person</span>-&gt;welcome()<span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We will get this output:</p>
+            <figure>
+            <img src="images/ud07-06.jpg" alt="Polymorphism in PHP" />
+            <figcaption aria-hidden="true">Polymorphism in
+            PHP</figcaption>
+            </figure>
+            <h2 data-number="2.14" id="anonymous-classes"><span
+            class="header-section-number">2.14</span> Anonymous
+            classes</h2>
+            <p>As we have anonymous functions in PHP, since PHP 7 we
+            have <strong>anonymous classes</strong> too. As with
+            anonymous functions, an anonymous class is a class with no
+            name that we can use when only a single object is
+            needed.</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="va">$obj</span> <span class="op">=</span> <span class="kw">new</span> <span class="kw">class</span>(<span class="st">&#39;Hi&#39;</span>) {</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="va">$x</span><span class="ot">;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> <span class="bu">__construct</span>(<span class="va">$a</span>) {</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;x <span class="op">=</span> <span class="va">$a</span><span class="ot">;</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$obj</span>-&gt;x<span class="ot">;</span> <span class="co">// &quot;Hi&quot;;</span></span></code></pre></div>
+            <h2 data-number="2.15" id="magic-methods"><span
+            class="header-section-number">2.15</span> Magic methods</h2>
+            <p>Magic methods in PHP are special functions prefixed with
+            <code>__</code> (<em>double underscore</em>) that allow you
+            to handle events and operations in classes.</p>
+            <p>The magic methods are:
+            <code>__construct()</code>,<code>__destruct()</code>,
+            <code>__call()</code>, <code>__callStatic()</code>,
+            <code>__get()</code>, <code>__set()</code>,
+            <code>__isset()</code>, <code>__unset()</code>,
+            <code>__sleep()</code>, <code>__wakeup()</code>,
+            <code>__serialize()</code>, <code>__unserialize()</code>,
+            <code>__toString()</code>, <code>__invoke()</code>,
+            <code>__set_state()</code>, <code>__clone()</code>, and
+            <code>__debugInfo()</code>.</p>
+            <p>We have already seen the magic methods
+            <code>__construct()</code> and <code>__destruct()</code>.
+            Let’s see another magic method: <code>__tostring()</code>.
+            This method is used to define how an object should be
+            represented as a string. When an object is treated as a
+            string, such as when using <code>echo</code>, the
+            <code>__toString()</code> method is automatically called and
+            returns the desired string representation of the object.</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>erson {</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="va">$surname</span><span class="ot">;</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> <span class="bu">__toString</span>() {</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;name <span class="op">.</span> <span class="st">&#39; &#39;</span> <span class="op">.</span> <span class="va">$this</span>-&gt;surname<span class="ot">;</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="va">$person</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>erson()<span class="ot">;</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="va">$person</span>-&gt;name <span class="op">=</span> <span class="st">&quot;Jane&quot;</span><span class="ot">;</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="va">$person</span>-&gt;surname <span class="op">=</span> <span class="st">&quot;Smith&quot;</span><span class="ot">;</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$person</span><span class="ot">;</span> <span class="co">// outputs &quot;Jane Smith&quot;</span></span></code></pre></div>
+            <p><a
+            href="https://www.php.net/manual/en/language.oop5.magic.php">Mora
+            about magic methods</a></p>
+            <h2 data-number="2.16" id="serializing-objects"><span
+            class="header-section-number">2.16</span> Serializing
+            objects</h2>
+            <p>The PHP function <code>serialize()</code> generates a
+            storable representation of a value. When working with
+            objects, this can be useful to store the object into a file,
+            a session variable, and so on. The function
+            <code>serialize()</code> returns a string.</p>
+            <p>To get the original value of the serialized object, we
+            can use the <code>unserialize()</code> function. The class
+            definition must be included in order to deserialize the
+            object properly.</p>
+            <p><a
+            href="https://www.php.net/manual/en/language.oop5.serialization.php">PHP
+            Serialization</a></p>
+            <h2 data-number="2.17"
+            id="some-useful-class-functions"><span
+            class="header-section-number">2.17</span> Some useful class
+            functions</h2>
+            <table>
+            <colgroup>
+            <col style="width: 50%" />
+            <col style="width: 50%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Function</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>class_exists($className)</code></td>
+            <td>Returns TRUE if the class exists, returns FALSE
+            otherwise</td>
+            </tr>
+            <tr class="even">
+            <td><code>get_class_methods($className)</code></td>
+            <td>Returns an array with the names of the class
+            methods</td>
+            </tr>
+            <tr class="odd">
+            <td><code>get_class_vars($className)</code></td>
+            <td>Returns an array with the names of the class properties
+            and their default values (only if they are accessible from
+            the current scope)</td>
+            </tr>
+            </tbody>
+            </table>
+            <h2 data-number="2.18"
+            id="some-useful-object-functions"><span
+            class="header-section-number">2.18</span> Some useful object
+            functions</h2>
+            <table>
+            <colgroup>
+            <col style="width: 50%" />
+            <col style="width: 50%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Function</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>is_object($var)</code></td>
+            <td>Returns TRUE if <code>$var</code> is an object</td>
+            </tr>
+            <tr class="even">
+            <td><code>get_class($obj)</code></td>
+            <td>Returns the name of the classe which the object
+            belongs</td>
+            </tr>
+            <tr class="odd">
+            <td><code>method_exists($obj,$meth)</code></td>
+            <td>Returns TRUE if the object <code>$obj</code> has the
+            method specified in <code>$meth</code></td>
+            </tr>
+            <tr class="even">
+            <td><code>get_object_vars($obj)</code></td>
+            <td>Returns an array with the object properties and their
+            values (only if they are accessible from the current
+            scope)</td>
+            </tr>
+            <tr class="odd">
+            <td><code>get_parent_class($obj)</code></td>
+            <td>Returns the name of the parent class of the object
+            <code>$obj</code> (FALSE if there is none)</td>
+            </tr>
+            </tbody>
+            </table>
+            <h1 data-number="3" id="namespaces"><span
+            class="header-section-number">3</span> Namespaces</h1>
+            <p><strong>Namespaces</strong> are useful to organize and
+            group classes. Namespaces also allow us to define more than
+            a class with the same name, as long as they are in different
+            namespaces.</p>
+            <p>We define a namespace using the keyword
+            <code>namespace</code>. When used, it must be the first
+            sentence in the PHP file.</p>
+            <p>Let’s see an exemple:</p>
+            <p><strong>File namespace01.php</strong></p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> group01<span class="ot">;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">S</span>ameName {</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p><strong>File namespace02.php</strong></p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> group02<span class="ot">;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">S</span>ameName {</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <blockquote>
+            <p>Although we have defined the different namespaces in
+            different files, we can declare multiple namespaces in the
+            same file.</p>
+            </blockquote>
+            <p>Now, in another PHP file we can do that:</p>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="st">&#39;namespace01.php&#39;</span><span class="ot">;</span> <span class="co">// including the external file</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span> <span class="st">&#39;namespace02.php&#39;</span><span class="ot">;</span> <span class="co">// including the external file</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> group01 <span class="kw">as</span> g1<span class="ot">;</span> <span class="co">// an alias for the namespace</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> group02 <span class="kw">as</span> g2<span class="ot">;</span> <span class="co">// an alias for the namespace</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="va">$object01</span> <span class="op">=</span> <span class="kw">new</span> g1\<span class="cn">S</span>ameName()<span class="ot">;</span> <span class="co">// using external namespace</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="va">$object02</span> <span class="op">=</span> <span class="kw">new</span> g2\<span class="cn">S</span>ameName()<span class="ot">;</span> <span class="co">// using external namespace</span></span></code></pre></div>
+            <p><a
+            href="https://www.php.net/manual/en/language.namespaces.php">More
+            about namespaces in PHP</a></p>
+            <h1 data-number="4"
+            id="handling-errors-and-exceptions-in-php"><span
+            class="header-section-number">4</span> Handling errors and
+            exceptions in PHP</h1>
+            <p><strong>Error handling</strong> is an essential part of
+            developing an application. PHP provides a number of tools
+            that we can use to handle any kind of errors.</p>
+            <p>In this unit we will see how manage them at two
+            levels:</p>
+            <ul>
+            <li>catching and handling throwable errors</li>
+            <li>configuring php to handle other types of errors</li>
+            </ul>
+            <p>Handling exceptions and errors is slightly different in
+            PHP7 compared to previous versions. We will go through those
+            differences in this lesson.</p>
+            <h2 data-number="4.1" id="exceptions"><span
+            class="header-section-number">4.1</span> Exceptions</h2>
+            <p>A PHP exception happens when the application tries to
+            perform a task and it’s unable to do it.</p>
+            <p>An exception stops the execution unless we catch it and
+            handle it.</p>
+            <p>By catching exceptions we can:</p>
+            <ul>
+            <li>avoid showing undesired error messages to the final
+            user</li>
+            <li>prevent the application to be suddenly halted</li>
+            </ul>
+            <h3 data-number="4.1.1" id="how-to-handle-exceptions"><span
+            class="header-section-number">4.1.1</span> How to handle
+            exceptions</h3>
+            <p>In PHP5 the exceptions would be handled by using the
+            <strong>exception</strong> class and the structure
+            <strong><em>try…catch</em></strong>.</p>
+            <div class="sourceCode" id="cb39"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span>(<span class="bu">Exception</span> <span class="va">$e</span>) {</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>In PHP5 some internal errors can not be handled by using
+            the <strong>exception</strong> class. In PHP7 we have the
+            <strong>class throwable</strong> instead. It covers both
+            exceptions and internal errors.</p>
+            <p>Just in case we are not sure if the server supports PHP5
+            or PHP7, we can include both clauses in our
+            <strong><em>try…catch</em></strong> block.</p>
+            <div class="sourceCode" id="cb40"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Code that may cause an Exception or Error.</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">Throwable</span> <span class="va">$t</span>){</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Executed only in PHP 7, will not match in PHP 5</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">Exception</span> <span class="va">$e</span>){</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>   <span class="co">// Only in PHP 5, won&#39;t be reached in PHP 7</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Let’s see an example. If we run this code:</p>
+            <div class="sourceCode" id="cb41"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="va">$number</span> <span class="op">=</span> <span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="va">$reverseNumber</span> <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="va">$number</span><span class="ot">;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;The reverse of </span><span class="va">$number</span><span class="st"> is </span><span class="va">$reverseNumber</span><span class="st">&lt;/h2&gt;&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p><strong>The output</strong>: The reverse of 10 is 0.1</p>
+            <p>But if we change the value of <code>$number</code> to
+            0:</p>
+            <div class="sourceCode" id="cb42"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="va">$number</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="va">$reverseNumber</span> <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="va">$number</span><span class="ot">;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;The reverse of </span><span class="va">$number</span><span class="st"> is </span><span class="va">$reverseNumber</span><span class="st">&lt;/h2&gt;&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>We will get an exception:</p>
+            <p><strong>Fatal error: Uncaught DivisionByZeroError:
+            Division by zero</strong></p>
+            <p>We can handle the exception by using the
+            <strong>try…catch</strong> block:</p>
+            <div class="sourceCode" id="cb43"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="va">$number</span><span class="op">=</span><span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$reverseNumber</span><span class="op">=</span><span class="dv">1</span><span class="op">/</span><span class="va">$number</span><span class="ot">;</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;The reverse of </span><span class="va">$number</span><span class="st"> is </span><span class="va">$reverseNumber</span><span class="st">&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span>(<span class="bu">Throwable</span> <span class="va">$t</span>) {</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;An error happened&quot;</span><span class="ot">;</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We will get the output:</p>
+            <p><strong>An error happened</strong></p>
+            <p>If an error occurs within the <code>try</code> section,
+            the execution will not be halted. It will be redirected to
+            the <code>catch</code> section instead. In this section, we
+            might display a message or redirect the application to a
+            safe exit.</p>
+            <h3 data-number="4.1.2" id="finally-section"><span
+            class="header-section-number">4.1.2</span> Finally
+            section</h3>
+            <p>A <strong>finally</strong> section may also be specified
+            after or instead of <strong>catch</strong> clauses. The code
+            inside the finally section will always be executed after the
+            <code>try</code> and <code>catch</code> blocks, regardless
+            of whether an exception has been thrown, and before normal
+            execution resumes.</p>
+            <figure>
+            <img src="images/exception-handling-flow.png"
+            alt="Exception handling workflow" />
+            <figcaption aria-hidden="true">Exception handling
+            workflow</figcaption>
+            </figure>
+            <p>If a <code>return</code> statement is encountered inside
+            either the try or the catch blocks, the finally block will
+            still be executed. Moreover, the return statement is
+            evaluated when encountered, but the result will be returned
+            after the finally block is executed. Additionally, if the
+            finally block also contains a return statement, the value
+            from the finally block is returned.</p>
+            <div class="sourceCode" id="cb44"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> reverse(<span class="va">$number</span>) {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$reverseNumber</span> <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="va">$number</span><span class="ot">;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$reverseumber</span><span class="ot">;</span>   <span class="co">// ERROR: wrong variable name</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$number</span><span class="op">=</span><span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;The reverse of </span><span class="va">$number</span><span class="st"> is&quot;</span><span class="op">.</span>reverse(<span class="va">$number</span>)<span class="op">.</span><span class="st">&quot;&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">Throwable</span> <span class="va">$t</span>) {</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;An error </span>{<span class="va">$t</span>-&gt;getMessage()}<span class="st"> happened&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span> {</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h3&gt;This section will run anyway&lt;/h3&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <figure>
+            <img src="images/ud0803.jpg" alt="Finally section" />
+            <figcaption aria-hidden="true">Finally section</figcaption>
+            </figure>
+            <h3 data-number="4.1.3"
+            id="some-exceptions-handling-methods"><span
+            class="header-section-number">4.1.3</span> Some exceptions
+            handling methods</h3>
+            <p>You might want to know more about exceptions. Both
+            <strong>Throwable</strong> and <strong>Exception</strong>
+            provide you with some helpful methods:</p>
+            <table>
+            <thead>
+            <tr class="header">
+            <th><strong>Function</strong></th>
+            <th><strong>Description</strong></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>getMessage()</code></td>
+            <td>returns the exception message</td>
+            </tr>
+            <tr class="even">
+            <td><code>getCode()</code></td>
+            <td>returns the code of the exception</td>
+            </tr>
+            <tr class="odd">
+            <td><code>getFile()</code></td>
+            <td>returns the name of the file where the exception
+            happened</td>
+            </tr>
+            <tr class="even">
+            <td><code>getLine()</code></td>
+            <td>returns the line in the file where the exception
+            happened</td>
+            </tr>
+            <tr class="odd">
+            <td><code>__toString()</code></td>
+            <td>returns the exception in a String format</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>An example:</p>
+            <div class="sourceCode" id="cb45"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="va">$number</span><span class="op">=</span><span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$reverseNumber</span><span class="op">=</span><span class="dv">1</span><span class="op">/</span><span class="va">$number</span><span class="ot">;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;The reverse of </span><span class="va">$number</span><span class="st"> is </span><span class="va">$reverseNumber</span><span class="st">&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span>(<span class="bu">Throwable</span> <span class="va">$t</span>) {</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;An error </span>{<span class="va">$t</span>-&gt;getMessage()}<span class="st"> happened&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;In line </span>{<span class="va">$t</span>-&gt;getLine()}<span class="st"> of file </span>{<span class="va">$t</span>-&gt;getFile()}<span class="st">&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The output:</p>
+            <figure>
+            <img src="images/ud0801.jpg" alt="Catching an exception" />
+            <figcaption aria-hidden="true">Catching an
+            exception</figcaption>
+            </figure>
+            <h3 data-number="4.1.4"
+            id="extending-the-exception-class"><span
+            class="header-section-number">4.1.4</span> Extending the
+            Exception class</h3>
+            <p>These methods belong to the PHP predefined
+            <strong>Exception</strong> class. We can define our own
+            custom class to handle exceptions by extending the
+            <strong>Exception</strong> class.</p>
+            <div class="sourceCode" id="cb46"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">M</span>yException <span class="kw">extends</span> <span class="bu">Exception</span> {</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we can override the Exception construct method</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> <span class="bu">__construct</span>(<span class="va">$message</span><span class="ot">,</span> <span class="va">$code</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">,</span> <span class="bu">Throwable</span> <span class="va">$previous</span> <span class="op">=</span> <span class="kw">null</span>) {</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>        <span class="co">// some code</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">// ...</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// but then we need to call the parent construct method</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">parent</span>::<span class="bu">__construct</span>(<span class="va">$message</span><span class="ot">,</span> <span class="va">$code</span><span class="ot">,</span> <span class="va">$previous</span>)<span class="ot">;</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// custom string representation of object</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> <span class="bu">__toString</span>() {</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="cn">__CLASS__</span> <span class="op">.</span> <span class="st">&quot;: [</span>{<span class="va">$this</span>-&gt;code}<span class="st">]: </span>{<span class="va">$this</span>-&gt;message}<span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// a new function that doesn&#39;t exist in the Exception class</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> customFunction() {</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;A custom function for this type of exception</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Now we can call the
+            <code>$exception-&gt;customFunction()</code> as we do with
+            <code>getMessage()</code> and other predefined
+            functions.</p>
+            <h3 data-number="4.1.5" id="specific-exceptions"><span
+            class="header-section-number">4.1.5</span> Specific
+            exceptions</h3>
+            <p>We can handle specific exceptions by replacing the
+            general clause <strong>throwable</strong> with the name of
+            the specific exception in the catch section.</p>
+            <div class="sourceCode" id="cb47"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">DivisionByZeroError</span> <span class="va">$t</span>)</span></code></pre></div>
+            <p>Thus, we can handle different exceptions within the same
+            <code>try...catch</code> block:</p>
+            <div class="sourceCode" id="cb48"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>     ...</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">DivisionByZeroError</span> <span class="va">$t</span>) {</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>     ...</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">ArithmeticError</span> <span class="va">$e</span>) {</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>     …</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <ul>
+            <li><a
+            href="https://www.php.net/manual/en/reserved.exceptions.php">List
+            of predefined exceptions</a>.</li>
+            </ul>
+            <h3 data-number="4.1.6" id="throwing-an-exception"><span
+            class="header-section-number">4.1.6</span> Throwing an
+            exception</h3>
+            <p>Exceptions can also be thrown voluntarily, before they
+            occur, with the <strong>throw</strong> command. It is common
+            to do this in functions in order to catch the exception in
+            the main program instead of the function. Thus, we will
+            avoid repetitions of the <code>try…catch</code> loop in each
+            function.</p>
+            <div class="sourceCode" id="cb49"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> f1() {</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (…) {</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;Message01&quot;</span>)<span class="ot">;</span> <span class="co">// we throw an exception</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> …</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> f2() {</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (…) {</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;Message02&quot;</span>)<span class="ot">;</span> <span class="co">// we throw an exception</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> …</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="co">// with only one try…catch structure we capture exceptions from both functions</span></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">// here we call f1()</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">// and we call f2()</span></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>} <span class="cf">catch</span> (<span class="bu">Exception</span> <span class="va">$exception</span>) {</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;An exception happened: &quot;</span><span class="op">.</span><span class="va">$exception</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="4.2" id="warnings"><span
+            class="header-section-number">4.2</span> Warnings</h2>
+            <p>Some errors are not throwable. Take a look at this
+            example:</p>
+            <div class="sourceCode" id="cb50"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> reverse(<span class="va">$number</span>) {</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$reverseNumber</span> <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="va">$number</span><span class="ot">;</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$reverseumber</span><span class="ot">;</span>   <span class="co">// ERROR: wrong variable name</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$number</span><span class="op">=</span><span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;The reverse of </span><span class="va">$number</span><span class="st"> is&quot;</span><span class="op">.</span>reverse(<span class="va">$number</span>)<span class="op">.</span><span class="st">&quot;&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">Throwable</span> <span class="va">$t</span>) {</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;An error </span>{<span class="va">$t</span>-&gt;getMessage()}<span class="st"> happened&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>When we run the script, we will get a
+            <strong>warning</strong>:</p>
+            <figure>
+            <img src="images/ud0802.jpg" alt="Warning" />
+            <figcaption aria-hidden="true">Warning</figcaption>
+            </figure>
+            <p>A <strong>warning</strong>, as you can see, is a
+            non-fatal error that shows a message, but it <strong>doesn’t
+            halt the application</strong>.</p>
+            <p>A warning can’t get handled by the
+            <strong><em>try…catch</em></strong> structure.</p>
+            <p>Warnings can be disabled in the <strong>php.ini</strong>
+            configuration file, or by using the function
+            <strong>error_reporting(e_error)</strong>. However, handling
+            them is a better practice in developing mode.</p>
+            <h3 data-number="4.2.1" id="how-to-handle-a-warning"><span
+            class="header-section-number">4.2.1</span> How to handle a
+            warning?</h3>
+            <p>We can handle warnings by transforming them into
+            exceptions with our own error handling function. First, we
+            create the function:</p>
+            <div class="sourceCode" id="cb51"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> handleErrors(<span class="va">$eLevel</span><span class="ot">,</span> <span class="va">$eMessage</span><span class="ot">,</span> <span class="va">$eFile</span><span class="ot">,</span> <span class="va">$eLine</span>){</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;Error &quot;</span><span class="op">.</span><span class="va">$eMessage</span><span class="op">.</span><span class="st">&quot; in line &quot;</span><span class="op">.</span>   </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>       <span class="va">$eLine</span><span class="op">.</span><span class="st">&quot; of &quot;</span><span class="op">.</span><span class="va">$eFile</span>)<span class="ot">;</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>And now we convert our function into the error handling
+            function:</p>
+            <div class="sourceCode" id="cb52"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_error_handler</span>(<span class="st">&quot;handleErrors&quot;</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>We should restore the automatic error handler at the end
+            of the script with the function
+            <code>restore_error_handler()</code>.</p>
+            <div class="sourceCode" id="cb53"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> handleErrors(<span class="va">$eLevel</span><span class="ot">,</span> <span class="va">$eMessage</span><span class="ot">,</span> <span class="va">$eFile</span><span class="ot">,</span> <span class="va">$eLine</span>) {</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;Error &quot;</span><span class="op">.</span><span class="va">$eMessage</span><span class="op">.</span><span class="st">&quot; in line &quot;</span><span class="op">.</span><span class="va">$eLine</span><span class="op">.</span><span class="st">&quot;</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="st">    of &quot;</span><span class="op">.</span><span class="va">$eFile</span>)<span class="ot">;</span> <span class="co">// both warnings and exceptions will be thrown as exceptions</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> reverse(<span class="va">$number</span>) {</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$reverseNumber</span> <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="va">$number</span><span class="ot">;</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$reverseumber</span><span class="ot">;</span> <span class="co">// this will cause a warning</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set_error_handler</span>(<span class="st">&quot;handleErrors&quot;</span>)<span class="ot">;</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">$number</span><span class="op">=</span><span class="dv">10</span><span class="ot">;</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h2&gt;The reverse of </span><span class="va">$number</span><span class="st"> is &quot;</span><span class="op">.</span>reverse(<span class="va">$number</span>)<span class="op">.</span><span class="st">&quot;&lt;/h2&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">Throwable</span> <span class="va">$t</span>) {</span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;An error </span>{<span class="va">$t</span>-&gt;getMessage()}<span class="st"> happened&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="fu">restore_error_handler</span>()<span class="ot">;</span></span></code></pre></div>
+            <h3 data-number="4.2.2" id="using-a-error-log-file"><span
+            class="header-section-number">4.2.2</span> Using a error log
+            file</h3>
+            <p>We can send our error messages to a <strong>.LOG
+            File</strong>. In this case, the name of the file should not
+            be <strong><em>error.log</em></strong> because it already
+            exists and is handling apache errors.</p>
+            <div class="sourceCode" id="cb54"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> handlingErrors(<span class="va">$eLevel</span><span class="ot">,</span> <span class="va">$eMessage</span><span class="ot">,</span> <span class="va">$eFile</span><span class="ot">,</span> <span class="va">$eLine</span>) {</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">error_log</span>(<span class="st">&quot;</span><span class="va">$eMessage</span><span class="st"> in </span><span class="va">$eFile</span><span class="st">, line </span><span class="va">$eLine</span><span class="st">&quot;</span><span class="ot">,</span> <span class="co">// message</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>                <span class="dv">3</span><span class="ot">,</span>  <span class="co">// append mode</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;c:/xampp/apache/logs/user_errors&quot;</span>)<span class="ot">;</span> <span class="co">// file route/name</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>In addition, we can add the user name
+            (<code>get_current_user()</code>), the IP
+            (<code>$_SERVER['remote_addr']</code>) of the client that
+            launched the script, the date and any other information
+            available.</p>
+            <div class="sourceCode" id="cb55"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> handleErrors(<span class="va">$eLevel</span><span class="ot">,</span> <span class="va">$eMessage</span><span class="ot">,</span> <span class="va">$eFile</span><span class="ot">,</span> <span class="va">$eLine</span>){</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$newMessage</span> <span class="op">=</span> <span class="st">&quot;Date: &quot;</span><span class="op">.</span><span class="fu">date</span>(<span class="st">&quot;H:i d-m-Y &quot;</span>)<span class="op">.</span><span class="va">$eMessage</span><span class="op">.</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot; in file &quot;</span><span class="op">.</span><span class="va">$eFile</span><span class="op">.</span><span class="st">&quot; line &quot;</span><span class="op">.</span><span class="va">$eLine</span><span class="op">.</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot; User: &quot;</span><span class="op">.</span><span class="fu">get_current_user</span>()<span class="op">.</span><span class="st">&quot; from IP: &quot;</span><span class="op">.</span>  <span class="va">$_SERVER</span>[<span class="st">&#39;REMOTE_ADDR&#39;</span>]<span class="ot">;</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">error_log</span>(<span class="st">&quot;</span><span class="va">$newMessage</span><span class="st"> in </span><span class="va">$eFile</span><span class="st">, line </span><span class="va">$eLine</span><span class="st">&quot;</span><span class="ot">,</span> </span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>        <span class="dv">3</span><span class="ot">,</span>                                              </span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;c:/xampp/apache/logs/user_errors&quot;</span>)<span class="ot">;</span>        </span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
