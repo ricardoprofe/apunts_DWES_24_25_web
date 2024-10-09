@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />        <title>Unit 06. Databases operations. Guided example.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 06. Databases operations. Guided
+example.</h1>
+            <!---->
+            <!--  -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#database-creation" id="toc-database-creation"><span
+class="toc-section-number">1</span> Database creation</a></li>
+<li><a href="#application-structure"
+id="toc-application-structure"><span class="toc-section-number">2</span>
+Application structure</a>
+<ul>
+<li><a href="#provider.php" id="toc-provider.php"><span
+class="toc-section-number">2.1</span> Provider.php</a></li>
+<li><a href="#idbaccess.php" id="toc-idbaccess.php"><span
+class="toc-section-number">2.2</span> IDbAccess.php</a></li>
+<li><a href="#dbconnection.php" id="toc-dbconnection.php"><span
+class="toc-section-number">2.3</span> DBConnection.php</a></li>
+<li><a href="#providerrepository.php"
+id="toc-providerrepository.php"><span
+class="toc-section-number">2.4</span> ProviderRepository.php</a>
+<ul>
+<li><a href="#select-methods" id="toc-select-methods"><span
+class="toc-section-number">2.4.1</span> Select methods</a></li>
+<li><a href="#insert-method" id="toc-insert-method"><span
+class="toc-section-number">2.4.2</span> Insert method</a></li>
+<li><a href="#delete-method" id="toc-delete-method"><span
+class="toc-section-number">2.4.3</span> Delete method</a></li>
+<li><a href="#update-method" id="toc-update-method"><span
+class="toc-section-number">2.4.4</span> Update method</a></li>
+</ul></li>
+<li><a href="#provider_list.php" id="toc-provider_list.php"><span
+class="toc-section-number">2.5</span> provider_list.php</a></li>
+<li><a href="#provider_form.php" id="toc-provider_form.php"><span
+class="toc-section-number">2.6</span> provider_form.php</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <p>In this example we’re going to do the basic database
+            operations. We will use a simple database to manage
+            providers (see Guided example for Unit 4).</p>
+            <h1 data-number="1" id="database-creation"><span
+            class="header-section-number">1</span> Database
+            creation</h1>
+            <p>The schema of our database is pretty simple: a single
+            table with the next structure:</p>
+            <ul>
+            <li><strong>id</strong>: INT, auto-increment, primary
+            key</li>
+            <li><strong>name</strong>: VARCHAR(100), not null</li>
+            <li><strong>email</strong>: VARCHAR(100), not null</li>
+            <li><strong>cif</strong>: VARCHAR(9), not null</li>
+            </ul>
+            <p>We can do all the process with
+            <strong>PhpMyAdmin</strong>. If you don’t have your MySql
+            database installed and configured, follow the process
+            explained in Unit 1.</p>
+            <p>First of all, provider to MySql console or to PhpMyAdmin
+            with an administrator user and create a new user named
+            <strong><code>providers</code></strong> along with a
+            database with the same name:</p>
+            <figure>
+            <img src="images/create_db.png" width="450"
+            alt="User and database creation" />
+            <figcaption aria-hidden="true">User and database
+            creation</figcaption>
+            </figure>
+            <p>Next, go to the new database (<code>providers</code>) and
+            create a new table named
+            <strong><code>providers</code></strong>:</p>
+            <figure>
+            <img src="images/create_table.png" width="450"
+            alt="Table creation" />
+            <figcaption aria-hidden="true">Table creation</figcaption>
+            </figure>
+            <p>Enter in the <code>providers</code> table and create the
+            schema:</p>
+            <figure>
+            <img src="images/create_table2.png"
+            alt="Columns creation" />
+            <figcaption aria-hidden="true">Columns creation</figcaption>
+            </figure>
+            <p>The same process can be done using the MySql command
+            line:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> `providers`.`providers` ( `id` <span class="dt">INT</span> <span class="kw">NOT</span> <span class="kw">NULL</span> AUTO_INCREMENT , `name` <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span> , `email` <span class="dt">VARCHAR</span>(<span class="dv">100</span>) <span class="kw">NOT</span> <span class="kw">NULL</span> , `cif` <span class="dt">VARCHAR</span>(<span class="dv">9</span>) <span class="kw">NOT</span> <span class="kw">NULL</span> , <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (`id`)) ENGINE <span class="op">=</span> InnoDB; </span></code></pre></div>
+            <p>Additionally we can add some sample data:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> `providers` (`id`, `name`, `email`, `cif`) <span class="kw">VALUES</span> (<span class="kw">NULL</span>, <span class="st">&#39;ACME&#39;</span>, <span class="st">&#39;acme@mail.com&#39;</span>, <span class="st">&#39;A12345678&#39;</span>), (<span class="kw">NULL</span>, <span class="st">&#39;Oscorp&#39;</span>, <span class="st">&#39;oscorp@mail.com&#39;</span>, <span class="st">&#39;B34567890&#39;</span>);</span></code></pre></div>
+            <p>Also, you can run the import script in order to create
+            the database with the sample data (this script doesn’t
+            create the <code>providers</code> user):</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mysql <span class="op">&lt;</span> providers.sql</span></code></pre></div>
+            <h1 data-number="2" id="application-structure"><span
+            class="header-section-number">2</span> Application
+            structure</h1>
+            <p>We want our application to have the next structure:</p>
+            <figure>
+            <img src="images/providers-db-diagram.drawio.png"
+            alt="Class diagram" />
+            <figcaption aria-hidden="true">Class diagram</figcaption>
+            </figure>
+            <ul>
+            <li><strong><code>providers_list.php</code></strong>: script
+            that will show (<code>SELECT</code>) the list of all the
+            entries (id, name, email and Cif), and a button to create a
+            new entry.</li>
+            <li><strong><code>provider_form.php</code></strong>: script
+            that will show (<code>SELECT</code> by id) the data of a
+            provider (id, provider name, email and Cif). In this script
+            we can change the provider data (<code>UPDATE</code>),
+            delete the entry (<code>DELETE</code>), and create a new one
+            (<code>INSERT</code>).</li>
+            <li><strong><code>Provider.php</code></strong>: a class to
+            store and retrieve the data of a single provider.</li>
+            <li><strong><code>ProviderRepository.php</code></strong>: a
+            repository class, used to do the operations with the
+            database.</li>
+            <li><strong><code>IDbAccess.php</code></strong>: interface
+            with the methods that must be implemented by
+            ProviderRepository.php.</li>
+            <li><strong><code>DBConnection</code></strong>: a
+            convenience class used to connect to the database.</li>
+            </ul>
+            <h2 data-number="2.1" id="provider.php"><span
+            class="header-section-number">2.1</span> Provider.php</h2>
+            <p>This is a simple data class, with the private fields and
+            their setters and getters:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>rovider</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> <span class="va">$id</span><span class="ot">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">string</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">string</span> <span class="va">$email</span><span class="ot">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">string</span> <span class="va">$cif</span><span class="ot">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> <span class="bu">__construct</span>()</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;id <span class="op">=</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;name <span class="op">=</span> <span class="st">&#39;&#39;</span><span class="ot">;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;email <span class="op">=</span> <span class="st">&#39;&#39;</span><span class="ot">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;cif <span class="op">=</span> <span class="st">&#39;&#39;</span><span class="ot">;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Getters and setters...</span></span></code></pre></div>
+            <blockquote>
+            <p>Note: At this point it could be a good idea to create a
+            directory for the classes, named <code>models</code> or
+            <code>classes</code>, for example.</p>
+            </blockquote>
+            <h2 data-number="2.2" id="idbaccess.php"><span
+            class="header-section-number">2.2</span> IDbAccess.php</h2>
+            <p>This is an <strong>interface</strong> with the methods
+            that must be implemented by
+            <code>ProviderRepository</code>:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> <span class="cn">I</span>DbAccess</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> getAll()<span class="ot">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> select(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> insert(<span class="va">$object</span>)<span class="ot">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> delete(<span class="va">$object</span>)<span class="ot">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> update(<span class="va">$object</span>)<span class="ot">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The reason for making this interface is because if we
+            have several classes that need to access the database, they
+            will all have the same operations (select, update, etc),
+            making it easy to use. For the same reason we have made it
+            as generic as possible.</p>
+            <h2 data-number="2.3" id="dbconnection.php"><span
+            class="header-section-number">2.3</span>
+            DBConnection.php</h2>
+            <p>This is a class with a static method that has the
+            parameters for connecting to our database. The method
+            <code>connectDB()</code> returns the connection to the DB or
+            <code>null</code> if a problem occurs:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">D</span>BConnection</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">//Database connection data</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="kw">static</span> <span class="va">$servername</span> <span class="op">=</span> <span class="st">&quot;localhost&quot;</span><span class="ot">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="kw">static</span> <span class="va">$dbname</span> <span class="op">=</span> <span class="st">&quot;providers&quot;</span><span class="ot">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="kw">static</span> <span class="va">$username</span> <span class="op">=</span> <span class="st">&quot;providers&quot;</span><span class="ot">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="kw">static</span> <span class="va">$password</span> <span class="op">=</span> <span class="st">&quot;your_password&quot;</span><span class="ot">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> connectDB()<span class="ot">:</span> <span class="ot">?</span><span class="bu">PDO</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">$servername</span> <span class="op">=</span> <span class="kw">self</span>::<span class="va">$servername</span><span class="ot">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$dbname</span> <span class="op">=</span> <span class="kw">self</span>::<span class="va">$dbname</span><span class="ot">;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$username</span> <span class="op">=</span> <span class="kw">self</span>::<span class="va">$username</span><span class="ot">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">$password</span> <span class="op">=</span> <span class="kw">self</span>::<span class="va">$password</span><span class="ot">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span> {</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            <span class="va">$conn</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&quot;mysql:host=</span><span class="va">$servername</span><span class="st">;dbname=</span><span class="va">$dbname</span><span class="st">&quot;</span><span class="ot">,</span> <span class="va">$username</span><span class="ot">,</span> <span class="va">$password</span><span class="ot">,</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                <span class="dt">array</span>(<span class="bu">PDO</span>::<span class="cn">ATTR_PERSISTENT</span> =&gt; <span class="kw">true</span>))<span class="ot">;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="co">// set the PDO error mode to exception</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>            <span class="va">$conn</span>-&gt;setAttribute(<span class="bu">PDO</span>::<span class="cn">ATTR_ERRMODE</span><span class="ot">,</span> <span class="bu">PDO</span>::<span class="cn">ERRMODE_EXCEPTION</span>)<span class="ot">;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">$conn</span><span class="ot">;</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">catch</span> (<span class="bu">PDOException</span> <span class="va">$e</span>) {</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="st">&quot;Connection failed: &quot;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>In the line 22 we are setting the default error mode to
+            <em>Exception</em> (which is the default since PHP 8.0) that
+            throws a <strong><code>PDOException</code></strong> and sets
+            its properties to reflect the error code and error
+            information.</p>
+            <h2 data-number="2.4" id="providerrepository.php"><span
+            class="header-section-number">2.4</span>
+            ProviderRepository.php</h2>
+            <p>This class must implement the interface
+            <code>IDbAccess</code>, defining the methods used to access
+            the database. All database work is done here.</p>
+            <p>First of all, we declare strict types, import the
+            required files and declare that this class will implement
+            the methods from the interface <code>IDbAccess</code>:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span><span class="op">.</span><span class="st">&#39;/Provider.php&#39;</span><span class="ot">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span><span class="op">.</span><span class="st">&#39;/../DBConnection.php&#39;</span><span class="ot">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span><span class="op">.</span><span class="st">&#39;/../IDbAccess.php&#39;</span><span class="ot">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>roviderDao <span class="kw">implements</span> <span class="cn">I</span>DbAccess {</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
+            <p>Let’s see each method individually:</p>
+            <h3 data-number="2.4.1" id="select-methods"><span
+            class="header-section-number">2.4.1</span> Select
+            methods</h3>
+            <p>Here we have 2 methods, one for selecting all the rows of
+            the table and the other one for selecting a single row by
+            its <code>id</code>. The <code>selectAll</code> method
+            is:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> getAll()<span class="ot">:</span> <span class="ot">?</span><span class="dt">array</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT * FROM providers&quot;</span>)<span class="ot">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;setFetchMode(<span class="bu">PDO</span>::<span class="cn">FETCH_CLASS</span><span class="op">|</span><span class="bu">PDO</span>::<span class="cn">FETCH_PROPS_LATE</span><span class="ot">,</span> <span class="st">&#39;Provider&#39;</span>)<span class="ot">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute()<span class="ot">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$stmt</span>-&gt;fetchAll()<span class="ot">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>This method connects to the DB using the static method of
+            the <code>DBConnection</code> class. Then, if the connection
+            is not null, it uses a prepared statement with the
+            query.</p>
+            <p>With the method
+            <code>$stmt-&gt;setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Provider')</code>
+            we are indicating that the statement must return an object
+            of the class <code>Provider</code>. Pay attention to the
+            <code>PDO::FETCH_PROPS_LATE</code> flag: without it the
+            result will consist in an empty object.</p>
+            <p>Finally, the script executes the statement, fetches all
+            the rows in an array with the method <code>fetchAll()</code>
+            and returns it. If an error occurs, we return
+            <code>null</code>, so that the script that uses this method
+            could check if it has been successful before reading the
+            data.</p>
+            <p>The <strong>select by id</strong> method is as
+            follows:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> select(<span class="va">$id</span>)<span class="ot">:</span> <span class="ot">?</span><span class="cn">P</span>rovider</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">// The user input is automatically quoted, so there is no risk of a SQL injection attack.</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT * FROM providers WHERE id = :id&quot;</span>)<span class="ot">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;setFetchMode(<span class="bu">PDO</span>::<span class="cn">FETCH_CLASS</span><span class="op">|</span><span class="bu">PDO</span>::<span class="cn">FETCH_PROPS_LATE</span><span class="ot">,</span> <span class="st">&#39;Provider&#39;</span>)<span class="ot">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;id&#39;</span> =&gt; <span class="va">$id</span>])<span class="ot">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span> <span class="op">=</span> <span class="va">$stmt</span>-&gt;fetch()<span class="ot">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="va">$provider</span>) {</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">$provider</span><span class="ot">;</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>This method is similar to the previous one, but passing
+            the <code>id</code> to the prepared statement using a
+            <strong>named placeholder <em>(:id)</em></strong>:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT * FROM providers WHERE id = :id&quot;</span>)<span class="ot">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;id&#39;</span> =&gt; <span class="va">$id</span>])<span class="ot">;</span></span></code></pre></div>
+            <p>The <code>fetch()</code> method returns a
+            <code>Provider</code> object or <code>false</code> on
+            failure, so we can check the returned value and return
+            <code>null</code> if an error occurs.</p>
+            <h3 data-number="2.4.2" id="insert-method"><span
+            class="header-section-number">2.4.2</span> Insert
+            method</h3>
+            <p>This method has a Provider object as parameter and
+            returns the id of the last row inserted to the database, or
+            <code>false</code> on failure. The steps are the same as
+            before, but preparing an <strong>insert statement</strong>.
+            Here, the use of a prepared statement is essential to avoid
+            SQL injection attacks.</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> insert(<span class="va">$object</span>)<span class="ot">:</span> <span class="kw">false</span> <span class="op">|</span> <span class="dt">string</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;INSERT INTO providers (id, name, email, cif) VALUES (:id, :name, :email, :cif)&quot;</span>)<span class="ot">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute([</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;id&#39;</span> =&gt; <span class="kw">null</span><span class="ot">,</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;name&#39;</span> =&gt; <span class="va">$object</span>-&gt;getName()<span class="ot">,</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;email&#39;</span> =&gt; <span class="va">$object</span>-&gt;getEmail()<span class="ot">,</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;cif&#39;</span> =&gt; <span class="va">$object</span>-&gt;getCif()</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$conn</span>-&gt;lastInsertId()<span class="ot">;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">false</span><span class="ot">;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Note that we are passing <code>null</code> as
+            <code>id</code> because in the database schema the
+            <code>id</code> is an auto-increment integer, so passing
+            <code>null</code> lets the database assign an automatic
+            <code>id</code> to the field.</p>
+            <p>The <code>lastInsertId()</code> method returns the ID of
+            the last inserted row or false if failed, so we can know if
+            the insertion has been successful.</p>
+            <h3 data-number="2.4.3" id="delete-method"><span
+            class="header-section-number">2.4.3</span> Delete
+            method</h3>
+            <p>This method is similar to the previous one, except for
+            the query:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> delete(<span class="va">$object</span>)<span class="ot">:</span> <span class="dt">int</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;DELETE FROM providers WHERE id=:id&quot;</span>)<span class="ot">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;id&#39;</span>=&gt;<span class="va">$object</span>-&gt;getId()])<span class="ot">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$stmt</span>-&gt;rowCount()<span class="ot">;</span> <span class="co">//Return the number of rows affected</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The <code>rowCount()</code> method returns the number of
+            rows affected by the last SQL statement.</p>
+            <h3 data-number="2.4.4" id="update-method"><span
+            class="header-section-number">2.4.4</span> Update
+            method</h3>
+            <p>This method is pretty similar to the previous ones: we
+            create the connection and the statement, retrieve the data
+            from the Provider object passed as parameter, do the query
+            and return the number of rows affected (0 on failure):</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> update(<span class="va">$object</span>)<span class="ot">:</span> <span class="dt">int</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;UPDATE providers SET name = :name, email = :email, cif = :cif WHERE id = :id&quot;</span>)<span class="ot">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute([</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;id&#39;</span> =&gt; <span class="va">$object</span>-&gt;getId()<span class="ot">,</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;name&#39;</span> =&gt; <span class="va">$object</span>-&gt;getName()<span class="ot">,</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;email&#39;</span> =&gt; <span class="va">$object</span>-&gt;getEmail()<span class="ot">,</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;cif&#39;</span> =&gt; <span class="va">$object</span>-&gt;getCif()</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$stmt</span>-&gt;rowCount()<span class="ot">;</span> <span class="co">//Return the number of rows affected</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="2.5" id="provider_list.php"><span
+            class="header-section-number">2.5</span>
+            provider_list.php</h2>
+            <p>In this script we make an index page with a table showing
+            the Id and email of each entry. Each row has a button which
+            opens a form to edit the email and password fields. We also
+            have a button to open an empty form for a new entry:</p>
+            <figure>
+            <img src="images/provider_list.png"
+            alt="provider_list.php" />
+            <figcaption
+            aria-hidden="true">provider_list.php</figcaption>
+            </figure>
+            <p>In the first part of the script, we import the
+            <code>Provider</code> and <code>ProviderDao</code> classes
+            and create an array of provider objects using the
+            <code>ProviderDao::getAll()</code> method:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/classes/ProviderRepository.php&#39;</span><span class="ot">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/classes/Provider.php&#39;</span><span class="ot">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="va">$providers</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::getAll()<span class="ot">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>In the HTML body, we create a form to submit the chosen
+            id to the <code>provider_form</code> script:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;provider_form.php&quot;</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;get&quot;</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;form1&quot;</span><span class="ot"> style</span><span class="op">=</span><span class="st">&quot;border: none&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>Finally we create a table populated with the next PHP
+            code:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span> (<span class="va">$providers</span> <span class="kw">as</span> <span class="va">$provider</span>){</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;    &lt;tr&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;      &lt;td style=&#39;text-align: center&#39;&gt; &lt;button type=&#39;submit&#39; form=&#39;form1&#39; name=&#39;id&#39; value=&#39;&quot;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span> <span class="va">$provider</span>-&gt;getId() <span class="op">.</span> <span class="st">&quot;&#39; &gt; Edit/View &lt;/button&gt; &lt;/td&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot; &lt;td&gt; &quot;</span> <span class="op">.</span> <span class="va">$provider</span>-&gt;getId() <span class="op">.</span> <span class="st">&quot;&lt;/td&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot; &lt;td&gt; &quot;</span> <span class="op">.</span> <span class="va">$provider</span>-&gt;getName() <span class="op">.</span> <span class="st">&quot;&lt;/td&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot; &lt;td&gt; &quot;</span> <span class="op">.</span> <span class="va">$provider</span>-&gt;getEmail() <span class="op">.</span> <span class="st">&quot;&lt;/td&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot; &lt;td&gt; &quot;</span> <span class="op">.</span> <span class="va">$provider</span>-&gt;getCif() <span class="op">.</span> <span class="st">&quot;&lt;/td&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;    &lt;/tr&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>Each button has the object id as <code>value</code>,
+            which is the data passed with the method GET.</p>
+            <p>Note that we are using objects to get the data
+            (<code>$provider-&gt;getId()</code>, etc…).</p>
+            <h2 data-number="2.6" id="provider_form.php"><span
+            class="header-section-number">2.6</span>
+            provider_form.php</h2>
+            <p>In this script we can create/update or delete an entry.
+            It is similar to the form of the Unit 4. We can see each
+            entry id too, but in a read only field. The “Save” button
+            creates a new provider and inserts it in the database, if
+            the provider’s id is 0 (that means it’s a new entry), or
+            updates it otherwise. The delete button deletes an existing
+            entry.</p>
+            <figure>
+            <img src="images/provider_form.png" width="400"
+            alt="Provider form" />
+            <figcaption aria-hidden="true">Provider form</figcaption>
+            </figure>
+            <p>First of all, we read the <code>id</code> sent with the
+            GET method from the <code>provider_list</code> script and
+            perform a query to the database with the
+            <code>ProviderDao::select</code> method and store the object
+            returned in the <code>$provider</code> variable:</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$_SERVER</span>[<span class="st">&quot;REQUEST_METHOD&quot;</span>] <span class="op">==</span> <span class="st">&quot;GET&quot;</span>) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="kw">empty</span>(<span class="va">$_REQUEST</span>[<span class="st">&quot;id&quot;</span>])) {</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::select(<span class="va">$_REQUEST</span>[<span class="st">&#39;id&#39;</span>])<span class="ot">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>}  </span></code></pre></div>
+            <p>After that, we do the same for the POST method, used for
+            data validation as in the Unit 5.</p>
+            <p>If no errors are found in the validation process
+            (checking if the <code>$error</code> array is empty), the
+            next step is to perform the requested operations.</p>
+            <p>If the button pressed is “Submit”, we check the entry
+            <code>id</code>: if it is 0 the operation is an
+            <code>insert</code>:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">empty</span>(<span class="va">$errors</span>)) {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_POST</span>[<span class="st">&#39;save&#39;</span>])) {</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="va">$provider</span>-&gt;getId() <span class="op">==</span> <span class="dv">0</span>) {</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>            <span class="co">//New provider</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span> {</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                <span class="va">$id</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::insert(<span class="va">$provider</span>)<span class="ot">;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (<span class="va">$id</span>) {</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                    <span class="va">$opMsg</span> <span class="op">=</span> <span class="st">&quot;New provider inserted with id </span><span class="va">$id</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                    <span class="va">$provider</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>rovider()<span class="ot">;</span> <span class="co">//If no errors, make a new empty provider to clear the fields</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>            } <span class="cf">catch</span> (<span class="bu">Exception</span> <span class="va">$e</span>) {</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>                <span class="kw">echo</span> <span class="st">&quot;Error inserting provider: &quot;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        } ...</span></code></pre></div>
+            <p>We use the <code>$opMsg</code> variable to show the value
+            of the operation performed.</p>
+            <p>If the operation has been successful, we assign a new
+            object to the <code>$provider</code> variable (
+            <code>$provider = new Provider()</code> ) in order to clear
+            the inputs when the form is reloaded.</p>
+            <p>If the value of the <code>id</code> is different from 0,
+            then the operation is an update:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        <span class="cn">P</span>roviderRepository::update(<span class="va">$provider</span>)<span class="ot">;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$opMsg</span> <span class="op">=</span> <span class="st">&quot;Provider updated&quot;</span><span class="ot">;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>rovider()<span class="ot">;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">catch</span> (<span class="bu">Exception</span> <span class="va">$e</span>) {</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Error updating provider: &quot;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>If the pressed button is “Delete”, we perform the delete
+            operation:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">isset</span>(<span class="va">$_POST</span>[<span class="st">&#39;delete&#39;</span>]) <span class="op">&amp;&amp;</span> <span class="va">$provider</span>-&gt;getId() <span class="op">!=</span> <span class="dv">0</span>) {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        <span class="cn">P</span>roviderRepository::delete(<span class="va">$provider</span>)<span class="ot">;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$opMsg</span> <span class="op">=</span> <span class="st">&quot;Provider deleted&quot;</span><span class="ot">;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>rovider()<span class="ot">;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">catch</span> (<span class="bu">Exception</span> <span class="va">$e</span>) {</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Error deleting provider: &quot;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>In the HTML body, we show the <code>$opMsg</code> message
+            and show the form:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h1<span class="op">&gt;</span><span class="cn">E</span>dit <span class="cn">P</span>rovider<span class="op">&lt;/</span>h1<span class="op">&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>p<span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$opMsg</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>p<span class="op">&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>form method<span class="op">=</span><span class="st">&quot;post&quot;</span> action<span class="op">=</span><span class="st">&quot;&lt;?php echo htmlspecialchars(</span><span class="va">$_SERVER</span>[<span class="st">&quot;</span><span class="cn">PHP_SELF</span><span class="st">&quot;]);?&gt;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>label <span class="cf">for</span><span class="op">=</span><span class="st">&quot;id&quot;</span><span class="op">&gt;</span><span class="cn">I</span>d<span class="ot">:</span><span class="op">&lt;/</span>label<span class="op">&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;text&quot;</span> id<span class="op">=</span><span class="st">&quot;id&quot;</span> name<span class="op">=</span><span class="st">&quot;id&quot;</span> value<span class="op">=</span><span class="st">&quot;&lt;?= </span><span class="va">$provider</span>-&gt;getId<span class="st">() ?? &#39;&#39; ?&gt;&quot;</span> <span class="dt">readonly</span><span class="op">&gt;</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>label <span class="cf">for</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="op">&gt;</span><span class="cn">N</span>ame<span class="ot">:</span><span class="op">&lt;/</span>label<span class="op">&gt;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;text&quot;</span> id<span class="op">=</span><span class="st">&quot;name&quot;</span> name<span class="op">=</span><span class="st">&quot;name&quot;</span> value<span class="op">=</span><span class="st">&quot;&lt;?= </span><span class="va">$provider</span>-&gt;getName<span class="st">() ?? &#39;&#39; ?&gt;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;error&quot;</span><span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$errors</span>[<span class="st">&#39;name&#39;</span>] <span class="op">??</span> <span class="st">&#39;&#39;</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>span<span class="op">&gt;</span> <span class="op">&lt;</span>br<span class="op">&gt;&lt;</span>br<span class="op">&gt;</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>label <span class="cf">for</span><span class="op">=</span><span class="st">&quot;email&quot;</span><span class="op">&gt;</span><span class="cn">E</span>mail<span class="ot">:</span><span class="op">&lt;/</span>label<span class="op">&gt;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;text&quot;</span> id<span class="op">=</span><span class="st">&quot;email&quot;</span> name<span class="op">=</span><span class="st">&quot;email&quot;</span> value<span class="op">=</span><span class="st">&quot;&lt;?= </span><span class="va">$provider</span>-&gt;getEmail<span class="st">() ?? &#39;&#39; ?&gt;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;error&quot;</span><span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$errors</span>[<span class="st">&#39;email&#39;</span>] <span class="op">??</span> <span class="st">&#39;&#39;</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>span<span class="op">&gt;</span> <span class="op">&lt;</span>br<span class="op">&gt;&lt;</span>br<span class="op">&gt;</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>label <span class="cf">for</span><span class="op">=</span><span class="st">&quot;cif&quot;</span><span class="op">&gt;</span><span class="cn">CIF</span><span class="ot">:</span><span class="op">&lt;/</span>label<span class="op">&gt;</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;text&quot;</span> id<span class="op">=</span><span class="st">&quot;cif&quot;</span> name<span class="op">=</span><span class="st">&quot;cif&quot;</span> value<span class="op">=</span><span class="st">&quot;&lt;?= </span><span class="va">$provider</span>-&gt;getCif<span class="st">() ?? &#39;&#39; ?&gt;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;error&quot;</span><span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$errors</span>[<span class="st">&#39;cif&#39;</span>] <span class="op">??</span> <span class="st">&#39;&#39;</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>span<span class="op">&gt;&lt;</span>br<span class="op">&gt;&lt;</span>br<span class="op">&gt;</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;submit&quot;</span> value<span class="op">=</span><span class="st">&quot;Save&quot;</span> name<span class="op">=</span><span class="st">&quot;save&quot;</span><span class="op">&gt;</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;submit&quot;</span> value<span class="op">=</span><span class="st">&quot;Delete&quot;</span> name<span class="op">=</span><span class="st">&quot;delete&quot;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$provider</span>-&gt;getId() <span class="op">==</span> <span class="dv">0</span> <span class="ot">?</span> <span class="st">&#39;disabled&#39;</span> <span class="ot">:</span> <span class="st">&#39;&#39;</span> <span class="kw">?&gt;</span> <span class="op">&gt;</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>form<span class="op">&gt;</span></span></code></pre></div>
+            <p>The validation process is similar to the one shown in
+            unit 4, but here we are working with objects.</p>
+            <p>You can get all the code from the <a
+            href="https://github.com/ricardoprofe/providers_sample_DWES_24_25_u6">GitHub
+            repository</a>.</p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>

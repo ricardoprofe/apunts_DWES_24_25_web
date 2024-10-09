@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 06. PHP and databases.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 06. PHP and databases.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#php-and-databases" id="toc-php-and-databases"><span
+class="toc-section-number">1</span> PHP and databases</a></li>
+<li><a href="#security-concerns-when-working-with-php-and-databases"
+id="toc-security-concerns-when-working-with-php-and-databases"><span
+class="toc-section-number">2</span> Security concerns when working with
+PHP and databases</a></li>
+<li><a href="#connecting-to-a-database"
+id="toc-connecting-to-a-database"><span
+class="toc-section-number">3</span> Connecting to a database</a>
+<ul>
+<li><a href="#mysqli-library-connection"
+id="toc-mysqli-library-connection"><span
+class="toc-section-number">3.1</span> MySQLi library connection</a></li>
+<li><a href="#pdo-library-connection"
+id="toc-pdo-library-connection"><span
+class="toc-section-number">3.2</span> PDO library connection</a>
+<ul>
+<li><a href="#configuring-the-connection"
+id="toc-configuring-the-connection"><span
+class="toc-section-number">3.2.1</span> Configuring the
+connection</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#sending-queries-to-the-database"
+id="toc-sending-queries-to-the-database"><span
+class="toc-section-number">4</span> Sending queries to the database</a>
+<ul>
+<li><a href="#queries-with-mysqli" id="toc-queries-with-mysqli"><span
+class="toc-section-number">4.1</span> Queries with mysqli</a>
+<ul>
+<li><a href="#using-prepared-statements-with-mysqli"
+id="toc-using-prepared-statements-with-mysqli"><span
+class="toc-section-number">4.1.1</span> Using prepared statements with
+mysqli</a></li>
+<li><a href="#multiqueries-with-mysqli"
+id="toc-multiqueries-with-mysqli"><span
+class="toc-section-number">4.1.2</span> Multiqueries with
+mysqli</a></li>
+</ul></li>
+<li><a href="#queries-with-pdo" id="toc-queries-with-pdo"><span
+class="toc-section-number">4.2</span> Queries with PDO</a>
+<ul>
+<li><a href="#prepared-statements-with-pdo"
+id="toc-prepared-statements-with-pdo"><span
+class="toc-section-number">4.2.1</span> Prepared statements with
+PDO</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#transactions" id="toc-transactions"><span
+class="toc-section-number">5</span> Transactions</a></li>
+<li><a href="#dates-with-php-and-mysqlmariadb"
+id="toc-dates-with-php-and-mysqlmariadb"><span
+class="toc-section-number">6</span> Dates with PHP and
+MySQL/MariaDB</a></li>
+<li><a href="#passwords-in-the-database"
+id="toc-passwords-in-the-database"><span
+class="toc-section-number">7</span> Passwords in the database</a></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="php-and-databases"><span
+            class="header-section-number">1</span> PHP and
+            databases</h1>
+            <p>To store large amounts of data or very volatile
+            information, the best option is always a database. In this
+            section, we are going to see how to work with relational
+            databases from PHP. For the examples, we will use
+            <strong>MySQL / MariaDB</strong> as the database server.</p>
+            <p>The PHP language has tools to execute data requests or
+            any other type of SQL instructions to a database server.
+            These requests return the requested information and convert
+            it into content that the client (the web browser) can
+            display. This maximizes the dynamism of the application.</p>
+            <figure>
+            <img src="images/ud0901.jpg" alt="Access to databases" />
+            <figcaption aria-hidden="true">Access to
+            databases</figcaption>
+            </figure>
+            <p>PHP has libraries to connect to a DBMS MySQL / MariaDB.
+            Nowadays, the most commonly used library is
+            <strong>PDO</strong> (<strong><em>PHP Data
+            Objects</em></strong>), although there are also applications
+            that work with the MySQLi library. The previous version,
+            MySQL, is deprecated and is not included as of PHP 7. In
+            this section, we will work with PDO, but you can find
+            additional examples for MySQLi.</p>
+            <p>An advantage of PDO is that it can also be used to
+            connect to relational database management systems other than
+            MySQL/MariaDB.</p>
+            <h1 data-number="2"
+            id="security-concerns-when-working-with-php-and-databases"><span
+            class="header-section-number">2</span> Security concerns
+            when working with PHP and databases</h1>
+            <p>For security reasons it is better not to use the
+            <strong>root</strong> user. You should create a new user
+            account with only the specific privileges it needs to work
+            on the database that your website depends upon. You can even
+            create a new user with all privileges only for certain user
+            defined databases.</p>
+            <h1 data-number="3" id="connecting-to-a-database"><span
+            class="header-section-number">3</span> Connecting to a
+            database</h1>
+            <p>There are three methods of connecting to a MySQL Server
+            from PHP:</p>
+            <ul>
+            <li><strong>MySQL library</strong>: oldest method. It has
+            been entirely removed from PHP since version 7.0.</li>
+            <li><strong>MySQLi</strong> library</li>
+            <li><strong>PDO library</strong></li>
+            </ul>
+            <p>There are a few differences between PDO and MySQLi, but
+            the main one is that you can use the PDO library to connect
+            to almost any database server (MySQL/MariaDB, PostgreSQL,
+            Oracle server, Microsoft SQL Server…) For this reason, most
+            recent PHP projects use the PDO library. However we will
+            analyze both methods: MySQLi and PDO.</p>
+            <h2 data-number="3.1" id="mysqli-library-connection"><span
+            class="header-section-number">3.1</span> MySQLi library
+            connection</h2>
+            <p>Supports both: <strong>procedural</strong> and
+            <strong>object-oriented language</strong>.</p>
+            <p>Object-oriented is better than procedural. Some MySQLi
+            Functions are in the aliases and deprecated section of the
+            <a href="https://www.php.net/manual/en/ref.mysqli.php">PHP
+            and MySQLi documentation</a> because PHP is moving steadily
+            in the direction of OO programming.</p>
+            <p>It’s worth noting that the PDO library, which is
+            considered the ideal for most DB code in PHP, is OOP
+            oriented. It doesn’t have a procedural interface.</p>
+            <p>There’s also the point about the ability to create an
+            extension class for your DB. For example:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> myDB <span class="kw">extends</span> <span class="bu">mysqli</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">// your own stuff here to extend and improve the base mysqli class</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>So, we will learn the MySQLi OOP Interface. We must
+            create a connection object of the <strong>mysqli
+            class</strong> this way:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">$db</span><span class="op">=</span><span class="kw">new</span> <span class="bu">mysqli</span>(<span class="va">$serverName</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="va">$password</span><span class="ot">,</span> <span class="va">$dbName</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>This creates a connection with the selected database. We
+            can check if the connection has been successful:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$db</span>-&gt;connect_error) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// connection error</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>To close the connection:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">$db</span>-&gt;close()<span class="ot">;</span></span></code></pre></div>
+            <h2 data-number="3.2" id="pdo-library-connection"><span
+            class="header-section-number">3.2</span> PDO library
+            connection</h2>
+            <p>Using PDO to establish a connection to a MySQL
+            server:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&#39;mysql:host=hostname;dbname=database&#39;</span><span class="ot">,</span> <span class="st">&#39;username&#39;</span><span class="ot">,</span><span class="st">&#39;password&#39;</span>)</span></code></pre></div>
+            <p>In any case, it takes three arguments:</p>
+            <ol type="1">
+            <li>a string with the database type (mysql:), the hostname
+            (host=localhost;), and the database name (dbname=ies)</li>
+            <li>the MySQL username</li>
+            <li>the MySQL password for that username</li>
+            </ol>
+            <p>There may be a connection error. You should catch the
+            exception using a <code>try...catch</code> statement:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&#39;mysql:host=localhost;dbname=xxxx&#39;</span><span class="ot">,</span><span class="st">&#39;user&#39;</span><span class="ot">,</span> <span class="st">&quot;1234&quot;</span>)<span class="ot">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&#39;Database connection established.&#39;</span><span class="ot">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">PDOException</span> <span class="va">$e</span>) {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&#39;Unable to connect to the database server.&#39;</span><span class="ot">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h3 data-number="3.2.1"
+            id="configuring-the-connection"><span
+            class="header-section-number">3.2.1</span> Configuring the
+            connection</h3>
+            <p>Our first task is to configure how our PDO object handles
+            errors. By default, PDO switches to a <em>silent
+            failure</em> mode after establishing a successful
+            connection. We’d like our PDO object to throw a PDOException
+            any time it fails doing our queries. We can configure it to
+            do so by calling the PDO object’s <code>setAttribute</code>
+            method:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">$pdo</span>-&gt;setAttribute(<span class="bu">PDO</span>::<span class="cn">ATTR_ERRMODE</span><span class="ot">,</span> <span class="bu">PDO</span>::<span class="cn">ERRMODE_EXCEPTION</span>)<span class="ot">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">// With this line we set the PDO attribute that controls the error</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">// mode (PDO::ATTR_ERRMODE) to the mode that throws exceptions</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">// (PDO::ERRMODE_EXCEPTION)</span></span></code></pre></div>
+            <p>By default, when PHP connects to MySQL/MariaDB, it uses
+            the simpler ISO-8859-1 (or Latin-1) encoding instead of
+            UTF-8.</p>
+            <p>In PDO the charset can be specified in the connection
+            string:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">$pdo</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&quot;mysql:host=</span><span class="va">$host</span><span class="st">;dbname=</span><span class="va">$db</span><span class="st">;charset=utf8&quot;</span><span class="ot">,</span> <span class="va">$user</span><span class="ot">,</span> <span class="va">$pass</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>The charset option is only used since PHP 5.3.6, so take
+            this into account when running an older version of PHP. In
+            that case you should run the following statement after
+            constructing the PDO object:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">$pdo</span>-&gt;<span class="fu">exec</span>(<span class="st">&#39;SET NAMES &quot;utf8&quot;&#39;</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>Many web applications will benefit from making
+            <strong>persistent connections</strong> to database servers.
+            Persistent connections are not closed at the end of the
+            script, but are cached and re-used when another script
+            requests a connection using the same credentials. It results
+            in a faster web application:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">$pdo</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&quot;mysql:host=</span><span class="va">$host</span><span class="st">;dbname=</span><span class="va">$db</span><span class="st">;charset=utf8&quot;</span><span class="ot">,</span> <span class="va">$user</span><span class="ot">,</span> <span class="va">$pass</span><span class="ot">,</span> <span class="dt">array</span>(<span class="bu">PDO</span>::<span class="cn">ATTR_PERSISTENT</span> =&gt; <span class="kw">true</span>))<span class="ot">;</span></span></code></pre></div>
+            <blockquote>
+            <p><strong>Important</strong>: If you wish to use persistent
+            connections, you must set <code>PDO::ATTR_PERSISTENT</code>
+            in the array of driver options passed to the PDO
+            constructor. If setting this attribute with
+            <code>PDO::setAttribute()</code> after instantiation of the
+            object, the driver will not use persistent connections.</p>
+            </blockquote>
+            <p>Here’s the complete code of the connection process:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&#39;mysql:host=localhost;dbname=xxxx;charset=utf8&#39;</span><span class="ot">,</span><span class="st">&#39;user&#39;</span><span class="ot">,</span> <span class="st">&#39;1234&#39;</span><span class="ot">,</span> <span class="dt">array</span>(<span class="bu">PDO</span>::<span class="cn">ATTR_PERSISTENT</span> =&gt; <span class="kw">true</span>))<span class="ot">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span>-&gt;setAttribute(<span class="bu">PDO</span>::<span class="cn">ATTR_ERRMODE</span><span class="ot">,</span> <span class="bu">PDO</span>::<span class="cn">ERRMODE_EXCEPTION</span>)<span class="ot">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">PDOException</span> <span class="va">$e</span>) {</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&#39;Unable to connect to the database server: &#39;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">exit</span>()<span class="ot">;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;Database connection established.&#39;</span><span class="ot">;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+            <p>With <code>$pdo=null</code> we force the disconnection
+            from the database server</p>
+            <h1 data-number="4"
+            id="sending-queries-to-the-database"><span
+            class="header-section-number">4</span> Sending queries to
+            the database</h1>
+            <p>Once we have connected to the database, we need to send
+            queries and any other SQL statement to be executed in the
+            database server.</p>
+            <h2 data-number="4.1" id="queries-with-mysqli"><span
+            class="header-section-number">4.1</span> Queries with
+            mysqli</h2>
+            <p>Use the <code>query()</code> method of the mysqli
+            connection instance to submit SQL statements:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="st">&#39;login.php&#39;</span><span class="ot">;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="va">$conn</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">mysqli</span>(<span class="va">$servername</span><span class="ot">,</span> <span class="va">$username</span><span class="ot">,</span> <span class="va">$password</span><span class="ot">,</span> <span class="va">$dbname</span>)<span class="ot">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$conn</span>-&gt;connect_error) {</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">die</span>(<span class="st">&quot;Fatal Error: &quot;</span> <span class="op">.</span> <span class="va">$conn</span>-&gt;connect_error)<span class="ot">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="va">$query</span> <span class="op">=</span> <span class="st">&#39;SELECT * FROM comment&#39;</span><span class="ot">;</span> <span class="co">// we create the SQL statement</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="va">$result</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;query(<span class="va">$query</span>)<span class="ot">;</span> <span class="co">// we launch the query</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="va">$result</span>) <span class="cf">die</span>(<span class="st">&quot;Fatal Error&quot;</span>)<span class="ot">;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="va">$rows</span> <span class="op">=</span> <span class="va">$result</span>-&gt;num_rows<span class="ot">;</span> <span class="co">// number of rows of the result</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="va">$j</span> <span class="op">=</span> <span class="dv">0</span> <span class="ot">;</span> <span class="va">$j</span> <span class="op">&lt;</span> <span class="va">$rows</span> <span class="ot">;</span> <span class="op">++</span><span class="va">$j</span>) {</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$row</span> <span class="op">=</span> <span class="va">$result</span>-&gt;fetch_assoc()<span class="ot">;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&#39;Value: &#39;</span><span class="op">.</span> <span class="fu">htmlspecialchars</span>(<span class="va">$row</span>[<span class="st">&#39;columnName&#39;</span>])<span class="op">.</span><span class="st">&#39;&lt;br/&gt;&#39;</span><span class="ot">;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="va">$result</span>-&gt;close()<span class="ot">;</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="va">$conn</span>-&gt;close()<span class="ot">;</span></span></code></pre></div>
+            <p>Methods that we can use with the <code>result</code>
+            object:</p>
+            <ul>
+            <li><code>fetch_array()</code> method: creates an
+            associative array, a numeric array, or both, based on the
+            second parameter (MYSQLI_ASSOC, MYSQLI_NUM, or
+            MYSQLI_BOTH)</li>
+            <li><code>fetch_assoc()</code> method: creates an
+            associative array, using the data field names as the array
+            keys.</li>
+            <li><code>fetch_row()</code> method: creates a numeric
+            array, using numeric indexes for each data field (starting
+            at 0, and using the data field order specified in the table
+            or SELECT statement data field).</li>
+            <li><code>close()</code>: It’s not necessary to free memory
+            because php frees it at the end of the script. But in high
+            traffic situations it can be useful.</li>
+            </ul>
+            <h3 data-number="4.1.1"
+            id="using-prepared-statements-with-mysqli"><span
+            class="header-section-number">4.1.1</span> Using prepared
+            statements with mysqli</h3>
+            <p>We should avoid SQL injection attacks in our application.
+            It’s very easy to launch this attack if we don’t sanitize
+            the data we include in the query. Anyway, the safest way of
+            submitting data in a statement is to use a <strong>prepared
+            statement</strong>, which defines a template of the query
+            you want to execute on the database server, and then sends
+            the data separate from the template.</p>
+            <p>With a prepared statement, we create the query string as
+            normal, but instead of including data values, we use a
+            question mark as a placeholder for each value:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span> <span class="op">=</span> <span class="st">&quot;INSERT INTO table VALUES (?, ?, ?...)&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>Then we use the <code>prepare()</code> method to submit
+            it:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="va">$sql</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>And then we will use <code>bind_param()</code> to pass
+            the real values:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;bind_param(<span class="st">&quot;ssi&quot;</span><span class="ot">,</span><span class="va">$value1</span><span class="ot">,</span><span class="va">$value2</span><span class="ot">,</span><span class="va">$value3</span>...)<span class="ot">;</span></span></code></pre></div>
+            <p>The first parameter (“ssi”) defines the type of each data
+            values:</p>
+            <p><strong>b</strong>: A blob data type value
+            <strong>i</strong>: An integer data type value
+            <strong>d</strong>: A double data type value
+            <strong>s</strong>: A string data type value</p>
+            <p>Finally, we execute the prepared statement:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute()<span class="ot">;</span></span></code></pre></div>
+            <p>It’s highly recommended to use prepared statements with
+            operations that modify the database, but it’s a good
+            practice to do so with queries when the query contains some
+            PHP variable.</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span> <span class="op">=</span> <span class="st">&quot;SELECT * FROM users WHERE id=?&quot;</span><span class="ot">;</span> <span class="co">// the SQL code</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="va">$sql</span>)<span class="ot">;</span> <span class="co">// we prepare the statement</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;bind_param(<span class="st">&quot;i&quot;</span><span class="ot">,</span> <span class="va">$id</span>)<span class="ot">;</span> <span class="co">// bind the ? to real values</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute()<span class="ot">;</span> <span class="co">// executes the statement</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="va">$result</span> <span class="op">=</span> <span class="va">$stmt</span>-&gt;get_result()<span class="ot">;</span> <span class="co">// returns the result</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="va">$row</span> <span class="op">=</span> <span class="va">$result</span>-&gt;fetch_assoc()) { </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="va">$row</span>[<span class="st">&#39;name&#39;</span>]<span class="ot">;</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <blockquote>
+            <p>It’s a good practice to separate the database interaction
+            from the HTML output</p>
+            </blockquote>
+            <p>Instead of the <code>while</code> loop we can fetch all
+            the result with just one line:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="va">$data</span> <span class="op">=</span> <span class="va">$result</span>-&gt;fetch_all(<span class="cn">MYSQLI_ASSOC</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>Now:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span>(<span class="va">$data</span> <span class="kw">as</span> <span class="va">$row</span>) <span class="kw">echo</span> <span class="va">$row</span>[<span class="st">&#39;column_name&#39;</span>]<span class="ot">;</span></span></code></pre></div>
+            <h3 data-number="4.1.2" id="multiqueries-with-mysqli"><span
+            class="header-section-number">4.1.2</span> Multiqueries with
+            mysqli</h3>
+            <p>We can execute one or multiple queries which are
+            concatenated by a semicolon.</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span><span class="op">=</span><span class="st">&quot;INSERT INTO table VALUES(50,&#39;RRHH1&#39;,&#39;VALENCIA&#39;);&quot;</span><span class="ot">;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span> <span class="op">.=</span><span class="st">&quot;INSERT INTO table VALUES(60,&#39;RRHH2&#39;,&#39;VALENCIA&#39;);&quot;</span><span class="ot">;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span> <span class="op">.=</span><span class="st">&quot;INSERT INTO table VALUES(70,&#39;RRHH3&#39;,&#39;MADRID&#39;)&quot;</span><span class="ot">;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$conn</span>-&gt;multi_query(<span class="va">$sql</span>)) { <span class="kw">echo</span> <span class="st">&quot;Right&quot;</span><span class="ot">;</span> }</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> { <span class="kw">echo</span> <span class="st">&quot;INSERT Failed&quot;</span><span class="ot">;</span> }</span></code></pre></div>
+            <p>Be careful with SQL injection: if the query contains any
+            variable input then use parameterized prepared statements.
+            Alternatively, the data must be properly formatted and all
+            strings must be escaped using the
+            <code>real_escape_string()</code> method or the methods we
+            have seen in previous units like <code>strip_tags</code> or
+            <code>htmlspecialchars</code>.</p>
+            <h2 data-number="4.2" id="queries-with-pdo"><span
+            class="header-section-number">4.2</span> Queries with
+            PDO</h2>
+            <p>Unlike mysqli, PDO library has two different methods for
+            SELECT queries and DML queries (INSERT, DELETE, UPDATE).</p>
+            <p>For DELETE, INSERT, and UPDATE queries (which modify the
+            database content), we will use the <code>exec</code> method
+            that returns the number of table rows (entries) that were
+            affected by the query.</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span><span class="op">=</span><span class="st">&quot;....&quot;</span><span class="ot">;</span> <span class="co">// the sql statement</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="va">$affectedRows</span><span class="op">=</span><span class="va">$pdo</span>-&gt;<span class="fu">exec</span>(<span class="va">$sql</span>)<span class="ot">;</span> <span class="co">// sql execution</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$affectedRows</span> <span class="op">==</span> <span class="dv">0</span>) {</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;No rows inserted/updated/deleted&quot;</span><span class="ot">;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>For SELECT queries, we will use the <code>query</code>
+            method that returns a list of all the rows (entries)
+            returned from the query.</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span><span class="op">=</span><span class="st">&quot;...&quot;</span><span class="ot">;</span> <span class="co">// the sql query</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="va">$result</span><span class="op">=</span><span class="va">$pdo</span>-&gt;query(<span class="va">$sql</span>)<span class="ot">;</span> <span class="co">// sql execution</span></span></code></pre></div>
+            <p>Now we can go through the result with a loop and the
+            <code>fetch</code> method of the PDOStatement class to which
+            the result belongs. The <code>fetch</code> method returns
+            the next row in the result set as an array. When the rows
+            end <code>fetch</code> returns false.</p>
+            <p>A complete example:</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&#39;mysql:host=localhost;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="st">                    dbname=databaseName;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">                    charset=utf8&#39;</span><span class="ot">,</span><span class="st">&#39;userName&#39;</span><span class="ot">,</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;password&#39;</span>)<span class="ot">;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span>-&gt;setAttribute(<span class="bu">PDO</span>::<span class="cn">ATTR_ERRMODE</span><span class="ot">,</span><span class="bu">PDO</span>::<span class="cn">ERRMODE_EXCEPTION</span>)<span class="ot">;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$sql</span> <span class="op">=</span> <span class="st">&#39;SELECT field1,field2... FROM databaseTable&#39;</span><span class="ot">;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">$result</span> <span class="op">=</span> <span class="va">$pdo</span>-&gt;query(<span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (<span class="va">$row</span> <span class="op">=</span> <span class="va">$result</span>-&gt;fetch()) {</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="va">$row</span>[<span class="st">&#39;field1&#39;</span>]<span class="ot">;</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="va">$row</span>[<span class="st">&#39;field2&#39;</span>]<span class="ot">;</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>} <span class="cf">catch</span> (<span class="bu">PDOException</span> <span class="va">$e</span>) {</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&#39;Something is wrong with the database server: &#39;</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="va">$e</span>-&gt;getMessage()<span class="op">.</span><span class="st">&#39; in &#39;</span><span class="op">.</span><span class="va">$e</span>-&gt;getFile()<span class="op">.</span><span class="st">&#39;:&#39;</span><span class="op">.</span><span class="va">$e</span>-&gt;getLine()<span class="ot">;</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h3 data-number="4.2.1"
+            id="prepared-statements-with-pdo"><span
+            class="header-section-number">4.2.1</span> Prepared
+            statements with PDO</h3>
+            <p>Prepared statements in PDO enhance security and
+            performance by separating SQL logic from data. Here’s how to
+            use them:</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span> <span class="op">=</span> <span class="st">&#39;INSERT INTO SQLTable values (:v1,:v2...)&#39;</span><span class="ot">;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span> <span class="op">=</span> <span class="va">$pdo</span>-&gt;prepare(<span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;bindValue(<span class="st">&#39;realValue1&#39;</span><span class="ot">,</span><span class="st">&#39;realValue2&#39;</span>...)<span class="ot">;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute()<span class="ot">;</span></span></code></pre></div>
+            <p>An alternative way:</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;:v1&#39;</span>=&gt;<span class="st">&#39;realValue1&#39;</span><span class="ot">,</span><span class="st">&#39;:v2&#39;</span>=&gt;<span class="st">&#39;realValue2&#39;</span>...])<span class="ot">;</span></span></code></pre></div>
+            <p>We can work using the ? symbol as well.</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span> <span class="op">=</span> <span class="st">&#39;INSERT INTO SQLTable values (?,?)&#39;</span><span class="ot">;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span> <span class="op">=</span> <span class="va">$db</span>-&gt;prepare(<span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="va">$value1</span> <span class="op">=</span> <span class="st">&quot;Good idea!&quot;</span><span class="ot">;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="va">$value2</span> <span class="op">=</span> <span class="st">&quot;CURDATE()&quot;</span><span class="ot">;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;bindParam(<span class="dv">1</span><span class="ot">,</span> <span class="va">$comment</span>)<span class="ot">;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;bindParam(<span class="dv">2</span><span class="ot">,</span> <span class="va">$date</span>)<span class="ot">;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute()<span class="ot">;</span></span></code></pre></div>
+            <p>An alternative way:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute([<span class="va">$comment</span><span class="ot">,</span> <span class="va">$date</span>])<span class="ot">;</span></span></code></pre></div>
+            <p>We can do queries with a prepared statement and store the
+            result in an indexed array, associative array or in a new
+            object of the requested class. We can tell which fetch mode
+            to use with the methods <code>setFetchMode</code> or
+            <code>fetch</code> of the <code>Statement</code> class:</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT * FROM persons&quot;</span>)<span class="ot">;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;fetch(<span class="bu">PDO</span>::<span class="cn">FETCH_ASSOC</span>)<span class="ot">;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute()<span class="ot">;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="va">$result</span> <span class="op">=</span> <span class="va">$stmt</span>-&gt;fetchAll()<span class="ot">;</span> <span class="co">//$result is an associative array</span></span></code></pre></div>
+            <p>If we want to store the result in an object, we need to
+            add the <code>PDO::FETCH_CLASS</code> and
+            <code>PDO::FETCH_PROPS_LATE</code> methods:</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT * FROM persons&quot;</span>)<span class="ot">;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;fetch((<span class="bu">PDO</span>::<span class="cn">FETCH_CLASS</span><span class="op">|</span><span class="bu">PDO</span>::<span class="cn">FETCH_PROPS_LATE</span><span class="ot">,</span> <span class="st">&#39;Person&#39;</span>)<span class="ot">;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute()<span class="ot">;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="va">$result</span> <span class="op">=</span> <span class="va">$stmt</span>-&gt;fetchAll()<span class="ot">;</span> <span class="co">//$result is an array of Person objects</span></span></code></pre></div>
+            <p>For a single result, for instance a select by the primary
+            key, we use the fetch method:</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="va">$person</span> <span class="op">=</span> <span class="va">$stmt</span>-&gt;fetch()<span class="ot">;</span> <span class="co">//$person is an object of the Person class</span></span></code></pre></div>
+            <p>The inserts, updates and deletes are similar, but we
+            don’t need the <code>fetch</code> or <code>fetchAll</code>
+            methods. For example:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;UPDATE cars SET brand=:brand, model=:model WHERE id=:id&quot;</span>)<span class="ot">;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;id&#39;</span>=&gt;<span class="va">$car</span>-&gt;getId()<span class="ot">,</span> <span class="st">&#39;brand&#39;</span>=&gt;<span class="va">$car</span>-&gt;getBrand()<span class="ot">,</span> <span class="st">&#39;model&#39;</span>=&gt;<span class="va">$car</span>-&gt;getModel()])<span class="ot">;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="va">$numrows</span> <span class="op">=</span> <span class="va">$stmt</span>-&gt;rowCount()<span class="ot">;</span></span></code></pre></div>
+            <p>We can use the method <code>rowCount</code> to know how
+            many rows have been affected by the query.</p>
+            <h1 data-number="5" id="transactions"><span
+            class="header-section-number">5</span> Transactions</h1>
+            <p>Database transactions ensure that a set of data changes
+            will only be made permanent if every statement is
+            successful.</p>
+            <p>PDO run “auto-commit” mode by default: It means that
+            every query that you run has its own implicit
+            transaction.</p>
+            <p>We can define a transaction with multiple queries by
+            using the methods <code>beginTransaction</code> and
+            <code>commit</code>. Between them, we define the statements
+            that we want to execute, but the whole bunch of statements
+            will be executed only when <code>commit</code> is
+            reached.</p>
+            <p>If one of the statements causes an exception, we can use
+            the <code>rollback</code> method to undo the changes and the
+            database will return to its state before
+            <code>beginTransaction</code>.</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span>-&gt;setAttribute(<span class="bu">PDO</span>::<span class="cn">ATTR_ERRMODE</span><span class="ot">,</span> <span class="bu">PDO</span>::<span class="cn">ERRMODE_EXCEPTION</span>)<span class="ot">;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span>-&gt;beginTransaction()<span class="ot">;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span>-&gt;<span class="fu">exec</span>(<span class="st">&quot;insert into staff(id, first, last) values (23, &#39;Joe&#39;,&#39;Smith&#39;)&quot;</span>)<span class="ot">;</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span>-&gt;<span class="fu">exec</span>(<span class="st">&quot;insert into salarychange(id, amount, changedate)</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="st">    values (23, 50000, NOW())&quot;</span>)<span class="ot">;</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span>-&gt;commit()<span class="ot">;</span><span class="co">//save changes</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">catch</span> (<span class="bu">Exception</span> <span class="va">$e</span>) {</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span>-&gt;rollBack()<span class="ot">;</span> <span class="co">//undo changes</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Failed: &quot;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h1 data-number="6"
+            id="dates-with-php-and-mysqlmariadb"><span
+            class="header-section-number">6</span> Dates with PHP and
+            MySQL/MariaDB</h1>
+            <p>In MySQL/MariaDB we have 5 types to represent date and
+            time data:</p>
+            <ul>
+            <li>DATE: YYYY-MM-DD</li>
+            <li>TIME: HH:MM:SS</li>
+            <li>DATETIME: YYYY-MM-DD HH:MM:SS</li>
+            <li>TIMESTAMP: same as DATETIME but with a different range
+            of dates because of their internal implementation</li>
+            <li>YEAR: YYYY</li>
+            </ul>
+            <p>We need to know which type are we working with in order
+            to prepare the date in its specific format. If we have dates
+            in spanish format we must convert them to the database
+            format.</p>
+            <p>An example with a DATE format field in the table:</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">// this line converts a d-m-Y date into a Y-m-d one</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="va">$date</span> <span class="op">=</span> <span class="bu">DateTime</span>::createFromFormat(<span class="st">&#39;d-m-Y&#39;</span><span class="ot">,</span> <span class="va">$birthday</span>)-&gt;format(<span class="st">&#39;Y-m-d&#39;</span>)<span class="ot">;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">// now we can insert the date into the table</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="va">$query</span> <span class="op">=</span> <span class="st">&quot;INSERT INTO users(id, name, birthday) VALUES(&#39;</span><span class="va">$id</span><span class="st">&#39;,&#39;</span><span class="va">$name</span><span class="st">&#39;,&#39;</span><span class="va">$date</span><span class="st">&#39;)&quot;</span><span class="ot">;</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">// we can use the SQL DATE_FORMAT function to get the date from</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co">// the database in a certain format</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co">// SELECT DATE_FORMAT(birthday, &#39;%D %M %Y&#39;) from users;  </span></span></code></pre></div>
+            <p>Another interesting option is to use a
+            <code>bigint</code> or <code>timestamp</code> column in the
+            database table and save the date in PHP timestamp format
+            (the amount of seconds from the beginning of Linux time). We
+            can simply do this:</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="va">$today</span><span class="op">=</span><span class="fu">date_create</span>()<span class="ot">;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="va">$todayTimeStamp</span><span class="op">=</span><span class="va">$today</span>-&gt;getTimeStamp()<span class="ot">;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">date</span>(<span class="st">&quot;d-m-Y&quot;</span><span class="ot">,</span><span class="va">$todayTimeStamp</span>)<span class="op">.</span><span class="st">&quot; - &quot;</span><span class="op">.</span><span class="va">$todayTimeStamp</span><span class="ot">;</span></span></code></pre></div>
+            <p>We will get:</p>
+            <figure>
+            <img src="images/ud0902.jpg"
+            alt="String Date and TimeStamp date" />
+            <figcaption aria-hidden="true">String Date and TimeStamp
+            date</figcaption>
+            </figure>
+            <p>Now, if we have a table like this in our database:</p>
+            <figure>
+            <img src="images/ud0903.jpg"
+            alt="Table with a TIMESTAMP date" />
+            <figcaption aria-hidden="true">Table with a TIMESTAMP
+            date</figcaption>
+            </figure>
+            <p>We can insert a user doing:</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="va">$today</span><span class="op">=</span><span class="fu">date_create</span>()<span class="ot">;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="va">$todayTimeStamp</span><span class="op">=</span><span class="va">$today</span>-&gt;getTimeStamp()<span class="ot">;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">date</span>(<span class="st">&quot;d-m-Y&quot;</span><span class="ot">,</span><span class="va">$todayTimeStamp</span>)<span class="op">.</span><span class="st">&quot; - &quot;</span><span class="op">.</span><span class="va">$todayTimeStamp</span><span class="ot">;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span> {</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pdo</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&#39;mysql:host=localhost;dbname=daw2223&#39;</span><span class="ot">,</span><span class="st">&#39;root&#39;</span><span class="ot">,</span> <span class="st">&#39;1234&#39;</span>)<span class="ot">;</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="cf">catch</span> (<span class="bu">PDOException</span> <span class="va">$e</span>) { <span class="cf">die</span>(<span class="st">&quot;Connecting failure&quot;</span>)<span class="ot">;</span> }</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span><span class="op">=</span><span class="st">&quot;INSERT INTO user VALUES(NULL,&#39;Fidel&#39;,</span><span class="va">$todayTimeStamp</span><span class="st">)&quot;</span><span class="ot">;</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="va">$rows</span><span class="op">=</span><span class="va">$pdo</span>-&gt;<span class="fu">exec</span>(<span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$rows</span><span class="op">==</span><span class="dv">0</span>) { <span class="kw">echo</span> <span class="st">&quot;Insert failure&quot;</span><span class="ot">;</span>}</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="va">$pdo</span><span class="op">=</span><span class="kw">null</span><span class="ot">;</span></span></code></pre></div>
+            <p>If we take a look to the database, this is what we
+            see:</p>
+            <figure>
+            <img src="images/ud0904.jpg"
+            alt="PHP timestamp in the database" />
+            <figcaption aria-hidden="true">PHP timestamp in the
+            database</figcaption>
+            </figure>
+            <p>Now, to retrieve the date:</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span><span class="op">=</span><span class="st">&quot;SELECT nameUser, birthday FROM user&quot;</span><span class="ot">;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="va">$result</span><span class="op">=</span><span class="va">$pdo</span>-&gt;query(<span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(<span class="va">$row</span><span class="op">=</span><span class="va">$result</span>-&gt;fetch()) {</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;strong&gt;Name:&lt;/strong&gt; &quot;</span><span class="op">.</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>            <span class="va">$row</span>[<span class="st">&#39;nameUser&#39;</span>]<span class="op">.</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot; &lt;strong&gt;Birthday:&lt;/strong&gt; &quot;</span><span class="op">.</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">date</span>(<span class="st">&quot;d-m-Y&quot;</span><span class="ot">,</span><span class="va">$row</span>[<span class="st">&#39;birthday&#39;</span>])<span class="ot">;</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>And this is the result:</p>
+            <figure>
+            <img src="images/ud0905.jpg"
+            alt="Date retrieved from the database" />
+            <figcaption aria-hidden="true">Date retrieved from the
+            database</figcaption>
+            </figure>
+            <h1 data-number="7" id="passwords-in-the-database"><span
+            class="header-section-number">7</span> Passwords in the
+            database</h1>
+            <p>It’s a good practice not to save passwords to the
+            database in plain text format.</p>
+            <p>The PHP function <code>password_hash()</code> creates a
+            new password hash from a string password using a strong
+            one-way hashing algorithm.</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="va">$strongPass</span> <span class="op">=</span> <span class="fu">password_hash</span>(<span class="va">$textPassword</span><span class="ot">,</span> <span class="cn">PASSWORD_DEFAULT</span>)<span class="ot">;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span> <span class="op">=</span> <span class="st">&quot;INSERT INTO login(usu, pass) values (&#39;</span><span class="va">$name</span><span class="st">&#39;,&#39;</span><span class="va">$strongPass</span><span class="st">&#39;)&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>We have used the PASSWORD_DEFAULT algorithm, but you can
+            find other options <a
+            href="https://www.php.net/manual/en/function.password-hash.php">in
+            the PHP documentation</a>.</p>
+            <p>We can’t decode the password again into a string
+            password, but when the user tries to validate we can compare
+            the password (in plain text format) introduced by the user
+            with the hashed password in the database using the function
+            <code>password_verify()</code>.</p>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sql</span> <span class="op">=</span> <span class="st">&quot;SELECT pass FROM login WHERE usu=&#39;John&#39;&quot;</span><span class="ot">;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="va">$result</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;query(<span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="va">$result</span>) <span class="cf">die</span>(<span class="st">&quot;Fatal Error&quot;</span>)<span class="ot">;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="va">$row</span> <span class="op">=</span> <span class="va">$result</span>-&gt;fetch_assoc()<span class="ot">;</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">password_verify</span>(<span class="va">$pass</span><span class="ot">,</span> <span class="va">$row</span>[<span class="st">&#39;pass&#39;</span>])) <span class="kw">echo</span> <span class="st">&#39;Correct Password&#39;</span><span class="ot">;</span></span></code></pre></div>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
