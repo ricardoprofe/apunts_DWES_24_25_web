@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 7. PHP and files.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 7. PHP and files.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#php-and-files" id="toc-php-and-files"><span
+class="toc-section-number">1</span> PHP and files</a></li>
+<li><a href="#file-system" id="toc-file-system"><span
+class="toc-section-number">2</span> File system</a>
+<ul>
+<li><a href="#file-system-size" id="toc-file-system-size"><span
+class="toc-section-number">2.1</span> File system size</a></li>
+<li><a href="#some-functions-to-get-information-about-the-file-status"
+id="toc-some-functions-to-get-information-about-the-file-status"><span
+class="toc-section-number">2.2</span> Some functions to get information
+about the file status</a></li>
+<li><a href="#some-functions-to-work-with-directories-folders"
+id="toc-some-functions-to-work-with-directories-folders"><span
+class="toc-section-number">2.3</span> Some functions to work with
+directories / folders</a></li>
+<li><a
+href="#some-functions-to-work-with-permissions-and-ownership-in-linux"
+id="toc-some-functions-to-work-with-permissions-and-ownership-in-linux"><span
+class="toc-section-number">2.4</span> Some functions to work with
+permissions and ownership (in Linux)</a></li>
+<li><a href="#some-functions-to-make-generic-operations-with-files"
+id="toc-some-functions-to-make-generic-operations-with-files"><span
+class="toc-section-number">2.5</span> Some functions to make generic
+operations with files</a></li>
+<li><a href="#some-functions-to-get-more-information-about-a-file"
+id="toc-some-functions-to-get-more-information-about-a-file"><span
+class="toc-section-number">2.6</span> Some functions to get more
+information about a file</a></li>
+<li><a href="#reading-the-content-of-a-directory"
+id="toc-reading-the-content-of-a-directory"><span
+class="toc-section-number">2.7</span> Reading the content of a
+directory</a></li>
+</ul></li>
+<li><a href="#working-with-text-files"
+id="toc-working-with-text-files"><span
+class="toc-section-number">3</span> Working with text files</a>
+<ul>
+<li><a href="#opening-a-text-file" id="toc-opening-a-text-file"><span
+class="toc-section-number">3.1</span> Opening a text file</a></li>
+<li><a href="#reading-the-content-of-a-text-file"
+id="toc-reading-the-content-of-a-text-file"><span
+class="toc-section-number">3.2</span> Reading the content of a text
+file</a>
+<ul>
+<li><a href="#reading-all-the-content-of-a-text-file"
+id="toc-reading-all-the-content-of-a-text-file"><span
+class="toc-section-number">3.2.1</span> Reading all the content of a
+text file</a></li>
+<li><a href="#reading-the-content-of-a-text-file-by-pieces"
+id="toc-reading-the-content-of-a-text-file-by-pieces"><span
+class="toc-section-number">3.2.2</span> Reading the content of a text
+file by pieces</a></li>
+<li><a href="#reading-csv-files" id="toc-reading-csv-files"><span
+class="toc-section-number">3.2.3</span> Reading CSV files</a></li>
+</ul></li>
+<li><a href="#writing-on-a-text-file"
+id="toc-writing-on-a-text-file"><span
+class="toc-section-number">3.3</span> Writing on a text file</a></li>
+<li><a href="#reading-and-writing-with-the-same-handler"
+id="toc-reading-and-writing-with-the-same-handler"><span
+class="toc-section-number">3.4</span> Reading and writing with the same
+handler</a></li>
+</ul></li>
+<li><a href="#php-and-json-files" id="toc-php-and-json-files"><span
+class="toc-section-number">4</span> PHP and JSON files</a>
+<ul>
+<li><a href="#creating-a-json-file" id="toc-creating-a-json-file"><span
+class="toc-section-number">4.1</span> Creating a JSON file</a></li>
+<li><a href="#reading-a-json-file." id="toc-reading-a-json-file."><span
+class="toc-section-number">4.2</span> Reading a JSON file.</a></li>
+<li><a href="#validating-json" id="toc-validating-json"><span
+class="toc-section-number">4.3</span> Validating JSON</a></li>
+</ul></li>
+<li><a href="#transfering-files" id="toc-transfering-files"><span
+class="toc-section-number">5</span> Transfering files</a>
+<ul>
+<li><a href="#uploading-files" id="toc-uploading-files"><span
+class="toc-section-number">5.1</span> Uploading files</a></li>
+<li><a href="#downloading-files" id="toc-downloading-files"><span
+class="toc-section-number">5.2</span> Downloading files</a></li>
+<li><a href="#storing-images" id="toc-storing-images"><span
+class="toc-section-number">5.3</span> Storing images</a></li>
+</ul></li>
+<li><a href="#cookies" id="toc-cookies"><span
+class="toc-section-number">6</span> Cookies</a>
+<ul>
+<li><a href="#setting-cookies-with-php"
+id="toc-setting-cookies-with-php"><span
+class="toc-section-number">6.1</span> Setting cookies with PHP</a></li>
+<li><a href="#reading-cookies" id="toc-reading-cookies"><span
+class="toc-section-number">6.2</span> Reading cookies</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="php-and-files"><span
+            class="header-section-number">1</span> PHP and files</h1>
+            <p>We have seen in previous units how to persist data using
+            session variables and databases. However, sometimes we will
+            need to store certain data in files, without having to
+            create a database. This happens when we only need to create
+            one file with no much data, or even a single object.</p>
+            <p>Files can have a structure, like JSON or XML, or not. We
+            will go over both types.</p>
+            <p>However, let’s take a look first to the <strong>file
+            system</strong> and how to work with it using PHP.</p>
+            <h1 data-number="2" id="file-system"><span
+            class="header-section-number">2</span> File system</h1>
+            <p>In order to work with files, we need to know how to
+            access to our file system and how to work with files and
+            directories.</p>
+            <h2 data-number="2.1" id="file-system-size"><span
+            class="header-section-number">2.1</span> File system
+            size</h2>
+            <p>The <strong><code>disk_free_space</code></strong>
+            function allows you to know the available space in the file
+            system or in a partition. On the other hand, the
+            <strong><code>disk_total_space</code></strong> function
+            tells us the total space of the file system or disk
+            partition. In both cases it does it in bytes. On Windows,
+            for example, we would do:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">$bytesFree</span><span class="op">=</span><span class="fu">disk_free_space</span>(<span class="st">&quot;C:&quot;</span>)<span class="ot">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">$bytesTotal</span><span class="op">=</span><span class="fu">disk_total_space</span>(<span class="st">&quot;C:&quot;</span>)<span class="ot">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">$gbFree</span><span class="op">=</span><span class="fu">round</span>(<span class="va">$bytesFree</span><span class="op">/</span><span class="fu">pow</span>(<span class="dv">1024</span><span class="ot">,</span><span class="dv">3</span>)<span class="ot">,</span><span class="dv">2</span>)<span class="ot">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">$gbTotal</span><span class="op">=</span><span class="fu">round</span>(<span class="va">$bytesTotal</span><span class="op">/</span><span class="fu">pow</span>(<span class="dv">1024</span><span class="ot">,</span><span class="dv">3</span>)<span class="ot">,</span><span class="dv">2</span>)<span class="ot">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;You have </span><span class="va">$gbFree</span><span class="st"> GB free of </span><span class="va">$gbTotal</span><span class="st"> GB&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>In Linux we just should change <code>"C:"</code> by our
+            file system root or partition, for example
+            <code>"/"</code>.</p>
+            <figure>
+            <img src="images/ud1001.jpg"
+            alt="Available space with PHP" />
+            <figcaption aria-hidden="true">Available space with
+            PHP</figcaption>
+            </figure>
+            <h2 data-number="2.2"
+            id="some-functions-to-get-information-about-the-file-status"><span
+            class="header-section-number">2.2</span> Some functions to
+            get information about the file status</h2>
+            <p>These are some functions to check the file status:</p>
+            <table>
+            <colgroup>
+            <col style="width: 50%" />
+            <col style="width: 50%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Function</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>file_exists($fileName)</code></td>
+            <td>Returns true if the file exists</td>
+            </tr>
+            <tr class="even">
+            <td><code>is_file($fileName)</code></td>
+            <td>Returns true if <code>$fileName</code> exists and is a
+            file</td>
+            </tr>
+            <tr class="odd">
+            <td><code>is_link($fileName)</code></td>
+            <td>Returns true if <code>$fileName</code> exists and is a
+            link</td>
+            </tr>
+            <tr class="even">
+            <td><code>is_executable($fileName)</code></td>
+            <td>Returns true if the file exists and is executable</td>
+            </tr>
+            <tr class="odd">
+            <td><code>is_readable($fileName)</code></td>
+            <td>Returns true if the file exists and can be read</td>
+            </tr>
+            <tr class="even">
+            <td><code>is_writable($fileName)</code></td>
+            <td>Returns true if the file exists and can be written</td>
+            </tr>
+            <tr class="odd">
+            <td><code>is_uploaded_file($fileName)</code></td>
+            <td>Returns true if <code>$fileName</code> has been uploaded
+            with HTTP_POST</td>
+            </tr>
+            </tbody>
+            </table>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span><span class="op">=</span><span class="st">&quot;ud07test.php&quot;</span><span class="ot">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is_file</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is_writable</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>     <span class="kw">echo</span> <span class="st">&quot;The file </span><span class="va">$fileName</span><span class="st"> exists and can be written&quot;</span><span class="ot">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> { <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$fileName</span><span class="st"> is not a file&quot;</span><span class="ot">;</span> }</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> { <span class="kw">echo</span> <span class="st">&quot;</span><span class="va">$fileName</span><span class="st"> doesn&#39;t exist&quot;</span><span class="ot">;</span> }</span></code></pre></div>
+            <h2 data-number="2.3"
+            id="some-functions-to-work-with-directories-folders"><span
+            class="header-section-number">2.3</span> Some functions to
+            work with directories / folders</h2>
+            <p>These are some of the most used functions to work with
+            directories:</p>
+            <table>
+            <colgroup>
+            <col style="width: 50%" />
+            <col style="width: 50%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Function</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>is_dir($path)</code></td>
+            <td>Returns true if <code>$path</code> exists and is a
+            directory</td>
+            </tr>
+            <tr class="even">
+            <td><code>mkdir($path, $mode, $recursive)</code></td>
+            <td>Creates a directory with the name specified by
+            <code>$path</code>. The <code>$mode</code> variable define
+            the Linux permissions, and it’s ignored in Windows. If
+            <code>$recursive</code> is true, the function allows us to
+            create nested directories.</td>
+            </tr>
+            <tr class="odd">
+            <td><code>rmdir($path)</code></td>
+            <td>Deletes the directory specified by the
+            <code>$path</code> variable</td>
+            </tr>
+            <tr class="even">
+            <td><code>chdir($path)</code></td>
+            <td>Changes to the directory specified by the
+            <code>$path</code> variable</td>
+            </tr>
+            <tr class="odd">
+            <td><code>getcwd()</code></td>
+            <td>Returns the current directory</td>
+            </tr>
+            <tr class="even">
+            <td><code>dirname($path,$levels)</code></td>
+            <td>Returns the parent directory’s path that is
+            <code>$levels</code> (1 if <code>$levels</code> is not
+            specified) up from the current directory</td>
+            </tr>
+            <tr class="odd">
+            <td><code>basename($path,$suffix)</code></td>
+            <td>Returns the last component of a path. If the name
+            component ends with <code>$suffix</code> will be cut
+            off</td>
+            </tr>
+            <tr class="even">
+            <td><code>pathinfo($path,$flags)</code></td>
+            <td>Returns information about the given path. The
+            information returned depends on the <code>$flags</code>
+            value</td>
+            </tr>
+            <tr class="odd">
+            <td><code>realpath($path)</code></td>
+            <td>Returns the real path of the directory/file specified in
+            <code>$path</code>. If none, returns the path of the current
+            directory</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>For example:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">dirname</span>(<span class="st">&quot;/usr/local/lib&quot;</span>)<span class="ot">;</span> <span class="co">// returns &quot;/usr/local&quot;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">dirname</span>(<span class="st">&quot;/usr/local/lib&quot;</span><span class="ot">,</span><span class="dv">2</span>)<span class="ot">;</span> <span class="co">// returns &quot;/usr&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">basename</span>(<span class="st">&quot;C://xampp/htdocs/curs2425&quot;</span>)<span class="ot">;</span> <span class="co">// returns curs2425</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">basename</span>(<span class="st">&quot;C://xampp/htdocs/curs2425&quot;</span><span class="ot">,</span><span class="st">&quot;25&quot;</span>)<span class="ot">;</span> <span class="co">// returns curs24</span></span></code></pre></div>
+            <h2 data-number="2.4"
+            id="some-functions-to-work-with-permissions-and-ownership-in-linux"><span
+            class="header-section-number">2.4</span> Some functions to
+            work with permissions and ownership (in Linux)</h2>
+            <table>
+            <colgroup>
+            <col style="width: 50%" />
+            <col style="width: 50%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Function</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>chgrp($fileName, $group)</code></td>
+            <td>Changes the group of <code>$fileName</code> to the
+            specified group</td>
+            </tr>
+            <tr class="even">
+            <td><code>lchgrp($linkName, $group)</code></td>
+            <td>Changes the group of the <code>$linkName</code> symbolic
+            link</td>
+            </tr>
+            <tr class="odd">
+            <td><code>chmod($fileName, $mode)</code></td>
+            <td>Change the permissions of the
+            <code>$fileName</code></td>
+            </tr>
+            <tr class="even">
+            <td><code>chown($fileName, $owner)</code></td>
+            <td>Change the owner of the <code>$fileName</code></td>
+            </tr>
+            <tr class="odd">
+            <td><code>lchown($linkName, $owner)</code></td>
+            <td>Change the owner of the <code>$linkName</code> symbolic
+            link</td>
+            </tr>
+            <tr class="even">
+            <td><code>filegroup($fileName)</code></td>
+            <td>Returns the group of the <code>$fileName</code> file or
+            directory</td>
+            </tr>
+            <tr class="odd">
+            <td><code>fileowner($fileName)</code></td>
+            <td>Returns the owner of the <code>$fileName</code>
+            file</td>
+            </tr>
+            <tr class="even">
+            <td><code>fileperms($fileName)</code></td>
+            <td>Returns the permissions of the <code>$fileName</code>
+            file or directory</td>
+            </tr>
+            </tbody>
+            </table>
+            <h2 data-number="2.5"
+            id="some-functions-to-make-generic-operations-with-files"><span
+            class="header-section-number">2.5</span> Some functions to
+            make generic operations with files</h2>
+            <p>These are some functions to make usual operations with
+            files like copy, delete or move them.</p>
+            <table>
+            <colgroup>
+            <col style="width: 50%" />
+            <col style="width: 50%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Function</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>copy($sourcePath,$destinationPath)</code></td>
+            <td>Copies the file specified in <code>$sourcePath</code> to
+            <code>destinationPath</code></td>
+            </tr>
+            <tr class="even">
+            <td><code>rename($sourcePath, $destinationPath)</code></td>
+            <td>Renames the specified file, or moves it to the
+            <code>$destinationPath</code> if it’s different from
+            <code>$sourcePath</code></td>
+            </tr>
+            <tr class="odd">
+            <td><code>unlink($fileName)</code></td>
+            <td>Deletes the file or link specified by
+            <code>$fileName</code></td>
+            </tr>
+            <tr class="even">
+            <td><code>move_uploaded_file($fileName, $destinationPath)</code></td>
+            <td>Moves the specified file uploaded with HTTP_POST to the
+            <code>$destinationPath</code></td>
+            </tr>
+            </tbody>
+            </table>
+            <h2 data-number="2.6"
+            id="some-functions-to-get-more-information-about-a-file"><span
+            class="header-section-number">2.6</span> Some functions to
+            get more information about a file</h2>
+            <p>These functions offer information about some file
+            features such as size, last access or last modification,
+            among others.</p>
+            <table>
+            <colgroup>
+            <col style="width: 50%" />
+            <col style="width: 50%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Function</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>fileatime($fileName)</code></td>
+            <td>Returns the date of the last access</td>
+            </tr>
+            <tr class="even">
+            <td><code>filemtime($fileName)</code></td>
+            <td>Returns the date of the last modification</td>
+            </tr>
+            <tr class="odd">
+            <td><code>filesize($fileName)</code></td>
+            <td>Returns the size of the file in bytes</td>
+            </tr>
+            <tr class="even">
+            <td><code>filetype($fileName)</code></td>
+            <td>Returns the type of the file (<em>file</em>,
+            <em>dir</em>, <em>link</em>…)</td>
+            </tr>
+            <tr class="odd">
+            <td><code>stat($fileName)</code></td>
+            <td>Returns an array with information about the file</td>
+            </tr>
+            <tr class="even">
+            <td><code>lstat($linkName)</code></td>
+            <td>Returns an array with information about the symbolic
+            link</td>
+            </tr>
+            <tr class="odd">
+            <td><code>fstat($pointer)</code></td>
+            <td>Returns an array with information about the file opened
+            by the pointer</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;../practice04.php&quot;</span><span class="ot">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">$fileSize</span> <span class="op">=</span> <span class="fu">filesize</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">$lastChange</span> <span class="op">=</span> <span class="fu">date</span>(<span class="st">&quot;d/m/Y H:i:s&quot;</span><span class="ot">,</span><span class="fu">filemtime</span>(<span class="va">$fileName</span>))<span class="ot">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;The size of the file &quot;</span><span class="op">.</span><span class="fu">basename</span>(<span class="va">$fileName</span>)<span class="op">.</span><span class="st">&quot; is </span><span class="va">$fileSize</span><span class="st"> bytes&quot;</span><span class="ot">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Last modification was made on </span><span class="va">$lastChange</span><span class="st">&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>When we run the script we will get this result:</p>
+            <figure>
+            <img src="images/ud1002.jpg" alt="File info" />
+            <figcaption aria-hidden="true">File info</figcaption>
+            </figure>
+            <h2 data-number="2.7"
+            id="reading-the-content-of-a-directory"><span
+            class="header-section-number">2.7</span> Reading the content
+            of a directory</h2>
+            <p>We can go through the content of a directory by using the
+            function <strong><code>scandir($directory)</code></strong>,
+            which returns an array with the files and directories inside
+            <strong><code>$directory</code></strong>.</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">$list</span> <span class="op">=</span> <span class="fu">scandir</span>(<span class="st">&quot;../practice06&quot;</span>)<span class="ot">;</span> <span class="co">// alfabetical ascending</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print_r</span>(<span class="va">$list</span>)<span class="ot">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="va">$list</span> <span class="op">=</span> <span class="fu">scandir</span>(<span class="st">&quot;../practice06&quot;</span><span class="ot">,</span> <span class="cn">SCANDIR_SORT_DESCENDING</span>)<span class="ot">;</span> <span class="co">// alfabetical descending</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print_r</span>(<span class="va">$list</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>The output will be:</p>
+            <figure>
+            <img src="images/ud1003.jpg"
+            alt="Result of scandir function" />
+            <figcaption aria-hidden="true">Result of scandir
+            function</figcaption>
+            </figure>
+            <p>We can use other functions as well:</p>
+            <ul>
+            <li><strong><code>opendir($directory)</code></strong> Opens
+            a directory handle</li>
+            <li><strong><code>readdir($dir_handle)</code></strong> Reads
+            next entry from the directory opened with
+            <strong><code>$dir_handle</code></strong></li>
+            <li><strong><code>closedir($dir_handle)</code></strong>
+            Closes the directory handle</li>
+            <li><strong><code>rewinddir($dir_handle)</code></strong>
+            Rewinds the directory handle to the beginning of the
+            directory</li>
+            </ul>
+            <p>This is the same example seen above but using
+            <code>opendir</code> and <code>readdir</code>:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">$directory</span> <span class="op">=</span> <span class="st">&quot;../practice06&quot;</span><span class="ot">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">$dirHandler</span> <span class="op">=</span> <span class="fu">opendir</span>(<span class="va">$directory</span>)<span class="ot">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$dirHandler</span>) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(<span class="kw">FALSE</span> <span class="op">!==</span> (<span class="va">$nextFile</span> <span class="op">=</span> <span class="fu">readdir</span>(<span class="va">$dirHandler</span>))) {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>         <span class="kw">echo</span> <span class="va">$nextFile</span><span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">closedir</span>(<span class="va">$dirHandler</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>Output:</p>
+            <figure>
+            <img src="images/ud1004.jpg"
+            alt="Directory content with a handler" />
+            <figcaption aria-hidden="true">Directory content with a
+            handler</figcaption>
+            </figure>
+            <p>A third way of working with the directory content is
+            using the <strong><code>Directory</code></strong> class.</p>
+            <ul>
+            <li>Function <strong><code>dir($directory</code>)</strong>
+            Creates an object of the Directory class</li>
+            <li>Method <strong><code>read()</code></strong> Reads the
+            next entry of the directory</li>
+            <li>Method <strong><code>close()</code></strong> Closes the
+            handler</li>
+            </ul>
+            <p>Again the same example:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">$d</span> <span class="op">=</span> <span class="fu">dir</span>(<span class="st">&quot;../practice06&quot;</span>)<span class="ot">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Handle: &quot;</span> <span class="op">.</span> <span class="va">$d</span>-&gt;handle <span class="op">.</span> <span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;Path: &quot;</span> <span class="op">.</span> <span class="va">$d</span>-&gt;path <span class="op">.</span> <span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="kw">false</span> <span class="op">!==</span> (<span class="va">$entry</span> <span class="op">=</span> <span class="va">$d</span>-&gt;read() )) {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">echo</span> <span class="va">$entry</span><span class="op">.</span><span class="st">&quot;&lt;br/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="va">$d</span>-&gt;close()<span class="ot">;</span></span></code></pre></div>
+            <p>And the output:</p>
+            <figure>
+            <img src="images/ud1005.jpg"
+            alt="Directory content with dir()" />
+            <figcaption aria-hidden="true">Directory content with
+            dir()</figcaption>
+            </figure>
+            <h1 data-number="3" id="working-with-text-files"><span
+            class="header-section-number">3</span> Working with text
+            files</h1>
+            <p>PHP offers some functions to work with text files and do
+            the basic operations of create/open/read/write.</p>
+            <h2 data-number="3.1" id="opening-a-text-file"><span
+            class="header-section-number">3.1</span> Opening a text
+            file</h2>
+            <p>To open a text file we will need a
+            <strong>handler</strong>. The handler is created using the
+            function
+            <strong><code>fopen($fileName, $mode)</code></strong>. The
+            mode can be:</p>
+            <table>
+            <colgroup>
+            <col style="width: 25%" />
+            <col style="width: 75%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th style="text-align: left;">Mode</th>
+            <th style="text-align: left;">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>r</code></strong></td>
+            <td style="text-align: left;">Read-only. Place the file
+            pointer to the beginning of the file. If the file doesn’t
+            exist, we’ll get a warning</td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>w</code></strong></td>
+            <td style="text-align: left;">Write-only. Place the file
+            pointer to the beginning of the file. If the file doesn’t
+            exist, will be created. If the file exists, it will be
+            overwritten</td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>a</code></strong></td>
+            <td style="text-align: left;">Append-only. Place the file
+            pointer to the end of the file. If the file doesn’t exist,
+            it will be created</td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>x</code></strong></td>
+            <td style="text-align: left;">Like ‘w’ but if the file
+            exists we’ll get a warning</td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>c</code></strong></td>
+            <td style="text-align: left;">Like ‘w’ but the file is not
+            overwritten until we add content</td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>r+</code></strong></td>
+            <td style="text-align: left;">Like ‘r’ but allows writing as
+            well</td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>w+</code></strong></td>
+            <td style="text-align: left;">Like ‘w’ but allows reading as
+            well</td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>a+</code></strong></td>
+            <td style="text-align: left;">Like ‘a’ but allows reading as
+            well</td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><strong><code>x+</code></strong></td>
+            <td style="text-align: left;">Like ‘x’ but allows reading as
+            well</td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><strong><code>c+</code></strong></td>
+            <td style="text-align: left;">Like ‘c’ but allows reading as
+            well</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>We will usually check if the file exists before opening
+            it with ‘w’, ‘a’ or ‘r’ mode.</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// the file doesn&#39;t exist</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">$f</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="va">$fileName</span><span class="ot">,</span><span class="st">&quot;w&quot;</span>)<span class="ot">;</span> <span class="co">// so we create the file</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// the file already exists</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="va">$f</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="va">$fileName</span><span class="ot">,</span><span class="st">&quot;a&quot;</span>)<span class="ot">;</span> <span class="co">// opened to append content</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="3.2"
+            id="reading-the-content-of-a-text-file"><span
+            class="header-section-number">3.2</span> Reading the content
+            of a text file</h2>
+            <p>We can read the content of a text file all at once or by
+            pieces.</p>
+            <h3 data-number="3.2.1"
+            id="reading-all-the-content-of-a-text-file"><span
+            class="header-section-number">3.2.1</span> Reading all the
+            content of a text file</h3>
+            <p>These are some functions that allow us to read the whole
+            content of a file with a single operation:</p>
+            <table>
+            <colgroup>
+            <col style="width: 50%" />
+            <col style="width: 50%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Function</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>readFile($fileName)</code></td>
+            <td>Reads the whole content of the file and sends it to the
+            default output buffer</td>
+            </tr>
+            <tr class="even">
+            <td><code>file_get_contents($fileName, $init, $length)</code></td>
+            <td>Reads the content of the file beginning in the
+            <code>$init</code> position (optional, by default from the
+            beginning) and for the <code>$length</code> number of
+            characters (optional, by default to the end of the file).
+            Returns a string with the read content</td>
+            </tr>
+            <tr class="odd">
+            <td><code>file($fileName)</code></td>
+            <td>Reads the content of the file and returns an array with
+            a position for each file line</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>Let’s see an example using the three functions:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;textfile.txt&quot;</span><span class="ot">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h4&gt;Reading the file with readfile():&lt;/h4&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">readfile</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h4&gt;Reading the file with file_get_contents():&lt;/h4&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="va">$string</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="fu">nl2br</span>(<span class="va">$string</span>)<span class="ot">;</span> <span class="co">// to change the text line breaks to &lt;br/&gt; tags</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h4&gt;Reading the file with file():&lt;/h4&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="va">$array</span> <span class="op">=</span> <span class="fu">file</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span>(<span class="va">$array</span> <span class="kw">as</span> <span class="va">$line</span>) { <span class="kw">echo</span> <span class="va">$line</span><span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> }</span></code></pre></div>
+            <p>The output:</p>
+            <figure>
+            <img src="images/ud1006.jpg"
+            alt="Reading the content of a file" />
+            <figcaption aria-hidden="true">Reading the content of a
+            file</figcaption>
+            </figure>
+            <h3 data-number="3.2.2"
+            id="reading-the-content-of-a-text-file-by-pieces"><span
+            class="header-section-number">3.2.2</span> Reading the
+            content of a text file by pieces</h3>
+            <p>Sometimes we will need to read the file line by line,
+            word by word or even char by char.</p>
+            <p>If we have opened the file with some of the modes that
+            allow reading, we can use these functions:</p>
+            <table>
+            <colgroup>
+            <col style="width: 36%" />
+            <col style="width: 63%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th style="text-align: left;">Function</th>
+            <th style="text-align: left;">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><code>fread($fileHandler, $size)</code></td>
+            <td style="text-align: left;">Read <code>$size</code> bytes
+            of the file opened with the handler and returns the
+            content</td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><code>fgets($fileHandler)</code></td>
+            <td style="text-align: left;">Reads and returns a line from
+            the file opened with the handler, and moves the pointer to
+            the next line</td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><code>fgetc($fileHandler)</code></td>
+            <td style="text-align: left;">Reads and returns a byte from
+            the file opened with the handler, and moves the pointer to
+            the next char</td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><code>fgetcsv($fileHandler, $length, $separator, $enclosure)</code></td>
+            <td style="text-align: left;">Reads a line from the file
+            opened with the handler, and search for CSV fields using the
+            <code>$separator</code> char (optional) and the
+            <code>$enclosure</code> char (optional) and then returns an
+            array</td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><code>feof($fileHandler)</code></td>
+            <td style="text-align: left;">Returns true if we reach the
+            end of the file</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>Let’s read our example file line by line:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;textfile.txt&quot;</span><span class="ot">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;h4&gt;Line by line&lt;/h4&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">$f</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="va">$fileName</span><span class="ot">,</span><span class="st">&quot;r&quot;</span>)<span class="ot">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="op">!</span><span class="fu">feof</span>(<span class="va">$f</span>)) {</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$line</span> <span class="op">=</span> <span class="fu">fgets</span>(<span class="va">$f</span>)<span class="ot">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="fu">nl2br</span>(<span class="va">$line</span>)<span class="ot">;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">fclose</span>(<span class="va">$f</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>The output:</p>
+            <figure>
+            <img src="images/ud1007.jpg" alt="File content" />
+            <figcaption aria-hidden="true">File content</figcaption>
+            </figure>
+            <h3 data-number="3.2.3" id="reading-csv-files"><span
+            class="header-section-number">3.2.3</span> Reading CSV
+            files</h3>
+            <p>Now, let’s take a look to this file:</p>
+            <pre class="csv"><code>&quot;John&quot;,&quot;Smith&quot;,&quot;john@gmail.com&quot;,&quot;42843242&quot;
+&quot;Paul&quot;,&quot;Lewis&quot;,&quot;paul@gmail.com&quot;,&quot;48203422&quot;
+&quot;David&quot;,&quot;Layne&quot;,&quot;dlayne@gmail.com&quot;,&quot;32342343&quot;
+&quot;Angie&quot;,&quot;Robertson&quot;,&quot;angie99@gmail.com&quot;,&quot;42342342&quot;</code></pre>
+            <p>This is a CSV formatted file, so we should use the
+            <code>fgetcsv()</code> function instead.</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;csvfile.txt&quot;</span><span class="ot">;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h4&gt;CSV file&lt;/h4&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$f</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="va">$fileName</span><span class="ot">,</span><span class="st">&quot;r&quot;</span>)<span class="ot">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (<span class="op">!</span><span class="fu">feof</span>(<span class="va">$f</span>)) {</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$array</span> <span class="op">=</span> <span class="fu">fgetcsv</span>(<span class="va">$f</span>)<span class="ot">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Name: &quot;</span><span class="op">.</span><span class="va">$array</span>[<span class="dv">0</span>]<span class="op">.</span><span class="st">&quot; &quot;</span><span class="op">.</span><span class="va">$array</span>[<span class="dv">1</span>]<span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Email: &quot;</span><span class="op">.</span><span class="va">$array</span>[<span class="dv">2</span>]<span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Phone: &quot;</span><span class="op">.</span><span class="va">$array</span>[<span class="dv">3</span>]<span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;&lt;hr&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fclose</span>(<span class="va">$f</span>)<span class="ot">;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> { <span class="kw">echo</span> <span class="st">&quot;&lt;h4&gt;The file </span><span class="va">$fileName</span><span class="st"> doesn&#39;t exist&lt;/h4&gt;&quot;</span><span class="ot">;</span> }</span></code></pre></div>
+            <p>The output:</p>
+            <figure>
+            <img src="images/ud1008.jpg" alt="Reading a CSV file" />
+            <figcaption aria-hidden="true">Reading a CSV
+            file</figcaption>
+            </figure>
+            <p>Another way to read a CSV file:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="va">$row</span> <span class="op">=</span> <span class="dv">1</span><span class="ot">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ((<span class="va">$handle</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="st">&quot;test.csv&quot;</span><span class="ot">,</span> <span class="st">&quot;r&quot;</span>)) <span class="op">!==</span> <span class="kw">FALSE</span>) {</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> ((<span class="va">$data</span> <span class="op">=</span> <span class="fu">fgetcsv</span>(<span class="va">$handle</span><span class="ot">,</span> <span class="dv">1000</span><span class="ot">,</span> <span class="st">&quot;,&quot;</span>)) <span class="op">!==</span> <span class="kw">FALSE</span>) {</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$num</span> <span class="op">=</span> <span class="fu">count</span>(<span class="va">$data</span>)<span class="ot">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;&lt;p&gt; </span><span class="va">$num</span><span class="st"> fields in line </span><span class="va">$row</span><span class="st">: &lt;/p&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$row</span><span class="op">++</span><span class="ot">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="va">$c</span><span class="op">=</span><span class="dv">0</span><span class="ot">;</span> <span class="va">$c</span> <span class="op">&lt;</span> <span class="va">$num</span><span class="ot">;</span> <span class="va">$c</span><span class="op">++</span>) {</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="va">$data</span>[<span class="va">$c</span>] <span class="op">.</span> <span class="st">&quot;&lt;br&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fclose</span>(<span class="va">$handle</span>)<span class="ot">;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
+            <p>The default separator is the <strong>comma</strong>
+            <code>,</code> and the default enclosure is <strong>double
+            quote</strong> <code>"</code>.</p>
+            <h2 data-number="3.3" id="writing-on-a-text-file"><span
+            class="header-section-number">3.3</span> Writing on a text
+            file</h2>
+            <p>To write on a text file we should open it with a mode
+            that allows writing or appending content.</p>
+            <p>To write content on a text file we can use the function
+            <code>fwrite()</code> or its alias <code>fputs()</code>.</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;newfile.txt&quot;</span><span class="ot">;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="va">$f</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="va">$fileName</span><span class="ot">,</span><span class="st">&quot;w&quot;</span>)<span class="ot">;</span> <span class="co">// the file is created with write permission</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(<span class="va">$f</span><span class="ot">,</span><span class="st">&quot;Line number 01&quot;</span><span class="op">.</span><span class="cn">PHP_EOL</span>)<span class="ot">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(<span class="va">$f</span><span class="ot">,</span><span class="st">&quot;Line number 02&quot;</span><span class="op">.</span><span class="cn">PHP_EOL</span>)<span class="ot">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fclose</span>(<span class="va">$f</span>)<span class="ot">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="va">$f</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="va">$fileName</span><span class="ot">,</span><span class="st">&quot;a&quot;</span>)<span class="ot">;</span> <span class="co">// now the file is opened to append lines</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(<span class="va">$f</span><span class="ot">,</span><span class="st">&quot;Line number 03&quot;</span><span class="op">.</span><span class="cn">PHP_EOL</span>)<span class="ot">;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(<span class="va">$f</span><span class="ot">,</span><span class="st">&quot;Line number 04&quot;</span><span class="op">.</span><span class="cn">PHP_EOL</span>)<span class="ot">;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">fclose</span>(<span class="va">$f</span>)<span class="ot">;</span></span></code></pre></div>
+            <blockquote>
+            <p>The <strong><code>PHP_EOL</code></strong> predefined
+            constant is used for adding an end of line.</p>
+            </blockquote>
+            <p>If you run the script you can check by yourself that the
+            file <code>newfile.txt</code> has been created with the
+            specified content.</p>
+            <blockquote>
+            <p>The function <code>fflush()</code> can be used to force
+            the writing of the buffered output, just in case we miss the
+            last line in the file</p>
+            </blockquote>
+            <h2 data-number="3.4"
+            id="reading-and-writing-with-the-same-handler"><span
+            class="header-section-number">3.4</span> Reading and writing
+            with the same handler</h2>
+            <p>To read and write a file using a single handler, we
+            should open the file with a mode that allow both operations:
+            w+, r+, a+…</p>
+            <p>The operations are very similar, but as we can read and
+            write without closing the file and opening it again, we need
+            to know how to move the pointer if needed.</p>
+            <table>
+            <colgroup>
+            <col style="width: 50%" />
+            <col style="width: 50%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Function</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>rewind($fileHandler)</code></td>
+            <td>Rewinds the pointer to the beginning of the file</td>
+            </tr>
+            <tr class="even">
+            <td><code>fseek($fileHandler,$offset,$init)</code></td>
+            <td>Moves the pointer <code>$offset</code> bytes from the
+            point specified by <code>$init</code>:
+            <strong>SEEK_CUR</strong> (current plus
+            offset),<strong>SEEK_END</strong> (end-of-file plus offset)
+            or, by default, from the beginning of the file plus
+            offset</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>We can add a 5th line to our example file, and then
+            rewind the pointer to display the updated content.</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;newfile.txt&quot;</span><span class="ot">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="va">$f</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="va">$fileName</span><span class="ot">,</span><span class="st">&quot;a+&quot;</span>)<span class="ot">;</span> <span class="co">// to add content at the end of the file</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(<span class="va">$f</span><span class="ot">,</span><span class="st">&quot;Line number 05&quot;</span><span class="op">.</span><span class="cn">PHP_EOL</span>)<span class="ot">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rewind</span>(<span class="va">$f</span>)<span class="ot">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="op">!</span><span class="fu">feof</span>(<span class="va">$f</span>)) {</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="fu">fgets</span>(<span class="va">$f</span>)<span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">fclose</span>(<span class="va">$f</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>You can check that a new line has been added to the
+            file.</p>
+            <h1 data-number="4" id="php-and-json-files"><span
+            class="header-section-number">4</span> PHP and JSON
+            files</h1>
+            <p>JSON files are plain text files, so we can work with them
+            using the functions seen above. In fact, we can use those
+            functions along with <code>json_decode()</code>,
+            <code>json_encode()</code> ans <code>json_validate()</code>
+            to work with JSON content. Let’s see how to do it.</p>
+            <h2 data-number="4.1" id="creating-a-json-file"><span
+            class="header-section-number">4.1</span> Creating a JSON
+            file</h2>
+            <p>As JSON format works with <strong>key-&gt;value</strong>
+            pairs, we can easily create the JSON file from an
+            associative array with the keys and values we need.</p>
+            <p>Let’s create again our contacts file, but this time as a
+            JSON file:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contacts</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&quot;Contacts&quot;</span>=&gt;<span class="dt">array</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;John&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Smith&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;john@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;42843242&quot;</span>)<span class="ot">,</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;Paul&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Lewis&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;paul@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;48203422&quot;</span>)<span class="ot">,</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;David&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Layne&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;dlayne@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;32342343&quot;</span>)<span class="ot">,</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;Angie&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Robertson&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;angie99@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;42342342&quot;</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>))<span class="ot">;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="va">$jsonFile</span> <span class="op">=</span> <span class="fu">json_encode</span>(<span class="va">$contacts</span>)<span class="ot">;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="va">$bytes</span> <span class="op">=</span> <span class="fu">file_put_contents</span>(<span class="st">&quot;contacts.json&quot;</span><span class="ot">,</span> <span class="va">$jsonFile</span>)<span class="ot">;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$bytes</span><span class="op">==</span><span class="dv">0</span>) {</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Write error&quot;</span><span class="ot">;</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> { </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Succesful!&quot;</span><span class="ot">;</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <blockquote>
+            <p>The
+            <strong><code>file_put_contents($filename, $data)</code></strong>
+            function is identical to calling <code>fopen()</code>,
+            <code>fwrite()</code> and <code>fclose()</code> successively
+            to write the <code>$data</code> data to the
+            <code>$filename</code> file.</p>
+            </blockquote>
+            <p>You can check that the <code>contacts.json</code> file
+            has been created and is well formed.</p>
+            <figure>
+            <img src="images/ud1009.jpg" alt="JSON file" />
+            <figcaption aria-hidden="true">JSON file</figcaption>
+            </figure>
+            <h2 data-number="4.2" id="reading-a-json-file."><span
+            class="header-section-number">4.2</span> Reading a JSON
+            file.</h2>
+            <p>Reading and working with a JSON file is very easy too,
+            because we just need to do the reverse operation: convert
+            the JSON file to an associative array. In fact, the JSON
+            file is converted into an object that has a property, the
+            one we defined as the first key (“Contacts”, in this case),
+            that contains the array.</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;contacts.json&quot;</span><span class="ot">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$jsonFile</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$data</span> <span class="op">=</span> <span class="fu">json_decode</span>(<span class="va">$jsonFile</span>)<span class="ot">;</span> <span class="co">// now $data is an object, not an array</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// but the property &quot;contacts&quot; is the array we are looking for</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$data</span>-&gt;<span class="cn">C</span>ontacts <span class="kw">as</span> <span class="va">$contact</span>) {</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">foreach</span>(<span class="va">$contact</span> <span class="kw">as</span> <span class="va">$key</span>=&gt;<span class="va">$value</span>) {</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>          <span class="kw">echo</span> <span class="st">&quot;&lt;strong&gt;</span><span class="va">$key</span><span class="st">: &lt;/strong&gt;</span><span class="va">$value</span><span class="st"> &quot;</span><span class="ot">;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        }        </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> { </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;The file </span><span class="va">$fileName</span><span class="st"> doesn&#39;t exist&quot;</span><span class="ot">;</span> </span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="4.3" id="validating-json"><span
+            class="header-section-number">4.3</span> Validating
+            JSON</h2>
+            <p>Since <strong>PHP 8.3</strong> we have the function
+            <code>json_validate()</code> that checks if a string
+            contains valid JSON content:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var_dump</span>(json_validate(<span class="st">&#39;{ &quot;test&quot;: { &quot;foo&quot;: &quot;bar&quot; } }&#39;</span>))<span class="ot">;</span> <span class="co">//Outputs: bool(true)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var_dump</span>(json_validate(<span class="st">&#39;{ &quot;&quot;: &quot;&quot;: &quot;&quot; } }&#39;</span>))<span class="ot">;</span>  <span class="co">//Outputs: bool(false)</span></span></code></pre></div>
+            <p>We can rewrite the previous example validating the Json
+            file before decode it:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;contacts.json&quot;</span><span class="ot">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$jsonFile</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(json_validate(<span class="va">$jsonFile</span>)) {</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>      <span class="va">$data</span> <span class="op">=</span> <span class="fu">json_decode</span>(<span class="va">$jsonFile</span>)<span class="ot">;</span> </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      ...</span></code></pre></div>
+            <p>Before PHP 8.3, we can simulate the behavior of
+            <code>json_validate()</code> with a custom function:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> json_validate(<span class="dt">string</span> <span class="va">$string</span>)<span class="ot">:</span> <span class="dt">bool</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">json_decode</span>(<span class="va">$string</span>)<span class="ot">;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">json_last_error</span>() <span class="op">===</span> <span class="cn">JSON_ERROR_NONE</span><span class="ot">;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(json_validate(<span class="va">$jsonFile</span>)) {</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
+            <h1 data-number="5" id="transfering-files"><span
+            class="header-section-number">5</span> Transfering
+            files</h1>
+            <p>Sometimes we need to transfer the files generated to or
+            from the server. Let’s see the most common ways.</p>
+            <h2 data-number="5.1" id="uploading-files"><span
+            class="header-section-number">5.1</span> Uploading
+            files</h2>
+            <p>To upload a file we need a form with an input of type
+            file:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;post&quot;</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;destination.php&quot;</span><span class="ot"> enctype</span><span class="op">=</span><span class="st">&quot;multipart/form-data&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">label</span><span class="dt">&gt;</span> Select file to upload:</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;file&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;fileToUpload&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Upload file&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;submitFile&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>The form must have the <strong>POST method</strong> and
+            the <strong>enctype</strong> (<em>encryption type</em>)
+            <strong><em>“multipart/form-data”</em></strong>. Without
+            these requirements, the file upload will not work.</p>
+            <blockquote>
+            <p><strong>Important</strong>: Before uploading files,
+            probably you need to increase the limits for uploading files
+            in <code>php.ini</code>, otherwise the files won’t be
+            uploaded:</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">upload_max_filesize</span> = 50M</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">post_max_size</span> = 50M</span></code></pre></div>
+            <p>After increasing the limits, restart the apache
+            server.</p>
+            </blockquote>
+            <p>The files are transferred in the superglobal array
+            <strong><code>$_FILES</code></strong>, which has the next
+            elements:</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Array</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  [fileToUpload] =&gt; <span class="dt">Array</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>      [name] =&gt; <span class="fu">file</span><span class="op">.</span>txt <span class="co">//Name of the file</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>      [full_path] =&gt; <span class="fu">file</span><span class="op">.</span>txt <span class="co">//Full path of all files, used when upload a folder</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>      [type] =&gt; text<span class="op">/</span>csv <span class="co">// File type</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>      [tmp_name] =&gt; <span class="op">/</span>tmp<span class="op">/</span>phpp6nt4o <span class="co">// Temporary path of the file</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>      [<span class="bu">error</span>] =&gt; <span class="dv">0</span> <span class="co">//0 means no errors</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>      [size] =&gt; <span class="dv">903</span> <span class="co">// the file size in bytes</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+            <p>When a file is uploaded, it’s stored in a temporary path,
+            indicated by the field <code>tmp_name</code>. If we only
+            need to read the file, we can do it directly. But if we want
+            to store the file in the server, we need to copy the file to
+            the destination folder.</p>
+            <p>Before that, we need to make some checks:</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$target_dir</span> <span class="op">=</span> <span class="st">&quot;uploads/&quot;</span><span class="ot">;</span> <span class="co">//Destination folder. Check the permissions!</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="va">$target_file</span> <span class="op">=</span> <span class="va">$target_dir</span> <span class="op">.</span> <span class="fu">basename</span>(<span class="va">$_FILES</span>[<span class="st">&quot;fileToUpload&quot;</span>][<span class="st">&quot;name&quot;</span>])<span class="ot">;</span> <span class="co">//Path of the file in the server</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="va">$fileType</span> <span class="op">=</span> <span class="fu">strtolower</span>(<span class="fu">pathinfo</span>(<span class="va">$target_file</span><span class="ot">,</span><span class="cn">PATHINFO_EXTENSION</span>))<span class="ot">;</span> <span class="co">//File extension in lower case</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if file already exists</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file_exists</span>(<span class="va">$target_file</span>)) {</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Sorry, file already exists.&quot;</span><span class="ot">;</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">;</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">// Check file size</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$_FILES</span>[<span class="st">&quot;fileToUpload&quot;</span>][<span class="st">&quot;size&quot;</span>] <span class="op">&gt;</span> <span class="dv">5000000</span>) { <span class="co">//5MB</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Sorry, your file is too large.&quot;</span><span class="ot">;</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">;</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co">// Allow certain file formats</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$fileType</span> <span class="op">!=</span> <span class="st">&quot;csv&quot;</span>) {</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Sorry, only CSV files are allowed.&quot;</span><span class="ot">;</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">;</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Then, if there were no errors, copy the file to the
+            destination folder, with the
+            <strong><code>move_uploaded_file ($filename, $destination)</code></strong>
+            function:</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if $uploadOk is set to 0 by an error</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="va">$uploadOk</span>) {</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Sorry, your file was not uploaded.&quot;</span><span class="ot">;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">// if everything is ok, try to upload file</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">move_uploaded_file</span>(<span class="va">$_FILES</span>[<span class="st">&quot;fileToUpload&quot;</span>][<span class="st">&quot;tmp_name&quot;</span>]<span class="ot">,</span> <span class="va">$target_file</span>)) {</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;File uploaded&quot;</span><span class="ot">;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Sorry, there was an error uploading your file.&quot;</span><span class="ot">;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Instead of moving the file, we can do other operations,
+            such as reading the file and inserting their elements in a
+            database.</p>
+            <h2 data-number="5.2" id="downloading-files"><span
+            class="header-section-number">5.2</span> Downloading
+            files</h2>
+            <p>The easiest way to download a file is to providing a link
+            to it:</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;a href=&quot;</span><span class="va">$fileName</span><span class="st">&quot;&gt; Download file &lt;/a&gt;&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <p>But if we want to automatic download a file (for example,
+            after a data export) we need to create an HTTP header and
+            use the <strong><code>readfile()</code></strong>
+            function:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Define header information</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Description: File Transfer&#39;</span>)<span class="ot">;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Type: application/octet-stream&#39;</span>)<span class="ot">;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&quot;Cache-Control: no-cache, must-revalidate&quot;</span>)<span class="ot">;</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&quot;Expires: 0&quot;</span>)<span class="ot">;</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Disposition: attachment; filename=&quot;&#39;</span> <span class="op">.</span> <span class="fu">basename</span>(<span class="va">$fileName</span>) <span class="op">.</span> <span class="st">&#39;&quot;&#39;</span>)<span class="ot">;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Length: &#39;</span> <span class="op">.</span> <span class="fu">filesize</span>(<span class="va">$fileName</span>))<span class="ot">;</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Pragma: public&#39;</span>)<span class="ot">;</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Clear system output buffer</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Read the file</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readfile</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Delete the file from server</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlink</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <blockquote>
+            <p><strong>Remember</strong>: The <code>header</code>
+            function must be used before showing any content on your
+            page, otherwise that content will be added to the download
+            file, corrupting the request’s header.</p>
+            </blockquote>
+            <h2 data-number="5.3" id="storing-images"><span
+            class="header-section-number">5.3</span> Storing images</h2>
+            <p>It is very common to store images (or any other file
+            types) in our app. There are 2 different aproaches:</p>
+            <ul>
+            <li>Storing the images in the server’s disk file system:
+            it’s better when we need to store a large quantity of
+            images, like in galleries. This approach reduces the
+            maintenance of the database, but requires a good
+            synchronization between database and file system
+            content.</li>
+            <li>Storing the images in the database: it’s better when
+            each image is associated with an entity instance (for
+            example, a contact’s profile picture). It requires less
+            maintenance, but the database size increases significantly,
+            making backups to take a long time.</li>
+            </ul>
+            <p>For the first approach, follow the process explained in
+            the <strong>Uploading files</strong> section. Once the file
+            is stored in the file system, store the file’s route in the
+            database, in a <code>VARCHAR</code> field.</p>
+            <p>For storing the file in the database we need a
+            <code>LONGBLOB</code> field on the table where we want to
+            store the image:</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">----------+--------------+------+-----+---------+----------------+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>| Field    | <span class="kw">Type</span>         | <span class="kw">Null</span> | <span class="kw">Key</span> | <span class="kw">Default</span> | Extra          |</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">----------+--------------+------+-----+---------+----------------+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="op">..</span>.</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>| image    | longblob     | YES  |     | <span class="kw">NULL</span>    |                |</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">----------+--------------+------+-----+---------+----------------+</span></span></code></pre></div>
+            <p>To upload the image, we need a form with a file input and
+            a submit button. We also have added an <code>img</code> tag
+            to show the image:</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;post&quot;</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;</span><span class="er">&lt;</span><span class="st">?php echo htmlspecialchars($_SERVER[&quot;</span><span class="ot">PHP_SELF</span><span class="er">&quot;]);?</span><span class="dt">&gt;</span>&quot;  enctype=&quot;multipart/form-data&quot;&gt;</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Other inputs --&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">label</span><span class="dt">&gt;</span>Image: <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> width</span><span class="op">=</span><span class="st">&quot;100px&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;data:image/jpg;charset=utf8;base64,</span><span class="er">&lt;</span><span class="st">?= !is_null($contact-&gt;getImage()) ? base64_encode($contact-&gt;getImage()) : &#39;&#39; ?&gt;&quot;</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="ot">             alt</span><span class="op">=</span><span class="st">&quot;login picture&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;error&quot;</span><span class="dt">&gt;</span> <span class="kw">&lt;?</span>= $imageErr; <span class="kw">?&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;file&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;image&quot;</span><span class="ot"> </span><span class="dt">&gt;</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Save&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>Note how we get the image from a <code>$contact</code>
+            object and encode it in order to be shown.</p>
+            <p>When the form or another script gets the
+            <code>POST</code> request, we need to check the image (size
+            and filetype), generate the error message, if any, and store
+            the image in the <code>$contact</code> object:</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">count</span>(<span class="va">$_FILES</span>) <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="kw">isset</span>(<span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;tmp_name&#39;</span>]) <span class="op">&amp;&amp;</span> <span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;size&#39;</span>] <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>      <span class="va">$fileType</span> <span class="op">=</span>  <span class="fu">strtolower</span>(<span class="fu">pathinfo</span>(<span class="fu">basename</span>(<span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;name&#39;</span>])<span class="ot">,</span> <span class="cn">PATHINFO_EXTENSION</span>))<span class="ot">;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Check file size</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="va">$_FILES</span>[<span class="st">&quot;image&quot;</span>][<span class="st">&quot;size&quot;</span>] <span class="op">&gt;</span> <span class="dv">5000000</span>) { <span class="co">//5MB</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>          <span class="va">$imageErr</span> <span class="op">=</span> <span class="st">&quot;* File too large. Max 5MB.&quot;</span><span class="ot">;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>          <span class="va">$err</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>      <span class="co">//Chek type</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(<span class="op">!</span><span class="fu">in_array</span>(<span class="va">$fileType</span><span class="ot">,</span> [<span class="st">&#39;jpg&#39;</span><span class="ot">,</span><span class="st">&#39;png&#39;</span><span class="ot">,</span><span class="st">&#39;jpeg&#39;</span><span class="ot">,</span><span class="st">&#39;gif&#39;</span><span class="ot">,</span> <span class="st">&#39;bmp&#39;</span>]) ){</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>          <span class="va">$imageErr</span> <span class="op">=</span> <span class="st">&#39;* Only JPG, JPEG, PNG, BMP &amp; GIF files are allowed.&#39;</span><span class="ot">;</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>          <span class="va">$err</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span><span class="va">$err</span>) {</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>          <span class="va">$imgData</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;tmp_name&#39;</span>])<span class="ot">;</span></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>          <span class="va">$contact</span>-&gt;setImage(<span class="va">$imgData</span>)<span class="ot">;</span></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The methods for store the image in the database are
+            similar to any other data types:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> insert(<span class="va">$object</span>)<span class="ot">:</span> <span class="dt">int</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>      <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;INSERT INTO contacts (image) VALUES (:image)&quot;</span>)<span class="ot">;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>      <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;image&#39;</span>=&gt;<span class="va">$object</span>-&gt;getImage()])<span class="ot">;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">echo</span> <span class="va">$stmt</span>-&gt;rowCount()<span class="ot">;</span> <span class="co">//Return the number of rows affected</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> update(<span class="va">$object</span>)<span class="ot">:</span> <span class="dt">int</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;UPDATE contacs SET image=:image WHERE id=:id&quot;</span>)<span class="ot">;</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;id&#39;</span>=&gt;<span class="va">$object</span>-&gt;getId()<span class="ot">,</span> <span class="st">&#39;image&#39;</span>=&gt;<span class="va">$object</span>-&gt;getImage()])<span class="ot">;</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$stmt</span>-&gt;rowCount()<span class="ot">;</span> <span class="co">//Return the number of rows affected</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Don’t forget to increase the <code>php.ini</code> upload
+            max límits.</p>
+            <h1 data-number="6" id="cookies"><span
+            class="header-section-number">6</span> Cookies</h1>
+            <p><strong><code>HTTP cookies</code></strong> are small
+            files created by a web server while a user is browsing a
+            website and placed on the user’s computer or other device by
+            the user’s web browser. Cookies are placed on the device
+            used to access a website, and more than one cookie may be
+            placed on a user’s device during a session.</p>
+            <p>Cookies serve useful and sometimes essential functions on
+            the web. They enable web servers to store stateful
+            information, such as items added in the shopping cart in an
+            online store, the user name or the user’s preferred
+            language.</p>
+            <h2 data-number="6.1" id="setting-cookies-with-php"><span
+            class="header-section-number">6.1</span> Setting cookies
+            with PHP</h2>
+            <p>To set (store) a cookie we use the function
+            <strong><code>setcookie</code></strong>:</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$name</span><span class="ot">,</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$value</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="ot">,</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> <span class="va">$expires_or_options</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">,</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$path</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="ot">,</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$domain</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="ot">,</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> <span class="va">$secure</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">,</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> <span class="va">$httponly</span> <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>)<span class="ot">:</span> <span class="dt">bool</span></span></code></pre></div>
+            <p>The most important arguments are:</p>
+            <ul>
+            <li><strong>name</strong>: The name of the cookie.</li>
+            <li><strong>value</strong>: The value of the cookie. This
+            value is stored on the client’s computer; do not store
+            sensitive information. Assuming the name is ‘cookiename’,
+            this value is retrieved through $_COOKIE[‘cookiename’]</li>
+            <li><strong>expires_or_options</strong>: The time the cookie
+            expires. This is a Unix timestamp. If set to 0, or omitted,
+            the cookie will expire at the end of the session (when the
+            browser closes).</li>
+            </ul>
+            <p>If <code>setcookie()</code> successfully runs, it will
+            return <code>true</code>. This does not indicate whether the
+            user accepted the cookie.</p>
+            <p>We usually set a cookie in this way:</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="fu">time</span>() <span class="op">+</span> <span class="dv">3660</span><span class="op">*</span><span class="dv">24</span><span class="op">*</span><span class="dv">30</span>)<span class="ot">;</span> <span class="co">//expires in 30 days</span></span></code></pre></div>
+            <blockquote>
+            <p><strong>Note</strong>: The <code>setcookie()</code>
+            function must appear BEFORE the <code>&lt;html&gt;</code>
+            tag.</p>
+            </blockquote>
+            <p>To <strong>modify a cookie</strong>, just set (again) the
+            cookie using the <code>setcookie()</code> function:</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$newUserName</span><span class="ot">,</span> <span class="fu">time</span>() <span class="op">+</span> <span class="dv">3660</span><span class="op">*</span><span class="dv">24</span><span class="op">*</span><span class="dv">30</span>)<span class="ot">;</span> </span></code></pre></div>
+            <p>To <strong>delete a cookie</strong>, use the
+            <code>setcookie()</code> function with an expiration date in
+            the past:</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">// set the expiration date to one hour ago</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="fu">time</span>() <span class="op">-</span> <span class="dv">3660</span>)<span class="ot">;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co">//or</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="dv">1</span>)<span class="ot">;</span> </span></code></pre></div>
+            <p>With <code>setcookie()</code> the value of the cookie is
+            automatically URLencoded (replacing HTML special chars) when
+            sending the cookie, and automatically decoded when received.
+            To prevent URLencoding, use
+            <strong><code>setrawcookie()</code></strong> instead.</p>
+            <p>When debbugging, you can see the cookies for each page in
+            your browser’s <strong>developer console</strong>, storage
+            section.</p>
+            <h2 data-number="6.2" id="reading-cookies"><span
+            class="header-section-number">6.2</span> Reading
+            cookies</h2>
+            <p>We can read the cookies with the
+            <strong><code>$_COOKIE</code></strong> superglobal:</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_COOKIE</span>[<span class="st">&quot;UserName&quot;</span>])) {</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">$userName</span> <span class="op">=</span> <span class="va">$_COOKIE</span>[<span class="st">&quot;UserName&quot;</span>]<span class="ot">;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <blockquote>
+            <p><strong>Tip</strong>: When working with cookies, it’s a
+            good idea to test the script in a private window on the
+            browser.</p>
+            </blockquote>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
