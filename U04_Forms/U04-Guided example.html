@@ -385,28 +385,27 @@ script</a></li>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">header</span>(<span class="st">&quot;Location:show_provider.php&quot;</span>)<span class="ot">;</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>View the <a
-            href="https://github.com/ricardoprofe/providers_sample_DWES_24_25/blob/main/login.php">complete
+            href="https://github.com/ricardoprofe/providers_sample_DWES_24_25_u4/blob/main/provider_form.php">complete
             code</a>.</p>
-            <p>The <code>checkuser.php</code> script simply gets the
+            <p>The <code>show_provider.php</code> script simply gets the
             session variables and compare them with the correct values,
             showing a message according to the result:</p>
             <div class="sourceCode" id="cb18"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">session_start</span>()<span class="ot">;</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="va">$correctEmail</span> <span class="op">=</span> <span class="st">&quot;peter@mail.com&quot;</span><span class="ot">;</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="va">$correctPass</span> <span class="op">=</span> <span class="st">&quot;12345678&quot;</span><span class="ot">;</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;pass&#39;</span>]<span class="op">==</span><span class="va">$correctPass</span> <span class="op">&amp;&amp;</span> <span class="va">$_SESSION</span>[<span class="st">&#39;email&#39;</span>]<span class="op">==</span><span class="va">$correctEmail</span>) {</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Login correct: &lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;provider&#39;</span>])) {</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$provider</span> <span class="op">=</span> <span class="va">$_SESSION</span>[<span class="st">&#39;provider&#39;</span>]<span class="ot">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;p&gt;Name: &quot;</span> <span class="op">.</span> <span class="va">$provider</span>[<span class="st">&#39;name&#39;</span>] <span class="op">.</span> <span class="st">&quot;&lt;/p&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;p&gt;Email: &quot;</span> <span class="op">.</span> <span class="va">$provider</span>[<span class="st">&#39;email&#39;</span>] <span class="op">.</span> <span class="st">&quot;&lt;/p&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;p&gt;CIF: &quot;</span> <span class="op">.</span> <span class="va">$provider</span>[<span class="st">&#39;cif&#39;</span>] <span class="op">.</span> <span class="st">&quot;&lt;/p&gt;&quot;</span><span class="ot">;</span></span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Login incorrect: &lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;p&gt;No provider data&lt;/p&gt;&quot;</span><span class="ot">;</span></span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="va">$_SESSION</span>[<span class="st">&#39;email&#39;</span>] <span class="op">.</span> <span class="st">&quot;, &quot;</span> <span class="op">.</span> <span class="va">$_SESSION</span>[<span class="st">&#39;pass&#39;</span>] <span class="op">.</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="fu">session_destroy</span>()<span class="ot">;</span></span></code></pre></div>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">session_destroy</span>()<span class="ot">;</span></span></code></pre></div>
             <p>You can get all the code from the <a
-            href="https://github.com/ricardoprofe/providers_sample_DWES_24_25">GitHub
+            href="https://github.com/ricardoprofe/providers_sample_DWES_24_25_u4">GitHub
             repository</a>.</p>
         </main>
         
