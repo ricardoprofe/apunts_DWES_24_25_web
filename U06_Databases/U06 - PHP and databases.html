@@ -34,7 +34,7 @@
         }
         @media print {
         pre > code.sourceCode { white-space: pre-wrap; }
-        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
         }
         pre.numberSource code
           { counter-reset: source-line 0; }
@@ -546,7 +546,7 @@ class="toc-section-number">7</span> Passwords in the database</a></li>
             <code>PDO::FETCH_PROPS_LATE</code> methods:</p>
             <div class="sourceCode" id="cb29"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT * FROM persons&quot;</span>)<span class="ot">;</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;fetch((<span class="bu">PDO</span>::<span class="cn">FETCH_CLASS</span><span class="op">|</span><span class="bu">PDO</span>::<span class="cn">FETCH_PROPS_LATE</span><span class="ot">,</span> <span class="st">&#39;Person&#39;</span>)<span class="ot">;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;fetch(<span class="bu">PDO</span>::<span class="cn">FETCH_CLASS</span><span class="op">|</span><span class="bu">PDO</span>::<span class="cn">FETCH_PROPS_LATE</span><span class="ot">,</span> <span class="st">&#39;Person&#39;</span>)<span class="ot">;</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="va">$stmt</span>-&gt;execute()<span class="ot">;</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="va">$result</span> <span class="op">=</span> <span class="va">$stmt</span>-&gt;fetchAll()<span class="ot">;</span> <span class="co">//$result is an array of Person objects</span></span></code></pre></div>
             <p>For a single result, for instance a select by the primary
