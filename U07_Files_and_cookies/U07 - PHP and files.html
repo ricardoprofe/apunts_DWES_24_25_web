@@ -34,7 +34,7 @@
         }
         @media print {
         pre > code.sourceCode { white-space: pre-wrap; }
-        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
         }
         pre.numberSource code
           { counter-reset: source-line 0; }
@@ -178,8 +178,8 @@ class="toc-section-number">4.2</span> Reading a JSON file.</a></li>
 <li><a href="#validating-json" id="toc-validating-json"><span
 class="toc-section-number">4.3</span> Validating JSON</a></li>
 </ul></li>
-<li><a href="#transfering-files" id="toc-transfering-files"><span
-class="toc-section-number">5</span> Transfering files</a>
+<li><a href="#transferring-files" id="toc-transferring-files"><span
+class="toc-section-number">5</span> Transferring files</a>
 <ul>
 <li><a href="#uploading-files" id="toc-uploading-files"><span
 class="toc-section-number">5.1</span> Uploading files</a></li>
@@ -940,6 +940,19 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             the writing of the buffered output, just in case we miss the
             last line in the file</p>
             </blockquote>
+            <p>We can also use the function
+            <strong><code>file_put_contents($filename, $data)</code></strong>
+            to open the <code>$filename</code> file, write the
+            <code>$data</code> content and close it.</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="va">$file</span> <span class="op">=</span> <span class="st">&#39;people.txt&#39;</span><span class="ot">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="va">$person</span> <span class="op">=</span> <span class="st">&quot;John Smith</span><span class="sc">\n</span><span class="st">&quot;</span><span class="ot">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">file_put_contents</span>(<span class="va">$file</span><span class="ot">,</span> <span class="va">$person</span><span class="ot">,</span> <span class="cn">FILE_APPEND</span>)<span class="ot">;</span></span></code></pre></div>
+            <blockquote>
+            <p>The <code>FILE_APPEND</code> constant allow us to open
+            the file in append mode.</p>
+            </blockquote>
             <h2 data-number="3.4"
             id="reading-and-writing-with-the-same-handler"><span
             class="header-section-number">3.4</span> Reading and writing
@@ -979,15 +992,15 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             </table>
             <p>We can add a 5th line to our example file, and then
             rewind the pointer to display the updated content.</p>
-            <div class="sourceCode" id="cb15"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;newfile.txt&quot;</span><span class="ot">;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="va">$f</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="va">$fileName</span><span class="ot">,</span><span class="st">&quot;a+&quot;</span>)<span class="ot">;</span> <span class="co">// to add content at the end of the file</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(<span class="va">$f</span><span class="ot">,</span><span class="st">&quot;Line number 05&quot;</span><span class="op">.</span><span class="cn">PHP_EOL</span>)<span class="ot">;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rewind</span>(<span class="va">$f</span>)<span class="ot">;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="op">!</span><span class="fu">feof</span>(<span class="va">$f</span>)) {</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="fu">fgets</span>(<span class="va">$f</span>)<span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">fclose</span>(<span class="va">$f</span>)<span class="ot">;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;newfile.txt&quot;</span><span class="ot">;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="va">$f</span> <span class="op">=</span> <span class="fu">fopen</span>(<span class="va">$fileName</span><span class="ot">,</span><span class="st">&quot;a+&quot;</span>)<span class="ot">;</span> <span class="co">// to add content at the end of the file</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(<span class="va">$f</span><span class="ot">,</span><span class="st">&quot;Line number 05&quot;</span><span class="op">.</span><span class="cn">PHP_EOL</span>)<span class="ot">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rewind</span>(<span class="va">$f</span>)<span class="ot">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="op">!</span><span class="fu">feof</span>(<span class="va">$f</span>)) {</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="fu">fgets</span>(<span class="va">$f</span>)<span class="op">.</span><span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">fclose</span>(<span class="va">$f</span>)<span class="ot">;</span></span></code></pre></div>
             <p>You can check that a new line has been added to the
             file.</p>
             <h1 data-number="4" id="php-and-json-files"><span
@@ -996,8 +1009,45 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             <p>JSON files are plain text files, so we can work with them
             using the functions seen above. In fact, we can use those
             functions along with <code>json_decode()</code>,
-            <code>json_encode()</code> ans <code>json_validate()</code>
-            to work with JSON content. Let’s see how to do it.</p>
+            <code>json_encode()</code> and <code>json_validate()</code>
+            to work with JSON content.</p>
+            <table>
+            <colgroup>
+            <col style="width: 36%" />
+            <col style="width: 63%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th style="text-align: left;">Function</th>
+            <th style="text-align: left;">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><code>json_encode($value)</code></td>
+            <td style="text-align: left;">Returns a
+            <strong>string</strong> containing the JSON representation
+            of <code>$value</code> (can be an array or object). Returns
+            <code>false</code> on failure.</td>
+            </tr>
+            <tr class="even">
+            <td
+            style="text-align: left;"><code>json_decode($string, true\|false)</code></td>
+            <td style="text-align: left;">Takes a
+            <code>JSON encoded string</code> and converts it into a PHP
+            value. If the second parameter is true, returns associative
+            arrays, else it returns objects (by default)</td>
+            </tr>
+            <tr class="odd">
+            <td
+            style="text-align: left;"><code>json_validate($string)</code></td>
+            <td style="text-align: left;">Checks if a string contains
+            valid JSON.</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>Let’s see how to do it.</p>
             <h2 data-number="4.1" id="creating-a-json-file"><span
             class="header-section-number">4.1</span> Creating a JSON
             file</h2>
@@ -1006,21 +1056,21 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             associative array with the keys and values we need.</p>
             <p>Let’s create again our contacts file, but this time as a
             JSON file:</p>
-            <div class="sourceCode" id="cb16"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contacts</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&quot;Contacts&quot;</span>=&gt;<span class="dt">array</span>(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;John&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Smith&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;john@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;42843242&quot;</span>)<span class="ot">,</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;Paul&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Lewis&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;paul@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;48203422&quot;</span>)<span class="ot">,</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;David&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Layne&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;dlayne@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;32342343&quot;</span>)<span class="ot">,</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;Angie&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Robertson&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;angie99@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;42342342&quot;</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>))<span class="ot">;</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="va">$jsonFile</span> <span class="op">=</span> <span class="fu">json_encode</span>(<span class="va">$contacts</span>)<span class="ot">;</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="va">$bytes</span> <span class="op">=</span> <span class="fu">file_put_contents</span>(<span class="st">&quot;contacts.json&quot;</span><span class="ot">,</span> <span class="va">$jsonFile</span>)<span class="ot">;</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$bytes</span><span class="op">==</span><span class="dv">0</span>) {</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Write error&quot;</span><span class="ot">;</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> { </span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Succesful!&quot;</span><span class="ot">;</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contacts</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&quot;Contacts&quot;</span>=&gt;<span class="dt">array</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;John&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Smith&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;john@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;42843242&quot;</span>)<span class="ot">,</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;Paul&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Lewis&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;paul@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;48203422&quot;</span>)<span class="ot">,</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;David&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Layne&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;dlayne@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;32342343&quot;</span>)<span class="ot">,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;Angie&quot;</span><span class="ot">,</span> <span class="st">&quot;Surname&quot;</span>=&gt;<span class="st">&quot;Robertson&quot;</span><span class="ot">,</span> <span class="st">&quot;Email&quot;</span>=&gt;<span class="st">&quot;angie99@gmail.com&quot;</span><span class="ot">,</span> <span class="st">&quot;Phone&quot;</span>=&gt;<span class="st">&quot;42342342&quot;</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>))<span class="ot">;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="va">$jsonFile</span> <span class="op">=</span> <span class="fu">json_encode</span>(<span class="va">$contacts</span>)<span class="ot">;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="va">$bytes</span> <span class="op">=</span> <span class="fu">file_put_contents</span>(<span class="st">&quot;contacts.json&quot;</span><span class="ot">,</span> <span class="va">$jsonFile</span>)<span class="ot">;</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$bytes</span><span class="op">==</span><span class="dv">0</span>) {</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Write error&quot;</span><span class="ot">;</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> { </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Succesful!&quot;</span><span class="ot">;</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <blockquote>
             <p>The
             <strong><code>file_put_contents($filename, $data)</code></strong>
@@ -1044,51 +1094,51 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             file is converted into an object that has a property, the
             one we defined as the first key (“Contacts”, in this case),
             that contains the array.</p>
-            <div class="sourceCode" id="cb17"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;contacts.json&quot;</span><span class="ot">;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$jsonFile</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$data</span> <span class="op">=</span> <span class="fu">json_decode</span>(<span class="va">$jsonFile</span>)<span class="ot">;</span> <span class="co">// now $data is an object, not an array</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// but the property &quot;contacts&quot; is the array we are looking for</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$data</span>-&gt;<span class="cn">C</span>ontacts <span class="kw">as</span> <span class="va">$contact</span>) {</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">foreach</span>(<span class="va">$contact</span> <span class="kw">as</span> <span class="va">$key</span>=&gt;<span class="va">$value</span>) {</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>          <span class="kw">echo</span> <span class="st">&quot;&lt;strong&gt;</span><span class="va">$key</span><span class="st">: &lt;/strong&gt;</span><span class="va">$value</span><span class="st"> &quot;</span><span class="ot">;</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        }        </span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> { </span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;The file </span><span class="va">$fileName</span><span class="st"> doesn&#39;t exist&quot;</span><span class="ot">;</span> </span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;contacts.json&quot;</span><span class="ot">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$jsonFile</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$data</span> <span class="op">=</span> <span class="fu">json_decode</span>(<span class="va">$jsonFile</span>)<span class="ot">;</span> <span class="co">// now $data is an object, not an array</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// but the property &quot;contacts&quot; is the array we are looking for</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$data</span>-&gt;Contacts <span class="kw">as</span> <span class="va">$contact</span>) {</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">foreach</span>(<span class="va">$contact</span> <span class="kw">as</span> <span class="va">$key</span>=&gt;<span class="va">$value</span>) {</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>          <span class="kw">echo</span> <span class="st">&quot;&lt;strong&gt;</span><span class="va">$key</span><span class="st">: &lt;/strong&gt;</span><span class="va">$value</span><span class="st"> &quot;</span><span class="ot">;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        }        </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;&lt;br&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> { </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;The file </span><span class="va">$fileName</span><span class="st"> doesn&#39;t exist&quot;</span><span class="ot">;</span> </span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <h2 data-number="4.3" id="validating-json"><span
             class="header-section-number">4.3</span> Validating
             JSON</h2>
             <p>Since <strong>PHP 8.3</strong> we have the function
             <code>json_validate()</code> that checks if a string
             contains valid JSON content:</p>
-            <div class="sourceCode" id="cb18"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var_dump</span>(json_validate(<span class="st">&#39;{ &quot;test&quot;: { &quot;foo&quot;: &quot;bar&quot; } }&#39;</span>))<span class="ot">;</span> <span class="co">//Outputs: bool(true)</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var_dump</span>(json_validate(<span class="st">&#39;{ &quot;&quot;: &quot;&quot;: &quot;&quot; } }&#39;</span>))<span class="ot">;</span>  <span class="co">//Outputs: bool(false)</span></span></code></pre></div>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var_dump</span>(<span class="fu">json_validate</span>(<span class="st">&#39;{ &quot;test&quot;: { &quot;foo&quot;: &quot;bar&quot; } }&#39;</span>))<span class="ot">;</span> <span class="co">//Outputs: bool(true)</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var_dump</span>(<span class="fu">json_validate</span>(<span class="st">&#39;{ &quot;&quot;: &quot;&quot;: &quot;&quot; } }&#39;</span>))<span class="ot">;</span>  <span class="co">//Outputs: bool(false)</span></span></code></pre></div>
             <p>We can rewrite the previous example validating the Json
             file before decode it:</p>
-            <div class="sourceCode" id="cb19"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;contacts.json&quot;</span><span class="ot">;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$jsonFile</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(json_validate(<span class="va">$jsonFile</span>)) {</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>      <span class="va">$data</span> <span class="op">=</span> <span class="fu">json_decode</span>(<span class="va">$jsonFile</span>)<span class="ot">;</span> </span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      ...</span></code></pre></div>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="va">$fileName</span> <span class="op">=</span> <span class="st">&quot;contacts.json&quot;</span><span class="ot">;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$jsonFile</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">json_validate</span>(<span class="va">$jsonFile</span>)) {</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>      <span class="va">$data</span> <span class="op">=</span> <span class="fu">json_decode</span>(<span class="va">$jsonFile</span>)<span class="ot">;</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>      ...</span></code></pre></div>
             <p>Before PHP 8.3, we can simulate the behavior of
             <code>json_validate()</code> with a custom function:</p>
-            <div class="sourceCode" id="cb20"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> json_validate(<span class="dt">string</span> <span class="va">$string</span>)<span class="ot">:</span> <span class="dt">bool</span> {</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">json_decode</span>(<span class="va">$string</span>)<span class="ot">;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">json_last_error</span>() <span class="op">===</span> <span class="cn">JSON_ERROR_NONE</span><span class="ot">;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(json_validate(<span class="va">$jsonFile</span>)) {</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
-            <h1 data-number="5" id="transfering-files"><span
-            class="header-section-number">5</span> Transfering
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">json_validate</span>(<span class="dt">string</span> <span class="va">$string</span>)<span class="ot">:</span> <span class="dt">bool</span> {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">json_decode</span>(<span class="va">$string</span>)<span class="ot">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">json_last_error</span>() <span class="op">===</span> <span class="cn">JSON_ERROR_NONE</span><span class="ot">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">json_validate</span>(<span class="va">$jsonFile</span>)) {</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
+            <h1 data-number="5" id="transferring-files"><span
+            class="header-section-number">5</span> Transferring
             files</h1>
             <p>Sometimes we need to transfer the files generated to or
             from the server. Let’s see the most common ways.</p>
@@ -1097,13 +1147,13 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             files</h2>
             <p>To upload a file we need a form with an input of type
             file:</p>
-            <div class="sourceCode" id="cb21"><pre
-            class="sourceCode html"><code class="sourceCode html"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;post&quot;</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;destination.php&quot;</span><span class="ot"> enctype</span><span class="op">=</span><span class="st">&quot;multipart/form-data&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">label</span><span class="dt">&gt;</span> Select file to upload:</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;file&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;fileToUpload&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Upload file&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;submitFile&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;post&quot;</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;destination.php&quot;</span><span class="ot"> enctype</span><span class="op">=</span><span class="st">&quot;multipart/form-data&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">label</span><span class="dt">&gt;</span> Select file to upload:</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;file&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;fileToUpload&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Upload file&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;submitFile&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
             <p>The form must have the <strong>POST method</strong> and
             the <strong>enctype</strong> (<em>encryption type</em>)
             <strong><em>“multipart/form-data”</em></strong>. Without
@@ -1113,73 +1163,73 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             probably you need to increase the limits for uploading files
             in <code>php.ini</code>, otherwise the files won’t be
             uploaded:</p>
-            <div class="sourceCode" id="cb22"><pre
-            class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">upload_max_filesize</span> = 50M</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">post_max_size</span> = 50M</span></code></pre></div>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">upload_max_filesize</span> = 50M</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">post_max_size</span> = 50M</span></code></pre></div>
             <p>After increasing the limits, restart the apache
             server.</p>
             </blockquote>
             <p>The files are transferred in the superglobal array
             <strong><code>$_FILES</code></strong>, which has the next
             elements:</p>
-            <div class="sourceCode" id="cb23"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Array</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  [fileToUpload] =&gt; <span class="dt">Array</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    (</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>      [name] =&gt; <span class="fu">file</span><span class="op">.</span>txt <span class="co">//Name of the file</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>      [full_path] =&gt; <span class="fu">file</span><span class="op">.</span>txt <span class="co">//Full path of all files, used when upload a folder</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>      [type] =&gt; text<span class="op">/</span>csv <span class="co">// File type</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>      [tmp_name] =&gt; <span class="op">/</span>tmp<span class="op">/</span>phpp6nt4o <span class="co">// Temporary path of the file</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>      [<span class="bu">error</span>] =&gt; <span class="dv">0</span> <span class="co">//0 means no errors</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>      [size] =&gt; <span class="dv">903</span> <span class="co">// the file size in bytes</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Array</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  [fileToUpload] =&gt; <span class="dt">Array</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>      [name] =&gt; <span class="fu">file</span><span class="op">.</span>txt <span class="co">//Name of the file</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>      [full_path] =&gt; <span class="fu">file</span><span class="op">.</span>txt <span class="co">//Full path of all files, used when upload a folder</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>      [type] =&gt; text<span class="op">/</span>csv <span class="co">// File type</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>      [tmp_name] =&gt; <span class="op">/</span>tmp<span class="op">/</span>phpp6nt4o <span class="co">// Temporary path of the file</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>      [<span class="bu">error</span>] =&gt; <span class="dv">0</span> <span class="co">//0 means no errors</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>      [size] =&gt; <span class="dv">903</span> <span class="co">// the file size in bytes</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
             <p>When a file is uploaded, it’s stored in a temporary path,
             indicated by the field <code>tmp_name</code>. If we only
             need to read the file, we can do it directly. But if we want
             to store the file in the server, we need to copy the file to
             the destination folder.</p>
             <p>Before that, we need to make some checks:</p>
-            <div class="sourceCode" id="cb24"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$target_dir</span> <span class="op">=</span> <span class="st">&quot;uploads/&quot;</span><span class="ot">;</span> <span class="co">//Destination folder. Check the permissions!</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="va">$target_file</span> <span class="op">=</span> <span class="va">$target_dir</span> <span class="op">.</span> <span class="fu">basename</span>(<span class="va">$_FILES</span>[<span class="st">&quot;fileToUpload&quot;</span>][<span class="st">&quot;name&quot;</span>])<span class="ot">;</span> <span class="co">//Path of the file in the server</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="va">$fileType</span> <span class="op">=</span> <span class="fu">strtolower</span>(<span class="fu">pathinfo</span>(<span class="va">$target_file</span><span class="ot">,</span><span class="cn">PATHINFO_EXTENSION</span>))<span class="ot">;</span> <span class="co">//File extension in lower case</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if file already exists</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file_exists</span>(<span class="va">$target_file</span>)) {</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Sorry, file already exists.&quot;</span><span class="ot">;</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">;</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">// Check file size</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$_FILES</span>[<span class="st">&quot;fileToUpload&quot;</span>][<span class="st">&quot;size&quot;</span>] <span class="op">&gt;</span> <span class="dv">5000000</span>) { <span class="co">//5MB</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Sorry, your file is too large.&quot;</span><span class="ot">;</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">;</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co">// Allow certain file formats</span></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$fileType</span> <span class="op">!=</span> <span class="st">&quot;csv&quot;</span>) {</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Sorry, only CSV files are allowed.&quot;</span><span class="ot">;</span></span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">;</span></span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">$target_dir</span> <span class="op">=</span> <span class="st">&quot;uploads/&quot;</span><span class="ot">;</span> <span class="co">//Destination folder. Check the permissions!</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="va">$target_file</span> <span class="op">=</span> <span class="va">$target_dir</span> <span class="op">.</span> <span class="fu">basename</span>(<span class="va">$_FILES</span>[<span class="st">&quot;fileToUpload&quot;</span>][<span class="st">&quot;name&quot;</span>])<span class="ot">;</span> <span class="co">//Path of the file in the server</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="va">$fileType</span> <span class="op">=</span> <span class="fu">strtolower</span>(<span class="fu">pathinfo</span>(<span class="va">$target_file</span><span class="ot">,</span><span class="cn">PATHINFO_EXTENSION</span>))<span class="ot">;</span> <span class="co">//File extension in lower case</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if file already exists</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file_exists</span>(<span class="va">$target_file</span>)) {</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Sorry, file already exists.&quot;</span><span class="ot">;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co">// Check file size</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$_FILES</span>[<span class="st">&quot;fileToUpload&quot;</span>][<span class="st">&quot;size&quot;</span>] <span class="op">&gt;</span> <span class="dv">5000000</span>) { <span class="co">//5MB</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Sorry, your file is too large.&quot;</span><span class="ot">;</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">;</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">// Allow certain file formats</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$fileType</span> <span class="op">!=</span> <span class="st">&quot;csv&quot;</span>) {</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Sorry, only CSV files are allowed.&quot;</span><span class="ot">;</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="va">$uploadOk</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">;</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>Then, if there were no errors, copy the file to the
             destination folder, with the
             <strong><code>move_uploaded_file ($filename, $destination)</code></strong>
             function:</p>
-            <div class="sourceCode" id="cb25"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if $uploadOk is set to 0 by an error</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="va">$uploadOk</span>) {</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Sorry, your file was not uploaded.&quot;</span><span class="ot">;</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">// if everything is ok, try to upload file</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">move_uploaded_file</span>(<span class="va">$_FILES</span>[<span class="st">&quot;fileToUpload&quot;</span>][<span class="st">&quot;tmp_name&quot;</span>]<span class="ot">,</span> <span class="va">$target_file</span>)) {</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;File uploaded&quot;</span><span class="ot">;</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Sorry, there was an error uploading your file.&quot;</span><span class="ot">;</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Check if $uploadOk is set to 0 by an error</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span><span class="va">$uploadOk</span>) {</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="st">&quot;Sorry, your file was not uploaded.&quot;</span><span class="ot">;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">// if everything is ok, try to upload file</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">move_uploaded_file</span>(<span class="va">$_FILES</span>[<span class="st">&quot;fileToUpload&quot;</span>][<span class="st">&quot;tmp_name&quot;</span>]<span class="ot">,</span> <span class="va">$target_file</span>)) {</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;File uploaded&quot;</span><span class="ot">;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;Sorry, there was an error uploading your file.&quot;</span><span class="ot">;</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>Instead of moving the file, we can do other operations,
             such as reading the file and inserting their elements in a
             database.</p>
@@ -1188,30 +1238,30 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             files</h2>
             <p>The easiest way to download a file is to providing a link
             to it:</p>
-            <div class="sourceCode" id="cb26"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;a href=&quot;</span><span class="va">$fileName</span><span class="st">&quot;&gt; Download file &lt;/a&gt;&quot;</span><span class="ot">;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&quot;&lt;a href=&quot;</span><span class="va">$fileName</span><span class="st">&quot;&gt; Download file &lt;/a&gt;&quot;</span><span class="ot">;</span></span></code></pre></div>
             <p>But if we want to automatic download a file (for example,
             after a data export) we need to create an HTTP header and
             use the <strong><code>readfile()</code></strong>
             function:</p>
-            <div class="sourceCode" id="cb27"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Define header information</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Description: File Transfer&#39;</span>)<span class="ot">;</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Type: application/octet-stream&#39;</span>)<span class="ot">;</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&quot;Cache-Control: no-cache, must-revalidate&quot;</span>)<span class="ot">;</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&quot;Expires: 0&quot;</span>)<span class="ot">;</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Disposition: attachment; filename=&quot;&#39;</span> <span class="op">.</span> <span class="fu">basename</span>(<span class="va">$fileName</span>) <span class="op">.</span> <span class="st">&#39;&quot;&#39;</span>)<span class="ot">;</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Length: &#39;</span> <span class="op">.</span> <span class="fu">filesize</span>(<span class="va">$fileName</span>))<span class="ot">;</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Pragma: public&#39;</span>)<span class="ot">;</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Clear system output buffer</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flush</span>()<span class="ot">;</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Read the file</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readfile</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Delete the file from server</span></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlink</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file_exists</span>(<span class="va">$fileName</span>)) {</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Define header information</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Description: File Transfer&#39;</span>)<span class="ot">;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Type: application/octet-stream&#39;</span>)<span class="ot">;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&quot;Cache-Control: no-cache, must-revalidate&quot;</span>)<span class="ot">;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&quot;Expires: 0&quot;</span>)<span class="ot">;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Disposition: attachment; filename=&quot;&#39;</span> <span class="op">.</span> <span class="fu">basename</span>(<span class="va">$fileName</span>) <span class="op">.</span> <span class="st">&#39;&quot;&#39;</span>)<span class="ot">;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Content-Length: &#39;</span> <span class="op">.</span> <span class="fu">filesize</span>(<span class="va">$fileName</span>))<span class="ot">;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">header</span>(<span class="st">&#39;Pragma: public&#39;</span>)<span class="ot">;</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Clear system output buffer</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Read the file</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readfile</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">//Delete the file from server</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlink</span>(<span class="va">$fileName</span>)<span class="ot">;</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <blockquote>
             <p><strong>Remember</strong>: The <code>header</code>
             function must be used before showing any content on your
@@ -1242,81 +1292,81 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             <p>For storing the file in the database we need a
             <code>LONGBLOB</code> field on the table where we want to
             store the image:</p>
-            <div class="sourceCode" id="cb28"><pre
-            class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">----------+--------------+------+-----+---------+----------------+</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>| Field    | <span class="kw">Type</span>         | <span class="kw">Null</span> | <span class="kw">Key</span> | <span class="kw">Default</span> | Extra          |</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">----------+--------------+------+-----+---------+----------------+</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="op">..</span>.</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>| image    | longblob     | YES  |     | <span class="kw">NULL</span>    |                |</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">----------+--------------+------+-----+---------+----------------+</span></span></code></pre></div>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">----------+--------------+------+-----+---------+----------------+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>| Field    | <span class="kw">Type</span>         | <span class="kw">Null</span> | <span class="kw">Key</span> | <span class="kw">Default</span> | Extra          |</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">----------+--------------+------+-----+---------+----------------+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="op">..</span>.</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>| image    | longblob     | YES  |     | <span class="kw">NULL</span>    |                |</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">----------+--------------+------+-----+---------+----------------+</span></span></code></pre></div>
             <p>To upload the image, we need a form with a file input and
             a submit button. We also have added an <code>img</code> tag
             to show the image:</p>
-            <div class="sourceCode" id="cb29"><pre
-            class="sourceCode html"><code class="sourceCode html"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;post&quot;</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;</span><span class="er">&lt;</span><span class="st">?php echo htmlspecialchars($_SERVER[&quot;</span><span class="ot">PHP_SELF</span><span class="er">&quot;]);?</span><span class="dt">&gt;</span>&quot;  enctype=&quot;multipart/form-data&quot;&gt;</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Other inputs --&gt;</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">label</span><span class="dt">&gt;</span>Image: <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> width</span><span class="op">=</span><span class="st">&quot;100px&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;data:image/jpg;charset=utf8;base64,</span><span class="er">&lt;</span><span class="st">?= !is_null($contact-&gt;getImage()) ? base64_encode($contact-&gt;getImage()) : &#39;&#39; ?&gt;&quot;</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="ot">             alt</span><span class="op">=</span><span class="st">&quot;login picture&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;error&quot;</span><span class="dt">&gt;</span> <span class="kw">&lt;?</span>= $imageErr; <span class="kw">?&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;file&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;image&quot;</span><span class="ot"> </span><span class="dt">&gt;</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Save&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;post&quot;</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;</span><span class="er">&lt;</span><span class="st">?php echo htmlspecialchars($_SERVER[&quot;</span><span class="ot">PHP_SELF</span><span class="er">&quot;]);?</span><span class="dt">&gt;</span>&quot;  enctype=&quot;multipart/form-data&quot;&gt;</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Other inputs --&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">label</span><span class="dt">&gt;</span>Image: <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> width</span><span class="op">=</span><span class="st">&quot;100px&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;data:image/jpg;charset=utf8;base64,</span><span class="er">&lt;</span><span class="st">?= !is_null($contact-&gt;getImage()) ? base64_encode($contact-&gt;getImage()) : &#39;&#39; ?&gt;&quot;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="ot">             alt</span><span class="op">=</span><span class="st">&quot;login picture&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;error&quot;</span><span class="dt">&gt;</span> <span class="kw">&lt;?</span>= $imageErr; <span class="kw">?&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;file&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;image&quot;</span><span class="ot"> </span><span class="dt">&gt;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Save&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
             <p>Note how we get the image from a <code>$contact</code>
             object and encode it in order to be shown.</p>
             <p>When the form or another script gets the
             <code>POST</code> request, we need to check the image (size
             and filetype), generate the error message, if any, and store
             the image in the <code>$contact</code> object:</p>
-            <div class="sourceCode" id="cb30"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">count</span>(<span class="va">$_FILES</span>) <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="kw">isset</span>(<span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;tmp_name&#39;</span>]) <span class="op">&amp;&amp;</span> <span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;size&#39;</span>] <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>      <span class="va">$fileType</span> <span class="op">=</span>  <span class="fu">strtolower</span>(<span class="fu">pathinfo</span>(<span class="fu">basename</span>(<span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;name&#39;</span>])<span class="ot">,</span> <span class="cn">PATHINFO_EXTENSION</span>))<span class="ot">;</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Check file size</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="va">$_FILES</span>[<span class="st">&quot;image&quot;</span>][<span class="st">&quot;size&quot;</span>] <span class="op">&gt;</span> <span class="dv">5000000</span>) { <span class="co">//5MB</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>          <span class="va">$imageErr</span> <span class="op">=</span> <span class="st">&quot;* File too large. Max 5MB.&quot;</span><span class="ot">;</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>          <span class="va">$err</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>      <span class="co">//Chek type</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(<span class="op">!</span><span class="fu">in_array</span>(<span class="va">$fileType</span><span class="ot">,</span> [<span class="st">&#39;jpg&#39;</span><span class="ot">,</span><span class="st">&#39;png&#39;</span><span class="ot">,</span><span class="st">&#39;jpeg&#39;</span><span class="ot">,</span><span class="st">&#39;gif&#39;</span><span class="ot">,</span> <span class="st">&#39;bmp&#39;</span>]) ){</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>          <span class="va">$imageErr</span> <span class="op">=</span> <span class="st">&#39;* Only JPG, JPEG, PNG, BMP &amp; GIF files are allowed.&#39;</span><span class="ot">;</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>          <span class="va">$err</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span><span class="va">$err</span>) {</span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>          <span class="va">$imgData</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;tmp_name&#39;</span>])<span class="ot">;</span></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>          <span class="va">$contact</span>-&gt;setImage(<span class="va">$imgData</span>)<span class="ot">;</span></span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">count</span>(<span class="va">$_FILES</span>) <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="kw">isset</span>(<span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;tmp_name&#39;</span>]) <span class="op">&amp;&amp;</span> <span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;size&#39;</span>] <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>      <span class="va">$fileType</span> <span class="op">=</span>  <span class="fu">strtolower</span>(<span class="fu">pathinfo</span>(<span class="fu">basename</span>(<span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;name&#39;</span>])<span class="ot">,</span> <span class="cn">PATHINFO_EXTENSION</span>))<span class="ot">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Check file size</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="va">$_FILES</span>[<span class="st">&quot;image&quot;</span>][<span class="st">&quot;size&quot;</span>] <span class="op">&gt;</span> <span class="dv">5000000</span>) { <span class="co">//5MB</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>          <span class="va">$imageErr</span> <span class="op">=</span> <span class="st">&quot;* File too large. Max 5MB.&quot;</span><span class="ot">;</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>          <span class="va">$err</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>      <span class="co">//Chek type</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(<span class="op">!</span><span class="fu">in_array</span>(<span class="va">$fileType</span><span class="ot">,</span> [<span class="st">&#39;jpg&#39;</span><span class="ot">,</span><span class="st">&#39;png&#39;</span><span class="ot">,</span><span class="st">&#39;jpeg&#39;</span><span class="ot">,</span><span class="st">&#39;gif&#39;</span><span class="ot">,</span> <span class="st">&#39;bmp&#39;</span>]) ){</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>          <span class="va">$imageErr</span> <span class="op">=</span> <span class="st">&#39;* Only JPG, JPEG, PNG, BMP &amp; GIF files are allowed.&#39;</span><span class="ot">;</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>          <span class="va">$err</span> <span class="op">=</span> <span class="kw">true</span><span class="ot">;</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span><span class="va">$err</span>) {</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>          <span class="va">$imgData</span> <span class="op">=</span> <span class="fu">file_get_contents</span>(<span class="va">$_FILES</span>[<span class="st">&#39;image&#39;</span>][<span class="st">&#39;tmp_name&#39;</span>])<span class="ot">;</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>          <span class="va">$contact</span>-&gt;setImage(<span class="va">$imgData</span>)<span class="ot">;</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>The methods for store the image in the database are
             similar to any other data types:</p>
-            <div class="sourceCode" id="cb31"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> insert(<span class="va">$object</span>)<span class="ot">:</span> <span class="dt">int</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>      <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;INSERT INTO contacts (image) VALUES (:image)&quot;</span>)<span class="ot">;</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>      <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;image&#39;</span>=&gt;<span class="va">$object</span>-&gt;getImage()])<span class="ot">;</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">echo</span> <span class="va">$stmt</span>-&gt;rowCount()<span class="ot">;</span> <span class="co">//Return the number of rows affected</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> update(<span class="va">$object</span>)<span class="ot">:</span> <span class="dt">int</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;UPDATE contacs SET image=:image WHERE id=:id&quot;</span>)<span class="ot">;</span></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;id&#39;</span>=&gt;<span class="va">$object</span>-&gt;getId()<span class="ot">,</span> <span class="st">&#39;image&#39;</span>=&gt;<span class="va">$object</span>-&gt;getImage()])<span class="ot">;</span></span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$stmt</span>-&gt;rowCount()<span class="ot">;</span> <span class="co">//Return the number of rows affected</span></span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> insert(<span class="va">$object</span>)<span class="ot">:</span> <span class="dt">int</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">$conn</span> <span class="op">=</span> DBConnection::connectDB()<span class="ot">;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>      <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;INSERT INTO contacts (image) VALUES (:image)&quot;</span>)<span class="ot">;</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>      <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;image&#39;</span>=&gt;<span class="va">$object</span>-&gt;getImage()])<span class="ot">;</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">echo</span> <span class="va">$stmt</span>-&gt;rowCount()<span class="ot">;</span> <span class="co">//Return the number of rows affected</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> update(<span class="va">$object</span>)<span class="ot">:</span> <span class="dt">int</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> DBConnection::connectDB()<span class="ot">;</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;UPDATE contacs SET image=:image WHERE id=:id&quot;</span>)<span class="ot">;</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;id&#39;</span>=&gt;<span class="va">$object</span>-&gt;getId()<span class="ot">,</span> <span class="st">&#39;image&#39;</span>=&gt;<span class="va">$object</span>-&gt;getImage()])<span class="ot">;</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$stmt</span>-&gt;rowCount()<span class="ot">;</span> <span class="co">//Return the number of rows affected</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>Don’t forget to increase the <code>php.ini</code> upload
             max límits.</p>
             <h1 data-number="6" id="cookies"><span
@@ -1337,16 +1387,16 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             with PHP</h2>
             <p>To set (store) a cookie we use the function
             <strong><code>setcookie</code></strong>:</p>
-            <div class="sourceCode" id="cb32"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$name</span><span class="ot">,</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$value</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="ot">,</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> <span class="va">$expires_or_options</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">,</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$path</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="ot">,</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$domain</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="ot">,</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> <span class="va">$secure</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">,</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> <span class="va">$httponly</span> <span class="op">=</span> <span class="kw">false</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>)<span class="ot">:</span> <span class="dt">bool</span></span></code></pre></div>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$name</span><span class="ot">,</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$value</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="ot">,</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> <span class="va">$expires_or_options</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">,</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$path</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="ot">,</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="va">$domain</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="ot">,</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> <span class="va">$secure</span> <span class="op">=</span> <span class="kw">false</span><span class="ot">,</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> <span class="va">$httponly</span> <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>)<span class="ot">:</span> <span class="dt">bool</span></span></code></pre></div>
             <p>The most important arguments are:</p>
             <ul>
             <li><strong>name</strong>: The name of the cookie.</li>
@@ -1363,8 +1413,8 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             return <code>true</code>. This does not indicate whether the
             user accepted the cookie.</p>
             <p>We usually set a cookie in this way:</p>
-            <div class="sourceCode" id="cb33"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="fu">time</span>() <span class="op">+</span> <span class="dv">3660</span><span class="op">*</span><span class="dv">24</span><span class="op">*</span><span class="dv">30</span>)<span class="ot">;</span> <span class="co">//expires in 30 days</span></span></code></pre></div>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="fu">time</span>() <span class="op">+</span> <span class="dv">3660</span><span class="op">*</span><span class="dv">24</span><span class="op">*</span><span class="dv">30</span>)<span class="ot">;</span> <span class="co">//expires in 30 days</span></span></code></pre></div>
             <blockquote>
             <p><strong>Note</strong>: The <code>setcookie()</code>
             function must appear BEFORE the <code>&lt;html&gt;</code>
@@ -1372,17 +1422,17 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             </blockquote>
             <p>To <strong>modify a cookie</strong>, just set (again) the
             cookie using the <code>setcookie()</code> function:</p>
-            <div class="sourceCode" id="cb34"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$newUserName</span><span class="ot">,</span> <span class="fu">time</span>() <span class="op">+</span> <span class="dv">3660</span><span class="op">*</span><span class="dv">24</span><span class="op">*</span><span class="dv">30</span>)<span class="ot">;</span> </span></code></pre></div>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$newUserName</span><span class="ot">,</span> <span class="fu">time</span>() <span class="op">+</span> <span class="dv">3660</span><span class="op">*</span><span class="dv">24</span><span class="op">*</span><span class="dv">30</span>)<span class="ot">;</span> </span></code></pre></div>
             <p>To <strong>delete a cookie</strong>, use the
             <code>setcookie()</code> function with an expiration date in
             the past:</p>
-            <div class="sourceCode" id="cb35"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">// set the expiration date to one hour ago</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="fu">time</span>() <span class="op">-</span> <span class="dv">3660</span>)<span class="ot">;</span> </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co">//or</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="dv">1</span>)<span class="ot">;</span> </span></code></pre></div>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">// set the expiration date to one hour ago</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="fu">time</span>() <span class="op">-</span> <span class="dv">3660</span>)<span class="ot">;</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co">//or</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">setcookie</span>(<span class="st">&quot;UserName&quot;</span><span class="ot">,</span> <span class="va">$userName</span><span class="ot">,</span> <span class="dv">1</span>)<span class="ot">;</span> </span></code></pre></div>
             <p>With <code>setcookie()</code> the value of the cookie is
             automatically URLencoded (replacing HTML special chars) when
             sending the cookie, and automatically decoded when received.
@@ -1396,10 +1446,10 @@ class="toc-section-number">6.2</span> Reading cookies</a></li>
             cookies</h2>
             <p>We can read the cookies with the
             <strong><code>$_COOKIE</code></strong> superglobal:</p>
-            <div class="sourceCode" id="cb36"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_COOKIE</span>[<span class="st">&quot;UserName&quot;</span>])) {</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">$userName</span> <span class="op">=</span> <span class="va">$_COOKIE</span>[<span class="st">&quot;UserName&quot;</span>]<span class="ot">;</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_COOKIE</span>[<span class="st">&quot;UserName&quot;</span>])) {</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">$userName</span> <span class="op">=</span> <span class="va">$_COOKIE</span>[<span class="st">&quot;UserName&quot;</span>]<span class="ot">;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <blockquote>
             <p><strong>Tip</strong>: When working with cookies, it’s a
             good idea to test the script in a private window on the
