@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 8. Web services.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 8. Web services.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#web-services" id="toc-web-services"><span
+class="toc-section-number">1</span> Web services</a>
+<ul>
+<li><a href="#advantages-of-a-web-service"
+id="toc-advantages-of-a-web-service"><span
+class="toc-section-number">1.1</span> Advantages of a web
+service</a></li>
+<li><a href="#types-of-web-services"
+id="toc-types-of-web-services"><span
+class="toc-section-number">1.2</span> Types of web services</a>
+<ul>
+<li><a href="#soap" id="toc-soap"><span
+class="toc-section-number">1.2.1</span> SOAP</a></li>
+<li><a href="#rest" id="toc-rest"><span
+class="toc-section-number">1.2.2</span> REST</a></li>
+</ul></li>
+<li><a href="#api-rest" id="toc-api-rest"><span
+class="toc-section-number">1.3</span> API REST</a></li>
+<li><a href="#http-response-status-codes"
+id="toc-http-response-status-codes"><span
+class="toc-section-number">1.4</span> HTTP response status
+codes</a></li>
+</ul></li>
+<li><a href="#working-with-json-files-in-php"
+id="toc-working-with-json-files-in-php"><span
+class="toc-section-number">2</span> Working with JSON files in
+PHP</a></li>
+<li><a href="#building-the-api-rest"
+id="toc-building-the-api-rest"><span class="toc-section-number">3</span>
+Building the API REST</a>
+<ul>
+<li><a href="#transforming-objects-to-json"
+id="toc-transforming-objects-to-json"><span
+class="toc-section-number">3.1</span> Transforming objects to
+JSON</a></li>
+<li><a href="#making-the-response" id="toc-making-the-response"><span
+class="toc-section-number">3.2</span> Making the Response</a></li>
+<li><a href="#making-the-services" id="toc-making-the-services"><span
+class="toc-section-number">3.3</span> Making the services</a>
+<ul>
+<li><a href="#getting-the-logins-get"
+id="toc-getting-the-logins-get"><span
+class="toc-section-number">3.3.1</span> Getting the logins
+(GET)</a></li>
+<li><a href="#using-postman" id="toc-using-postman"><span
+class="toc-section-number">3.3.2</span> Using Postman</a></li>
+<li><a href="#posting-one-element-post"
+id="toc-posting-one-element-post"><span
+class="toc-section-number">3.3.3</span> Posting one element
+(POST)</a></li>
+<li><a href="#modifying-an-element-put"
+id="toc-modifying-an-element-put"><span
+class="toc-section-number">3.3.4</span> Modifying an element
+(PUT)</a></li>
+<li><a href="#removing-an-element-delete"
+id="toc-removing-an-element-delete"><span
+class="toc-section-number">3.3.5</span> Removing an element
+(DELETE)</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#validation" id="toc-validation"><span
+class="toc-section-number">4</span> Validation</a></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="web-services"><span
+            class="header-section-number">1</span> Web services</h1>
+            <p>A web service is a method for exchanging messages between
+            client and server applications. The web service includes a
+            specific set of methods that can be invoked from the client
+            application. These methods usually return data in a standard
+            format, so the client application, whatever the language or
+            technology used, would be able to read them. A web service
+            is a resource commonly used for this purpose: sending
+            requests to a web server and then receiving data in a
+            response form.</p>
+            <p>In practice, any software, application, or cloud
+            technology that uses standard web protocols like HTTP/HTTPS
+            and interoperates with other apps, exchanging messages in
+            formats like XML or JSON, for example, can be a web
+            service.</p>
+            <h2 data-number="1.1" id="advantages-of-a-web-service"><span
+            class="header-section-number">1.1</span> Advantages of a web
+            service</h2>
+            <ul>
+            <li>Allows programs developed in different languages to
+            connect each other and exchange data</li>
+            <li>A web service works both in Internet and Intranet
+            networks</li>
+            <li>Independence from the language, operating system or
+            technology</li>
+            <li>Easy access</li>
+            <li>Allows different sources to access to an unique
+            database</li>
+            </ul>
+            <h2 data-number="1.2" id="types-of-web-services"><span
+            class="header-section-number">1.2</span> Types of web
+            services</h2>
+            <p>Basically we can create a web service using two main
+            methods: * SOAP * REST</p>
+            <h3 data-number="1.2.1" id="soap"><span
+            class="header-section-number">1.2.1</span> SOAP</h3>
+            <p><strong>SOAP</strong> is an acronym for <strong>Simple
+            Object Access Protocol</strong>. SOAP is a messaging
+            protocol for exchanging structured information between a
+            server and a client. It uses XML for the message format and
+            works mainly over the HTTP protocol, although SMTP, TCP or
+            UDP can be used too. SOAP allows developers to invoke
+            processes running on different operating systems, so the
+            client can receive responses from different languages,
+            operating systems and platforms.</p>
+            <p>To work, SOAP needs a <em>Web Services Description
+            Language</em> (<strong>WSDL</strong>) method definition
+            file. WSDL contains methods, parameters, and all other
+            information needed to send web service requests.</p>
+            <p>Nowadays SOAP is less popular than in previous years.
+            This is because of the increasing use of REST.</p>
+            <h3 data-number="1.2.2" id="rest"><span
+            class="header-section-number">1.2.2</span> REST</h3>
+            <p><strong>REST</strong> is an acronym for
+            <strong>REpresentational State Transfer</strong>. REST is a
+            software architectural style that was in the roots of the
+            World Wide Web. It defines some constraints and principles
+            to be followed when creating a web service.</p>
+            <p>REST web services can generate response information both
+            in <strong>JSON</strong> and <strong>XML</strong> format.
+            REST supports all the main four HTTP methods (POST, GET, PUT
+            and DELETE) for CRUD (Create, Read, Update and Delete)
+            operations.</p>
+            <table>
+            <thead>
+            <tr class="header">
+            <th>METHOD</th>
+            <th>FUNCTION</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td>GET</td>
+            <td>Retrieve information from the service</td>
+            </tr>
+            <tr class="even">
+            <td>POST</td>
+            <td>Create an new resource</td>
+            </tr>
+            <tr class="odd">
+            <td>PUT</td>
+            <td>Update a particular resource</td>
+            </tr>
+            <tr class="even">
+            <td>DELETE</td>
+            <td>Remove a particular resource</td>
+            </tr>
+            </tbody>
+            </table>
+            <h2 data-number="1.3" id="api-rest"><span
+            class="header-section-number">1.3</span> API REST</h2>
+            <p>An <strong>API</strong> (<strong>Application Programming
+            Interface</strong>) is a set of definitions and protocols
+            for building and integrating application software. Usually
+            it’s defined as a kind of contract between the server and
+            the client for exchanging data.</p>
+            <p>An <strong>API REST</strong> is an API that conforms to
+            the requirements of REST architectural style and allows
+            interaction between clients and web services.</p>
+            <p>An API is considered REST if it has these conditions:</p>
+            <ul>
+            <li>A client‑server architecture</li>
+            <li>HTTP protocol</li>
+            <li>Independence between transactions</li>
+            <li>A standard interface and a standard form for the
+            transferred information</li>
+            <li>Internal details are transparent for the client</li>
+            </ul>
+            <h2 data-number="1.4" id="http-response-status-codes"><span
+            class="header-section-number">1.4</span> HTTP response
+            status codes</h2>
+            <p>When an API returns a response, it adds an HTTP response
+            status code. <strong>HTTP response status codes</strong>
+            indicate whether a specific HTTP request has been
+            successfully completed. Responses are grouped in five
+            classes:</p>
+            <ul>
+            <li>Informational responses (100 - 199)</li>
+            <li>Successful responses (200 - 299)</li>
+            <li>Redirection messages (300 - 399)</li>
+            <li>Client error responses (400 - 499)</li>
+            <li>Server error responses (500 - 599)</li>
+            </ul>
+            <p>The most common codes are:</p>
+            <ul>
+            <li><p><strong>200 OK</strong>: Request successful. The
+            result meaning of “success” depends on the HTTP method. For
+            a GET request usually means that the resource has been
+            fetched and transmitted in the message body.</p></li>
+            <li><p><strong>201 Created</strong>: The request succeeded,
+            and a new resource was created as a result. This is
+            typically the response sent after POST and PUT
+            requests.</p></li>
+            <li><p><strong>400 Bad Request</strong>: The server cannot
+            process the request due to a client error (e.g., malformed
+            request syntax, invalid parameters…).</p></li>
+            <li><p><strong>401 Unauthorized</strong>: Means that the
+            client is “unauthenticated”. The client must authenticate
+            itself to get the requested response.</p></li>
+            <li><p><strong>404 Not Found</strong>: The server cannot
+            find the requested resource.</p></li>
+            <li><p><strong>500 Internal Server Error</strong>: The
+            server has encountered a situation it does not know how to
+            handle.</p></li>
+            </ul>
+            <p><a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">Complete
+            HTTP status codes</a></p>
+            <h1 data-number="2"
+            id="working-with-json-files-in-php"><span
+            class="header-section-number">2</span> Working with JSON
+            files in PHP</h1>
+            <p>As you surely know, <strong>JSON</strong> stands for
+            <strong>JavaScript Object Notation</strong>, and is a
+            standard for storing and exchanging data in a text‑based
+            format. Thus, the JSON files can be easily exchanged between
+            the server and the client and they can be used by any
+            programming language. Examples of JSON variables:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">&quot;name&quot;</span><span class="fu">:</span><span class="st">&quot;Joe&quot;</span><span class="fu">,</span> <span class="dt">&quot;age&quot;</span><span class="fu">:</span><span class="st">&quot;25&quot;</span><span class="fu">}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span><span class="dt">&quot;name&quot;</span><span class="fu">:</span><span class="st">&quot;Joe&quot;</span><span class="fu">,</span> <span class="dt">&quot;age&quot;</span><span class="fu">:</span><span class="st">&quot;25&quot;</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span><span class="dt">&quot;name&quot;</span><span class="fu">:</span><span class="st">&quot;Jane&quot;</span><span class="fu">,</span> <span class="dt">&quot;age&quot;</span><span class="fu">:</span><span class="st">&quot;22&quot;</span><span class="fu">}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code></pre></div>
+            <p>We can convert a PHP object into an JSON object by using
+            the <code>json_encode()</code> function:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">$book</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">B</span>ook()<span class="ot">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">$book</span>-&gt;setTitle(<span class="st">&quot;...&quot;</span>)<span class="ot">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">$book</span>-&gt;setYear(<span class="st">&quot;...&quot;</span>)<span class="ot">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="va">$jsonBook</span><span class="op">=</span><span class="fu">json_encode</span>(<span class="va">$book</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>The same function can be used to transform an array into
+            a JSON object:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">$person</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;John&quot;</span><span class="ot">,</span><span class="st">&quot;Age&quot;</span>=&gt;<span class="dv">36</span><span class="ot">,</span><span class="st">&quot;City&quot;</span>=&gt;<span class="st">&quot;Tavernes&quot;</span>)<span class="ot">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">$jsonPerson</span> <span class="op">=</span> <span class="fu">json_encode</span>(<span class="va">$person</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&quot;/jsoncheck&quot;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&quot;jsoncheck&quot;</span>)<span class="at">]</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> jsoncheck()<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$person</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&quot;Name&quot;</span>=&gt;<span class="st">&quot;John&quot;</span><span class="ot">,</span><span class="st">&quot;Age&quot;</span>=&gt;<span class="dv">36</span><span class="ot">,</span><span class="st">&quot;City&quot;</span>=&gt;<span class="st">&quot;Tavernes&quot;</span>)<span class="ot">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$jsonPerson</span> <span class="op">=</span> <span class="fu">json_encode</span>(<span class="va">$person</span>)<span class="ot">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;html&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;body&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;h2&gt;</span><span class="va">$jsonPerson</span><span class="st">&lt;/h2&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;/body&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;/html&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;</span>)<span class="ot">;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>When we go to
+            <code>http://localhost:8080/jsoncheck</code> we get:</p>
+            <figure>
+            <img src="images/json_php.png"
+            alt="Showing a JSON object in PHP" />
+            <figcaption aria-hidden="true">Showing a JSON object in
+            PHP</figcaption>
+            </figure>
+            <p>By using the function <code>json_decode()</code> we can
+            convert a JSON object into a PHP object or into an
+            associative array. The function returns an object by
+            default. If we add a second parameter set to true, then the
+            result will be an associative array.</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">$jsonString</span><span class="op">=</span><span class="st">&#39;{&quot;Name&quot;: &quot;Peter&quot;,&quot;Phone&quot;: &quot;123123&quot;,&quot;City&quot;: &quot;Tavernes&quot;}&#39;</span><span class="ot">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="va">$phpObject</span><span class="op">=</span><span class="fu">json_decode</span>(<span class="va">$jsonString</span>)<span class="ot">;</span> <span class="co">// returns an object</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="va">$array</span><span class="op">=</span><span class="fu">json_decode</span>(<span class="va">$jsonString</span><span class="ot">,</span><span class="kw">true</span>)<span class="ot">;</span> <span class="co">// returns an associative array</span></span></code></pre></div>
+            <h1 data-number="3" id="building-the-api-rest"><span
+            class="header-section-number">3</span> Building the API
+            REST</h1>
+            <p>In this example we will make a REST web service based on
+            the Provider application. It follows the last guided
+            example.</p>
+            <p>In the databases unit we made entity classes and the
+            database access functionalities. These parts will remain the
+            same, the only thing we have to do is to add API REST
+            functionality.</p>
+            <h2 data-number="3.1"
+            id="transforming-objects-to-json"><span
+            class="header-section-number">3.1</span> Transforming
+            objects to JSON</h2>
+            <p>As we need the objects we send and get via the API to be
+            encoded as JSON, we will do this task in the entity
+            class.</p>
+            <p>First, we will encode a login object as an array to pass
+            it later to <code>json_encode</code>. Go to the Provider
+            class and add the next method:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> toArray()<span class="ot">:</span> <span class="dt">array</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dt">array</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;id&#39;</span> =&gt; <span class="va">$this</span>-&gt;getId()<span class="ot">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;name&#39;</span> =&gt; <span class="va">$this</span>-&gt;getName()<span class="ot">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;email&#39;</span> =&gt; <span class="va">$this</span>-&gt;getEmail()<span class="ot">,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;cif&#39;</span> =&gt; <span class="va">$this</span>-&gt;getCif()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    )<span class="ot">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>As you can see, this function transforms a login object
+            in an array.</p>
+            <h2 data-number="3.2" id="making-the-response"><span
+            class="header-section-number">3.2</span> Making the
+            Response</h2>
+            <p>To return a response we will create a
+            <strong><code>Response</code></strong> class with a static
+            method called <code>result</code>:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">R</span>esponse</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> result(<span class="dt">int</span> <span class="va">$code</span><span class="ot">,</span> <span class="dt">array</span> <span class="va">$response</span>)<span class="ot">:</span> <span class="dt">bool</span><span class="op">|</span><span class="dt">string</span> {</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">header</span>(<span class="st">&quot;Content-type:application/json; charset=utf-8&quot;</span>)<span class="ot">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">http_response_code</span>(<span class="va">$code</span>)<span class="ot">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fu">json_encode</span>(<span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>In the <code>header</code> function we are telling that
+            the response will have content of type
+            <code>application/json</code> and <code>utf8</code>
+            codification.</p>
+            <p>In the function <code>http_response_code</code> we pass
+            the HTTP status code (200, 400, etc).</p>
+            <p>Finally, the <code>json_encode</code> returns a JSON
+            object from the <code>$response</code> array or
+            <code>false</code> if <code>$response</code> has errors.</p>
+            <h2 data-number="3.3" id="making-the-services"><span
+            class="header-section-number">3.3</span> Making the
+            services</h2>
+            <p>To serve the API, we create a new script called
+            <code>api.php</code>. In it we import the needed
+            classes:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/models/Provider.php&#39;</span><span class="ot">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/models/ProviderRepository.php&#39;</span><span class="ot">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/models/Response.php&#39;</span><span class="ot">;</span></span></code></pre></div>
+            <p>All the logic will be managed inside a
+            <code>switch</code> statement that gets the request method
+            via the <code>$_SERVER</code> superglobal:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span>(<span class="va">$_SERVER</span>[<span class="st">&#39;REQUEST_METHOD&#39;</span>]) {</span></code></pre></div>
+            <p>The <code>'REQUEST_METHOD'</code> key stores the method
+            used by the client to make the request.</p>
+            <h3 data-number="3.3.1" id="getting-the-logins-get"><span
+            class="header-section-number">3.3.1</span> Getting the
+            logins (GET)</h3>
+            <p>In the <strong>case</strong> of a <code>GET</code>
+            request we have 2 cases: a request of a single login by its
+            <code>id</code>, or a request of all the logins.</p>
+            <p>First we get the query string params with the
+            <code>parse_string</code> function. It parses the query
+            variables into the array passed as the second argument.</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_str</span>(<span class="va">$_SERVER</span>[<span class="st">&#39;QUERY_STRING&#39;</span>]<span class="ot">,</span> <span class="va">$params</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>If the client is requesting a single login, then it will
+            set a parameter with the name ‘id’, so we can know if the
+            request is for a single element. Then, we retrieve the
+            requested login by its id, convert it to an array and create
+            a response array with the data and the result value ‘OK’,
+            that indicates the request has been successful:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$params</span>[<span class="st">&#39;id&#39;</span>])) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Get by id</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$id</span><span class="op">=</span><span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$params</span>[<span class="st">&#39;id&#39;</span>]))<span class="ot">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$provider</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::select(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$provider</span>) {</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;OK&#39;</span><span class="ot">,</span> <span class="st">&#39;data&#39;</span>=&gt;<span class="va">$provider</span>-&gt;toArray())<span class="ot">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span> <span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;Provider not found&#39;</span>)<span class="ot">;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>If we don’t have an <code>id</code> param, the we get all
+            the elements. Here, we are using the <code>toArray</code>
+            method inside a foreach loop in order to transform all the
+            objects in arrays. Another method is to use the
+            <code>PDO::FETCH_ASSOC</code> constant in the
+            <code>ProviderRepository</code> class select methods, but
+            for this example we won’t do it.</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$params</span>[<span class="st">&#39;id&#39;</span>])) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Get by id</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Get all</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$result</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::getAll()<span class="ot">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$resultArray</span> <span class="op">=</span> []<span class="ot">;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span> (<span class="va">$result</span> <span class="kw">as</span> <span class="va">$object</span>){</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$resultArray</span>[] <span class="op">=</span> <span class="va">$object</span>-&gt;toArray()<span class="ot">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;OK&#39;</span><span class="ot">,</span> <span class="st">&#39;data&#39;</span>=&gt;<span class="va">$resultArray</span>)<span class="ot">;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Finally, call the <code>Response::result</code> static
+            method and echo the response.</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">200</span><span class="ot">,</span><span class="va">$response</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>The full code block:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="st">&#39;GET&#39;</span><span class="ot">:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">//parses the query variables into the params array</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parse_str</span>(<span class="va">$_SERVER</span>[<span class="st">&#39;QUERY_STRING&#39;</span>]<span class="ot">,</span> <span class="va">$params</span>)<span class="ot">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$params</span>[<span class="st">&#39;id&#39;</span>])) {</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Get by id</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$id</span><span class="op">=</span><span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$params</span>[<span class="st">&#39;id&#39;</span>]))<span class="ot">;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">$provider</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::select(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$provider</span>) {</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;OK&#39;</span><span class="ot">,</span> <span class="st">&#39;data&#39;</span>=&gt;<span class="va">$provider</span>-&gt;toArray())<span class="ot">;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span> <span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;Provider not found&#39;</span>)<span class="ot">;</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>      <span class="co">//Get all</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>      <span class="va">$result</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::getAll()<span class="ot">;</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>      <span class="va">$resultArray</span> <span class="op">=</span> []<span class="ot">;</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>      <span class="cf">foreach</span> (<span class="va">$result</span> <span class="kw">as</span> <span class="va">$object</span>){</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>          <span class="va">$resultArray</span>[] <span class="op">=</span> <span class="va">$object</span>-&gt;toArray()<span class="ot">;</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>      <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(<span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;OK&#39;</span><span class="ot">,</span> <span class="st">&#39;data&#39;</span>=&gt;<span class="va">$resultArray</span>)<span class="ot">;</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">200</span><span class="ot">,</span><span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">break</span><span class="ot">;</span></span></code></pre></div>
+            <p>We can check the request simply writing the URL in a
+            browser. For the url <code>../api.php</code>:</p>
+            <figure>
+            <img src="images/u08-001.png" width="350"
+            alt="All the logins in Firefox" />
+            <figcaption aria-hidden="true">All the logins in
+            Firefox</figcaption>
+            </figure>
+            <p>And for the url <code>../api.php?id=2</code>:</p>
+            <figure>
+            <img src="images/u08-002.png" width="350"
+            alt="A single login request" />
+            <figcaption aria-hidden="true">A single login
+            request</figcaption>
+            </figure>
+            <p>You can also use Postman to do that. The use of Postman
+            will be explained later.</p>
+            <h3 data-number="3.3.2" id="using-postman"><span
+            class="header-section-number">3.3.2</span> Using
+            Postman</h3>
+            <p>We have seen that testing GET services is simple with a
+            browser. Even testing a POST service could be done via an
+            HTML form, but the modification (PUT) or deletion (DELETE)
+            services require other tools if we want to test them. One of
+            the most useful tools for this purpose is
+            <strong>Postman</strong>.</p>
+            <p><strong>Postman</strong> is a free and cross-platform
+            application that allows you to send all kind of requests to
+            a server, and examine the response that it produces. In this
+            way, we can verify that the services offer the adequate
+            information before being used by a real client
+            application.</p>
+            <p>You can download Postman from its web site, <a
+            href="https://www.postman.com/">postman.com</a>, and click
+            on the icon below “Download the desktop app” of your
+            operating system:</p>
+            <figure>
+            <img src="images/download_postman.png"
+            alt="Download Postman" />
+            <figcaption aria-hidden="true">Download Postman</figcaption>
+            </figure>
+            <p>In Ubuntu you can install from the Snap repository:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> snap install postman</span></code></pre></div>
+            <p>Once installed, as soon as it starts, it will ask us if
+            we want to register, and even associate Postman with a
+            Google account. This has the advantages of being able to
+            store in the account the different tests that we do, and we
+            are able to use them in other computers, but it is not a
+            mandatory step, and we can skip it.</p>
+            <figure>
+            <img src="images/postman_register.png"
+            alt="Postman register" />
+            <figcaption aria-hidden="true">Postman register</figcaption>
+            </figure>
+            <p>After this screen, we will see a dialog to create simple
+            <strong>requests</strong> or <strong>collections</strong> of
+            requests (test suites for an application). Click on
+            <strong><em>Create a collection -&gt; From
+            scratch</em></strong> and write the name for the new
+            collection, <em>“Providers API”</em>.</p>
+            <figure>
+            <img src="images/postman_new_col.png" width="300"
+            alt="Create collection" />
+            <figcaption aria-hidden="true">Create
+            collection</figcaption>
+            </figure>
+            <p>We can see the collection in the left panel of Postman.
+            To make our first request, click on <strong>New</strong>
+            (above the new collection, in the left panel) and select
+            <strong>HTTP Request</strong>:</p>
+            <figure>
+            <img src="images/postman_new_req.png" width="300"
+            alt="Postman new request" />
+            <figcaption aria-hidden="true">Postman new
+            request</figcaption>
+            </figure>
+            <figure>
+            <img src="images/postman_new_req2.png"
+            alt="Postman new request" />
+            <figcaption aria-hidden="true">Postman new
+            request</figcaption>
+            </figure>
+            <p>Now, write the listing URL
+            (<code>localhost/yout_app/api.php</code>) next to the GET
+            selection button and then click on
+            <strong><em>Send</em></strong>. In the bottom panel you
+            should view the Json response:</p>
+            <figure>
+            <img src="images/u08-004.png" alt="Postman GET request" />
+            <figcaption aria-hidden="true">Postman GET
+            request</figcaption>
+            </figure>
+            <p>If everything is ok, click on the
+            <strong><em>Save</em></strong> button so you could reuse the
+            request later.</p>
+            <p>You can test getting one login by its id in the same
+            way.</p>
+            <h3 data-number="3.3.3" id="posting-one-element-post"><span
+            class="header-section-number">3.3.3</span> Posting one
+            element (POST)</h3>
+            <p>To insert a login we use the POST method and the default
+            route without parameters in the query string, because the
+            new data (except the id) will be included in the request
+            body. As the method is different from GET, we can reuse the
+            same route with a different operation.</p>
+            <p>Here, <code>file_get_contents</code> reads the post
+            content into a string and <code>json_decode</code> parses a
+            json string into an array:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="st">&#39;POST&#39;</span><span class="ot">:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$params</span> <span class="op">=</span> <span class="fu">json_decode</span>(<span class="fu">file_get_contents</span>(<span class="st">&quot;php://input&quot;</span>)<span class="ot">,</span><span class="kw">true</span>)<span class="ot">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="op">!</span><span class="kw">isset</span>(<span class="va">$params</span>)) {</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span><span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;Empty data&#39;</span>)<span class="ot">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">400</span><span class="ot">,</span><span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>rovider()<span class="ot">;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span>-&gt;setName(<span class="va">$params</span>[<span class="st">&#39;name&#39;</span>])<span class="ot">;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span>-&gt;setEmail(<span class="va">$params</span>[<span class="st">&#39;email&#39;</span>])<span class="ot">;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span>-&gt;setCif(<span class="va">$params</span>[<span class="st">&#39;cif&#39;</span>])<span class="ot">;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">$id</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::insert(<span class="va">$provider</span>)<span class="ot">;</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span>-&gt;setId(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;OK&#39;</span><span class="ot">,</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;data&#39;</span>=&gt;<span class="va">$provider</span>-&gt;toArray()<span class="ot">,</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        )<span class="ot">;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">201</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span><span class="ot">;</span></span></code></pre></div>
+            <p>In the data element we are showing the new login
+            added.</p>
+            <p>To make a POST request with Postman, change the method to
+            POST and write in the <strong>Body</strong> section, in
+            <strong>raw</strong> format, the data that you want to
+            insert:</p>
+            <figure>
+            <img src="images/u08-003.png"
+            alt="POST request with Postman" />
+            <figcaption aria-hidden="true">POST request with
+            Postman</figcaption>
+            </figure>
+            <h3 data-number="3.3.4" id="modifying-an-element-put"><span
+            class="header-section-number">3.3.4</span> Modifying an
+            element (PUT)</h3>
+            <p>This method is similar to the previous one, but fetching
+            first the login by its <code>id</code> and modifying it
+            later with the request data. We are using the same url but
+            changing the method and adding the <code>id</code> of the
+            login. We are also checking if the provided <code>id</code>
+            exists.</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="st">&#39;PUT&#39;</span><span class="ot">:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">parse_str</span>(<span class="va">$_SERVER</span>[<span class="st">&#39;QUERY_STRING&#39;</span>]<span class="ot">,</span> <span class="va">$query</span>)<span class="ot">;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$params</span> <span class="op">=</span> <span class="fu">json_decode</span>(<span class="fu">file_get_contents</span>(<span class="st">&quot;php://input&quot;</span>)<span class="ot">,</span><span class="kw">true</span>)<span class="ot">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="op">!</span><span class="kw">isset</span>(<span class="va">$params</span>) <span class="op">||</span> <span class="kw">empty</span>(<span class="va">$query</span>[<span class="st">&#39;id&#39;</span>])) {</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span><span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;Empty data&#39;</span>)<span class="ot">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">400</span><span class="ot">,</span><span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>rovider()<span class="ot">;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span>-&gt;setId(<span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$query</span>[<span class="st">&#39;id&#39;</span>])))<span class="ot">;</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span>-&gt;setName(<span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$params</span>[<span class="st">&#39;name&#39;</span>] <span class="op">??</span> <span class="st">&#39;&#39;</span>)))<span class="ot">;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span>-&gt;setEmail(<span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$params</span>[<span class="st">&#39;email&#39;</span>] <span class="op">??</span> <span class="st">&#39;&#39;</span>)))<span class="ot">;</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span>-&gt;setCif(<span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$params</span>[<span class="st">&#39;cif&#39;</span>] <span class="op">??</span> <span class="st">&#39;&#39;</span>)))<span class="ot">;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="cn">P</span>roviderRepository::update(<span class="va">$provider</span>)){</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;OK&#39;</span><span class="ot">,</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;data&#39;</span>=&gt;<span class="va">$provider</span>-&gt;toArray()<span class="ot">,</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>            )<span class="ot">;</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">201</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>            <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;Provider not found&#39;</span><span class="ot">,</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>            )<span class="ot">;</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">400</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span><span class="ot">;</span></span></code></pre></div>
+            <p>The PUT request with Postman can be done changing to the
+            PUT method and writing the data with the desired
+            changes:</p>
+            <figure>
+            <img src="images/u08-005.png"
+            alt="PUT request with Postman" />
+            <figcaption aria-hidden="true">PUT request with
+            Postman</figcaption>
+            </figure>
+            <p>It’s a good practice to test with wrong data, like an non
+            existing <code>id</code>:</p>
+            <figure>
+            <img src="images/u08-006.png"
+            alt="PUT request with wrong id" />
+            <figcaption aria-hidden="true">PUT request with wrong
+            id</figcaption>
+            </figure>
+            <h3 data-number="3.3.5"
+            id="removing-an-element-delete"><span
+            class="header-section-number">3.3.5</span> Removing an
+            element (DELETE)</h3>
+            <p>The same as before, but using the DELETE method. Here we
+            check if the <code>id</code> exists and the login is
+            deleted.</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="st">&#39;DELETE&#39;</span><span class="ot">:</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">parse_str</span>(<span class="va">$_SERVER</span>[<span class="st">&#39;QUERY_STRING&#39;</span>]<span class="ot">,</span> <span class="va">$query</span>)<span class="ot">;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="op">!</span><span class="kw">isset</span>(<span class="va">$query</span>[<span class="st">&#39;id&#39;</span>])) {</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span><span class="op">=</span><span class="dt">array</span>(<span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span><span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;Empty data&#39;</span>)<span class="ot">;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">400</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$id</span> <span class="op">=</span> <span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$query</span>[<span class="st">&#39;id&#39;</span>]))<span class="ot">;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provider</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::select(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$provider</span>) <span class="op">&amp;&amp;</span> <span class="cn">P</span>roviderRepository::delete(<span class="va">$provider</span>)){</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>            <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;OK&#39;</span><span class="ot">,</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;data&#39;</span>=&gt;<span class="va">$provider</span>-&gt;toArray()<span class="ot">,</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>            )<span class="ot">;</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">200</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>            <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;No providers deleted&#39;</span><span class="ot">,</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>            )<span class="ot">;</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">200</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span><span class="ot">;</span></span></code></pre></div>
+            <p>To do the DELETE request with Postman, we only need to
+            specify the DELETE method and to pass the id with the
+            URL:</p>
+            <figure>
+            <img src="images/u08-007.png"
+            alt="DELETE request and result with Postman" />
+            <figcaption aria-hidden="true">DELETE request and result
+            with Postman</figcaption>
+            </figure>
+            <p>Remember to save your requests in Postman in order to
+            reuse them later.</p>
+            <h1 data-number="4" id="validation"><span
+            class="header-section-number">4</span> Validation</h1>
+            <p>To do the validation we simply need to use the
+            <code>validate()</code> method of the <code>Provider</code>
+            class.</p>
+            <p>The code for the PUT method in the <code>api.php</code>
+            script:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">//PUT</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="va">$provider</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>rovider()<span class="ot">;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="va">$provider</span>-&gt;setId(<span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$query</span>[<span class="st">&#39;id&#39;</span>])))<span class="ot">;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="va">$provider</span>-&gt;setName(<span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$params</span>[<span class="st">&#39;name&#39;</span>] <span class="op">??</span> <span class="st">&#39;&#39;</span>)))<span class="ot">;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="va">$provider</span>-&gt;setEmail(<span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$params</span>[<span class="st">&#39;email&#39;</span>] <span class="op">??</span> <span class="st">&#39;&#39;</span>)))<span class="ot">;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="va">$provider</span>-&gt;setCif(<span class="fu">trim</span>(<span class="fu">strip_tags</span>(<span class="va">$params</span>[<span class="st">&#39;cif&#39;</span>] <span class="op">??</span> <span class="st">&#39;&#39;</span>)))<span class="ot">;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">//Validation</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="va">$errors</span> <span class="op">=</span> <span class="va">$provider</span>-&gt;validate()<span class="ot">;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">empty</span>(<span class="va">$errors</span>)){</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="cn">P</span>roviderRepository::update(<span class="va">$provider</span>)){</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;OK&#39;</span><span class="ot">,</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;data&#39;</span>=&gt;<span class="va">$provider</span>-&gt;toArray()<span class="ot">,</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>        )<span class="ot">;</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">201</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;Provider not found&#39;</span><span class="ot">,</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        )<span class="ot">;</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">400</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Validation errors</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;Validation erros&#39;</span><span class="ot">,</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;errors&#39;</span>=&gt;<span class="va">$errors</span><span class="ot">,</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    )<span class="ot">;</span></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">400</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Note that we are adding the errors array to the
+            response.</p>
+            <p>Then, check some invalid PUT requests:</p>
+            <figure>
+            <img src="images/u08-008.png" width="300"
+            alt="PUT request with empty fields" />
+            <figcaption aria-hidden="true">PUT request with empty
+            fields</figcaption>
+            </figure>
+            <figure>
+            <img src="images/u08-009.png" width="300"
+            alt="PUT request with invalid data" />
+            <figcaption aria-hidden="true">PUT request with invalid
+            data</figcaption>
+            </figure>
+            <p>The POST method code:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">//POST</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="va">$provider</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>rovider()<span class="ot">;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="va">$provider</span>-&gt;setName(<span class="va">$params</span>[<span class="st">&#39;name&#39;</span>])<span class="ot">;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="va">$provider</span>-&gt;setEmail(<span class="va">$params</span>[<span class="st">&#39;email&#39;</span>])<span class="ot">;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="va">$provider</span>-&gt;setCif(<span class="va">$params</span>[<span class="st">&#39;cif&#39;</span>])<span class="ot">;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="va">$errors</span> <span class="op">=</span> <span class="va">$provider</span>-&gt;validate()<span class="ot">;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">empty</span>(<span class="va">$errors</span>)){</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Validation successful</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">$id</span> <span class="op">=</span> <span class="cn">P</span>roviderRepository::insert(<span class="va">$provider</span>)<span class="ot">;</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$provider</span>-&gt;setId(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;OK&#39;</span><span class="ot">,</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;data&#39;</span>=&gt;<span class="va">$provider</span>-&gt;toArray()<span class="ot">,</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    )<span class="ot">;</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">201</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Validation errors</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="va">$response</span> <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;result&#39;</span>=&gt;<span class="st">&#39;Error&#39;</span><span class="ot">,</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;data&#39;</span>=&gt;<span class="st">&#39;Validation erros&#39;</span><span class="ot">,</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;errors&#39;</span>=&gt;<span class="va">$errors</span><span class="ot">,</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    )<span class="ot">;</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="cn">R</span>esponse::result(<span class="dv">400</span><span class="ot">,</span> <span class="va">$response</span>)<span class="ot">;</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>You can get the full code at <a
+            href="https://github.com/ricardoprofe/providers_sample_DWES_24_25_u8">GitHub
+            repository</a></p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
