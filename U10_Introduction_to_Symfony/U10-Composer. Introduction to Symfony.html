@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 10. Composer. PHP Frameworks. Symfony.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 10. Composer. PHP Frameworks.
+Symfony.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#composer" id="toc-composer"><span
+class="toc-section-number">1</span> Composer</a>
+<ul>
+<li><a href="#installing-composer-on-linux"
+id="toc-installing-composer-on-linux"><span
+class="toc-section-number">1.1</span> Installing Composer on
+Linux</a></li>
+<li><a href="#installing-composer-on-windows"
+id="toc-installing-composer-on-windows"><span
+class="toc-section-number">1.2</span> Installing Composer on
+Windows</a></li>
+<li><a href="#packagist" id="toc-packagist"><span
+class="toc-section-number">1.3</span> Packagist</a></li>
+<li><a href="#composer-first-steps" id="toc-composer-first-steps"><span
+class="toc-section-number">1.4</span> Composer first steps</a>
+<ul>
+<li><a href="#require" id="toc-require"><span
+class="toc-section-number">1.4.1</span> require</a></li>
+<li><a href="#install" id="toc-install"><span
+class="toc-section-number">1.4.2</span> install</a></li>
+<li><a href="#update" id="toc-update"><span
+class="toc-section-number">1.4.3</span> update</a></li>
+<li><a href="#another-composer-useful-commands"
+id="toc-another-composer-useful-commands"><span
+class="toc-section-number">1.4.4</span> Another composer useful
+commands</a></li>
+</ul></li>
+<li><a href="#composer-and-version-control"
+id="toc-composer-and-version-control"><span
+class="toc-section-number">1.5</span> Composer and version
+control</a></li>
+<li><a href="#autoloading" id="toc-autoloading"><span
+class="toc-section-number">1.6</span> Autoloading</a></li>
+<li><a href="#creating-projects" id="toc-creating-projects"><span
+class="toc-section-number">1.7</span> Creating projects</a></li>
+</ul></li>
+<li><a href="#php-frameworks" id="toc-php-frameworks"><span
+class="toc-section-number">2</span> PHP Frameworks</a>
+<ul>
+<li><a href="#benefits-of-using-a-php-framework"
+id="toc-benefits-of-using-a-php-framework"><span
+class="toc-section-number">2.1</span> Benefits of using a PHP
+Framework</a></li>
+<li><a href="#frameworks-and-micro-frameworks"
+id="toc-frameworks-and-micro-frameworks"><span
+class="toc-section-number">2.2</span> Frameworks and
+micro-frameworks</a></li>
+<li><a href="#some-php-frameworks" id="toc-some-php-frameworks"><span
+class="toc-section-number">2.3</span> Some PHP frameworks</a></li>
+</ul></li>
+<li><a href="#symfony" id="toc-symfony"><span
+class="toc-section-number">3</span> Symfony</a>
+<ul>
+<li><a href="#installing-symfony" id="toc-installing-symfony"><span
+class="toc-section-number">3.1</span> Installing Symfony</a>
+<ul>
+<li><a href="#work-environment" id="toc-work-environment"><span
+class="toc-section-number">3.1.1</span> Work environment</a></li>
+<li><a href="#windows-installation" id="toc-windows-installation"><span
+class="toc-section-number">3.1.2</span> Windows installation</a></li>
+<li><a href="#linux-installation" id="toc-linux-installation"><span
+class="toc-section-number">3.1.3</span> Linux installation</a></li>
+</ul></li>
+<li><a href="#our-first-symfony-project"
+id="toc-our-first-symfony-project"><span
+class="toc-section-number">3.2</span> Our first Symfony project</a></li>
+<li><a href="#env-file" id="toc-env-file"><span
+class="toc-section-number">3.3</span> .env file</a></li>
+<li><a href="#customizing-our-first-web-application"
+id="toc-customizing-our-first-web-application"><span
+class="toc-section-number">3.4</span> Customizing our first web
+application</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="composer"><span
+            class="header-section-number">1</span> Composer</h1>
+            <p>Composer is a dependency manager for PHP that allows you
+            to install different modules or libraries in a project. It
+            contains an online database, <a
+            href="https://packagist.com/">Packagist.com</a>, with many
+            centralized available libraries, with which we can indicate
+            which one(s) we want for each specific project, and Composer
+            downloads and installs them for us. It is something very
+            similar to other managers such as NPM (Node Package
+            Manager), for Node or Javascript in general.</p>
+            <p>Composer can be installed locally for each web project,
+            or globally for the entire system. This last option is
+            recommended if we want to manage several projects on our
+            computer, so as not to have to install it on all of
+            them.</p>
+            <h2 data-number="1.1"
+            id="installing-composer-on-linux"><span
+            class="header-section-number">1.1</span> Installing Composer
+            on Linux</h2>
+            <p>To install Composer on Ubuntu, first of all install the
+            required dependencies:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install php-cli unzip</span></code></pre></div>
+            <p>Next, install Composer with these commands:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-r</span> <span class="st">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-r</span> <span class="st">&quot;if (hash_file(&#39;sha384&#39;, &#39;composer-setup.php&#39;) === &#39;dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> composer-setup.php</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-r</span> <span class="st">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span></span></code></pre></div>
+            <p>This installer script will simply check some
+            <code>php.ini</code> settings, warn you if they are set
+            incorrectly, and then download the latest
+            <code>composer.phar</code> in the current directory. The 4
+            lines above will, in order:</p>
+            <ul>
+            <li>Download the installer to the current directory</li>
+            <li>Verify the installer SHA-384, which you can also
+            cross-check here</li>
+            <li>Run the installer</li>
+            <li>Remove the installer</li>
+            </ul>
+            <p>Next, move the <code>composer.phar</code> file into a
+            directory on your PATH, so you can call composer from any
+            directory:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv composer.phar /usr/local/bin/composer</span></code></pre></div>
+            <p>You can check your installation with:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> <span class="at">-V</span></span></code></pre></div>
+            <p>The complete installation guide:</p>
+            <ul>
+            <li>https://getcomposer.org/download/</li>
+            </ul>
+            <h2 data-number="1.2"
+            id="installing-composer-on-windows"><span
+            class="header-section-number">1.2</span> Installing Composer
+            on Windows</h2>
+            <p>Using the Installer is the easiest way to get Composer
+            set up on your machine.</p>
+            <p>Download and run <a
+            href="https://getcomposer.org/doc/00-intro.md#installation-windows">Composer-Setup.exe</a>.
+            It will install the latest Composer version and set up your
+            PATH so that you can call composer from any directory in
+            your command line.</p>
+            <h2 data-number="1.3" id="packagist"><span
+            class="header-section-number">1.3</span> Packagist</h2>
+            <p><strong>Packagist</strong> is Composer’s default package
+            repository, from which Composer pulls libraries and their
+            dependencies when you ask it to install a specific library.
+            There are hundreds of libraries available on Packagist. If
+            you need a feature in your PHP projects that you think
+            should already be available as a 3rd party library,
+            Packagist is the first place to look.</p>
+            <p>You can search directly in the Packagist web page, <a
+            href="https://packagist.org/">packagist.org</a>, or search
+            in the command line. For instance:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> search monolog</span></code></pre></div>
+            <p>returns the result in the format
+            <strong><code>vendor/package</code></strong>:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">monolog/monolog</span>                       Sends your logs to files, sockets...</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony/monolog-bundle</span>                Symfony MonologBundle</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony/monolog-bridge</span>                Provides integration for Monolog ...</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony/debug-bundle</span>                  Provides a tight integration of the Symfony VarDumper component...</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">maxbanton/cwh</span>                         AWS CloudWatch Handler for Monolog library</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
+            <h2 data-number="1.4" id="composer-first-steps"><span
+            class="header-section-number">1.4</span> Composer first
+            steps</h2>
+            <p>The common procedure is to create a directory for your
+            project. The next composer commands must be written inside
+            the main folder of your project.</p>
+            <h3 data-number="1.4.1" id="require"><span
+            class="header-section-number">1.4.1</span> require</h3>
+            <p>The composer <strong><code>require</code></strong>
+            command is a shortcut for the process of creating the
+            dependency files for your project. <code>require</code> will
+            create a <strong><code>composer.json</code></strong> file
+            (if it does not exist) and add the required package to it
+            automatically. It also creates and/or updates the
+            <strong><code>composer.lock</code></strong> file, which is
+            used to write the package’s information with the exact
+            versions. And finally, it installs the required package and
+            dependencies in the <strong><code>vendor</code></strong>
+            directory.</p>
+            <p>The following command shows how to install the monolog
+            package (a library used to create logs) with
+            <code>require</code>. Write that inside your project
+            directory:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require monolog/monolog</span></code></pre></div>
+            <p>The content of the composer.json file is:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;require&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;monolog/monolog&quot;</span><span class="fu">:</span> <span class="st">&quot;^3.7&quot;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+            <h3 data-number="1.4.2" id="install"><span
+            class="header-section-number">1.4.2</span> install</h3>
+            <p>This command installs the project dependencies from the
+            <code>composer.lock</code> file if present, or falls back on
+            the <code>composer.json</code>.</p>
+            <p>To use install, you first need to create the
+            <code>composer.json</code> file in your project.
+            Alternatively to the initialization with
+            <code>require</code>, you can write your own
+            <code>composer.json</code> file and then run the
+            <code>composer install</code> command to download the
+            package and all its dependencies:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> install</span></code></pre></div>
+            <p>For instance, try to delete your <code>vendor</code> dir
+            and then run <code>composer install</code>. You’ll see how
+            the <code>vendor</code> directory will be created again.</p>
+            <h3 data-number="1.4.3" id="update"><span
+            class="header-section-number">1.4.3</span> update</h3>
+            <p>The <code>composer.lock</code> file prevents you from
+            automatically getting the latest versions of your
+            dependencies. It helps to maintain the integrity of the
+            project so forces all the members of the developers team to
+            have the same versions.</p>
+            <p>To update to the latest versions, use the
+            <code>update</code> command. This will fetch the latest
+            matching versions (according to your composer.json file) and
+            update the lock file with the new versions.</p>
+            <p>The command:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> update</span></code></pre></div>
+            <p>updates all the packages.</p>
+            <p>If you want to update only a package, write:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> update vendor/package</span></code></pre></div>
+            <h3 data-number="1.4.4"
+            id="another-composer-useful-commands"><span
+            class="header-section-number">1.4.4</span> Another composer
+            useful commands</h3>
+            <ul>
+            <li><strong>composer list</strong>: List the Composer
+            commands.</li>
+            <li><strong>composer self-update</strong>: Updates Composer
+            to the latest version.</li>
+            <li><strong>composer show</strong>: Shows information about
+            packages (<code>composer show</code> inside a project or
+            <code>composer show vendor/package</code>)</li>
+            <li><strong>composer status</strong>: Shows a list of
+            locally modified packages.</li>
+            <li><strong>composer remove</strong>: Removes a package from
+            the project.</li>
+            </ul>
+            <h2 data-number="1.5"
+            id="composer-and-version-control"><span
+            class="header-section-number">1.5</span> Composer and
+            version control</h2>
+            <p>If you use a version control, like <strong>Git</strong>,
+            you need to add your <code>composer.json</code> and
+            <code>composer.lock</code> files to the repo, but you don’t
+            have to add the <code>vendor</code> folder, because it
+            stores a large amount of data that can be recreated again
+            with <code>composer install</code>.</p>
+            <p>Committing <code>composer.lock</code> to version control
+            is important because it will cause anyone who sets up the
+            project to use the exact same versions of the dependencies
+            that you are using. That mitigates the potential for bugs
+            affecting only some parts of the deployments. Even if you
+            develop alone, in six months when reinstalling the project
+            you can feel confident the dependencies installed are still
+            working even if your dependencies released many new versions
+            since then.</p>
+            <p>The <code>.gitignore</code> file of your project should
+            have the next line:</p>
+            <pre><code>vendor/</code></pre>
+            <p>To clone a PHP project with composer, first clone the
+            project and then, enter to the project’s folder and run
+            composer install:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone project-repo-url</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> project-dir</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> install</span></code></pre></div>
+            <h2 data-number="1.6" id="autoloading"><span
+            class="header-section-number">1.6</span> Autoloading</h2>
+            <p>For libraries that specify
+            <strong><code>autoload</code></strong> information, Composer
+            generates a vendor/<code>autoload.php</code> file. You can
+            include this file and start using the classes that those
+            libraries provide without any extra work:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">require</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/../vendor/autoload.php&#39;</span><span class="ot">;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="va">$log</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">M</span>onolog\<span class="cn">L</span>ogger(<span class="st">&#39;name&#39;</span>)<span class="ot">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="va">$log</span>-&gt;pushHandler( <span class="kw">new</span> <span class="cn">M</span>onolog\<span class="cn">H</span>andler\<span class="cn">S</span>treamHandler(<span class="st">&#39;app.log&#39;</span><span class="ot">,</span> <span class="cn">M</span>onolog\<span class="cn">L</span>ogger::<span class="cn">WARNING</span>))<span class="ot">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="va">$log</span>-&gt;warning(<span class="st">&#39;warning message&#39;</span>)<span class="ot">;</span></span></code></pre></div>
+            <h2 data-number="1.7" id="creating-projects"><span
+            class="header-section-number">1.7</span> Creating
+            projects</h2>
+            <p>You can use Composer to create new projects from an
+            existing package. This is the equivalent of doing a
+            <code>git clone</code> followed by a
+            <code>composer install</code> of the vendors.</p>
+            <p>To create a new project using Composer you can use the
+            create-project command. Pass it a package name, and the
+            directory to create the project in. You can also provide a
+            version as a third argument, otherwise the latest version is
+            used.</p>
+            <p>If the directory does not currently exist, it will be
+            created during installation.</p>
+            <p>Some examples:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a Doctrine project, with the 2.2 version</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project doctrine/orm my-doctrine-project <span class="st">&quot;2.2.*&quot;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a Laravel project</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project laravel/laravel my-laravel-project</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a full Symfony project</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/website-skeleton my-symfony-project</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a Symfony micro-service project</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/skeleton my-symfony-microservice</span></code></pre></div>
+            <p><strong>Composer documentation:</strong> <a
+            href="https://getcomposer.org/doc/">https://getcomposer.org/doc/</a></p>
+            <h1 data-number="2" id="php-frameworks"><span
+            class="header-section-number">2</span> PHP Frameworks</h1>
+            <p>At the moment we can write a PHP application from
+            scratch, creating our own classes, views, validators and
+            functions to access the database. Therefore, we have tools
+            to help us in the process: the
+            <strong><em>frameworks</em></strong>. What is a
+            framework?</p>
+            <blockquote>
+            <p>A <strong>framework</strong> is a tool that provides the
+            basic structure and the main components to develop an
+            application.</p>
+            </blockquote>
+            <p>PHP frameworks provide tools, commands, built-in
+            functions, libraries and other reusable components to make
+            the web development easier. Most PHP frameworks help us to
+            create projects with the <strong>MVC</strong>
+            (<em>Model-View-Controller</em>) software design pattern.
+            Because of its modular structure, the resulting project is
+            very easy to maintain.</p>
+            <h2 data-number="2.1"
+            id="benefits-of-using-a-php-framework"><span
+            class="header-section-number">2.1</span> Benefits of using a
+            PHP Framework</h2>
+            <p>A PHP framework speeds up the development and helps us
+            increase productivity. These are some of the benefits of
+            using a PHP framework:</p>
+            <ul>
+            <li>Using a framework saves development time</li>
+            <li>Makes easier to cooperate with other developers</li>
+            <li>Helps to keep the code more organized</li>
+            <li>Most PHP frameworks provide a lot of extensive and clear
+            documentation</li>
+            <li>Frameworks usually provide safe code in order to
+            minimize risks like cross-site scripting or SQL
+            injection</li>
+            </ul>
+            <h2 data-number="2.2"
+            id="frameworks-and-micro-frameworks"><span
+            class="header-section-number">2.2</span> Frameworks and
+            micro-frameworks</h2>
+            <p>A full-stack PHP framework helps developers with the
+            entire developing process, from the user interface to the
+            access to the database. However, we can use micro-frameworks
+            to develop small applications with low complexity and a
+            specific use.</p>
+            <h2 data-number="2.3" id="some-php-frameworks"><span
+            class="header-section-number">2.3</span> Some PHP
+            frameworks</h2>
+            <p>Below you can see a list of some PHP frameworks. All of
+            them are open-source:</p>
+            <ul>
+            <li>Laravel</li>
+            <li>CodeIgniter</li>
+            <li>Symfony</li>
+            <li>Laminas (continuation of Zend)</li>
+            <li>Phalcon</li>
+            <li>CakePHP</li>
+            <li>FuelPHP</li>
+            </ul>
+            <p>Some PHP microframeworks:</p>
+            <ul>
+            <li>Slim</li>
+            <li>Fat-free Framework (F3)</li>
+            </ul>
+            <p>In this course we will use <strong>Symfony</strong>.</p>
+            <h1 data-number="3" id="symfony"><span
+            class="header-section-number">3</span> Symfony</h1>
+            <p>Symfony has a lot of features that make it a very
+            attractive option. Some of them are:</p>
+            <ul>
+            <li>modular component system</li>
+            <li>a <a href="https://symfony.com/community">large
+            developers community</a></li>
+            <li>very oriented to MVC design pattern</li>
+            <li>a fast template engine (<em>Twig</em>)</li>
+            <li>a built-in debugging tool</li>
+            <li>interaction with third-party libraries
+            (<em>bundles</em>)</li>
+            <li>SymfonyCloud support (optional)</li>
+            <li>many helpful learning resources and extensive
+            documentation</li>
+            </ul>
+            <p>As of today, the last Symfony version is the 7.1, but the
+            next version, 7.2, is planned to be released in november
+            2025.</p>
+            <blockquote>
+            <p>For this course we will use the <strong>Symfony version
+            7.1</strong>, which requires at least <strong>PHP
+            8.2</strong>.</p>
+            </blockquote>
+            <p><a
+            href="https://symfony.com/doc/current/index.html">Symfony
+            official page</a></p>
+            <p><a href="https://symfony.com/book">Official Symfony book
+            (downloadable by paying)</a></p>
+            <h2 data-number="3.1" id="installing-symfony"><span
+            class="header-section-number">3.1</span> Installing
+            Symfony</h2>
+            <h3 data-number="3.1.1" id="work-environment"><span
+            class="header-section-number">3.1.1</span> Work
+            environment</h3>
+            <p>Symfony runs on any popular OS (macOS, Windows,
+            Linux).</p>
+            <p>In <strong>Windows</strong>, as work environment, we can
+            keep using XAMPP. Our DBMS will be MariaDB/MySQL, and our
+            web server will be Apache. For Symfony 6.1 to 6.4, we will
+            need to check that our PHP version is 8.1 or higher. And for
+            Symfony 7.1 we need PHP 8.2 or higher.</p>
+            <p>In Linux we will continue with the existent
+            configuration: <strong>PHP 8.2</strong> (recommended
+            version), <strong>Apache</strong> and <strong>MySQL</strong>
+            or <strong>MariaDB</strong>.</p>
+            <p>Let’s assume you’ve already installed
+            <strong>Composer</strong>.</p>
+            <h3 data-number="3.1.2" id="windows-installation"><span
+            class="header-section-number">3.1.2</span> Windows
+            installation</h3>
+            <p>Let’s assume we have <strong>Xampp</strong> installed. We
+            will work with Apache later. Check that our Xampp version
+            includes the PHP version that we need.</p>
+            <p>We can get Symfony CLI from <a
+            href="https://symfony.com/download">the official
+            web:</a></p>
+            <p>We need Scoop (a command-line installer for Windows) (<a
+            href="https://scoop.sh/">install Scoop</a>). In a PowerShell
+            terminal, run:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">Set-ExecutionPolicy</span> <span class="op">-</span>ExecutionPolicy RemoteSigned <span class="op">-</span>Scope CurrentUser</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">Invoke-RestMethod</span> <span class="op">-</span>Uri https<span class="op">://</span>get<span class="op">.</span><span class="fu">scoop</span><span class="op">.</span><span class="fu">sh</span> <span class="op">|</span> <span class="fu">Invoke-Expression</span></span></code></pre></div>
+            <p>And then, in a terminal:</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode cmd"><code class="sourceCode dosbat"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>scoop install symfony<span class="at">-cli</span></span></code></pre></div>
+            <h3 data-number="3.1.3" id="linux-installation"><span
+            class="header-section-number">3.1.3</span> Linux
+            installation</h3>
+            <p>We can also install Symfony CLI in Linux from our command
+            line by doing:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://get.symfony.com/cli/installer <span class="at">-O</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div>
+            <p>or</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> https://get.symfony.com/cli/installer <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div>
+            <p>Once installed, we need to move Symfony under our
+            <em><code>$PATH</code></em> in order to have it available
+            from our project folders. As you can see in the figure, we
+            can’t execute Symfony from everywhere yet.</p>
+            <figure>
+            <img src="images/screen01.jpg" alt="Symfony installed" />
+            <figcaption aria-hidden="true">Symfony
+            installed</figcaption>
+            </figure>
+            <p>So, we move the executable file to a folder included in
+            our <em>$PATH</em>, for instance
+            <strong>/usr/local/bin</strong></p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv .symfony5/bin/symfony /usr/local/bin/symfony</span></code></pre></div>
+            <p>Let’s try if it works:</p>
+            <figure>
+            <img src="images/screen02.jpg"
+            alt="Symfony CLI is working" />
+            <figcaption aria-hidden="true">Symfony CLI is
+            working</figcaption>
+            </figure>
+            <p>Once you have installed the <em>symfony-cli</em> tool,
+            run the next command to check if you have the required
+            extensions:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> check:requirements</span></code></pre></div>
+            <p>Then, install the missing dependencies, if needed.</p>
+            <p>Alternatively, you can run the <strong>php
+            client</strong> (<em><code>php-cli</code></em>) command
+            <code>php -m</code> to check the PHP extensions currently
+            enabled. If an important extension is missing, we can
+            install it with <code>apt</code>. The PHP extensions that we
+            need are: <em>intl</em>, <em>pdo_pgsql</em>, <em>xsl</em>,
+            <em>amqp</em>, <em>gd</em>, <em>openssl</em>,
+            <em>sodium</em>, <em>redis</em> and <em>curl</em>.</p>
+            <p>Complete installation instructions:</p>
+            <ul>
+            <li><a
+            href="https://symfony.com/doc/current/setup.html">Installing
+            &amp; Setting up the Symfony Framework</a></li>
+            <li><a href="https://symfony.com/download">Download
+            Symfony</a></li>
+            </ul>
+            <h2 data-number="3.2" id="our-first-symfony-project"><span
+            class="header-section-number">3.2</span> Our first Symfony
+            project</h2>
+            <p>To create a Symfony project, move to a selected folder
+            which will contain all our projects, and then open the
+            console terminal and run one of these commands:</p>
+            <p>To create a complete web application</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> new project_name <span class="at">--webapp</span></span></code></pre></div>
+            <p>To build a microservice, API or console app:</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> new project_name</span></code></pre></div>
+            <p>With Composer, to create a full app:</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/website-skeleton project_name</span></code></pre></div>
+            <p>or</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/skeleton my_project_name</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> my_project_name</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require webapp</span></code></pre></div>
+            <p>or, to build a micro-service:</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/skeleton project_name</span></code></pre></div>
+            <p>Let’s create a new web project called
+            <strong>prova</strong> in our home folder:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> new prova <span class="at">--webapp</span></span></code></pre></div>
+            <p>It will take from seconds to minutes to create the full
+            project structure. When the process is completed, we can go
+            the the <strong>prova</strong> folder and list the contents
+            to see the whole project structure:</p>
+            <figure>
+            <img src="images/screen04.jpg"
+            alt="Our project structure" />
+            <figcaption aria-hidden="true">Our project
+            structure</figcaption>
+            </figure>
+            <p>Let’s take a look to the more important sections of our
+            project:</p>
+            <ul>
+            <li><strong>bin</strong>: this folder contains the main CLI
+            entry point, the <code>console</code> command, among other
+            useful instructions</li>
+            <li><strong>config</strong>: contains some configuration
+            files</li>
+            <li><strong>public</strong>: is the web root directory which
+            will contain our <strong>index.php</strong> file and other
+            static contents (mostly client content like CSS or
+            javascript files)</li>
+            <li><strong>src</strong>: our php code</li>
+            <li><strong>templates</strong>: our views
+            (<strong><em>Twig</em></strong> templates)</li>
+            <li><strong>tests</strong>: our tests</li>
+            <li><strong>translations</strong>: for translation
+            services</li>
+            <li><strong>var</strong>: this folder contains caches, logs
+            and files generated at runtime (this directory needs to be
+            writable in production)</li>
+            <li><strong>vendor</strong>: this folder contains all
+            packages and libraries installed by
+            <strong><em>Composer</em></strong></li>
+            </ul>
+            <p>By now, we can work with a Symfony local server to check
+            our web applications. To run the server we write this
+            command (the <em>-d</em> option is for running the server in
+            the background) from the folder where the project has been
+            created (in this case, <strong>prova</strong>):</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> server:start <span class="at">-d</span></span></code></pre></div>
+            <p>Now let’s go to our browser and write the URL
+            <em>localhost:8000</em></p>
+            <figure>
+            <img src="images/screen05.jpg" alt="Welcome page" />
+            <figcaption aria-hidden="true">Welcome page</figcaption>
+            </figure>
+            <p>It works!</p>
+            <h2 data-number="3.3" id="env-file"><span
+            class="header-section-number">3.3</span> .env file</h2>
+            <p>Symfony applications come with a file called
+            <strong>.env</strong> located at the project root directory.
+            This file is used to define the value of environment
+            variables. To apply a particular configuration to our
+            development environment and override environment values, we
+            should make a copy of the file, name it
+            <strong>.env.local</strong>, and then assign or override the
+            values for our local machine.</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .env.local</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_URL</span><span class="op">=</span><span class="st">&quot;mysql://user:@127.0.0.1:3306/my_database_name&quot;</span></span></code></pre></div>
+            <p>A Symfony application can run in three environments: dev
+            (for local development), prod (for production servers) and
+            test (for automated tests). In the <strong>.env</strong>
+            file, a variable named APP_ENV define the environment we are
+            working on.</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .env (or .env.local)</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="va">APP_ENV</span><span class="op">=</span>dev</span></code></pre></div>
+            <p>Again, we can create an <strong>.env</strong> file for
+            any environment and override general variables. This file
+            should be named
+            <strong><code>.env.environment</code></strong> where
+            <strong>environment</strong> must be <strong>dev</strong>,
+            <strong>prod</strong> or <strong>test</strong>.</p>
+            <h2 data-number="3.4"
+            id="customizing-our-first-web-application"><span
+            class="header-section-number">3.4</span> Customizing our
+            first web application</h2>
+            <p>Let’s open our <strong>prova</strong> folder with Visual
+            Studio Code. Take a look to the left section that shows our
+            project structure:</p>
+            <figure>
+            <img src="images/screen06.jpg"
+            alt="Our project in Visual Studio Code" />
+            <figcaption aria-hidden="true">Our project in Visual Studio
+            Code</figcaption>
+            </figure>
+            <p>In the <strong><em>public</em></strong> section we only
+            have one file: <em>index.php</em>. This is the main entry to
+            our web application. You can see some other folders too,
+            like <strong><em>src/Controller</em></strong>,
+            <strong><em>src/Entity</em></strong> and
+            <strong><em>templates</em></strong>. We will come back to
+            these sections in the next chapters of the unit. The main
+            thing at the moment is to see the content of the
+            <em>index.php</em> file. It might be something like
+            this:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">K</span>ernel<span class="ot">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="fu">dirname</span>(<span class="cn">__DIR__</span>)<span class="op">.</span><span class="st">&#39;/vendor/autoload_runtime.php&#39;</span><span class="ot">;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="kw">function</span> (<span class="dt">array</span> <span class="va">$context</span>) {</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> <span class="cn">K</span>ernel(<span class="va">$context</span>[<span class="st">&#39;APP_ENV&#39;</span>]<span class="ot">,</span> <span class="dt">(bool)</span> <span class="va">$context</span>[<span class="st">&#39;APP_DEBUG&#39;</span>])<span class="ot">;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span></code></pre></div>
+            <p>We don’t need to understand what this file is doing. The
+            only thing we need to know by now is that <em>index.php</em>
+            is, at this moment, the main entry of our application. We
+            can change the content of the file to show some kind of
+            welcome message.</p>
+            <p>For instance, let’s copy an <em>in construction</em>
+            image to a new folder
+            <strong><em>public/images</em></strong></p>
+            <figure>
+            <img src="images/screen07.jpg"
+            alt="Image in public/images folder" />
+            <figcaption aria-hidden="true">Image in public/images
+            folder</figcaption>
+            </figure>
+            <p>and now let’s change the <em>index.php</em> this way:</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">K</span>ernel<span class="ot">;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="fu">dirname</span>(<span class="cn">__DIR__</span>)<span class="op">.</span><span class="st">&#39;/vendor/autoload_runtime.php&#39;</span><span class="ot">;</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="kw">function</span> (<span class="dt">array</span> <span class="va">$context</span>) {</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;div style=&#39;text-align:center;&#39;&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h3&gt;Welcome to my web&lt;/h3&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;img src=&#39;images/under-construction.gif&#39;/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;/div&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">//return new Kernel($context[&#39;APP_ENV&#39;], (bool) $context[&#39;APP_DEBUG&#39;]);</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span></code></pre></div>
+            <p>Let’s refresh the page in our browser and see what
+            happens:</p>
+            <figure>
+            <img src="images/screen08.jpg"
+            alt="Our index.php customized page" />
+            <figcaption aria-hidden="true">Our index.php customized
+            page</figcaption>
+            </figure>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
