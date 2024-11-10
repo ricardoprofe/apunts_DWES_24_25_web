@@ -34,15 +34,7 @@
         }
         @media print {
         pre > code.sourceCode { white-space: pre-wrap; }
-<<<<<<< HEAD
-<<<<<<< HEAD
-        pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-=======
         pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
->>>>>>> refs/remotes/origin/main
-=======
-        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
->>>>>>> refs/remotes/origin/main
         }
         pre.numberSource code
           { counter-reset: source-line 0; }
@@ -126,17 +118,6 @@ class="toc-section-number">2.2</span> Login repository</a></li>
 class="toc-section-number">2.3</span> Register</a></li>
 <li><a href="#login" id="toc-login"><span
 class="toc-section-number">2.4</span> Login</a></li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<li><a href="#tracking-user-and-logging-out"
-id="toc-tracking-user-and-logging-out"><span
-class="toc-section-number">2.5</span> Tracking user and logging
-out</a></li>
-<li><a href="#permissions" id="toc-permissions"><span
-class="toc-section-number">2.6</span> Permissions</a></li>
-=======
-=======
->>>>>>> refs/remotes/origin/main
 <li><a href="#view-registered-users"
 id="toc-view-registered-users"><span
 class="toc-section-number">2.5</span> View registered users</a></li>
@@ -146,10 +127,6 @@ class="toc-section-number">2.6</span> Tracking user and logging
 out</a></li>
 <li><a href="#permissions" id="toc-permissions"><span
 class="toc-section-number">2.7</span> Permissions</a></li>
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
 </ul></li>
 </ul>
             </div>
@@ -171,28 +148,12 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             examples to show how to do all the stuff. We will use the
             next scripts:</p>
             <ul>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <li><code>provider_form.php</code>: the existent script,
-            used to manage providers.</li>
-=======
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
             <li><code>register_form.php</code>: a new script to
             auto-register users.</li>
             <li><code>login_form.php</code>: a new script to log in the
             users.</li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
             <li><code>login_list.php</code>: a new script to view the
             registered users.</li>
->>>>>>> refs/remotes/origin/main
-=======
-            <li><code>login_list.php</code>: a new script to view the
-            registered users.</li>
->>>>>>> refs/remotes/origin/main
             </ul>
             <h1 data-number="2" id="managing-users"><span
             class="header-section-number">2</span> Managing users</h1>
@@ -215,15 +176,7 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Login</span>
-=======
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">L</span>ogin</span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">L</span>ogin</span>
->>>>>>> refs/remotes/origin/main
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> <span class="va">$id</span><span class="ot">;</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">string</span> <span class="va">$email</span><span class="ot">;</span></span>
@@ -267,28 +220,12 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/DBConnection.php&#39;</span><span class="ot">;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/IDbAccess.php&#39;</span><span class="ot">;</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LoginRepository <span class="kw">implements</span> IDbAccess</span>
-=======
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">L</span>oginRepository <span class="kw">implements</span> <span class="cn">I</span>DbAccess</span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">L</span>oginRepository <span class="kw">implements</span> <span class="cn">I</span>DbAccess</span>
->>>>>>> refs/remotes/origin/main
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> getAll()<span class="ot">:</span> <span class="ot">?</span><span class="dt">array</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    {</span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> DBConnection::connectDB()<span class="ot">;</span></span>
-=======
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT * FROM login&quot;</span>)<span class="ot">;</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span>-&gt;setFetchMode(<span class="bu">PDO</span>::<span class="cn">FETCH_CLASS</span><span class="op">|</span><span class="bu">PDO</span>::<span class="cn">FETCH_PROPS_LATE</span><span class="ot">,</span> <span class="st">&#39;Login&#39;</span>)<span class="ot">;</span></span>
@@ -299,21 +236,9 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        }</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> select(<span class="va">$id</span>) <span class="ot">:</span> <span class="ot">?</span>Login</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> DBConnection::connectDB()<span class="ot">;</span></span>
-=======
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> select(<span class="va">$id</span>) <span class="ot">:</span> <span class="ot">?</span><span class="cn">L</span>ogin</span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> select(<span class="va">$id</span>) <span class="ot">:</span> <span class="ot">?</span><span class="cn">L</span>ogin</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT * FROM login WHERE id = :id&quot;</span>)<span class="ot">;</span></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span>-&gt;setFetchMode(<span class="bu">PDO</span>::<span class="cn">FETCH_CLASS</span><span class="op">|</span><span class="bu">PDO</span>::<span class="cn">FETCH_PROPS_LATE</span><span class="ot">,</span> <span class="st">&#39;Login&#39;</span>)<span class="ot">;</span></span>
@@ -329,15 +254,7 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> insert(<span class="va">$object</span>) <span class="ot">:</span> <span class="kw">false</span> <span class="op">|</span> <span class="dt">string</span></span>
 <span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    {</span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> DBConnection::connectDB()<span class="ot">;</span></span>
-=======
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;INSERT INTO login (id, email, password) VALUES (:id, :email, :password)&quot;</span>)<span class="ot">;</span></span>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span>-&gt;execute([</span>
@@ -352,15 +269,7 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> delete(<span class="va">$object</span>) <span class="ot">:</span> <span class="dt">int</span></span>
 <span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    {</span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> DBConnection::connectDB()<span class="ot">;</span></span>
-=======
 <span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
 <span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
 <span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;DELETE FROM login WHERE id = :id&quot;</span>)<span class="ot">;</span></span>
 <span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;id&#39;</span> =&gt; <span class="va">$object</span>-&gt;getId()])<span class="ot">;</span></span>
@@ -371,15 +280,7 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> update(<span class="va">$object</span>) <span class="ot">:</span> <span class="dt">int</span></span>
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    {</span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> DBConnection::connectDB()<span class="ot">;</span></span>
-=======
 <span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
 <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
 <span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;UPDATE login SET email = :email, password = :password WHERE id = :id&quot;</span>)<span class="ot">;</span></span>
 <span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>            <span class="va">$stmt</span>-&gt;execute([</span>
@@ -431,28 +332,12 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             <figcaption aria-hidden="true">Existent email</figcaption>
             </figure>
             <p>To do this check, we add the needed code to the form
-<<<<<<< HEAD
-<<<<<<< HEAD
-            after the basic validation:</p>
-=======
             script after the basic validation:</p>
->>>>>>> refs/remotes/origin/main
-=======
-            script after the basic validation:</p>
->>>>>>> refs/remotes/origin/main
             <div class="sourceCode" id="cb5"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>...</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="va">$errors</span> <span class="op">=</span> <span class="va">$login</span>-&gt;validate()<span class="ot">;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">empty</span>(<span class="va">$errors</span>) <span class="op">&amp;&amp;</span> LoginRepository::searchByEmail(<span class="va">$login</span>) <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
-=======
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">empty</span>(<span class="va">$errors</span>) <span class="op">&amp;&amp;</span> <span class="cn">L</span>oginRepository::searchByEmail(<span class="va">$login</span>) <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">empty</span>(<span class="va">$errors</span>) <span class="op">&amp;&amp;</span> <span class="cn">L</span>oginRepository::searchByEmail(<span class="va">$login</span>) <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
->>>>>>> refs/remotes/origin/main
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$errors</span>[<span class="st">&#39;email&#39;</span>] <span class="op">=</span> <span class="st">&quot;* Email already exists&quot;</span><span class="ot">;</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
@@ -461,15 +346,7 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             email, the <code>searchByEmail</code> method:</p>
             <div class="sourceCode" id="cb6"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> searchByEmail(<span class="va">$object</span>)<span class="ot">:</span> <span class="dt">int</span> {</span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> DBConnection::connectDB()<span class="ot">;</span></span>
-=======
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT email FROM login WHERE email=:email&quot;</span>)<span class="ot">;</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;email&#39;</span>=&gt;<span class="va">$object</span>-&gt;getEmail()])<span class="ot">;</span></span>
@@ -486,21 +363,9 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">//New login</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span> {</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="va">$login</span>-&gt;setPassword(<span class="fu">password_hash</span>(<span class="va">$login</span>-&gt;getPassword()<span class="ot">,</span> <span class="cn">PASSWORD_DEFAULT</span>))<span class="ot">;</span></span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            LoginRepository::insert(<span class="va">$login</span>)<span class="ot">;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="va">$opMsg</span> <span class="op">=</span> <span class="st">&quot;Register successful&quot;</span><span class="ot">;</span><span class="co">//If no errors, make a new empty login to clear the fields</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="va">$login</span> <span class="op">=</span> <span class="kw">new</span> Login()<span class="ot">;</span></span>
-=======
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="cn">L</span>oginRepository::insert(<span class="va">$login</span>)<span class="ot">;</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="va">$opMsg</span> <span class="op">=</span> <span class="st">&quot;Register successful&quot;</span><span class="ot">;</span><span class="co">//If no errors, make a new empty login to clear the fields</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="va">$login</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">L</span>ogin()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
-=======
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="cn">L</span>oginRepository::insert(<span class="va">$login</span>)<span class="ot">;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="va">$opMsg</span> <span class="op">=</span> <span class="st">&quot;Register successful&quot;</span><span class="ot">;</span><span class="co">//If no errors, make a new empty login to clear the fields</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="va">$login</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">L</span>ogin()<span class="ot">;</span></span>
->>>>>>> refs/remotes/origin/main
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">catch</span> (<span class="bu">Exception</span> <span class="va">$e</span>) {</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="st">&quot;Error registering user: &quot;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        }</span>
@@ -508,20 +373,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>If you query the database, you can see the new login
             hashed:</p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <pre><code>select * from login;
-+----+----------------+--------------------------------------------------------------+
-| id | email          | password                                                     |
-+----+----------------+--------------------------------------------------------------+
-|  1 | admin@mail.com | $2y$10$ET9Sj8II1XDQpIYBN4RQ9.lQ9IsdYhrTMcUpOwkXcCaMVEudduDoq |
-+----+----------------+--------------------------------------------------------------+</code></pre>
-            <h2 data-number="2.4" id="login"><span
-            class="header-section-number">2.4</span> Login</h2>
-            <p>Once a user is registered, it need a login form to be
-=======
-=======
->>>>>>> refs/remotes/origin/main
             <figure>
             <img src="images/u09-07.png" alt="New login stored" />
             <figcaption aria-hidden="true">New login stored</figcaption>
@@ -529,10 +380,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             <h2 data-number="2.4" id="login"><span
             class="header-section-number">2.4</span> Login</h2>
             <p>Once a user is registered, it needs a login form to be
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
             authenticated. We will create the
             <code>login_form.php</code> script to do that:</p>
             <figure>
@@ -546,28 +393,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             method in <code>LoginRepository</code> to check if the
             stored credentials are valid, using the
             <code>password_verify</code> method seen on Unit 6:</p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <div class="sourceCode" id="cb9"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> checkCredential(<span class="va">$clearPassword</span><span class="ot">,</span> <span class="va">$object</span>)<span class="ot">:</span> <span class="dt">bool</span><span class="op">|</span><span class="dt">int</span> {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> DBConnection::connectDB()<span class="ot">;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$conn</span>)) {</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span> <span class="op">=</span> <span class="va">$conn</span>-&gt;prepare(<span class="st">&quot;SELECT * FROM logins WHERE email=:email&quot;</span>)<span class="ot">;</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;setFetchMode(<span class="bu">PDO</span>::<span class="cn">FETCH_CLASS</span> <span class="op">|</span> <span class="bu">PDO</span>::<span class="cn">FETCH_PROPS_LATE</span><span class="ot">,</span> <span class="st">&#39;Login&#39;</span>)<span class="ot">;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$stmt</span>-&gt;execute([<span class="st">&#39;email&#39;</span>=&gt;<span class="va">$object</span>-&gt;getEmail()])<span class="ot">;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$login</span> <span class="op">=</span> <span class="va">$stmt</span>-&gt;fetch()<span class="ot">;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="va">$login</span> <span class="op">&amp;&amp;</span> <span class="fu">password_verify</span>(<span class="va">$clearPassword</span><span class="ot">,</span> <span class="va">$login</span>-&gt;getPassword())){</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="co">//Returns the id login if successful</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">$login</span>-&gt;getId()<span class="ot">;</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="kw">false</span><span class="ot">;</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">false</span><span class="ot">;</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-=======
-=======
->>>>>>> refs/remotes/origin/main
             <div class="sourceCode" id="cb8"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> checkCredential(<span class="va">$clearPassword</span><span class="ot">,</span> <span class="va">$object</span>)<span class="ot">:</span> <span class="dt">bool</span><span class="op">|</span><span class="dt">int</span> {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conn</span> <span class="op">=</span> <span class="cn">D</span>BConnection::connectDB()<span class="ot">;</span></span>
@@ -585,10 +410,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">false</span><span class="ot">;</span></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
             <p>Then, in <code>login_form.php</code>, use the new method
             to check if the credentials match those stored in the DB. If
             they are, store the user’s id in a session variable in order
@@ -596,32 +417,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             (remember to call <code>session_start()</code> at the
             beginning of the script) and redirect to the
             <code>provider_list.php</code> script:</p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <div class="sourceCode" id="cb10"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">empty</span>(<span class="va">$errors</span>)) {</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_POST</span>[<span class="st">&#39;submit&#39;</span>]) ){</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span> {</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>            <span class="va">$idLogin</span> <span class="op">=</span> LoginRepository::checkCredential(<span class="va">$clearPassword</span><span class="ot">,</span> <span class="va">$login</span>)<span class="ot">;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(<span class="va">$idLogin</span>){</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                <span class="va">$opMsg</span> <span class="op">=</span> <span class="st">&quot;Login successful&quot;</span><span class="ot">;</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                <span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>] <span class="op">=</span> <span class="va">$idLogin</span><span class="ot">;</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">header</span>(<span class="st">&#39;Location: provider_list.php&#39;</span>)<span class="ot">;</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            } <span class="cf">else</span> {</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                <span class="va">$opMsg</span> <span class="op">=</span> <span class="st">&quot;Login failed&quot;</span><span class="ot">;</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>            <span class="va">$login</span> <span class="op">=</span> <span class="kw">new</span> Login()<span class="ot">;</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">catch</span> (<span class="bu">Exception</span> <span class="va">$e</span>) {</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="st">&quot;Error checking login: &quot;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-            <h2 data-number="2.5"
-            id="tracking-user-and-logging-out"><span
-            class="header-section-number">2.5</span> Tracking user and
-=======
-=======
->>>>>>> refs/remotes/origin/main
             <div class="sourceCode" id="cb9"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">empty</span>(<span class="va">$errors</span>)) {</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_POST</span>[<span class="st">&#39;submit&#39;</span>]) ){</span>
@@ -685,31 +480,11 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             <h2 data-number="2.6"
             id="tracking-user-and-logging-out"><span
             class="header-section-number">2.6</span> Tracking user and
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
             logging out</h2>
             <p>Once the user is authenticated, we can check if it is
             logged in on each script using the session variable
             <code>'user_id'</code>. Make a new partial, named
             <code>nav_bar.part.php</code> to be included at the top of
-<<<<<<< HEAD
-<<<<<<< HEAD
-            each page with that shows the user’s email:</p>
-            <div class="sourceCode" id="cb11"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/../models/Login.php&#39;</span><span class="ot">;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/../models/LoginDao.php&#39;</span><span class="ot">;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="va">$welcomeMessage</span> <span class="op">=</span> <span class="st">&#39;&#39;</span><span class="ot">;</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])) {</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$user</span> <span class="op">=</span> LoginDao::select(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])<span class="ot">;</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$user</span>)) {</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$userEmail</span> <span class="op">=</span> LoginDao::select(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])-&gt;getEmail() <span class="op">??</span> <span class="st">&#39;&#39;</span><span class="ot">;</span></span>
-=======
-=======
->>>>>>> refs/remotes/origin/main
             each page that shows the user’s email:</p>
             <div class="sourceCode" id="cb11"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
@@ -721,10 +496,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$user</span> <span class="op">=</span> <span class="cn">L</span>oginRepository::select(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])<span class="ot">;</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">is_null</span>(<span class="va">$user</span>)) {</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$userEmail</span> <span class="op">=</span> <span class="cn">L</span>oginRepository::select(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])-&gt;getEmail() <span class="op">??</span> <span class="st">&#39;&#39;</span><span class="ot">;</span></span>
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">$welcomeMessage</span> <span class="op">=</span> <span class="st">&quot;Welcome </span><span class="va">$userEmail</span><span class="st">&quot;</span><span class="ot">;</span></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -733,19 +504,9 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>nav<span class="op">&gt;</span></span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>span<span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$welcomeMessage</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>nav<span class="op">&gt;</span></span></code></pre></div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <p>Then, include it in <code>login_form.php</code> and in
-=======
             <p>Then, include it in all the pages:
             <code>provider_list.php</code>,
             <code>provider_form.php</code>, and in
->>>>>>> refs/remotes/origin/main
-=======
-            <p>Then, include it in all the pages:
-            <code>provider_list.php</code>,
-            <code>provider_form.php</code>, and in
->>>>>>> refs/remotes/origin/main
             <code>login_list.php</code> (remember to call
             <code>session_start()</code> at the beginning of the
             script):</p>
@@ -753,54 +514,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// login_form.php</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>body<span class="op">&gt;</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php <span class="kw">include</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/partials/nav_bar.part.php&#39;</span><span class="ot">;</span> <span class="kw">?&gt;</span></span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h1<span class="op">&gt;</span>Edit login<span class="op">&lt;/</span>h1<span class="op">&gt;</span></span></code></pre></div>
-            <p>In <code>login_form.php</code>, we can get the login data
-            using the <code>id</code> and, then, pass it to the
-            form:</p>
-            <div class="sourceCode" id="cb13"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Read id from login_list</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$_SERVER</span>[<span class="st">&#39;REQUEST_METHOD&#39;</span>] <span class="op">==</span> <span class="st">&quot;GET&quot;</span>) {</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="kw">empty</span>(<span class="va">$_REQUEST</span>[<span class="st">&quot;id&quot;</span>])) {</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$login</span> <span class="op">=</span> LoginDao::select(<span class="va">$_REQUEST</span>[<span class="st">&#39;id&#39;</span>])<span class="ot">;</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">//Read id from session</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])){</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="va">$login</span> <span class="op">=</span> LoginDao::select(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])<span class="ot">;</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-            <p>The next step is to implement a method to logging out the
-            user. In <code>nav_bar.part.php</code> add a link only if
-            the user is authenticated:</p>
-            <div class="sourceCode" id="cb14"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> nav_bar<span class="op">.</span>part<span class="op">.</span>php <span class="op">-</span>-&gt;</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>nav<span class="op">&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>span<span class="op">&gt;</span> <span class="op">&lt;</span><span class="ot">?</span><span class="op">=</span> <span class="va">$welcomeMessage</span> <span class="kw">?&gt;</span> <span class="op">&lt;/</span>span<span class="op">&gt;</span> <span class="op">|</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>span<span class="op">&gt;</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span><span class="ot">?</span>php</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])) {</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>            <span class="kw">echo</span> <span class="st">&quot;&lt;a href=&#39;logout.php&#39;&gt;Logout&lt;/a&gt;&quot;</span><span class="ot">;</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">?&gt;</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>nav<span class="op">&gt;</span></span></code></pre></div>
-            <p>The target, <code>logout.php</code>, simply deletes the
-            session variable and redirect to the login access form:</p>
-            <div class="sourceCode" id="cb15"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">session_start</span>()<span class="ot">;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])) {</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">unset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])<span class="ot">;</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">header</span>(<span class="st">&#39;Location: login_access_form.php&#39;</span>)<span class="ot">;</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-            <h2 data-number="2.6" id="permissions"><span
-            class="header-section-number">2.6</span> Permissions</h2>
-=======
-=======
->>>>>>> refs/remotes/origin/main
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>h1<span class="op">&gt;</span><span class="cn">E</span>dit login<span class="op">&lt;/</span>h1<span class="op">&gt;</span></span></code></pre></div>
             <p>The next step is to implement a method to logging out the
             user. In <code>nav_bar.part.php</code> add a link only if
@@ -825,10 +538,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <h2 data-number="2.7" id="permissions"><span
             class="header-section-number">2.7</span> Permissions</h2>
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
             <p>To establish an authorization system, we need each user
             to having a role. Each role will determine which pages and
             actions can the user do.</p>
@@ -837,44 +546,18 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             <ul>
             <li>Unauthenticated users: can only visit the login and
             register pages.</li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <li>Users with the role <strong>‘user’</strong>: can edit
-            their own user data in the <code>login_form.php</code>
-            script, but cannot access to the <code>logins_list</code>
-            page.</li>
-            <li>Users with the role <strong>‘admin’</strong>: can acces
-            to the <code>login_list.php</code> page and edit all the
-            users data in <code>login_form.php</code>.</li>
-=======
-=======
->>>>>>> refs/remotes/origin/main
             <li>Users with the role <strong>‘user’</strong>: can view
             all the providers in <code>provider_list.php</code>, but
             cannot access to the rest of the pages.</li>
             <li>Users with the role <strong>‘admin’</strong>: can acces
             to all the page and edit the providers data in
             <code>provider_form.php</code>.</li>
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
             </ul>
             <p>Before coding, we need another field in our logins table
             to store the role. You can create it with phpMyAdmin or
             executing this SQL statement:</p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <div class="sourceCode" id="cb16"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cn">ALTER</span> <span class="cn">TABLE</span> <span class="st">`logins`</span> <span class="cn">ADD</span> <span class="st">`role`</span> <span class="cn">VARCHAR</span>(<span class="dv">20</span>) <span class="kw">NULL</span> <span class="cf">DEFAULT</span> <span class="st">&#39;user&#39;</span><span class="ot">;</span> </span></code></pre></div>
-=======
             <div class="sourceCode" id="cb15"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cn">ALTER</span> <span class="cn">TABLE</span> <span class="st">`login`</span> <span class="cn">ADD</span> <span class="st">`role`</span> <span class="cn">VARCHAR</span>(<span class="dv">20</span>) <span class="kw">NULL</span> <span class="cf">DEFAULT</span> <span class="st">&#39;user&#39;</span><span class="ot">;</span> </span></code></pre></div>
->>>>>>> refs/remotes/origin/main
-=======
-            <div class="sourceCode" id="cb15"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cn">ALTER</span> <span class="cn">TABLE</span> <span class="st">`login`</span> <span class="cn">ADD</span> <span class="st">`role`</span> <span class="cn">VARCHAR</span>(<span class="dv">20</span>) <span class="kw">NULL</span> <span class="cf">DEFAULT</span> <span class="st">&#39;user&#39;</span><span class="ot">;</span> </span></code></pre></div>
->>>>>>> refs/remotes/origin/main
             <p>The default role will be ‘user’. We are allowing null
             data, so the existing users will be equivalent to users with
             the role ‘user’.</p>
@@ -893,35 +576,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             <p>In addition, we need a new property in our
             <code>Login</code> class with the name <code>'role'</code>
             and their setter and getter:</p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <div class="sourceCode" id="cb17"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">string</span> <span class="va">$role</span><span class="ot">;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getRole()<span class="ot">:</span> <span class="dt">string</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;role<span class="ot">;</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> setRole(<span class="dt">string</span> <span class="va">$role</span>)<span class="ot">:</span> <span class="dt">void</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">$this</span>-&gt;role <span class="op">=</span> <span class="va">$role</span><span class="ot">;</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-            <p>Also, add the necessary code to the
-            <code>LoginRepository</code> class to store and retrieve the
-            new field.</p>
-            <p>In <code>logins_list.php</code>, simply add a check in
-            the beginning of the script. If the user is authenticated
-            but doesn’t has the admin role, redirect it to
-            <code>login_form.php</code>. If the user is not
-            authenticated, redirect to
-            <code>login_access_form.php</code>:</p>
-            <div class="sourceCode" id="cb18"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])) {</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$user</span> <span class="op">=</span> LoginDao::select(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])<span class="ot">;</span></span>
-=======
-=======
->>>>>>> refs/remotes/origin/main
             <div class="sourceCode" id="cb16"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">string</span> <span class="va">$role</span><span class="ot">;</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -952,10 +606,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             <div class="sourceCode" id="cb18"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])) {</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$user</span> <span class="op">=</span> <span class="cn">L</span>oginDao::select(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])<span class="ot">;</span></span>
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$userRole</span> <span class="op">=</span> <span class="va">$user</span>-&gt;getRole()<span class="ot">;</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$userRole</span> <span class="op">!=</span> <span class="st">&#39;admin&#39;</span>){</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">//Has the role user</span></span>
@@ -965,8 +615,6 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">//No authenticated user</span></span>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">header</span>(<span class="st">&#39;Location: login_access_form.php&#39;</span>)<span class="ot">;</span></span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<<<<<<< HEAD
-<<<<<<< HEAD
             <p>Go to the <code>login_form.php</code>. In this form the
             admin users can view and change all the users data, but the
             normal users only can view and change their own data. To do
@@ -975,7 +623,7 @@ class="toc-section-number">2.7</span> Permissions</a></li>
             in the browser):</p>
             <div class="sourceCode" id="cb19"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])) {</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$user</span> <span class="op">=</span> LoginRepository::select(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])<span class="ot">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$user</span> <span class="op">=</span> <span class="cn">L</span>oginRepository::select(<span class="va">$_SESSION</span>[<span class="st">&#39;user_id&#39;</span>])<span class="ot">;</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$userRole</span> <span class="op">=</span> <span class="va">$user</span>-&gt;getRole()<span class="ot">;</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$userRole</span> <span class="op">!=</span> <span class="st">&#39;admin&#39;</span> <span class="op">&amp;&amp;</span> <span class="va">$login</span>-&gt;getId() <span class="op">!=</span> <span class="va">$user</span>-&gt;getId()){</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">//Has the role user and the same id</span></span>
@@ -987,24 +635,10 @@ class="toc-section-number">2.7</span> Permissions</a></li>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>There are a lot of things to improve, like adding the
             possibility to change the user’s role or a mechanism to
-            change the user’s password correctly. You can do it as
-            exercise.</p>
-            <p>Get the full app code in the <a
-            href="https://github.com/ricardoprofe/login-security">GitHub
-=======
-=======
->>>>>>> refs/remotes/origin/main
-            <p>Do the same in <code>provider_form.php</code>.</p>
-            <p>There are a lot of things to improve, like adding the
-            possibility to change the user’s role or a mechanism to
             change the user’s password correctly, even protect the api.
             You can do it as exercise.</p>
             <p>Get the full app code in the <a
             href="https://github.com/ricardoprofe/providers_sample_DWES_24_25_u9">GitHub
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
             repo</a>.</p>
         </main>
         
