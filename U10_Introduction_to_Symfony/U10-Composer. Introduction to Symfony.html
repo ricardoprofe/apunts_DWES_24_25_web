@@ -34,7 +34,7 @@
         }
         @media print {
         pre > code.sourceCode { white-space: pre-wrap; }
-        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
         }
         pre.numberSource code
           { counter-reset: source-line 0; }
@@ -395,8 +395,8 @@ application</a></li>
             <div class="sourceCode" id="cb14"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">require</span> <span class="cn">__DIR__</span> <span class="op">.</span> <span class="st">&#39;/../vendor/autoload.php&#39;</span><span class="ot">;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="va">$log</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">M</span>onolog\<span class="cn">L</span>ogger(<span class="st">&#39;name&#39;</span>)<span class="ot">;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="va">$log</span>-&gt;pushHandler( <span class="kw">new</span> <span class="cn">M</span>onolog\<span class="cn">H</span>andler\<span class="cn">S</span>treamHandler(<span class="st">&#39;app.log&#39;</span><span class="ot">,</span> <span class="cn">M</span>onolog\<span class="cn">L</span>ogger::<span class="cn">WARNING</span>))<span class="ot">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="va">$log</span> <span class="op">=</span> <span class="kw">new</span> Monolog\Logger(<span class="st">&#39;name&#39;</span>)<span class="ot">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="va">$log</span>-&gt;pushHandler( <span class="kw">new</span> Monolog\Handler\StreamHandler(<span class="st">&#39;app.log&#39;</span><span class="ot">,</span> Monolog\Logger::<span class="cn">WARNING</span>))<span class="ot">;</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="va">$log</span>-&gt;warning(<span class="st">&#39;warning message&#39;</span>)<span class="ot">;</span></span></code></pre></div>
             <h2 data-number="1.7" id="creating-projects"><span
             class="header-section-number">1.7</span> Creating
@@ -421,11 +421,8 @@ application</a></li>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a Laravel project</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project laravel/laravel my-laravel-project</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a full Symfony project</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/website-skeleton my-symfony-project</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a Symfony micro-service project</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/skeleton my-symfony-microservice</span></code></pre></div>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a Symfony micro-service project</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/skeleton my-symfony-microservice</span></code></pre></div>
             <p><strong>Composer documentation:</strong> <a
             href="https://getcomposer.org/doc/">https://getcomposer.org/doc/</a></p>
             <h1 data-number="2" id="php-frameworks"><span
@@ -628,19 +625,16 @@ application</a></li>
             class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> new project_name</span></code></pre></div>
             <p>With Composer, to create a full app:</p>
             <div class="sourceCode" id="cb24"><pre
-            class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/website-skeleton project_name</span></code></pre></div>
-            <p>or</p>
-            <div class="sourceCode" id="cb25"><pre
-            class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/skeleton my_project_name</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> my_project_name</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require webapp</span></code></pre></div>
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/skeleton my_project_name</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> my_project_name</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require webapp</span></code></pre></div>
             <p>or, to build a micro-service:</p>
-            <div class="sourceCode" id="cb26"><pre
-            class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/skeleton project_name</span></code></pre></div>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> create-project symfony/skeleton project_name</span></code></pre></div>
             <p>Let’s create a new web project called
             <strong>prova</strong> in our home folder:</p>
-            <div class="sourceCode" id="cb27"><pre
-            class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> new prova <span class="at">--webapp</span></span></code></pre></div>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> new prova <span class="at">--webapp</span></span></code></pre></div>
             <p>It will take from seconds to minutes to create the full
             project structure. When the process is completed, we can go
             the the <strong>prova</strong> folder and list the contents
@@ -681,8 +675,8 @@ application</a></li>
             command (the <em>-d</em> option is for running the server in
             the background) from the folder where the project has been
             created (in this case, <strong>prova</strong>):</p>
-            <div class="sourceCode" id="cb28"><pre
-            class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> server:start <span class="at">-d</span></span></code></pre></div>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> server:start <span class="at">-d</span></span></code></pre></div>
             <p>Now let’s go to our browser and write the URL
             <em>localhost:8000</em></p>
             <figure>
@@ -700,17 +694,17 @@ application</a></li>
             should make a copy of the file, name it
             <strong>.env.local</strong>, and then assign or override the
             values for our local machine.</p>
-            <div class="sourceCode" id="cb29"><pre
-            class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .env.local</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_URL</span><span class="op">=</span><span class="st">&quot;mysql://user:@127.0.0.1:3306/my_database_name&quot;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .env.local</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_URL</span><span class="op">=</span><span class="st">&quot;mysql://user:@127.0.0.1:3306/my_database_name&quot;</span></span></code></pre></div>
             <p>A Symfony application can run in three environments: dev
             (for local development), prod (for production servers) and
             test (for automated tests). In the <strong>.env</strong>
             file, a variable named APP_ENV define the environment we are
             working on.</p>
-            <div class="sourceCode" id="cb30"><pre
-            class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .env (or .env.local)</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="va">APP_ENV</span><span class="op">=</span>dev</span></code></pre></div>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .env (or .env.local)</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="va">APP_ENV</span><span class="op">=</span>dev</span></code></pre></div>
             <p>Again, we can create an <strong>.env</strong> file for
             any environment and override general variables. This file
             should be named
@@ -740,16 +734,16 @@ application</a></li>
             thing at the moment is to see the content of the
             <em>index.php</em> file. It might be something like
             this:</p>
-            <div class="sourceCode" id="cb31"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">K</span>ernel<span class="ot">;</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="fu">dirname</span>(<span class="cn">__DIR__</span>)<span class="op">.</span><span class="st">&#39;/vendor/autoload_runtime.php&#39;</span><span class="ot">;</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="kw">function</span> (<span class="dt">array</span> <span class="va">$context</span>) {</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> <span class="cn">K</span>ernel(<span class="va">$context</span>[<span class="st">&#39;APP_ENV&#39;</span>]<span class="ot">,</span> <span class="dt">(bool)</span> <span class="va">$context</span>[<span class="st">&#39;APP_DEBUG&#39;</span>])<span class="ot">;</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> App\Kernel<span class="ot">;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="fu">dirname</span>(<span class="cn">__DIR__</span>)<span class="op">.</span><span class="st">&#39;/vendor/autoload_runtime.php&#39;</span><span class="ot">;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="kw">function</span> (<span class="dt">array</span> <span class="va">$context</span>) {</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> Kernel(<span class="va">$context</span>[<span class="st">&#39;APP_ENV&#39;</span>]<span class="ot">,</span> <span class="dt">(bool)</span> <span class="va">$context</span>[<span class="st">&#39;APP_DEBUG&#39;</span>])<span class="ot">;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span></code></pre></div>
             <p>We don’t need to understand what this file is doing. The
             only thing we need to know by now is that <em>index.php</em>
             is, at this moment, the main entry of our application. We
@@ -765,20 +759,20 @@ application</a></li>
             folder</figcaption>
             </figure>
             <p>and now let’s change the <em>index.php</em> this way:</p>
-            <div class="sourceCode" id="cb32"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">K</span>ernel<span class="ot">;</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="fu">dirname</span>(<span class="cn">__DIR__</span>)<span class="op">.</span><span class="st">&#39;/vendor/autoload_runtime.php&#39;</span><span class="ot">;</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="kw">function</span> (<span class="dt">array</span> <span class="va">$context</span>) {</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;div style=&#39;text-align:center;&#39;&gt;&quot;</span><span class="ot">;</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h3&gt;Welcome to my web&lt;/h3&gt;&quot;</span><span class="ot">;</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;img src=&#39;images/under-construction.gif&#39;/&gt;&quot;</span><span class="ot">;</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;/div&gt;&quot;</span><span class="ot">;</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">//return new Kernel($context[&#39;APP_ENV&#39;], (bool) $context[&#39;APP_DEBUG&#39;]);</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> App\Kernel<span class="ot">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="fu">dirname</span>(<span class="cn">__DIR__</span>)<span class="op">.</span><span class="st">&#39;/vendor/autoload_runtime.php&#39;</span><span class="ot">;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="kw">function</span> (<span class="dt">array</span> <span class="va">$context</span>) {</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;div style=&#39;text-align:center;&#39;&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;h3&gt;Welcome to my web&lt;/h3&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;img src=&#39;images/under-construction.gif&#39;/&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&quot;&lt;/div&gt;&quot;</span><span class="ot">;</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">//return new Kernel($context[&#39;APP_ENV&#39;], (bool) $context[&#39;APP_DEBUG&#39;]);</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>}<span class="ot">;</span></span></code></pre></div>
             <p>Let’s refresh the page in our browser and see what
             happens:</p>
             <figure>
