@@ -34,7 +34,7 @@
         }
         @media print {
         pre > code.sourceCode { white-space: pre-wrap; }
-        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
         }
         pre.numberSource code
           { counter-reset: source-line 0; }
@@ -291,12 +291,12 @@ class="toc-section-number">4.2</span> Creating services</a></li>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
             <p>With attributes (PHP 8.0 or higher):</p>
             <div class="sourceCode" id="cb5"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/path&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;action&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/path&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;action&#39;</span>)<span class="at">]</span></span></code></pre></div>
             <p>Let’s see an example:</p>
             <div class="sourceCode" id="cb6"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">M</span>ainController <span class="kw">extends</span> <span class="cn">A</span>bstractController {</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MainController <span class="kw">extends</span> AbstractController {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/main&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span>)<span class="at">]</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span>Route(<span class="st">&#39;/main&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span>)<span class="at">]</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index() {</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;main/index.html.twig&#39;</span>)<span class="ot">;</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    }</span>
@@ -330,16 +330,16 @@ class="toc-section-number">4.2</span> Creating services</a></li>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">C</span>ontroller<span class="ot">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> App\Controller<span class="ot">;</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">B</span>undle\<span class="cn">F</span>rameworkBundle\<span class="cn">C</span>ontroller\<span class="cn">A</span>bstractController<span class="ot">;</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">H</span>ttpFoundation\<span class="cn">J</span>sonResponse<span class="ot">;</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">R</span>outing\<span class="cn">A</span>ttribute\<span class="cn">R</span>oute<span class="ot">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Symfony\Bundle\FrameworkBundle\Controller\AbstractController<span class="ot">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Symfony\Component\HttpFoundation\JsonResponse<span class="ot">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Symfony\Component\Routing\Attribute\Route<span class="ot">;</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">H</span>elloController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> HelloController <span class="kw">extends</span> AbstractController</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">J</span>sonResponse</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span>Route(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> JsonResponse</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;json([</span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;message&#39;</span> =&gt; <span class="st">&#39;Welcome to your new controller!&#39;</span><span class="ot">,</span></span>
@@ -377,16 +377,16 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <div class="sourceCode" id="cb11"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">C</span>ontroller<span class="ot">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> App\Controller<span class="ot">;</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">B</span>undle\<span class="cn">F</span>rameworkBundle\<span class="cn">C</span>ontroller\<span class="cn">A</span>bstractController<span class="ot">;</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">H</span>ttpFoundation\<span class="cn">R</span>esponse<span class="ot">;</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">R</span>outing\<span class="cn">A</span>ttribute\<span class="cn">R</span>oute<span class="ot">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Symfony\Bundle\FrameworkBundle\Controller\AbstractController<span class="ot">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Symfony\Component\HttpFoundation\Response<span class="ot">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Symfony\Component\Routing\Attribute\Route<span class="ot">;</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">H</span>elloController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> HelloController <span class="kw">extends</span> AbstractController</span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span>Route(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> Response</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;hello/index.html.twig&#39;</span><span class="ot">,</span> [</span>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;controller_name&#39;</span> =&gt; <span class="st">&#39;HelloController&#39;</span><span class="ot">,</span></span>
@@ -413,12 +413,12 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             content of the method so we can show a different
             message:</p>
             <div class="sourceCode" id="cb12"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> Response</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">/*return $this-&gt;render(&#39;hello/index.html.twig&#39;, [</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">            &#39;controller_name&#39; =&gt; &#39;HelloController&#39;,</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">        ]);*/</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;&lt;h2&gt;Hola!&lt;/h2&gt;&quot;</span>)<span class="ot">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> Response(<span class="st">&quot;&lt;h2&gt;Hola!&lt;/h2&gt;&quot;</span>)<span class="ot">;</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
             <p>Now we can refresh the page in our browser:</p>
             <figure>
@@ -431,9 +431,9 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             you can create and write the class directly or use the
             <code>symfony maker</code> and then delete the view.</p>
             <div class="sourceCode" id="cb13"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main()<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main()<span class="ot">:</span> Response {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> Response(<span class="st">&quot;</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;html&gt;</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;body&gt;</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;div style=&#39;text-align:center;&#39;&gt;</span></span>
@@ -467,23 +467,23 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <p>For instance: let’s personalize our welcome message.</p>
             <p>First, we need to attach the argument to the route:</p>
             <div class="sourceCode" id="cb14"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span></code></pre></div>
             <p>Then, we pass the parameter with the same name to the
             function related to the route:</p>
             <div class="sourceCode" id="cb15"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> Response</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>{</span></code></pre></div>
             <p>Now we can use the <em><code>$name</code></em> variable
             in the function to personalize our welcome message:</p>
             <div class="sourceCode" id="cb16"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> Response</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">$message</span><span class="op">=</span><span class="st">&quot;Welcome&quot;</span><span class="ot">;</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="va">$name</span><span class="op">!=</span><span class="st">&#39;&#39;</span>) {</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="va">$message</span><span class="op">=</span><span class="va">$message</span><span class="op">.</span><span class="st">&quot; &quot;</span><span class="op">.</span><span class="va">$name</span><span class="op">.</span><span class="st">&quot;!&quot;</span><span class="ot">;</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> Response(<span class="st">&quot;</span></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;html&gt;</span></span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;body&gt;</span></span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;div style=&#39;text-align:center;&#39;&gt;</span></span>
@@ -517,8 +517,8 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             In this case, we need to define the same parameters in the
             route and in the method.</p>
             <div class="sourceCode" id="cb17"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}/{lastname}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$lastname</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{name}/{lastname}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$lastname</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> Response</span></code></pre></div>
             <figure>
             <img src="images/screen15.jpg"
             alt="Controller method with 2 parameters" />
@@ -534,11 +534,11 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <p>What happens if we have this two pairs
             route-controller?</p>
             <div class="sourceCode" id="cb18"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> Response</span></code></pre></div>
             <div class="sourceCode" id="cb19"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> Response</span></code></pre></div>
             <p>When we write the URL
             <code>http://localhost:8000/hello</code> the function
             index() should be called, but…</p>
@@ -572,11 +572,11 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <li>Using the Priority parameter:</li>
             </ul>
             <div class="sourceCode" id="cb22"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> Response</span></code></pre></div>
             <div class="sourceCode" id="cb23"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span><span class="ot">,</span> priority<span class="ot">:</span> <span class="dv">2</span>)<span class="at">]</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span><span class="ot">,</span> priority<span class="ot">:</span> <span class="dv">2</span>)<span class="at">]</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> Response</span></code></pre></div>
             <p>The priority parameter expects an integer value. Routes
             with higher priority are sorted before routes with lower
             priority. The default value when it is not defined is 0.</p>
@@ -584,20 +584,20 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <li>By having a different number of parameters</li>
             </ul>
             <div class="sourceCode" id="cb24"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main01...</span></code></pre></div>
             <div class="sourceCode" id="cb25"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}/{lastname}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{name}/{lastname}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main02...</span></code></pre></div>
             <ul>
             <li>By having the same number of parameters but of different
             type:</li>
             </ul>
             <div class="sourceCode" id="cb26"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{customer}/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer01&#39;</span>)<span class="at">]</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{customer}/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer01&#39;</span>)<span class="at">]</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> customer01...</span></code></pre></div>
             <div class="sourceCode" id="cb27"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{customer}/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer02&#39;</span>)<span class="at">]</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{customer}/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer02&#39;</span>)<span class="at">]</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> customer02...</span></code></pre></div>
             <p>If the parameter is a number, the function
             <em>customer01</em> will be executed. If the parameter is
@@ -611,10 +611,10 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <li>By changing the route adding levels to it:</li>
             </ul>
             <div class="sourceCode" id="cb28"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{customer}/id/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer01&#39;</span>)<span class="at">]</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{customer}/id/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer01&#39;</span>)<span class="at">]</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> customer01...</span></code></pre></div>
             <div class="sourceCode" id="cb29"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{customer}/name/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer01&#39;</span>)<span class="at">]</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/{customer}/name/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer01&#39;</span>)<span class="at">]</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> customer02...</span></code></pre></div>
             <p>The route <code>http://localhost:8000/id/1</code> leads
             to function <em>customer01</em>, while the route
@@ -691,7 +691,7 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             block for the title, one block for styles, one block for the
             body and one block for javascript.</p>
             <div class="sourceCode" id="cb31"><pre
-            class="sourceCode html"><code class="sourceCode html"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
+            class="sourceCode html"><code class="sourceCode html"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="dt">&gt;</span></span>
@@ -719,9 +719,9 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <p>Let’s create a new route <code>'/main'</code> with a new
             method name, <code>main2</code>:</p>
             <div class="sourceCode" id="cb32"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/main&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span>)<span class="at">]</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main2()<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/main&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span>)<span class="at">]</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main2()<span class="ot">:</span> Response {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> Response(<span class="st">&quot;</span></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;html&gt;</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;body&gt;</span></span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;div style=&#39;text-align:center;&#39;&gt;</span></span>
@@ -771,7 +771,7 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <p>Next step is to render the view from the controller.
             Modify the <code>main2</code> function:</p>
             <div class="sourceCode" id="cb35"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main2()<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main2()<span class="ot">:</span> Response {</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;hello/main.html.twig&#39;</span>)<span class="ot">;</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>The method <strong>render</strong> is inherited from the
@@ -833,8 +833,8 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             route. To do that, add the <code>name</code> parameter to
             the route and to the function’s parameters:</p>
             <div class="sourceCode" id="cb38"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/main/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span><span class="ot">,</span> priority<span class="ot">:</span> <span class="dv">2</span>)<span class="at">]</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main2(<span class="va">$name</span> <span class="op">=</span> <span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/main/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span><span class="ot">,</span> priority<span class="ot">:</span> <span class="dv">2</span>)<span class="at">]</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main2(<span class="va">$name</span> <span class="op">=</span> <span class="st">&#39;&#39;</span>)<span class="ot">:</span> Response {</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;hello/main.html.twig&#39;</span><span class="ot">,</span> [</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;name&#39;</span> =&gt; <span class="va">$name</span></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
@@ -1044,13 +1044,13 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             long as the name of the route doesn’t change).</p>
             <p>For instance, if we have this route:</p>
             <div class="sourceCode" id="cb58"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/main/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/main/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span>)<span class="at">]</span></span></code></pre></div>
             <p>We can link to the page from Twig doing:</p>
             <div class="sourceCode" id="cb59"><pre
             class="sourceCode html"><code class="sourceCode html"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;/main/{{ name_value }}&quot;</span><span class="dt">&gt;</span>Link to the main page<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre></div>
             <p>But it is better to use the function
-            <strong><code>path</code></strong> with the name of the
-            route and the parameters:</p>
+            <strong><code>path</code></strong> <strong>with the name of
+            the route</strong> and the parameters:</p>
             <div class="sourceCode" id="cb60"><pre
             class="sourceCode html"><code class="sourceCode html"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;{{ path(&#39;main&#39;, { name: name_value }) }}&quot;</span><span class="dt">&gt;</span>Link to the main page<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre></div>
             <h2 data-number="3.8"
@@ -1138,12 +1138,12 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <p>If you want to use a service you only need to import it
             with the <strong><code>use</code></strong> keyword:</p>
             <div class="sourceCode" id="cb70"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">P</span>sr\<span class="fu">Log</span>\<span class="cn">L</span>oggerInterface<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Psr\<span class="fu">Log</span>\LoggerInterface<span class="ot">;</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>roductController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ProductController <span class="kw">extends</span> AbstractController</span>
 <span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/products&#39;</span>)<span class="at">]</span></span>
-<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> <span class="kw">list</span>(<span class="cn">L</span>oggerInterface <span class="va">$logger</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span>Route(<span class="st">&#39;/products&#39;</span>)<span class="at">]</span></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> <span class="kw">list</span>(LoggerInterface <span class="va">$logger</span>)<span class="ot">:</span> Response</span>
 <span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$logger</span>-&gt;info(<span class="st">&#39;Look, I just used a service!&#39;</span>)<span class="ot">;</span></span>
 <span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a></span>
@@ -1166,9 +1166,9 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <div class="sourceCode" id="cb72"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">// src/Service/HelloGenerator.php</span></span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">S</span>ervice<span class="ot">;</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> App\Service<span class="ot">;</span></span>
 <span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">H</span>elloGenerator</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> HelloGenerator</span>
 <span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> getWelcome()<span class="ot">:</span> <span class="dt">string</span> {</span>
 <span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;Welcome to my Symfony App!&quot;</span><span class="ot">;</span></span>
@@ -1177,16 +1177,16 @@ class="toc-section-number">4.2</span> Creating services</a></li>
             <p>You can use it immediately inside your controller
             including a <code>use</code> directive:</p>
             <div class="sourceCode" id="cb73"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">S</span>ervice\<span class="cn">H</span>elloGenerator<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> App\Service\HelloGenerator<span class="ot">;</span></span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>...</span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">H</span>elloController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> HelloController <span class="kw">extends</span> AbstractController</span>
 <span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
-<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span>Route(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> Response</span>
 <span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$welcomMsg</span> <span class="op">=</span> <span class="cn">H</span>elloGenerator::getWelcome()<span class="ot">;</span></span>
-<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;</span></span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$welcomMsg</span> <span class="op">=</span> HelloGenerator::getWelcome()<span class="ot">;</span></span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> Response(<span class="st">&quot;</span></span>
 <span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;html&gt;</span></span>
 <span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;body&gt;</span></span>
 <span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;h1&gt;</span><span class="va">$welcomMsg</span><span class="st">&lt;/h1&gt;</span></span>
