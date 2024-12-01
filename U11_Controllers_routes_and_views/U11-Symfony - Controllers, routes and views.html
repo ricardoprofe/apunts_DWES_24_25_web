@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 11. Symfony. Controllers, routes and views.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 11. Symfony. Controllers, routes and
+views.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#mvc-model---view---controller"
+id="toc-mvc-model---view---controller"><span
+class="toc-section-number">1</span> MVC (Model - View -
+Controller)</a></li>
+<li><a href="#controllers-and-routes"
+id="toc-controllers-and-routes"><span
+class="toc-section-number">2</span> Controllers and routes</a>
+<ul>
+<li><a href="#the-symfony-maker-bundle"
+id="toc-the-symfony-maker-bundle"><span
+class="toc-section-number">2.1</span> The Symfony Maker Bundle</a></li>
+<li><a href="#routes-with-attributes"
+id="toc-routes-with-attributes"><span
+class="toc-section-number">2.2</span> Routes with attributes</a></li>
+<li><a href="#creating-a-controller"
+id="toc-creating-a-controller"><span
+class="toc-section-number">2.3</span> Creating a controller</a></li>
+<li><a href="#passing-parameters-to-the-controller"
+id="toc-passing-parameters-to-the-controller"><span
+class="toc-section-number">2.4</span> Passing parameters to the
+controller</a></li>
+<li><a href="#troubleshooting-with-the-controller-parameters"
+id="toc-troubleshooting-with-the-controller-parameters"><span
+class="toc-section-number">2.5</span> Troubleshooting with the
+controller parameters</a></li>
+</ul></li>
+<li><a href="#views" id="toc-views"><span
+class="toc-section-number">3</span> Views</a>
+<ul>
+<li><a href="#html-templates-with-twig"
+id="toc-html-templates-with-twig"><span
+class="toc-section-number">3.1</span> HTML templates with Twig</a></li>
+<li><a href="#our-first-view" id="toc-our-first-view"><span
+class="toc-section-number">3.2</span> Our first view</a></li>
+<li><a href="#passing-parameters-to-the-view"
+id="toc-passing-parameters-to-the-view"><span
+class="toc-section-number">3.3</span> Passing parameters to the
+view</a></li>
+<li><a href="#accessing-to-properties-and-methods-from-twig"
+id="toc-accessing-to-properties-and-methods-from-twig"><span
+class="toc-section-number">3.4</span> Accessing to properties and
+methods from Twig</a></li>
+<li><a href="#control-structures-in-twig"
+id="toc-control-structures-in-twig"><span
+class="toc-section-number">3.5</span> Control structures in Twig</a>
+<ul>
+<li><a href="#if-in-twig" id="toc-if-in-twig"><span
+class="toc-section-number">3.5.1</span> If in Twig</a></li>
+<li><a href="#for-in-twig" id="toc-for-in-twig"><span
+class="toc-section-number">3.5.2</span> For in Twig</a></li>
+</ul></li>
+<li><a href="#filters" id="toc-filters"><span
+class="toc-section-number">3.6</span> Filters</a></li>
+<li><a href="#linking-to-other-pages"
+id="toc-linking-to-other-pages"><span
+class="toc-section-number">3.7</span> Linking to other pages</a></li>
+<li><a href="#linking-to-static-content-css-javascript-images"
+id="toc-linking-to-static-content-css-javascript-images"><span
+class="toc-section-number">3.8</span> Linking to static content (CSS,
+JavaScript, images)</a></li>
+<li><a href="#inheritance-extending-blocks-and-including-templates"
+id="toc-inheritance-extending-blocks-and-including-templates"><span
+class="toc-section-number">3.9</span> Inheritance, extending blocks and
+including templates</a></li>
+<li><a href="#twig-official-documentation"
+id="toc-twig-official-documentation"><span
+class="toc-section-number">3.10</span> Twig official
+documentation</a></li>
+</ul></li>
+<li><a href="#services" id="toc-services"><span
+class="toc-section-number">4</span> Services</a>
+<ul>
+<li><a href="#using-services" id="toc-using-services"><span
+class="toc-section-number">4.1</span> Using services</a></li>
+<li><a href="#creating-services" id="toc-creating-services"><span
+class="toc-section-number">4.2</span> Creating services</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="mvc-model---view---controller"><span
+            class="header-section-number">1</span> MVC (Model - View -
+            Controller)</h1>
+            <p><strong>MVC</strong> is acronym of
+            <strong>Model-View-Controller</strong>, a software design
+            pattern. By using this pattern, we divide our applications
+            in three main parts:</p>
+            <ul>
+            <li><p><strong>Model</strong>: is the section where we work
+            with the data. Usually these data are extracted from
+            databases or other information sources. Our model classes
+            will contain the instructions to connect and work with these
+            information sources.</p></li>
+            <li><p><strong>View</strong>: is the section that connects
+            the application with the user. Usually the views are
+            interfaces to show information or ask the user for
+            information.</p></li>
+            <li><p><strong>Controller</strong>: is the section that
+            coordinates and communicates the other two. The controllers
+            accepts some inputs and transform them to instructions and
+            calls to the model or the view.</p></li>
+            </ul>
+            <figure>
+            <img src="images/mvc.png" width="450"
+            alt="MVC pattern in Symfony" />
+            <figcaption aria-hidden="true">MVC pattern in
+            Symfony</figcaption>
+            </figure>
+            <p><strong>MVC</strong> is a very structured pattern that
+            allows independence between the sections. It has been widely
+            adopted as a web design pattern, and a lot of frameworks use
+            this pattern. Because of its modular structure, is a great
+            approach to work as a team.</p>
+            <h1 data-number="2" id="controllers-and-routes"><span
+            class="header-section-number">2</span> Controllers and
+            routes</h1>
+            <p>The interaction between the user and the web application
+            usually works as follows:</p>
+            <ul>
+            <li><p>The user sends a <strong><em>request</em></strong>,
+            mainly by writing (or calling in any other way) an
+            URL</p></li>
+            <li><p>In a PHP application using the MVC pattern, this
+            request has to be redirected to a
+            <strong><em>controller</em></strong>, that will be a PHP
+            callable piece of code (usually a class method)</p></li>
+            <li><p>The controller receives the request, and then it has
+            to create a <strong><em>response</em></strong> for that
+            request. The response can be rendering a view with Twig,
+            returning html code or json code, and so on.</p></li>
+            </ul>
+            <p>A <strong><em>route</em></strong> is the link that
+            connects the requested path (like <em>localhost:8000/</em>,
+            or any other local URL) and a controller.</p>
+            <h2 data-number="2.1" id="the-symfony-maker-bundle"><span
+            class="header-section-number">2.1</span> The Symfony Maker
+            Bundle</h2>
+            <p>In Symfony the controllers are implemented as classes.
+            These classes can be created manually, but a better and
+            faster way is to use the <strong><em>Symfony Maker
+            Bundle</em></strong>.</p>
+            <blockquote>
+            <p>First of all, we need a Symfony microservice app, if you
+            don’t have it done yet:</p>
+            <p><code>symfony new sample_project --version="7.1.*"</code></p>
+            </blockquote>
+            <p>The maker bundle not only generates controllers but a lot
+            of different and useful classes. When using the maker we
+            will need to specify which kind of element we want to
+            generate. If we run:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console list make</span></code></pre></div>
+            <blockquote>
+            <p>Alternatively, if you don’t have the Symfony-CLI
+            installed, you can use <code>php bin/console</code> inside a
+            Symfony project to execute Symfony commands:</p>
+            </blockquote>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> bin/console list make</span></code></pre></div>
+            <p>We will see on screen all the generators provided by the
+            maker.</p>
+            <figure>
+            <img src="images/screen09.jpg"
+            alt="List of elements of Symfony Maker Bundle" />
+            <figcaption aria-hidden="true">List of elements of Symfony
+            Maker Bundle</figcaption>
+            </figure>
+            <p>If you don’t have the maker bundle installed (the usual
+            if you are in a microservice project), you’ll get an error.
+            Install the Symfony maker bundle with:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require <span class="at">--dev</span> symfony/maker-bundle</span></code></pre></div>
+            <h2 data-number="2.2" id="routes-with-attributes"><span
+            class="header-section-number">2.2</span> Routes with
+            attributes</h2>
+            <p>From PHP 8.0 on, we can define routes and required
+            dependencies using attributes instead of annotations.</p>
+            <p>With annotations:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">* </span><span class="an">@Route(&quot;/path&quot;,</span><span class="co"> name=&quot;action&quot;)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code></pre></div>
+            <p>With attributes (PHP 8.0 or higher):</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/path&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;action&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">M</span>ainController <span class="kw">extends</span> <span class="cn">A</span>bstractController {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/main&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span>)<span class="at">]</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index() {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;main/index.html.twig&#39;</span>)<span class="ot">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The content of the <em>index</em> function is not
+            important. The main thing is learning how to connect our
+            route (<em>/main</em>) with our controller (the
+            <em>index</em> method in the <em>MainController</em> class).
+            We will learn more about annotations, routes and controllers
+            later.</p>
+            <p>Symfony recommends the use of attributes.</p>
+            <blockquote>
+            <p>Symfony also supports another methods to make routes,
+            using YAML, XML or PHP configuration files in the
+            <code>config</code> dir: <a
+            href="https://symfony.com/doc/current/routing.html#creating-routes-in-yaml-xml-or-php-files">https://symfony.com/doc/current/routing.html#creating-routes-in-yaml-xml-or-php-files</a></p>
+            </blockquote>
+            <h2 data-number="2.3" id="creating-a-controller"><span
+            class="header-section-number">2.3</span> Creating a
+            controller</h2>
+            <p>Now we can create our first controller. The Maker offers
+            us an easy way to create a controller:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console make:controller HelloController</span></code></pre></div>
+            <p>This command will create a class named
+            <strong><em>HelloController</em></strong> in the
+            <em>src/Controller</em> folder of our project which serves a
+            Json response:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ot">?</span>php</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">C</span>ontroller<span class="ot">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">B</span>undle\<span class="cn">F</span>rameworkBundle\<span class="cn">C</span>ontroller\<span class="cn">A</span>bstractController<span class="ot">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">H</span>ttpFoundation\<span class="cn">J</span>sonResponse<span class="ot">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">R</span>outing\<span class="cn">A</span>ttribute\<span class="cn">R</span>oute<span class="ot">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">H</span>elloController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">J</span>sonResponse</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;json([</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;message&#39;</span> =&gt; <span class="st">&#39;Welcome to your new controller!&#39;</span><span class="ot">,</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;path&#39;</span> =&gt; <span class="st">&#39;src/Controller/HelloController.php&#39;</span><span class="ot">,</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Again, it’s not important what the index function does.
+            By now we only need to check if the connection between the
+            route (/hello) and the controller (index) is working
+            fine.</p>
+            <p>Let’s go to our browser and write the URL
+            <code>http://localhost:8000/hello</code> (the route begins
+            in our local server root page, which is
+            <code>http://localhost:port</code>)</p>
+            <figure>
+            <img src="images/u11-json.png" alt="Our first controller" />
+            <figcaption aria-hidden="true">Our first
+            controller</figcaption>
+            </figure>
+            <p>As you can see, the route <code>/hello</code> returns a
+            Json response.</p>
+            <p>This is fine if we are making a web service, but if we
+            want to show a webpage instead of Json data, we need a
+            template system. Symfony uses <strong>Twig</strong> as
+            template engine.</p>
+            <p>To install Twig, write in the command line:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> composer require twig</span></code></pre></div>
+            <p>Now, delete the <code>HelloController.php</code> and
+            create again the same controller:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console make:controller HelloController</span></code></pre></div>
+            <p>It generates again the controller:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">C</span>ontroller<span class="ot">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">B</span>undle\<span class="cn">F</span>rameworkBundle\<span class="cn">C</span>ontroller\<span class="cn">A</span>bstractController<span class="ot">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">H</span>ttpFoundation\<span class="cn">R</span>esponse<span class="ot">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">R</span>outing\<span class="cn">A</span>ttribute\<span class="cn">R</span>oute<span class="ot">;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">H</span>elloController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;hello/index.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;controller_name&#39;</span> =&gt; <span class="st">&#39;HelloController&#39;</span><span class="ot">,</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <figure>
+            <img src="images/screen10.jpg" alt="Our first view" />
+            <figcaption aria-hidden="true">Our first view</figcaption>
+            </figure>
+            <p>Now, we have a different code in the body of
+            <code>index()</code>. Note how the function calls the render
+            method and pass to it the parameter
+            <code>controller_name</code> whit the value
+            <code>'HelloController'</code>.This string is shown in the
+            view title.</p>
+            <p>This is how the whole thing works: the user writes a
+            <strong><em>route</em></strong>, this route leads to a
+            certain method in a <strong><em>controller</em></strong>,
+            and, then, the controller does something and leads to the
+            <strong><em>view</em></strong> that we can see on the
+            screen.</p>
+            <p>As we don’t know about views yet, we can change the
+            content of the method so we can show a different
+            message:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">/*return $this-&gt;render(&#39;hello/index.html.twig&#39;, [</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">            &#39;controller_name&#39; =&gt; &#39;HelloController&#39;,</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">        ]);*/</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;&lt;h2&gt;Hola!&lt;/h2&gt;&quot;</span>)<span class="ot">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+            <p>Now we can refresh the page in our browser:</p>
+            <figure>
+            <img src="images/screen11.jpg" alt="Changing the output" />
+            <figcaption aria-hidden="true">Changing the
+            output</figcaption>
+            </figure>
+            <p>We can create our own homepage by adding a new method to
+            the class with the route “/”. We don’t need the template, so
+            you can create and write the class directly or use the
+            <code>symfony maker</code> and then delete the view.</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main()<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;html&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;body&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;div style=&#39;text-align:center;&#39;&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;h2&gt;This is my first Symfony web&lt;/h2&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;h3&gt;Welcome!&lt;/h3&gt;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;img src=&#39;/images/under-construction.gif&#39;&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;/div&gt;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;/body&gt;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;/html&gt;&quot;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    )<span class="ot">;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Now if we write on the browser
+            <code>http://localhost:8000/</code> we will get our new
+            homepage:</p>
+            <figure>
+            <img src="images/screen12.jpg" alt="Our new homepage" />
+            <figcaption aria-hidden="true">Our new homepage</figcaption>
+            </figure>
+            <blockquote>
+            <p><strong>Note</strong>: To show the image correctly, you
+            need to make a new folder inside the <code>public</code>
+            folder named <code>images</code> and then save the image
+            inside.</p>
+            </blockquote>
+            <h2 data-number="2.4"
+            id="passing-parameters-to-the-controller"><span
+            class="header-section-number">2.4</span> Passing parameters
+            to the controller</h2>
+            <p>We can send parameters to a method by adding GET
+            arguments in the URL.</p>
+            <p>For instance: let’s personalize our welcome message.</p>
+            <p>First, we need to attach the argument to the route:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            <p>Then, we pass the parameter with the same name to the
+            function related to the route:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>{</span></code></pre></div>
+            <p>Now we can use the <em><code>$name</code></em> variable
+            in the function to personalize our welcome message:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">$message</span><span class="op">=</span><span class="st">&quot;Welcome&quot;</span><span class="ot">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="va">$name</span><span class="op">!=</span><span class="st">&#39;&#39;</span>) {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="va">$message</span><span class="op">=</span><span class="va">$message</span><span class="op">.</span><span class="st">&quot; &quot;</span><span class="op">.</span><span class="va">$name</span><span class="op">.</span><span class="st">&quot;!&quot;</span><span class="ot">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;html&gt;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;body&gt;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;div style=&#39;text-align:center;&#39;&gt;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;h2&gt;This is my first Symfony web&lt;/h2&gt;</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;h3&gt;</span><span class="va">$message</span><span class="st">&lt;/h3&gt;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;img src=&#39;/images/under-construction.gif&#39;/&gt;</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;/div&gt;</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/body&gt;</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;/html&gt;&quot;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        )<span class="ot">;</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+            <p>Finally, call the URL with a GET parameter attached:</p>
+            <figure>
+            <img src="images/screen13.jpg"
+            alt="A controller with parameters" />
+            <figcaption aria-hidden="true">A controller with
+            parameters</figcaption>
+            </figure>
+            <p>If we call the same URL without the GET parameter,
+            <em><code>$name</code></em> will get is default value
+            <code>main($name='')</code> and therefore the message will
+            be different (just Welcome! without a name):</p>
+            <figure>
+            <img src="images/screen14.jpg"
+            alt="The same controller without passing the parameter" />
+            <figcaption aria-hidden="true">The same controller without
+            passing the parameter</figcaption>
+            </figure>
+            <p>We can pass two or more parameters attached to the URL.
+            In this case, we need to define the same parameters in the
+            route and in the method.</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}/{lastname}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$lastname</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            <figure>
+            <img src="images/screen15.jpg"
+            alt="Controller method with 2 parameters" />
+            <figcaption aria-hidden="true">Controller method with 2
+            parameters</figcaption>
+            </figure>
+            <p>More about controllers: <a
+            href="https://symfony.com/doc/current/controller.html">https://symfony.com/doc/current/controller.html</a></p>
+            <h2 data-number="2.5"
+            id="troubleshooting-with-the-controller-parameters"><span
+            class="header-section-number">2.5</span> Troubleshooting
+            with the controller parameters</h2>
+            <p>What happens if we have this two pairs
+            route-controller?</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            <p>When we write the URL
+            <code>http://localhost:8000/hello</code> the function
+            index() should be called, but…</p>
+            <figure>
+            <img src="images/screen16.jpg" alt="Wrong method" />
+            <figcaption aria-hidden="true">Wrong method</figcaption>
+            </figure>
+            <p>The router thinks that “hello” is the value of the
+            <em>name</em> argument in the URL, so the function main() is
+            invoked with the parameter <em>name</em> equals to
+            “hello”.</p>
+            <p>To know which route is taken by Symfony, we can write in
+            the console the command:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console debug:route</span></code></pre></div>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode txt"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>---------------- -------- -------- ------ -------------------------- </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  Name             Method   Scheme   Host   Path                      </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a> ---------------- -------- -------- ------ -------------------------- </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  _preview_error   ANY      ANY      ANY    /_error/{code}.{_format}  </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  app_hello        ANY      ANY      ANY    /hello                    </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  homepage         ANY      ANY      ANY    /{name}                   </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a> ---------------- -------- -------- ------ -------------------------- </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+            <p>We can see that Symfony is taking the first method in our
+            <code>HelloController</code> file.</p>
+            <p>If we have two routes with the same name and we want them
+            to lead to different methods, we need to differentiate
+            between them in some way. It might be:</p>
+            <ul>
+            <li>Using the Priority parameter:</li>
+            </ul>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main(<span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span><span class="ot">,</span> priority<span class="ot">:</span> <span class="dv">2</span>)<span class="at">]</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            <p>The priority parameter expects an integer value. Routes
+            with higher priority are sorted before routes with lower
+            priority. The default value when it is not defined is 0.</p>
+            <ul>
+            <li>By having a different number of parameters</li>
+            </ul>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main01...</span></code></pre></div>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{name}/{lastname}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;homepage&#39;</span>)<span class="at">]</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main02...</span></code></pre></div>
+            <ul>
+            <li>By having the same number of parameters but of different
+            type:</li>
+            </ul>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{customer}/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer01&#39;</span>)<span class="at">]</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> customer01...</span></code></pre></div>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{customer}/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer02&#39;</span>)<span class="at">]</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> customer02...</span></code></pre></div>
+            <p>If the parameter is a number, the function
+            <em>customer01</em> will be executed. If the parameter is
+            not a number, then the function <em>customer02</em> will be
+            called instead.</p>
+            <blockquote>
+            <p><code>\d+</code> is a <strong>regular expression</strong>
+            that matches a digit of any length.</p>
+            </blockquote>
+            <ul>
+            <li>By changing the route adding levels to it:</li>
+            </ul>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{customer}/id/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer01&#39;</span>)<span class="at">]</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> customer01...</span></code></pre></div>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/{customer}/name/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;customer01&#39;</span>)<span class="at">]</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> customer02...</span></code></pre></div>
+            <p>The route <code>http://localhost:8000/id/1</code> leads
+            to function <em>customer01</em>, while the route
+            <code>http://localhost:8000/name/1</code> would lead to
+            function <em>customer02</em>.</p>
+            <p>More about routes: <a
+            href="https://symfony.com/doc/current/routing.html">https://symfony.com/doc/current/routing.html</a></p>
+            <h1 data-number="3" id="views"><span
+            class="header-section-number">3</span> Views</h1>
+            <p>As we have seen in previous sections,
+            <strong>MVC</strong> is acronym of
+            <strong>Model-View-Controller</strong>, a software design
+            pattern. The idea of MVC is to separate the
+            <strong>model</strong> (data) from the <strong>view</strong>
+            (user interface). The controller coordinates the
+            communication between the model and the view.</p>
+            <p>We want our views, controllers and models to be quite
+            independent of each other. That’s the reason why we don’t
+            want to implement interfaces in the controllers. We must be
+            able to change our interfaces without modifying neither the
+            controllers nor the models.</p>
+            <p>On the other hand, our interfaces might be too complex to
+            handle them in a <code>return new Response(...)</code>
+            clause. We need to implement interfaces that interact with
+            the user, with styles, forms and a lot of features.
+            Therefore, we are going to completely separate our
+            interfaces from our controllers.</p>
+            <p>Our goal will be to separate, as much as possible, our
+            PHP code from the HTML code. Basically, the
+            <strong>controller</strong> (PHP code) obtains the data that
+            we want to show and send them to the <strong>views</strong>.
+            The result is what the user will see on the screen.</p>
+            <p>Symfony offers a tool to build templates for our
+            interfaces: <strong>Twig</strong>.</p>
+            <h2 data-number="3.1" id="html-templates-with-twig"><span
+            class="header-section-number">3.1</span> HTML templates with
+            Twig</h2>
+            <p><strong>Twig</strong> is a template engine for PHP. Twig
+            makes the code faster by compiling the templates to create
+            optimized and secure PHP code. By using Twig templates, we
+            will avoid the <em>echo</em> instruction and functions like
+            <em>htmlspecialchars</em> and others. Twig offers elements
+            like blocks, automatic escaping, shortcuts for common
+            structures, multiple inheritance and much more.</p>
+            <p>Usually Twig will be incorporated into our Symfony full
+            web apps projects. Anyway, if we want to install Twig in a
+            project that doesn’t has the bundle, we can do:</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> composer req twig</span></code></pre></div>
+            <p>That adds Twig as a required dependency for our
+            project.</p>
+            <p>When we create a project with Twig installed on it, a
+            <strong><em>templates</em></strong> directory will be
+            created. Inside that folder, we can find a sample layout
+            template named <em><code>base.html.twig</code></em>. Twig
+            templates have the extension
+            <em><code>.html.twig</code></em>. The template
+            <em><code>base.html.twig</code></em> is the basic structure
+            from which the rest of our templates will inherit.</p>
+            <p>For every controller, we will get a subfolder in the
+            <code>templates</code> directory. And for every method in
+            our controller, we will get a new template. In our example
+            (<em>HelloController</em>) we created a method called
+            <em>index</em>, and automatically we got the Twig template
+            <em>index.html.twig</em> as you can see below.</p>
+            <figure>
+            <img src="images/screen17.jpg"
+            alt="Twig templates structure" />
+            <figcaption aria-hidden="true">Twig templates
+            structure</figcaption>
+            </figure>
+            <p>The <em><code>base</code></em> template defines some
+            sections called <em>blocks</em>. We will get at least one
+            block for the title, one block for styles, one block for the
+            body and one block for javascript.</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">&quot;UTF-8&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>{% block title %}Welcome!{% endblock %}<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;icon&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;data:image/svg+xml,</span><span class="er">&lt;</span><span class="st">svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22&gt;</span><span class="er">&lt;</span><span class="st">text y=%221.2em%22 font-size=%2296%22&gt;·</span><span class="er">&lt;</span><span class="st">/text&gt;</span><span class="er">&lt;</span><span class="st">text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22&gt;sf</span><span class="er">&lt;</span><span class="st">/text&gt;</span><span class="er">&lt;</span><span class="st">/svg&gt;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        {% block stylesheets %}</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>        {% endblock %}</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        {% block javascripts %}</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>        {% endblock %}</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>        {% block body %}{% endblock %}</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>Our own templates will be an extension of
+            <em><code>base.html.twig</code></em>. By doing that, we just
+            need to fill the blocks in the child templates with our HTML
+            code. As we will see later, we can add variables and some
+            Twig code as well.</p>
+            <p>Let’s try first something simple in order to learn how to
+            connect the controllers with the views.</p>
+            <h2 data-number="3.2" id="our-first-view"><span
+            class="header-section-number">3.2</span> Our first view</h2>
+            <p>Let’s create a new route <code>'/main'</code> with a new
+            method name, <code>main2</code>:</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/main&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span>)<span class="at">]</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main2()<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;html&gt;</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;body&gt;</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;div style=&#39;text-align:center;&#39;&gt;</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;h2&gt;This is my first Symfony web&lt;/h2&gt;</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;h3&gt;Welcome!&lt;/h3&gt;</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;img src=&#39;/images/under-construction.gif&#39;/&gt;</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;/div&gt;</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;/body&gt;</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;/html&gt;&quot;</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    )<span class="ot">;</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The <strong><code>main2()</code></strong> function is
+            associated to the route <code>/main</code>. So, if we write
+            <em><code>http://localhost:8000/main</code></em> in our
+            browser we will get:</p>
+            <figure>
+            <img src="images/screen18.jpg" alt="Basic welcome page" />
+            <figcaption aria-hidden="true">Basic welcome
+            page</figcaption>
+            </figure>
+            <p>Now, we will try this using a view.</p>
+            <p>First, we need to create a view. Let’s call it
+            <strong>main.html.twig</strong>. As usual, the view will
+            extend the <strong>base.html.twig</strong>. We will need at
+            least two blocks: one for the <strong>title</strong> and one
+            for the <strong>body</strong>. At first, the views should be
+            like follows:</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>{% extends &#39;base.html.twig&#39; %}</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>{% block title %} {% endblock %}</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
+            <p>Of course, the view doesn’t show anything on the screen.
+            Let’s fill the blocks with out content:</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>{% extends &#39;base.html.twig&#39; %}</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>{% block title %} My first Symfony page{% endblock %}</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> style</span><span class="op">=</span><span class="st">&#39;text-align:center;&#39;</span><span class="dt">&gt;</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>This is my first Symfony page<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Welcome!<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">&#39;/images/under-construction.gif&#39;</span><span class="dt">/&gt;</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
+            <p>We have included in our <em>block body</em> the same
+            content that we were including in our response.</p>
+            <p>Next step is to render the view from the controller.
+            Modify the <code>main2</code> function:</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main2()<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;hello/main.html.twig&#39;</span>)<span class="ot">;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The method <strong>render</strong> is inherited from the
+            class <strong>AbstractController</strong> which we extended
+            in our <strong>HelloController</strong> class.</p>
+            <p>Now, if we go to <code>http://localhost:8000/main</code>
+            we will get the same result, but without including any HTML
+            code in our controller.</p>
+            <figure>
+            <img src="images/screen18.jpg"
+            alt="The result of our view" />
+            <figcaption aria-hidden="true">The result of our
+            view</figcaption>
+            </figure>
+            <h2 data-number="3.3"
+            id="passing-parameters-to-the-view"><span
+            class="header-section-number">3.3</span> Passing parameters
+            to the view</h2>
+            <p>We can send an <strong>array of parameters</strong> as
+            the second argument of the <em>render</em> function.</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="va">$name</span> <span class="op">=</span> <span class="st">&quot;Fidel&quot;</span><span class="ot">;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;hello/main.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;name&#39;</span> =&gt; <span class="va">$name</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span></code></pre></div>
+            <p>Now we can show the value of the variable <em>name</em>
+            in our view, but without using an <em>echo</em>
+            instruction.</p>
+            <p>In the Twig templates we can use two basic notations to
+            include dynamic content:</p>
+            <ul>
+            <li>The <code>{% %}</code> notation to indicate an action or
+            a structure.</li>
+            <li>The <code>{{ }}</code> notation to display
+            something.</li>
+            </ul>
+            <p>In this case, we want our view to receive the variable
+            <em><code>name</code></em> and then to show its value on the
+            screen. We just need to make a little change to the view to
+            include the <em><code>name</code></em> variable and display
+            it.</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Welcome, {{ name }}!<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+            <blockquote>
+            <p><strong>ATTENTION!</strong> It’s recommended to include a
+            blank space after and before the content of the <strong>{{
+            }}</strong> variable.</p>
+            </blockquote>
+            <p>Let’s refresh our main page:</p>
+            <figure>
+            <img src="images/screen19.jpg"
+            alt="Our view with a name parameter" />
+            <figcaption aria-hidden="true">Our view with a <em>name</em>
+            parameter</figcaption>
+            </figure>
+            <p>A better way to show a name, is to include it in the
+            route. To do that, add the <code>name</code> parameter to
+            the route and to the function’s parameters:</p>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/main/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span><span class="ot">,</span> priority<span class="ot">:</span> <span class="dv">2</span>)<span class="at">]</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> main2(<span class="va">$name</span> <span class="op">=</span> <span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;hello/main.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;name&#39;</span> =&gt; <span class="va">$name</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Check the route adding a name to the route, for instance
+            <code>localhost:8000/main/John</code>.</p>
+            <h2 data-number="3.4"
+            id="accessing-to-properties-and-methods-from-twig"><span
+            class="header-section-number">3.4</span> Accessing to
+            properties and methods from Twig</h2>
+            <p>In Twig we have an universal method to access to
+            properties of a given object. That way is:</p>
+            <div class="sourceCode" id="cb39"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>object.property</span></code></pre></div>
+            <p>It works for <strong>associative arrays</strong>, for
+            <strong>object properties</strong> and for <strong>object
+            methods</strong>. For instance, if we send a parameter
+            <em><code>contact</code></em> to a Twig template, if we
+            write:</p>
+            <div class="sourceCode" id="cb40"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>contact.name</span></code></pre></div>
+            <p>Twig will search for one of these elements, in this
+            order:</p>
+            <ol type="1">
+            <li><strong>$contact[‘name’]</strong> (a property of the
+            $contact array)</li>
+            <li><strong>$contact-&gt;name</strong> (a public attribute
+            of the $contact object)</li>
+            <li><strong>$contact-&gt;name()</strong> (a method of the
+            $contact object)</li>
+            <li><strong>$contact-&gt;getName()</strong> (a getter method
+            of the $contact object)</li>
+            <li><strong>$contact-&gt;isName()</strong> (object and isser
+            method);</li>
+            <li><strong>$contact-&gt;hasName()</strong> (object and
+            hasser method);</li>
+            <li>If none of the above exists, use <code>null</code> (or
+            throw a <code>Twig\Error\RuntimeError</code> exception if
+            the <code>strict_variables</code> option is enabled).</li>
+            </ol>
+            <h2 data-number="3.5" id="control-structures-in-twig"><span
+            class="header-section-number">3.5</span> Control structures
+            in Twig</h2>
+            <p>We can use the <strong><code>{% %}</code></strong> blocks
+            to create control structures like iterations and
+            alternatives.</p>
+            <h3 data-number="3.5.1" id="if-in-twig"><span
+            class="header-section-number">3.5.1</span> If in Twig</h3>
+            <p>We can use the <strong><code>if</code></strong> structure
+            like in other programming languages.</p>
+            <div class="sourceCode" id="cb41"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>{% if condition %}</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>{% elseif condition %}</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>{% else %}</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>{% endif %}</span></code></pre></div>
+            <p>The if statement in Twig is comparable with the if
+            statements of PHP.</p>
+            <p>Example:</p>
+            <div class="sourceCode" id="cb42"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>{% if online == false %}</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Our website is in maintenance mode. Please, come back later.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>{% endif %}</span></code></pre></div>
+            <p>You can also use <strong><code>not</code></strong>
+            (equivalent to <code>!</code> in PHP) to check for values
+            that evaluate to false :</p>
+            <div class="sourceCode" id="cb43"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>{% if not user.subscribed %}</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>You are not subscribed to our mailing list.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>{% endif %}</span></code></pre></div>
+            <p>For multiple conditions,
+            <strong><code>and</code></strong> and
+            <strong><code>or</code></strong> can be used:</p>
+            <div class="sourceCode" id="cb44"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>{% if temperature &gt; 18 and temperature <span class="er">&lt;</span> 27 %}</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>It&#39;s a nice day for a walk in the park.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>{% endif %}</span></code></pre></div>
+            <p>For multiple branches
+            <strong><code>elseif</code></strong> and
+            <strong><code>else</code></strong> can be used like in PHP.
+            You can use more complex expressions there too:</p>
+            <div class="sourceCode" id="cb45"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>{% if product.stock &gt; 10 %}</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>   Available</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>{% elseif product.stock &gt; 0 %}</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>   Only {{ product.stock }} left!</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>{% else %}</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>   Sold-out!</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>{% endif %}</span></code></pre></div>
+            <h3 data-number="3.5.2" id="for-in-twig"><span
+            class="header-section-number">3.5.2</span> For in Twig</h3>
+            <p>We can use the <strong><code>for</code></strong>
+            structure to loop over each item in a given sequence, like
+            an array or a explicit list of values.</p>
+            <div class="sourceCode" id="cb46"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>{% for i in 1..10 %} </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>{% endfor %}</span></code></pre></div>
+            <p>If we send an array named <em>contacts</em> to a Twig
+            view:</p>
+            <div class="sourceCode" id="cb47"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>{% for contact in contacts %}</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span> Name:  {{ contact.name }} <span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>{% endfor %}</span></code></pre></div>
+            <p>By default the <strong>for</strong> loop iterates over
+            the values. We can iterate over the keys, too.</p>
+            <div class="sourceCode" id="cb48"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>{% for key in contacts|keys %}</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>{{ key }}<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>{% endfor %}</span></code></pre></div>
+            <p>We can iterate over the keys and values like in
+            <code>foreach($array as $key=&gt;$value)</code> in php:</p>
+            <div class="sourceCode" id="cb49"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>{% for key, contact in contacts %}</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>{{ key }}: {{ contact.name }}<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>{% endfor %}</span></code></pre></div>
+            <p>If no iteration took place because the sequence was
+            empty, you can render a replacement block by using
+            <strong><code>else</code></strong>:</p>
+            <div class="sourceCode" id="cb50"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    {% for user in users %}</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>{{ user.username|e }}<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    {% else %}</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">em</span><span class="dt">&gt;</span>no user found<span class="dt">&lt;/</span><span class="kw">em</span><span class="dt">&gt;&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    {% endfor %}</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>Inside a <em>for</em> we can access to some <strong>loop
+            properties</strong> like:</p>
+            <table>
+            <thead>
+            <tr class="header">
+            <th>Loop property</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>loop.index</code></td>
+            <td>The current iteration beginning with 1</td>
+            </tr>
+            <tr class="even">
+            <td><code>loop.index0</code></td>
+            <td>The current iteration beginning with 0</td>
+            </tr>
+            <tr class="odd">
+            <td><code>loop.first</code></td>
+            <td>True if it’s the first iteration</td>
+            </tr>
+            <tr class="even">
+            <td><code>loop.last</code></td>
+            <td>True if it’s the last iteration</td>
+            </tr>
+            <tr class="odd">
+            <td><code>loop.length</code></td>
+            <td>Total number of iterations</td>
+            </tr>
+            </tbody>
+            </table>
+            <div class="sourceCode" id="cb51"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>{# Prints a list of usernames with a number beginning with 1 #}</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>{% for user in users %}</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    {{ loop.index }} - {{ user.username }}</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>{% endfor %}</span></code></pre></div>
+            <h2 data-number="3.6" id="filters"><span
+            class="header-section-number">3.6</span> Filters</h2>
+            <p>The <strong>filters</strong> modify the content before
+            rendering the page. The syntax is:</p>
+            <div class="sourceCode" id="cb52"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>{{ variable|filter }}</span></code></pre></div>
+            <p>For instance, we can change a string to uppercase
+            doing:</p>
+            <div class="sourceCode" id="cb53"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>{{ variable|upper }}</span></code></pre></div>
+            <p>To find out the length of an array:</p>
+            <div class="sourceCode" id="cb54"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>{{ arrayname|length }}</span></code></pre></div>
+            <p>To display a date in a specific format:</p>
+            <div class="sourceCode" id="cb55"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>{{ date|format_datetime(&#39;date format&#39;,&#39;hour format&#39;, locale=&#39;...&#39;) }}</span></code></pre></div>
+            <p>Example:</p>
+            <div class="sourceCode" id="cb56"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>{{ birthDate|date(&quot;d-m-Y&quot;, &quot;Europe/Madrid&quot;) }}</span></code></pre></div>
+            <p>To escape characters:</p>
+            <div class="sourceCode" id="cb57"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>{{ value|escape }} or {{ value|e }}</span></code></pre></div>
+            <p>By default, the escaping strategy consists in applying
+            the <code>htmlspecialchars()</code> php function.</p>
+            <p>There are a lot of filters. Some of them are Twig
+            natives, and some others are provided by Symfony. You can
+            check them out at these pages:</p>
+            <p><a
+            href="https://twig.symfony.com/doc/2.x/filters/index.html">Twig
+            filters</a></p>
+            <p><a
+            href="https://symfony.com/doc/current/reference/twig_reference.html">Filters
+            and functions defined by Symfony</a></p>
+            <h2 data-number="3.7" id="linking-to-other-pages"><span
+            class="header-section-number">3.7</span> Linking to other
+            pages</h2>
+            <p>Although we can create links to other pages in our web in
+            the usual HTML way, linking to the URL associated to the
+            page, is a good practice to use the route name instead. By
+            doing this, we avoid problems if a URL route changes (as
+            long as the name of the route doesn’t change).</p>
+            <p>For instance, if we have this route:</p>
+            <div class="sourceCode" id="cb58"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/main/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;main&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            <p>We can link to the page from Twig doing:</p>
+            <div class="sourceCode" id="cb59"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;/main/{{ name_value }}&quot;</span><span class="dt">&gt;</span>Link to the main page<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>But it is better to use the function
+            <strong><code>path</code></strong> with the name of the
+            route and the parameters:</p>
+            <div class="sourceCode" id="cb60"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;{{ path(&#39;main&#39;, { name: name_value }) }}&quot;</span><span class="dt">&gt;</span>Link to the main page<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre></div>
+            <h2 data-number="3.8"
+            id="linking-to-static-content-css-javascript-images"><span
+            class="header-section-number">3.8</span> Linking to static
+            content (CSS, JavaScript, images)</h2>
+            <p>The static content always should be placed in the
+            <strong>public</strong> folder or a subfolder inside
+            <em>public</em>. So, the route of the content will be rooted
+            on the <em>public</em> folder.</p>
+            <p>We can create a css folder inside <em>public</em> with a
+            <em>styles.css</em> file inside it. Then, we can do:</p>
+            <div class="sourceCode" id="cb61"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;/css/styles.css&quot;</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span></code></pre></div>
+            <p>or</p>
+            <div class="sourceCode" id="cb62"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;{{ asset(&#39;css/styles.css&#39;) }}&quot;</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span></code></pre></div>
+            <p>Before using the <code>asset</code> function, you
+            probably will need to install the <code>asset</code> package
+            on your project. Run:</p>
+            <div class="sourceCode" id="cb63"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require symfony/asset</span></code></pre></div>
+            <p>The advantage of using the
+            <strong><code>asset</code></strong> function is that it
+            references the root in our host even if we change that host.
+            In addition, we can define specific assets in our
+            configuration files to make our links shorter.</p>
+            <p>More information in this link:</p>
+            <p><a
+            href="https://symfony.com/doc/current/templates.html#templates-link-to-assets">More
+            about assets in Twig</a></p>
+            <p>It works the same way for javascript content and
+            images.</p>
+            <div class="sourceCode" id="cb64"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;{{ asset(&#39;images/image.png&#39;) }}&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb65"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;{{ asset(&#39;js/scriptname.js&#39;) }}&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+            <h2 data-number="3.9"
+            id="inheritance-extending-blocks-and-including-templates"><span
+            class="header-section-number">3.9</span> Inheritance,
+            extending blocks and including templates</h2>
+            <p>As you know, we can extend a Twig template by doing:</p>
+            <div class="sourceCode" id="cb66"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>{% extends &#39;name_of_the_template.html.twig&#39; %}</span></code></pre></div>
+            <p>And then, fill in the blocks defined in the parent
+            template.</p>
+            <p>We can extend a block from our parent template by using
+            the <em>parent()</em> function. By doing so, we include the
+            content of the given block in the parent template and we
+            complete the block with some new code.</p>
+            <p>For instance, if we have a block for a css file in a
+            template, and we want to add a new css file in the inherited
+            template, we could do:</p>
+            <div class="sourceCode" id="cb67"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>{% extends name_of_parent_twig.html.twig %}</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>{% block stylesheets %}</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>    {{ parent() }}  //the content of the parent stylesheets block</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;{{ asset(&#39;new_css_file.css&#39;) }} rel=&quot;</span><span class="ot">stylesheet</span><span class="er">&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span> // the added content</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
+            <p>We can include a template in other templates in order to
+            reuse its code. It works like the <code>include</code> in
+            php.</p>
+            <div class="sourceCode" id="cb68"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>{{ include(&#39;other_template.html.twig&#39;) }}</span></code></pre></div>
+            <p>If the template requires parameters:</p>
+            <div class="sourceCode" id="cb69"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>{{ include (&#39;other_template.html.twig&#39;, { &#39;parameter&#39;: value }) }}</span></code></pre></div>
+            <h2 data-number="3.10"
+            id="twig-official-documentation"><span
+            class="header-section-number">3.10</span> Twig official
+            documentation</h2>
+            <p>Twig has a lot more features that you can find in the
+            official Twig website.</p>
+            <p><a href="https://twig.symfony.com/doc/3.x/">Twig official
+            documentation</a></p>
+            <h1 data-number="4" id="services"><span
+            class="header-section-number">4</span> Services</h1>
+            <p>In Symfony, we have several utilities, (logger, mailer,
+            etc) that are called <strong>services</strong>. Each service
+            lives inside a very special object called the
+            <strong>service container</strong>. The container allows you
+            to centralize the way objects are constructed.</p>
+            <h2 data-number="4.1" id="using-services"><span
+            class="header-section-number">4.1</span> Using services</h2>
+            <p>If you want to use a service you only need to import it
+            with the <strong><code>use</code></strong> keyword:</p>
+            <div class="sourceCode" id="cb70"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">P</span>sr\<span class="fu">Log</span>\<span class="cn">L</span>oggerInterface<span class="ot">;</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">P</span>roductController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/products&#39;</span>)<span class="at">]</span></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> <span class="kw">list</span>(<span class="cn">L</span>oggerInterface <span class="va">$logger</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$logger</span>-&gt;info(<span class="st">&#39;Look, I just used a service!&#39;</span>)<span class="ot">;</span></span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">// ...</span></span>
+<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>If you want to know what services are available just
+            run:</p>
+            <div class="sourceCode" id="cb71"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>symfony console debug<span class="ot">:</span>autowiring</span></code></pre></div>
+            <h2 data-number="4.2" id="creating-services"><span
+            class="header-section-number">4.2</span> Creating
+            services</h2>
+            <p>You can create your own services. It’s the better way to
+            share functionalities between controllers.</p>
+            <p>To create a new service, create a new class in the
+            src/Service folder (create the folder if needed). for
+            instance, the next class is used to generate a welcome
+            message:</p>
+            <div class="sourceCode" id="cb72"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">// src/Service/HelloGenerator.php</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">S</span>ervice<span class="ot">;</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">H</span>elloGenerator</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">function</span> getWelcome()<span class="ot">:</span> <span class="dt">string</span> {</span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;Welcome to my Symfony App!&quot;</span><span class="ot">;</span></span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>You can use it immediately inside your controller
+            including a <code>use</code> directive:</p>
+            <div class="sourceCode" id="cb73"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">S</span>ervice\<span class="cn">H</span>elloGenerator<span class="ot">;</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">H</span>elloController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/hello&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_hello&#39;</span>)<span class="at">]</span></span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> index()<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$welcomMsg</span> <span class="op">=</span> <span class="cn">H</span>elloGenerator::getWelcome()<span class="ot">;</span></span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> <span class="cn">R</span>esponse(<span class="st">&quot;</span></span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;html&gt;</span></span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;body&gt;</span></span>
+<span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;h1&gt;</span><span class="va">$welcomMsg</span><span class="st">&lt;/h1&gt;</span></span>
+<span id="cb73-14"><a href="#cb73-14" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/body&gt;</span></span>
+<span id="cb73-15"><a href="#cb73-15" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;/html&gt;&quot;</span></span>
+<span id="cb73-16"><a href="#cb73-16" aria-hidden="true" tabindex="-1"></a>        )<span class="ot">;</span></span>
+<span id="cb73-17"><a href="#cb73-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>More about services: <a
+            href="https://symfony.com/doc/current/service_container.html">https://symfony.com/doc/current/service_container.html</a></p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
