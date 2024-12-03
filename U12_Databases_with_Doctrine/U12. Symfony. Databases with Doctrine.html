@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 12. Symfony. Databases with Doctrine.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 12. Symfony. Databases with
+Doctrine.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#doctrine" id="toc-doctrine"><span
+class="toc-section-number">1</span> Doctrine</a></li>
+<li><a href="#installation-and-configuration"
+id="toc-installation-and-configuration"><span
+class="toc-section-number">2</span> Installation and
+configuration</a></li>
+<li><a href="#creating-the-database"
+id="toc-creating-the-database"><span class="toc-section-number">3</span>
+Creating the database</a></li>
+<li><a href="#creating-the-entitiestables"
+id="toc-creating-the-entitiestables"><span
+class="toc-section-number">4</span> Creating the entities/tables</a>
+<ul>
+<li><a href="#creating-the-entity" id="toc-creating-the-entity"><span
+class="toc-section-number">4.1</span> Creating the entity</a></li>
+<li><a href="#creating-the-table" id="toc-creating-the-table"><span
+class="toc-section-number">4.2</span> Creating the table</a></li>
+<li><a href="#troubleshooting" id="toc-troubleshooting"><span
+class="toc-section-number">4.3</span> Troubleshooting</a></li>
+<li><a href="#how-to-establish-another-primary-key"
+id="toc-how-to-establish-another-primary-key"><span
+class="toc-section-number">4.4</span> How to establish another primary
+key</a></li>
+</ul></li>
+<li><a href="#operating-with-our-database"
+id="toc-operating-with-our-database"><span
+class="toc-section-number">5</span> Operating with our database</a>
+<ul>
+<li><a href="#inserting-objects-to-the-database"
+id="toc-inserting-objects-to-the-database"><span
+class="toc-section-number">5.1</span> Inserting objects to the
+database</a></li>
+<li><a href="#inserting-objects-using-parameters"
+id="toc-inserting-objects-using-parameters"><span
+class="toc-section-number">5.2</span> Inserting objects using
+parameters</a></li>
+<li><a href="#retrieving-information-from-the-database"
+id="toc-retrieving-information-from-the-database"><span
+class="toc-section-number">5.3</span> Retrieving information from the
+database</a>
+<ul>
+<li><a href="#finding-an-object-by-its-id"
+id="toc-finding-an-object-by-its-id"><span
+class="toc-section-number">5.3.1</span> Finding an object by its
+id</a></li>
+<li><a
+href="#finding-an-object-by-a-property-different-from-the-primary-key"
+id="toc-finding-an-object-by-a-property-different-from-the-primary-key"><span
+class="toc-section-number">5.3.2</span> Finding an object by a property
+different from the primary key</a></li>
+<li><a href="#finding-a-list-of-objects-by-one-or-more-conditions"
+id="toc-finding-a-list-of-objects-by-one-or-more-conditions"><span
+class="toc-section-number">5.3.3</span> Finding a list of objects by one
+or more conditions</a></li>
+<li><a href="#retrieving-all-the-objects-in-the-table"
+id="toc-retrieving-all-the-objects-in-the-table"><span
+class="toc-section-number">5.3.4</span> Retrieving all the objects in
+the table</a></li>
+<li><a href="#automatically-fetching-objects"
+id="toc-automatically-fetching-objects"><span
+class="toc-section-number">5.3.5</span> Automatically Fetching
+Objects</a></li>
+</ul></li>
+<li><a href="#advanced-queries" id="toc-advanced-queries"><span
+class="toc-section-number">5.4</span> Advanced queries</a></li>
+<li><a href="#deleting-objects-from-the-database"
+id="toc-deleting-objects-from-the-database"><span
+class="toc-section-number">5.5</span> Deleting objects from the
+database</a>
+<ul>
+<li><a href="#deleting-an-array-of-objects-from-the-controller"
+id="toc-deleting-an-array-of-objects-from-the-controller"><span
+class="toc-section-number">5.5.1</span> Deleting an array of objects
+from the controller</a></li>
+<li><a href="#deleting-an-array-of-objects-from-the-repository-class"
+id="toc-deleting-an-array-of-objects-from-the-repository-class"><span
+class="toc-section-number">5.5.2</span> Deleting an array of objects
+from the repository class</a></li>
+</ul></li>
+<li><a href="#updating-objects-in-the-database"
+id="toc-updating-objects-in-the-database"><span
+class="toc-section-number">5.6</span> Updating objects in the
+database</a>
+<ul>
+<li><a href="#updating-one-object" id="toc-updating-one-object"><span
+class="toc-section-number">5.6.1</span> Updating one object</a></li>
+<li><a href="#updating-a-list-of-objects"
+id="toc-updating-a-list-of-objects"><span
+class="toc-section-number">5.6.2</span> Updating a list of
+objects</a></li>
+<li><a href="#updating-a-list-of-objects-using-the-repository-class"
+id="toc-updating-a-list-of-objects-using-the-repository-class"><span
+class="toc-section-number">5.6.3</span> Updating a list of objects using
+the repository class</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#relationships" id="toc-relationships"><span
+class="toc-section-number">6</span> Relationships</a>
+<ul>
+<li><a href="#m-relationships" id="toc-m-relationships"><span
+class="toc-section-number">6.1</span> 1:M relationships</a>
+<ul>
+<li><a href="#creating-the-new-entity"
+id="toc-creating-the-new-entity"><span
+class="toc-section-number">6.1.1</span> Creating the new entity</a></li>
+<li><a href="#creating-the-relationship"
+id="toc-creating-the-relationship"><span
+class="toc-section-number">6.1.2</span> Creating the
+relationship</a></li>
+<li><a href="#managing-the-relationships-from-symfony"
+id="toc-managing-the-relationships-from-symfony"><span
+class="toc-section-number">6.1.3</span> Managing the relationships from
+Symfony</a></li>
+<li><a href="#adding-a-new-object-with-a-foreign-key"
+id="toc-adding-a-new-object-with-a-foreign-key"><span
+class="toc-section-number">6.1.4</span> Adding a new object with a
+foreign key</a></li>
+<li><a href="#retrieving-data-using-the-primary-key---foreign-key-link."
+id="toc-retrieving-data-using-the-primary-key---foreign-key-link."><span
+class="toc-section-number">6.1.5</span> Retrieving data using the
+primary key - foreign key link.</a></li>
+<li><a href="#adding-a-new-entity-in-both-classes."
+id="toc-adding-a-new-entity-in-both-classes."><span
+class="toc-section-number">6.1.6</span> Adding a new entity in both
+classes.</a></li>
+</ul></li>
+<li><a href="#other-association-types-11-mm"
+id="toc-other-association-types-11-mm"><span
+class="toc-section-number">6.2</span> Other association types (1:1,
+M:M)</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="doctrine"><span
+            class="header-section-number">1</span> Doctrine</h1>
+            <p>In order to work with databases with Symfony, and to make
+            its management easier, we will work with a library called
+            <strong>Doctrine</strong>. Doctrine is an
+            <strong>ORM</strong> (<strong>Object Relational
+            Mapping</strong>), a framework that helps the developer to
+            work with relational databases. The idea is to make a
+            correspondence between our model classes and the database
+            tables. The ORM makes the whole process transparent to the
+            developer. In fact, we will use objects and methods to
+            operate with the database.</p>
+            <h1 data-number="2"
+            id="installation-and-configuration"><span
+            class="header-section-number">2</span> Installation and
+            configuration</h1>
+            <p>To work with Doctrine and MySQL/MariaDB databases, we
+            first need to install the ORM for our project. In the
+            project folder we type:</p>
+            <p>The doctrine support should be installed if you have
+            created your project as a full webapp. If not, you can
+            install Doctrine with:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require symfony/orm-pack</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require <span class="at">--dev</span> symfony/maker-bundle</span></code></pre></div>
+            <p>Now we need to check if the php drivers for mysql are
+            installed. Try:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-m</span></span></code></pre></div>
+            <p>Check that <code>mysqli</code>, <code>mysqlnd</code> and
+            <code>pdo_mysql</code> appear. If not, go to the
+            <strong>php.ini</strong> file and uncomment the lines
+            corresponding to these drivers.</p>
+            <p>Just in case the drivers are not installed, install them
+            with:</p>
+            <pre><code>sudo apt-get install php-mysql
+sudo apt-get install pdo-mysql</code></pre>
+            <p>Now we go to the <strong>.env.local</strong> file (create
+            it as a copy from <strong>.env</strong> if it doesn’t exist)
+            in our project to uncomment the line where the database
+            connection is defined. We have to define the user, the
+            password, our server address, the port, the database name
+            and the version. For instance:</p>
+            <ul>
+            <li>driver: mysql</li>
+            <li>username: root</li>
+            <li>password: 1234</li>
+            <li>address and port: 127.0.0.1:3306</li>
+            <li>database: contacts</li>
+            <li>version: MySql 8</li>
+            </ul>
+            <p>So the line will be like this (for MySQL):</p>
+            <pre><code>DATABASE_URL=&quot;mysql://root:1234@127.0.0.1:3306/contacts?serverVersion=8&amp;charset=utf8mb4&quot;</code></pre>
+            <p>And for MariaDB:</p>
+            <pre><code>DATABASE_URL=&quot;mysql://root:1234@127.0.0.1:3306/contacts?serverVersion=10.11.2-MariaDB&amp;charset=utf8mb4&quot;</code></pre>
+            <h1 data-number="3" id="creating-the-database"><span
+            class="header-section-number">3</span> Creating the
+            database</h1>
+            <p>If the database doesn’t exist, we can create it from
+            doctrine by doing:</p>
+            <pre><code>symfony console doctrine:database:create</code></pre>
+            <p>There’s no need to include the name of the database we
+            are going to create, because it’s already included in our
+            DATABASE_URL environment variable. In this case, the
+            database <strong>contacts</strong> will be created.</p>
+            <figure>
+            <img src="images/screen20.jpg"
+            alt="Database created by Doctrine" />
+            <figcaption aria-hidden="true">Database created by
+            Doctrine</figcaption>
+            </figure>
+            <p>At this moment, it’s recommended that you create a new
+            user instead of root to work with the database.</p>
+            <p>Another way is to create the database and the user
+            directly from phpMyAdmin or the console (see the guided
+            example of this unit).</p>
+            <h1 data-number="4" id="creating-the-entitiestables"><span
+            class="header-section-number">4</span> Creating the
+            entities/tables</h1>
+            <p>The <strong>M</strong> in the MVC design pattern is for
+            the <strong>Model</strong>. Symfony’s model component is
+            based on an object/relational mapping layer. What does it
+            mean? It means that PHP and Symfony work with objects, but
+            MySQL/MariaDB work with the relational model, so they manage
+            tables. Doctrine creates the link between the classes and
+            the tables (<strong><em>object-relational
+            mapping</em></strong>), providing classes and objects that
+            give access to the database.</p>
+            <p>Of course, once the class is created, we can append
+            methods that don’t match a column in the table. We will go
+            back to this in the next chapters.</p>
+            <h2 data-number="4.1" id="creating-the-entity"><span
+            class="header-section-number">4.1</span> Creating the
+            entity</h2>
+            <p>To create an entity, we use the instruction:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console make:entity EntityName</span></code></pre></div>
+            <p>Where <em>TableName</em> is the name of the entity we
+            want to create.</p>
+            <p>The command is interactive, so it will guide us through
+            the process. We will add the fields and properties of our
+            entity/table just by answering the questions. Sometimes we
+            will just accept the default value.</p>
+            <p>Let’s create our Contacts entity / table with the name,
+            phone and email attributes (we don’t need to create an
+            <strong><em><code>id</code></em></strong> as a primary key:
+            Doctrine will do it automatically):</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console make:entity Contact</span></code></pre></div>
+            <figure>
+            <img src="images/screen21.jpg" alt="Creating our entity" />
+            <figcaption aria-hidden="true">Creating our
+            entity</figcaption>
+            </figure>
+            <p>Doctrine has created two classes:</p>
+            <ul>
+            <li>Entity/Contact.php (our entity class)</li>
+            <li>Repository/ContactRepository.php (our repository
+            class)</li>
+            </ul>
+            <p>We will talk later about the repository utility.</p>
+            <p>Let’s continue with the process of creating the entity.
+            As you can see, Doctrine is asking us to add some fields. If
+            we don’t want to add more fields, just press &lt;return&gt;
+            when asked to introduce a new property.</p>
+            <p>Now we are creating the Contact entity with the name,
+            phone and email.</p>
+            <figure>
+            <img src="images/screen22.jpg"
+            alt="Creating the property name" />
+            <figcaption aria-hidden="true">Creating the property
+            <code>name</code></figcaption>
+            </figure>
+            <p>Let’s proceed the same way with the phone and email
+            attributes:</p>
+            <figure>
+            <img src="images/screen23.jpg"
+            alt="Adding the rest of the properties" />
+            <figcaption aria-hidden="true">Adding the rest of the
+            properties</figcaption>
+            </figure>
+            <p>We don’t want to add more properties, so we press
+            &lt;return&gt;.</p>
+            <p>Now we can see our new Contact class created
+            automatically by Doctrine in our <code>src\Entity</code>
+            folder:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity<span class="ot">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">R</span>epository\<span class="cn">C</span>ontactRepository<span class="ot">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">D</span>octrine\<span class="cn">ORM</span>\<span class="cn">M</span>apping <span class="kw">as</span> <span class="cn">ORM</span><span class="ot">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">E</span>ntity(repositoryClass<span class="ot">:</span> <span class="cn">C</span>ontactRepository::<span class="kw">class</span>)<span class="at">]</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontact</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">I</span>d<span class="at">]</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">G</span>eneratedValue<span class="at">]</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn<span class="at">]</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">int</span> <span class="va">$id</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">30</span>)<span class="at">]</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$name</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">15</span>)<span class="at">]</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$phone</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">30</span><span class="ot">,</span> nullable<span class="ot">:</span> <span class="kw">true</span>)<span class="at">]</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$email</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getId()<span class="ot">:</span> <span class="ot">?</span><span class="dt">int</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;id<span class="ot">;</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getName()<span class="ot">:</span> <span class="ot">?</span><span class="dt">string</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;name<span class="ot">;</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> setName(<span class="dt">string</span> <span class="va">$name</span>)<span class="ot">:</span> <span class="kw">static</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;name <span class="op">=</span> <span class="va">$name</span><span class="ot">;</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getPhone()<span class="ot">:</span> <span class="ot">?</span><span class="dt">string</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;phone<span class="ot">;</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> setPhone(<span class="dt">string</span> <span class="va">$phone</span>)<span class="ot">:</span> <span class="kw">static</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;phone <span class="op">=</span> <span class="va">$phone</span><span class="ot">;</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getEmail()<span class="ot">:</span> <span class="ot">?</span><span class="dt">string</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;email<span class="ot">;</span></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> setEmail(<span class="ot">?</span><span class="dt">string</span> <span class="va">$email</span>)<span class="ot">:</span> <span class="kw">static</span></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;email <span class="op">=</span> <span class="va">$email</span><span class="ot">;</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>As you can see, the class includes the attributes, the
+            getters and setters, along with some annotations. These
+            annotations represent some metadata that Doctrine will use
+            to map the class to its related database table.</p>
+            <p>But the table doesn’t exist yet, so we are going to
+            create it.</p>
+            <blockquote>
+            <p><strong>Note</strong>: In this class you can see how the
+            setters methods return the same static object. This is
+            because they are fluent methods. The fluent methods allow a
+            more fluent way to assign the properties. For example:</p>
+            <p><code>$c = new Contact();</code></p>
+            <p><code>$c-&gt;setName('John')-&gt;setPhone('666554433')-&gt;setEmail('john@mail.com');</code></p>
+            <p><a
+            href="https://dev.to/mofiqul/fluent-interface-and-method-chaining-in-php-and-javascript-251c">More
+            examples about fluent methods</a>.</p>
+            </blockquote>
+            <h2 data-number="4.2" id="creating-the-table"><span
+            class="header-section-number">4.2</span> Creating the
+            table</h2>
+            <p>Once the entity has been created, we just need to make a
+            migration to the database. Doctrine provides us with a
+            specific tool to initiate the process. First, it creates a
+            <em>migration</em> class that describes the changes needed
+            to update the database with the new changes. Second, the
+            migration itself will be made.</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console make:migration</span></code></pre></div>
+            <p>This command creates a file in the
+            <code>migrations</code> folder with all the data needed to
+            do the migration. If you need to create the tables on a new
+            server you can use this file.</p>
+            <p>If you open the file, it contains the SQL needed to
+            update your database. To run that SQL, execute your
+            migrations:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console doctrine:migrations:migrate</span></code></pre></div>
+            <p>This command executes all migration files that have not
+            already been run against your database. You should run this
+            command on production when you deploy to keep your
+            production database up-to-date.</p>
+            <p>Let’s take a look now to our database:</p>
+            <figure>
+            <img src="images/screen24.jpg"
+            alt="The table has been created" />
+            <figcaption aria-hidden="true">The table has been
+            created</figcaption>
+            </figure>
+            <p>As has been told before, note that the primary key
+            <strong><em>id</em></strong> has been created automatically
+            as an AUTO_INCREMENT column.</p>
+            <p>We can modify our table structure at any moment just by
+            executing again the <em>make:entity</em> command with the
+            name of the class that we want to change. Once the changes
+            have been done, we have to generate a new migration and
+            migrate it.</p>
+            <h2 data-number="4.3" id="troubleshooting"><span
+            class="header-section-number">4.3</span>
+            Troubleshooting</h2>
+            <p>Just in case you get an error with the migration
+            procedure like <em>‘The metadata storage is not up to date,
+            please run the sync-metadata-storage command to fix this
+            issue’</em>, try this:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console doctrine:migrations:sync-metadata-storage</span></code></pre></div>
+            <p>If you see a message like
+            <code>[OK] Metadata storage synchronized</code> but the
+            problem still persists, add this code to your
+            <code>config\packages\doctrine.yaml</code> file:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">doctrine_migrations</span><span class="kw">:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">migrations_paths</span><span class="kw">:</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">        # namespace is arbitrary but should be different from App\Migrations</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">        # as migrations classes should NOT be autoloaded</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">&#39;DoctrineMigrations&#39;</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;%kernel.project_dir%/src/Migrations&#39;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">storage</span><span class="kw">:</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">        # Default (SQL table) metadata storage configuration</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">table_storage</span><span class="kw">:</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">table_name</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;migration_versions&#39;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">version_column_name</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;version&#39;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">version_column_length</span><span class="kw">:</span><span class="at"> </span><span class="dv">1024</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">executed_at_column_name</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;executed_at&#39;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">execution_time_column_name</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;execution_time&#39;</span></span></code></pre></div>
+            <h2 data-number="4.4"
+            id="how-to-establish-another-primary-key"><span
+            class="header-section-number">4.4</span> How to establish
+            another primary key</h2>
+            <p>If we want our table to have another primary key
+            different than the automatically generated
+            <strong><em>id</em></strong>, we can change it by doing
+            this:</p>
+            <ul>
+            <li><p>Delete the <strong><em>id</em></strong> attribute in
+            the class, along with its getter and setter
+            methods.</p></li>
+            <li><p>Define the new primary key by adding the annotation
+            <code>#[ORM\Id]</code> to the attribute or attributes that
+            will form the new primary key.</p></li>
+            </ul>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">I</span>d<span class="at">]</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="va">$newId</span><span class="ot">;</span></span></code></pre></div>
+            <h1 data-number="5" id="operating-with-our-database"><span
+            class="header-section-number">5</span> Operating with our
+            database</h1>
+            <p>To operate with our database, we need to use the
+            <strong><em>EntityManagerInterface</em></strong> of
+            Doctrine. This is a class that includes the methods needed
+            to perform tasks like insert, delete, update or select.</p>
+            <p>Let’s see first how to add rows to our tables.</p>
+            <h2 data-number="5.1"
+            id="inserting-objects-to-the-database"><span
+            class="header-section-number">5.1</span> Inserting objects
+            to the database</h2>
+            <p>To add a contact to our database, we need first to create
+            a Contact object with some data. Create a new method in the
+            <code>ContactController</code> class (create the controller
+            if it doesn’t exist), let’s say “newContact”. We link the
+            method to the route
+            <strong><code>/contact/new</code></strong>.</p>
+            <p>First, add the <strong><code>use</code></strong> for the
+            <code>Contact</code> class in the controller class. We must
+            use the <strong>Entity Manager Interface</strong> as
+            well.</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">B</span>undle\<span class="cn">F</span>rameworkBundle\<span class="cn">C</span>ontroller\<span class="cn">A</span>bstractController<span class="ot">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">H</span>ttpFoundation\<span class="cn">R</span>esponse<span class="ot">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">R</span>outing\<span class="cn">A</span>ttribute\<span class="cn">R</span>oute<span class="ot">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity\<span class="cn">C</span>ontact<span class="ot">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">D</span>octrine\<span class="cn">ORM</span>\<span class="cn">E</span>ntityManagerInterface<span class="ot">;</span></span></code></pre></div>
+            <p>Now we can create the new method. The route will be
+            <code>/contact/new</code>. The method receives an object of
+            the <strong>ManagerRegistryInterface</strong> class, and
+            returns a <strong>Response</strong>.</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Inside the method we create the object of the
+            <em>Contact</em> class with the data that we want to insert
+            into the table. We don’t assign an id to the contact because
+            the primary key is an autoincrement column in the database,
+            so the id will be automatically assigned.</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setName(<span class="st">&quot;Eduardo Gómez&quot;</span>)<span class="ot">;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setPhone(<span class="st">&quot;23454321&quot;</span>)<span class="ot">;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setEmail(<span class="st">&quot;eduardogomez@gmail.com&quot;</span>)<span class="ot">;</span> </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Then, we have to use the
+            <strong><code>EntityManager</code></strong> object which
+            will provide us with the methods to make the insert. We get
+            the <code>ManagerRegistry</code> object as a parameter in
+            our function (this is a <em>dependency injection</em>). We
+            will need two methods:</p>
+            <ul>
+            <li>first, <code>persist()</code> to generate the
+            information for the manager, before doing the query,</li>
+            <li>second, <code>flush()</code> to effectively save the
+            object to our table in the database and to do the
+            query,</li>
+            </ul>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setName(<span class="st">&quot;Eduardo Gómez&quot;</span>)<span class="ot">;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setPhone(<span class="st">&quot;23454321&quot;</span>)<span class="ot">;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setEmail(<span class="st">&quot;eduardogomez@gmail.com&quot;</span>)<span class="ot">;</span> </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;persist(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Let’s go to the URL
+            <code>http://localhost:8000/contact/new</code> and see what
+            happens.</p>
+            <figure>
+            <img src="images/screen25.jpg"
+            alt="It works but with a warning" />
+            <figcaption aria-hidden="true">It works but with a
+            warning</figcaption>
+            </figure>
+            <p>The warning tells us that the method must return a
+            response object. We solve this by creating a view with a
+            message “The contact has been added” and rendering the view
+            from the method.</p>
+            <p>The <code>templates\contact\new.html.twig</code>
+            file:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>{% extends &#39;base.html.twig&#39; %}</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>{% block title %}It works!{% endblock %}</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span>: <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span>: <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span>: <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span>: <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span>: <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span>: <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;example-wrapper&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>The contact has been added!<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
+            <p>And then the method (change the data not to repeat the
+            same contact):</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setName(<span class="st">&quot;Eduardo Gómez&quot;</span>)<span class="ot">;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setPhone(<span class="st">&quot;23454321&quot;</span>)<span class="ot">;</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setEmail(<span class="st">&quot;eduardogomez@gmail.com&quot;</span>)<span class="ot">;</span> </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;persist(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/new.html.twig&#39;</span><span class="ot">,</span> [])<span class="ot">;</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Now, when we run the controller by typing the url, we get
+            the message:</p>
+            <figure>
+            <img src="images/screen26.jpg" alt="It totally works!" />
+            <figcaption aria-hidden="true">It totally
+            works!</figcaption>
+            </figure>
+            <h2 data-number="5.2"
+            id="inserting-objects-using-parameters"><span
+            class="header-section-number">5.2</span> Inserting objects
+            using parameters</h2>
+            <p>Of course we don’t want to change our code every time we
+            need to add a contact to the database. We will see later how
+            to use an API to introduce data. By now, we can specify that
+            information by adding parameters to our URL.</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new/{name}/{phone}/{email}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact_param&#39;</span>)<span class="at">]</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newContactParam(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$phone</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$email</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setName(<span class="va">$name</span>)<span class="ot">;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setPhone(<span class="va">$phone</span>)<span class="ot">;</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setEmail(<span class="va">$email</span>)<span class="ot">;</span> </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span>-&gt;persist(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/new.html.twig&#39;</span><span class="ot">,</span> [])<span class="ot">;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Now we can add a new contact with different data without
+            having to modify the controller code.</p>
+            <figure>
+            <img src="images/screen27.jpg"
+            alt="Adding a new contact using the URL" />
+            <figcaption aria-hidden="true">Adding a new contact using
+            the URL</figcaption>
+            </figure>
+            <p>Let’s check the database:</p>
+            <figure>
+            <img src="images/screen28.jpg"
+            alt="Checking if the database has been updated" />
+            <figcaption aria-hidden="true">Checking if the database has
+            been updated</figcaption>
+            </figure>
+            <h2 data-number="5.3"
+            id="retrieving-information-from-the-database"><span
+            class="header-section-number">5.3</span> Retrieving
+            information from the database</h2>
+            <p>To retrieve information from the database, we will need
+            to instantiate a new repository object. As you remember,
+            when we created the <em><code>Contact</code></em> model
+            Symfony added two classes to the application: the class
+            <em><code>Contact</code></em> itself and the class
+            <em><code>ContactRepository</code></em>. This class is in
+            the <em><code>Repository</code></em> folder and has some
+            methods, inherited from
+            <em><code>ServiceEntityRepository</code></em>, to recover
+            information from our database:</p>
+            <ul>
+            <li><strong>find(value)</strong> finds an object using the
+            primary key. Returns a single object with its primary key
+            being equal to the value.</li>
+            <li><strong>findOneBy(condition)</strong> finds an object
+            that accomplishes the condition. Returns a single
+            object.</li>
+            <li><strong>findBy(condition)</strong> finds all the objects
+            that accomplish the condition. Return an array of
+            objects.</li>
+            <li><strong>findAll()</strong> finds all the objects in the
+            table. Return an array of objects.</li>
+            </ul>
+            <p>Let’s see an example of each one.</p>
+            <h3 data-number="5.3.1"
+            id="finding-an-object-by-its-id"><span
+            class="header-section-number">5.3.1</span> Finding an object
+            by its id</h3>
+            <p>We want to implement a method that receives the id of a
+            contact and then shows the contact card in a view.</p>
+            <p>First, let’s prepare the view. We call it
+            <strong>contact.html.twig</strong></p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>{% extends &#39;base.html.twig&#39; %}</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>{% block title %}Contact card{% endblock %}</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span>: <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span>: <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span>: <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span>: <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span>: <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span>: <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;example-wrapper&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Contact card<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Id: {{ contact.id }}<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Name: {{ contact.name }}<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Phone: {{ contact.phone }}<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Email: {{ contact.email }}<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
+            <p>And now we create the method
+            <strong><code>getContactById()</code></strong> that receives
+            an id as a parameter, finds the contact in the database, and
+            then sends the retrieved contact to the view.</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getContactById(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span> <span class="op">=</span> <span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span> <span class="op">=</span> <span class="va">$rep</span>-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contact.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>With the line:</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)</span></code></pre></div>
+            <p>we create a repository for our class
+            <em><code>Contact</code></em>. And then with the line:</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span> <span class="op">=</span> <span class="va">$rep</span>-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>We search in the associated table for a contact with the
+            given <strong>id</strong>, then the result is saved into the
+            object. Finally, we send the object to the view. The result
+            is:</p>
+            <figure>
+            <img src="images/screen29.jpg" width="400"
+            alt="Contact found" />
+            <figcaption aria-hidden="true">Contact found</figcaption>
+            </figure>
+            <p>If the supplied <strong>id</strong> doesn’t exist, we
+            will get:</p>
+            <figure>
+            <img src="images/screen30.jpg" width="400"
+            alt="Contact not found error" />
+            <figcaption aria-hidden="true">Contact not found
+            error</figcaption>
+            </figure>
+            <p>As we already know, to solve the problem we have to check
+            the existence of the object in our template.</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;example-wrapper&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Contact card<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    {% if contact %}</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Id: {{ contact.id }}<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Name: {{ contact.name }}<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Phone: {{ contact.phone }}<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Email: {{ contact.email }}<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    {% else %}</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>The contact doesn&#39;t exist<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    {% endif %}</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>And now, if we search for an nonexistent id, we get:</p>
+            <figure>
+            <img src="images/screen31.jpg"
+            alt="Contact not found message" />
+            <figcaption aria-hidden="true">Contact not found
+            message</figcaption>
+            </figure>
+            <h3 data-number="5.3.2"
+            id="finding-an-object-by-a-property-different-from-the-primary-key"><span
+            class="header-section-number">5.3.2</span> Finding an object
+            by a property different from the primary key</h3>
+            <p>We can search for an object in our database using any
+            condition different from the primary key value. If we know
+            that only an object will accomplish the condition we can use
+            <code>findOneBy</code>. Let’s see how to find a contact by
+            its name:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyname&#39;</span>)<span class="at">]</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getcontactbyname(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>) {</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="va">$rep</span>-&gt;findOneBy([<span class="st">&quot;name&quot;</span>=&gt;<span class="va">$name</span>])<span class="ot">;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contact.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We can search a contact by its name from the URL:</p>
+            <figure>
+            <img src="images/screen32.jpg" width="400"
+            alt="Contact found by name" />
+            <figcaption aria-hidden="true">Contact found by
+            name</figcaption>
+            </figure>
+            <p>As we are searching for a contact, we render the same
+            view that in the search by id.</p>
+            <blockquote>
+            <p><strong>ATTENTION!</strong> To avoid conflict between the
+            two routes <code>contact/{id}</code> and
+            <code>contact/{name}</code> we need to discriminate when the
+            parameter is a number. Thus, the route for searching by the
+            id must be changed in order to add the requirement.</p>
+            </blockquote>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            <p>Of course, we can also rename both routes to avoid
+            duplicates.</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/byid/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/byname/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyname&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            <p>The <code>findOneBy</code> method accepts more than one
+            condition. The conditions are separated by commas.</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span><span class="op">=</span><span class="va">$rep</span>-&gt;findOneBy([<span class="st">&quot;name&quot;</span>=&gt;<span class="va">$name</span><span class="ot">,</span> <span class="st">&quot;phone&quot;</span>=&gt;<span class="va">$phone</span>])<span class="ot">;</span></span></code></pre></div>
+            <h3 data-number="5.3.3"
+            id="finding-a-list-of-objects-by-one-or-more-conditions"><span
+            class="header-section-number">5.3.3</span> Finding a list of
+            objects by one or more conditions</h3>
+            <p>Sometimes our condition can be accomplished by more than
+            one object. In this case, we will use the
+            <strong>findBy</strong> method. This method returns an array
+            of objects of the given class. Let’s suppose that we have
+            some contacts with the same name, and we want to retrieve
+            them all. We should use <strong><code>findBy</code></strong>
+            instead of <strong><code>findOneBy</code></strong>.</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findBy([<span class="st">&quot;name&quot;</span>=&gt;<span class="va">$name</span>])<span class="ot">;</span></span></code></pre></div>
+            <p>Then we send the <strong>$contacts</strong> array to a
+            new template and, using a loop, we can show every single
+            object. For instance, let’s create a new template named
+            <strong><code>contactlist.html.twig</code></strong> with
+            this content:</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>{% extends &#39;base.html.twig&#39; %}</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>{% block title %}Contact card{% endblock %}</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span>: <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span>: <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span>: <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span>: <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span>: <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span>: <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;example-wrapper&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Contact list<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    {% if contacts %}</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>        {% for contact in contacts %}</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Id:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ contact.id }}<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Name:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ contact.name }}<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Phone:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ contact.phone }}<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Email:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ contact.email }}<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">hr</span><span class="dt">/&gt;</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>        {% endfor %}</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    {% else %}</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>No matching contacts<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>    {% endif %}</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
+            <p>Then the controller gets the contact list and renders the
+            view.</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyname&#39;</span>)<span class="at">]</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getcontactbyname(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span>) {</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findBy([<span class="st">&quot;name&quot;</span>=&gt;<span class="va">$name</span>])<span class="ot">;</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactlist.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$contacts</span><span class="ot">,</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h3 data-number="5.3.4"
+            id="retrieving-all-the-objects-in-the-table"><span
+            class="header-section-number">5.3.4</span> Retrieving all
+            the objects in the table</h3>
+            <p>To retrieve all the objects in the table, we will use the
+            <strong>findAll()</strong> method. This method will return
+            an array with every single object in our table.</p>
+            <p>Let’s create a method <strong>contacts()</strong> to
+            retrieve all the contacts in the table and then render our
+            <strong>contactlist.html.twig</strong> template to show
+            them.</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_contacts&#39;</span>)<span class="at">]</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> contacts(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactlist.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$contacts</span><span class="ot">,</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Then, by calling the <strong>/contact</strong> route we
+            will get the whole contact list.</p>
+            <figure>
+            <img src="images/screen33.jpg" alt="Contact list" />
+            <figcaption aria-hidden="true">Contact list</figcaption>
+            </figure>
+            <blockquote>
+            <p>Remember to use <code>symfony console debug:router</code>
+            console command to view the routes order.</p>
+            </blockquote>
+            <h3 data-number="5.3.5"
+            id="automatically-fetching-objects"><span
+            class="header-section-number">5.3.5</span> Automatically
+            Fetching Objects</h3>
+            <p>In many cases, you can use the
+            <code>EntityValueResolver</code> to do the query
+            automatically. You can simplify the controller to:</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> contact(<span class="cn">C</span>ontact <span class="va">$contact</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contact.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Entity Value Resolver was introduced in Symfony 6.2. This
+            behavior is enabled by default on all the controllers, but
+            it can be disabled by setting the
+            <code>doctrine.orm.controller_resolver.auto_mapping</code>
+            config option to false.</p>
+            <p>More info about the Entity Value Resolver: <a
+            href="https://symfony.com/doc/6.3/doctrine.html#automatically-fetching-objects-entityvalueresolver">https://symfony.com/doc/6.3/doctrine.html#automatically-fetching-objects-entityvalueresolver</a></p>
+            <h2 data-number="5.4" id="advanced-queries"><span
+            class="header-section-number">5.4</span> Advanced
+            queries</h2>
+            <p>The methods that we have seen in the previous chapter
+            (find, findOneBy, findBy, findAll) belong to a class named
+            <strong>ServiceEntityRepository</strong>. This class is
+            extended by a repository class that Symfony creates for
+            every entity. In our case, the class for the
+            <strong>Contact</strong> entity is
+            <strong>ContactRepository</strong>.</p>
+            <p>This class can be found in the
+            <code>src\Repository</code> folder of our project, and it’s
+            editable. Therefore, we can modify its content and, more
+            important, we can add new methods. Let’s see an example.</p>
+            <p>When we search for a contact by its name, we need to
+            introduce the whole name. If we introduce only a part of the
+            name, the <code>findOneBy</code> or <code>findBy</code>
+            methods won’t be able to find the contact. Imagine that our
+            two contacts named “Fidel” have a surname: one of them is
+            <em>Fidel Oltra</em> and the other one is <em>Fidel
+            Landete</em>.</p>
+            <p>If we search for “Fidel”, we will get:</p>
+            <figure>
+            <img src="images/screen34.jpg"
+            alt="Contact “Fidel” not found" />
+            <figcaption aria-hidden="true">Contact “Fidel” not
+            found</figcaption>
+            </figure>
+            <p>That’s because the default <em>find</em> methods make a
+            full search. If we want to perform a partial search (WHERE
+            name LIKE…), we need to add a new <em>find</em> method to
+            our repository. In this case, let’s add a method
+            <strong><code>findByName</code></strong> in our
+            <code>src\Repository\ContactRepository</code> class:</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> findByName(<span class="va">$name</span>) {</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;createQueryBuilder(<span class="st">&#39;contact&#39;</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    -&gt;andWhere(<span class="st">&#39;contact.name LIKE :val&#39;</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    -&gt;setParameter(<span class="st">&#39;val&#39;</span><span class="ot">,</span> <span class="st">&#39;%&#39;</span><span class="op">.</span><span class="va">$name</span><span class="op">.</span><span class="st">&#39;%&#39;</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    -&gt;getQuery()</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    -&gt;getResult()<span class="ot">;</span>   </span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We use the <em><code>createQueryBuilder</code></em>
+            method to create a new query. The function
+            <em><code>andWhere</code></em> adds a condition, and
+            <em><code>setParameter</code></em> gives values to the
+            parameters of the condition. Finally,
+            <em><code>getQuery()-&gt;getResult()</code></em> returns an
+            array with the contacts that match the query.</p>
+            <p>Now, in our
+            <strong><code>getContactByname</code></strong> method, we
+            can use our <strong><code>findByName</code></strong>
+            function instead:</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findByName(<span class="va">$name</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>Now the method calls the new function
+            <strong><code>findByName</code></strong> so if we look for
+            <code>"Fidel"</code> we will get every contact with
+            <code>"Fidel"</code> in its name.</p>
+            <figure>
+            <img src="images/screen35.jpg"
+            alt="List with the contacts that match the partial name" />
+            <figcaption aria-hidden="true">List with the contacts that
+            match the partial name</figcaption>
+            </figure>
+            <p>More about the QueryBuilder syntax:</p>
+            <p><a
+            href="https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html">QueryBuilder</a></p>
+            <h2 data-number="5.5"
+            id="deleting-objects-from-the-database"><span
+            class="header-section-number">5.5</span> Deleting objects
+            from the database</h2>
+            <p>It’s very easy to remove <strong>one</strong> object from
+            the database. We just need to find the object and then call
+            the method <strong><em>remove</em></strong> of our entity
+            manager.</p>
+            <p>Let’s add a new method, <strong>deleteContact</strong>,
+            that receives an id from the route
+            <em><code>/contact/remove</code></em>:</p>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/remove/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_deletecontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> deleteContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span>) {</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we find the contact with the given id</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="va">$rep</span>-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// if it exists, we remove it</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$contact</span>) {</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;remove(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// now we refresh the contact list</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactlist.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$contacts</span><span class="ot">,</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>But, what if we want to delete all the objects that match
+            a given condition?</p>
+            <p>We have two options:</p>
+            <h3 data-number="5.5.1"
+            id="deleting-an-array-of-objects-from-the-controller"><span
+            class="header-section-number">5.5.1</span> Deleting an array
+            of objects from the controller</h3>
+            <p>If we can use a
+            <strong><em><code>find</code></em></strong> method to
+            retrieve the objects that we want to delete, we can solve
+            the problem in the controller method.</p>
+            <div class="sourceCode" id="cb39"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">// we retrieve the contacts that match the condition</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findBy(...write the condition here<span class="op">..</span>)<span class="ot">;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$contacts</span>) {</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// and now, we delete them one by one</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$contacts</span> <span class="kw">as</span> <span class="va">$contact</span>) {</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;remove(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>After retrieving the contacts that match the given
+            condition with
+            <strong><em><code>findBy()</code></em></strong>, we do a
+            <em>foreach</em> to delete the contacts one by one.</p>
+            <h3 data-number="5.5.2"
+            id="deleting-an-array-of-objects-from-the-repository-class"><span
+            class="header-section-number">5.5.2</span> Deleting an array
+            of objects from the repository class</h3>
+            <p>As we have seen before, if we can’t make use of the
+            <em>find</em> methods available from the repository, we can
+            create our own methods by adding functions to the repository
+            class. If we need a new <em>find</em> method to search the
+            objects we want to delete, we can remove them in the same
+            method.</p>
+            <p>Remember our findByName method we created in the
+            ContactRepository class to be able to search for the
+            contacts which name match a certain string pattern:</p>
+            <div class="sourceCode" id="cb40"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> findByName(<span class="va">$name</span>) {</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;createQueryBuilder(<span class="st">&#39;contact&#39;</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    -&gt;andWhere(<span class="st">&#39;contact.name LIKE :val&#39;</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    -&gt;setParameter(<span class="st">&#39;val&#39;</span><span class="ot">,</span> <span class="st">&#39;%&#39;</span><span class="op">.</span><span class="va">$name</span><span class="op">.</span><span class="st">&#39;%&#39;</span>)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    -&gt;getQuery()</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    -&gt;getResult()<span class="ot">;</span>   </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We can copy and paste to create a
+            <strong><em><code>deleteByName</code></em></strong> function
+            that deletes the contacts that meet the condition, instead
+            of returning them. So, we first add a call to the function
+            <strong><em><code>delete()</code></em></strong> before the
+            condition; then, as we are not going to return an array, we
+            will change the call to
+            <strong><em><code>getResult()</code></em></strong> for a
+            call to the <strong><em><code>execute()</code></em></strong>
+            function.</p>
+            <div class="sourceCode" id="cb41"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> deleteByName(<span class="va">$name</span>) {</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;createQueryBuilder(<span class="st">&#39;contact&#39;</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    -&gt;delete()</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    -&gt;andWhere(<span class="st">&#39;contact.name LIKE :val&#39;</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    -&gt;setParameter(<span class="st">&#39;val&#39;</span><span class="ot">,</span> <span class="st">&#39;%&#39;</span><span class="op">.</span><span class="va">$name</span><span class="op">.</span><span class="st">&#39;%&#39;</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    -&gt;getQuery()</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    -&gt;execute()<span class="ot">;</span>   </span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Now, in the controller, we can use the new
+            <strong>deleteByName</strong> function to create a new
+            method that receives a partial name as a parameter and then
+            removes any contact that match the name pattern:</p>
+            <div class="sourceCode" id="cb42"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/remove/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_deletecontactbyname&#39;</span>)<span class="at">]</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> deleteContactByName(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span>) {</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$deleted</span><span class="op">=</span><span class="va">$rep</span>-&gt;deleteByName(<span class="va">$name</span>)<span class="ot">;</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">// now we refresh the contact list</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactlist.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$contacts</span><span class="ot">,</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+            <h2 data-number="5.6"
+            id="updating-objects-in-the-database"><span
+            class="header-section-number">5.6</span> Updating objects in
+            the database</h2>
+            <p>Updating an object in the database is very easy. We just
+            need to find the object we want to update, modify the
+            desired attributes and then make a
+            <strong><code>flush()</code></strong>.</p>
+            <h3 data-number="5.6.1" id="updating-one-object"><span
+            class="header-section-number">5.6.1</span> Updating one
+            object</h3>
+            <p>To update a single object, we do:</p>
+            <ul>
+            <li>a <code>find($id)</code> to find and retrieve the
+            object</li>
+            <li>a call to the respective <strong>set</strong> method to
+            make the change</li>
+            <li>a call to <code>flush()</code></li>
+            </ul>
+            <div class="sourceCode" id="cb43"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span> <span class="op">=</span> <span class="va">$rep</span>-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$contact</span>) {</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setName(<span class="va">$newname</span>)<span class="ot">;</span> <span class="co">// we change the name</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// other modifications...</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h3 data-number="5.6.2"
+            id="updating-a-list-of-objects"><span
+            class="header-section-number">5.6.2</span> Updating a list
+            of objects</h3>
+            <p>To update a list of objects from the controller, we
+            do:</p>
+            <ul>
+            <li>a
+            <strong><em><code>findBy(condition)</code></em></strong> to
+            find and retrieve the objects (or a
+            <strong><em><code>findAll()</code></em></strong> if we want
+            to apply the changes to all the objects in the table).</li>
+            <li>a <strong><em><code>foreach</code></em></strong> to go
+            over every object in the list.</li>
+            <li>inside the
+            <strong><em><code>foreach</code></em></strong>, a call to
+            the respective set methods to make the changes and then
+            finally a
+            <strong><em><code>flush()</code></em></strong>.</li>
+            </ul>
+            <p>Let’s add a “96” area code to every phone in our contact
+            table:</p>
+            <div class="sourceCode" id="cb44"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/add/{code}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;addareacode&#39;</span>)<span class="at">]</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> addAreaCode(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span><span class="va">$code</span>) {</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$contacts</span> <span class="kw">as</span> <span class="va">$contact</span>) {</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phoneNumber</span><span class="op">=</span><span class="va">$contact</span>-&gt;getPhone()<span class="ot">;</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phoneNumber</span><span class="op">=</span><span class="va">$code</span><span class="op">.</span><span class="va">$phoneNumber</span><span class="ot">;</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setPhone(<span class="va">$phoneNumber</span>)<span class="ot">;</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span>   </span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactlist.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$contacts</span><span class="ot">,</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>This is our contact list:</p>
+            <figure>
+            <img src="images/screen38.jpg"
+            alt="Contact list before adding the area code" />
+            <figcaption aria-hidden="true">Contact list before adding
+            the area code</figcaption>
+            </figure>
+            <p>Now let’s do
+            <code>http://localhost:8000/contact/add/96</code> and then
+            check the list again:</p>
+            <figure>
+            <img src="images/screen39.jpg"
+            alt="Contact list after adding the area code" />
+            <figcaption aria-hidden="true">Contact list after adding the
+            area code</figcaption>
+            </figure>
+            <h3 data-number="5.6.3"
+            id="updating-a-list-of-objects-using-the-repository-class"><span
+            class="header-section-number">5.6.3</span> Updating a list
+            of objects using the repository class</h3>
+            <p>What if we add a couple of contacts without the “96” in
+            the phone, and then we want to add the “96” only to these
+            contacts? Time to get back to the repository class.</p>
+            <p>First, we would need a <em>find</em> method to search
+            only the contacts whose phone number doesn’t start with “96”
+            (or whatever the code is).</p>
+            <div class="sourceCode" id="cb45"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> findByAreaCodeNOT(<span class="va">$code</span>) {</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;createQueryBuilder(<span class="st">&#39;contact&#39;</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    -&gt;andWhere(<span class="st">&#39;contact.phone NOT LIKE :val&#39;</span>)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    -&gt;setParameter(<span class="st">&#39;val&#39;</span><span class="ot">,</span> <span class="va">$code</span><span class="op">.</span><span class="st">&#39;%&#39;</span>)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    -&gt;getQuery()</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    -&gt;getResult()<span class="ot">;</span>   </span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>And now let’s change the code in our controller method
+            to:</p>
+            <div class="sourceCode" id="cb46"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/add/{code}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;addareacode&#39;</span>)<span class="at">]</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> addAreaCode(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span><span class="va">$code</span>) {</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span>entityManager-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contactstochange</span><span class="op">=</span><span class="va">$rep</span>-&gt;findByAreaCodeNOT(<span class="va">$code</span>)<span class="ot">;</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$contactstochange</span> <span class="kw">as</span> <span class="va">$contact</span>) {</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phoneNumber</span><span class="op">=</span><span class="va">$contact</span>-&gt;getPhone()<span class="ot">;</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phoneNumber</span><span class="op">=</span><span class="st">&quot;96&quot;</span><span class="op">.</span><span class="va">$phoneNumber</span><span class="ot">;</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setPhone(<span class="va">$phoneNumber</span>)<span class="ot">;</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span>   </span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactlist.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$contacts</span><span class="ot">,</span></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Now, if we have this contact list:</p>
+            <figure>
+            <img src="images/screen40.jpg"
+            alt="Contact list before the update" />
+            <figcaption aria-hidden="true">Contact list before the
+            update</figcaption>
+            </figure>
+            <p>After executing the method from the route
+            <code>localhost:8000/contact/add/96</code> we will get:</p>
+            <figure>
+            <img src="images/screen41.jpg"
+            alt="Contact list after the update" />
+            <figcaption aria-hidden="true">Contact list after the
+            update</figcaption>
+            </figure>
+            <p>Pay attention to the contacts 10 and 11. They are the
+            only two contacts that have been modified.</p>
+            <h1 data-number="6" id="relationships"><span
+            class="header-section-number">6</span> Relationships</h1>
+            <p>As you know, a database usually contains more than one
+            table, and these tables should have some kind of
+            relationship between them. We know how to implement a
+            relationship between tables in SQL, and how to use tools
+            like <em>phpMyAdmin</em>. But, how to implement the same
+            relationships in Doctrine?</p>
+            <p>The short answer is: the same way that we add any other
+            property to an entity. We just need to pay attention to the
+            <strong>type</strong> of the new property, and be sure that
+            the referred table already exists.</p>
+            <p>Remember that we can find two kind of relationships
+            between tables:</p>
+            <ul>
+            <li>A relationship where more than one table has a M
+            participation (1:1, 1:M, M:1, 1:1:M…)</li>
+            <li>A relationship where none or only one table has a M
+            participation (M:M, 1:M:M, M:M:M…)</li>
+            </ul>
+            <p>The main difference is that, in the second type, a new
+            table has to be created. In the first type there’s no need
+            to create a new table, we will implement the relationship
+            only by using foreign keys in the existing tables.</p>
+            <p>Let’s implement a couple of examples to see how it works
+            in Doctrine / Symfony.</p>
+            <h2 data-number="6.1" id="m-relationships"><span
+            class="header-section-number">6.1</span> 1:M
+            relationships</h2>
+            <p>We are going to work with our <strong>contacts</strong>
+            database. At this moment, we have only one table in the
+            database: <strong>contact</strong>. The structure of the
+            table is:</p>
+            <figure>
+            <img src="images/screen49.jpg" alt="Contact table" />
+            <figcaption aria-hidden="true">Contact table</figcaption>
+            </figure>
+            <p>Now, we want to add a <strong>city</strong> column that
+            references a new table called <strong>city</strong> as well.
+            In a city we can have a lot of contacts, but in a given
+            moment a contact will have only one city. So the
+            relationship is <strong>1:M</strong> (1 city –&gt; M
+            contacts).</p>
+            <p>We know how to work in these situations. First, we create
+            the new table <strong>city</strong> with, let’s say, a
+            primary key (id), the postal code and the city name. Then we
+            will add a column in the <strong>contact</strong> table that
+            will be a foreign key linked to the primary key of
+            <strong>city</strong>. We create the relationship in the
+            relation view section, and that’s all.</p>
+            <p>But we don’t want to work directly in the database, we
+            want to do exactly the same process using Doctrine and
+            Symfony.</p>
+            <h3 data-number="6.1.1" id="creating-the-new-entity"><span
+            class="header-section-number">6.1.1</span> Creating the new
+            entity</h3>
+            <p>First, let’s create our <strong>city</strong>
+            table/entity as we already know: with
+            <code>symfony console make:entity</code>.</p>
+            <p>Now we can create the entity <strong>city</strong>.
+            Remember: we won’t add the <strong><code>id</code></strong>
+            here, it’s automatic. So the fields will be the postal code
+            and the city name.</p>
+            <pre class="console"><code>symfony console make:entity
+
+ Class name of the entity to create or update (e.g. BravePopsicle):
+ &gt; City
+
+ created: src/Entity/City.php
+ created: src/Repository/CityRepository.php
+ 
+ Entity generated! Now let&#39;s add some fields!
+ You can always add more fields later manually or by re-running this command.
+
+ New property name (press &lt;return&gt; to stop adding fields):
+ &gt; postalCode       
+
+ Field type (enter ? to see all types) [string]:
+ &gt; 
+
+ Field length [255]:
+ &gt; 5
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ &gt; 
+
+ updated: src/Entity/City.php
+
+ Add another property? Enter the property name (or press &lt;return&gt; to stop adding fields):
+ &gt; cityName
+
+ Field type (enter ? to see all types) [string]:
+ &gt; 
+
+ Field length [255]:
+ &gt; 50
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ &gt; 
+
+ updated: src/Entity/City.php
+
+ Add another property? Enter the property name (or press &lt;return&gt; to stop adding fields):
+ &gt; </code></pre>
+            <p>Now, we must generate the migration files and then run
+            the migration:</p>
+            <pre class="console"><code>$ symfony console make:migration
+$ symfony console doctrine:migrations:migrate</code></pre>
+            <p>Now we should have the entity <strong>City</strong> in
+            our project, and the table <strong>city</strong> in our
+            database.</p>
+            <p>The entity:</p>
+            <div class="sourceCode" id="cb49"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity<span class="ot">;</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">R</span>epository\<span class="cn">C</span>ityRepository<span class="ot">;</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">D</span>octrine\<span class="cn">ORM</span>\<span class="cn">M</span>apping <span class="kw">as</span> <span class="cn">ORM</span><span class="ot">;</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">E</span>ntity(repositoryClass<span class="ot">:</span> <span class="cn">C</span>ityRepository::<span class="kw">class</span>)<span class="at">]</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ity</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">I</span>d<span class="at">]</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">G</span>eneratedValue<span class="at">]</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn<span class="at">]</span></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">int</span> <span class="va">$id</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">5</span>)<span class="at">]</span></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$postalCode</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">50</span>)<span class="at">]</span></span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$cityName</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getId()<span class="ot">:</span> <span class="ot">?</span><span class="dt">int</span></span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;id<span class="ot">;</span></span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getPostalCode()<span class="ot">:</span> <span class="ot">?</span><span class="dt">string</span></span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;postalCode<span class="ot">;</span></span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> setPostalCode(<span class="dt">string</span> <span class="va">$postalCode</span>)<span class="ot">:</span> <span class="kw">static</span></span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;postalCode <span class="op">=</span> <span class="va">$postalCode</span><span class="ot">;</span></span>
+<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-36"><a href="#cb49-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
+<span id="cb49-37"><a href="#cb49-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-38"><a href="#cb49-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-39"><a href="#cb49-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getCityName()<span class="ot">:</span> <span class="ot">?</span><span class="dt">string</span></span>
+<span id="cb49-40"><a href="#cb49-40" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb49-41"><a href="#cb49-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;cityName<span class="ot">;</span></span>
+<span id="cb49-42"><a href="#cb49-42" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-43"><a href="#cb49-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-44"><a href="#cb49-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> setCityName(<span class="dt">string</span> <span class="va">$cityName</span>)<span class="ot">:</span> <span class="kw">static</span></span>
+<span id="cb49-45"><a href="#cb49-45" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb49-46"><a href="#cb49-46" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;cityName <span class="op">=</span> <span class="va">$cityName</span><span class="ot">;</span></span>
+<span id="cb49-47"><a href="#cb49-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-48"><a href="#cb49-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
+<span id="cb49-49"><a href="#cb49-49" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-50"><a href="#cb49-50" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>And here’s the table:</p>
+            <figure>
+            <img src="images/screen50.jpg" alt="City table" />
+            <figcaption aria-hidden="true">City table</figcaption>
+            </figure>
+            <h3 data-number="6.1.2" id="creating-the-relationship"><span
+            class="header-section-number">6.1.2</span> Creating the
+            relationship</h3>
+            <p>Now, to complete the process, we need to add a property
+            <strong><em>city</em></strong> to our entity
+            <strong>Contact</strong>. That property will perform the
+            function of foreign key, making reference to the city where
+            our contact lives.</p>
+            <p>We add the property doing again a
+            <strong>make:entity</strong>. Then, when we are asked about
+            the property type, we must answer
+            <strong><em>relation</em></strong>. After that we must enter
+            the related entity, and the type of the relationship.</p>
+            <p>Finally, we must say if we want to have a method in the
+            referred class to get an array with all the occurrences of
+            the first class. In our case, we will be asked if we want to
+            have a <code>getContacts()</code> method in the City class
+            that would return a list of contacts of a given city.</p>
+            <p>This is the whole process.</p>
+            <pre class="console"><code>$ symfony console make:entity
+
+ Class name of the entity to create or update (e.g. OrangePizza):
+ &gt; contact
+ Your entity already exists! So let&#39;s add some new fields!
+ New property name (press &lt;return&gt; to stop adding fields):
+ &gt; city
+ Field type (enter ? to see all types) [string]:
+ &gt; relation
+ What class should this entity be related to?:
+ &gt; city
+
+What type of relationship is this? 
+
+------------------------------ 
+Type           Description                                                        
+----------------------------- 
+ManyToOne   Each Contact relates to (has) one city.                            
+            Each city can relate to (can have) many Contact objects        
+OneToMany   Each Contact can relate to (can have) many city objects.           
+            Each city relates to (has) one Contact                             
+ManyToMany  Each Contact can relate to (can have) many city objects.           
+            Each city can also relate to (can also have) many Contact objects  
+OneToOne    Each Contact relates to (has) exactly one city.                    
+            Each city also relates to (has) exactly one Contact.               
+----------------------------- 
+
+ Relation type? [ManyToOne, OneToMany, ManyToMany, OneToOne]:
+ &gt; ManyToOne
+ Is the Contact.city property allowed to be null (nullable)? (yes/no) [yes]:
+ &gt;   
+ Do you want to add a new property to city so that you can access/update Contact objects from it - e.g. $city-&gt;getContacts()? (yes/no) [yes]:
+ &gt; 
+ A new property will also be added to the city class so that you can access the related Contact objects from it.
+ New field name inside city [contacts]:
+ &gt; 
+ updated: src/Entity/Contact.php
+ updated: src/Entity/City.php
+
+ Add another property? Enter the property name (or press &lt;return&gt; to stop adding fields):
+ &gt; </code></pre>
+            <p>Now we do again the
+            <code>symfony console make:migration</code> and
+            <code>symfony console doctrine:migrations:migrate</code>. As
+            a result, we get a new property (city) in our contact class
+            with its methods get and set:</p>
+            <div class="sourceCode" id="cb51"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">M</span>anyToOne(inversedBy<span class="ot">:</span> <span class="st">&#39;contacts&#39;</span>)<span class="at">]</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="cn">C</span>ity <span class="va">$city</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getCity()<span class="ot">:</span> <span class="ot">?</span><span class="cn">C</span>ity {</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;city<span class="ot">;</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> setCity(<span class="ot">?</span><span class="cn">C</span>ity <span class="va">$city</span>)<span class="ot">:</span> <span class="kw">static</span> {</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$this</span>-&gt;city <span class="op">=</span> <span class="va">$city</span><span class="ot">;</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We get a new property (contacts) in our city class with
+            the method <code>get</code>, a method to add a new contact
+            to the city, and a method to remove a contact from the
+            city:</p>
+            <div class="sourceCode" id="cb52"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">O</span>neToMany(mappedBy<span class="ot">:</span> <span class="st">&#39;city&#39;</span><span class="ot">,</span> targetEntity<span class="ot">:</span> <span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="at">]</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="cn">C</span>ollection <span class="va">$contacts</span><span class="ot">;</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@return</span><span class="co"> Collection</span><span class="kw">&lt;int</span><span class="ot">, Contact</span><span class="kw">&gt;</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getContacts()<span class="ot">:</span> <span class="cn">C</span>ollection {</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;contacts<span class="ot">;</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> addContact(<span class="cn">C</span>ontact <span class="va">$contact</span>)<span class="ot">:</span> <span class="kw">static</span> {</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="va">$this</span>-&gt;contacts-&gt;contains(<span class="va">$contact</span>)) {</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;contacts-&gt;add(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setCity(<span class="va">$this</span>)<span class="ot">;</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> removeContact(<span class="cn">C</span>ontact <span class="va">$contact</span>)<span class="ot">:</span> <span class="kw">static</span> {</span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="va">$this</span>-&gt;contacts-&gt;removeElement(<span class="va">$contact</span>)) {</span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>        <span class="co">// set the owning side to null (unless already changed)</span></span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="va">$contact</span>-&gt;getCity() <span class="op">===</span> <span class="va">$this</span>) {</span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a>            <span class="va">$contact</span>-&gt;setCity(<span class="kw">null</span>)<span class="ot">;</span></span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>And finally, we get the foreign key in our
+            <strong>contact</strong> table:</p>
+            <figure>
+            <img src="images/screen51.jpg"
+            alt="Foreign key added to contact table" />
+            <figcaption aria-hidden="true">Foreign key added to contact
+            table</figcaption>
+            </figure>
+            <h3 data-number="6.1.3"
+            id="managing-the-relationships-from-symfony"><span
+            class="header-section-number">6.1.3</span> Managing the
+            relationships from Symfony</h3>
+            <p>At this point, we need to add some things to our
+            application. First, we should create a new controller for
+            the entity <strong>City</strong> with at least two
+            methods:</p>
+            <ul>
+            <li>a method to list the cities (with its template)</li>
+            <li>a method to add a new city (with its template)</li>
+            </ul>
+            <p>First, let’s create the <strong>CityController</strong>
+            controller:</p>
+            <pre class="console"><code>symfony console make:controller CityController</code></pre>
+            <p>Then we change the
+            <strong><em><code>index()</code></em></strong> method as
+            follows:</p>
+            <div class="sourceCode" id="cb54"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/city&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_city&#39;</span>)<span class="at">]</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ity::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$cities</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;city/index.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;cities&#39;</span> =&gt; <span class="va">$cities</span><span class="ot">,</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span> </span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We are just retrieving all the cities from the database,
+            and then rendering the view with a cities array as a
+            parameter. The view uses a twig template:</p>
+            <div class="sourceCode" id="cb55"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>{% extends &#39;base.html.twig&#39; %}</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>{% block title %}Cities list{% endblock %}</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>{% if cities %}</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Cities list<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">table</span><span class="dt">&gt;</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Id<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Postal Code<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Name<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>    {% for city in cities %}</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>{{ city.id }}<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>{{ city.postalcode }}<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>{{ city.cityname }}<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>    {% endfor %}</span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">table</span><span class="dt">&gt;</span></span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>{% else %}</span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>No cities in the database<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a>{% endif %}</span>
+<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
+            <p>Now let’s make a controller method to add a new city
+            manually. The process is the same seen in the point to add a
+            new contact.</p>
+            <p>Now, by calling the URL
+            <code>localhost:8000/city/new</code>, or through a link in
+            the cities list, we add a new city and then the updated list
+            appears.</p>
+            <figure>
+            <img src="images/screen53.jpg" alt="Cities list" />
+            <figcaption aria-hidden="true">Cities list</figcaption>
+            </figure>
+            <p>By now, all these operations are very familiar to us. We
+            are performing the same tasks that we did with the contact
+            table: show a list, add a new city…</p>
+            <p>But at this moment, we have a relationship between both
+            tables, contact and city. How can we say that a contact
+            lives in a certain city?</p>
+            <h3 data-number="6.1.4"
+            id="adding-a-new-object-with-a-foreign-key"><span
+            class="header-section-number">6.1.4</span> Adding a new
+            object with a foreign key</h3>
+            <p>We are going to learn how to add a new object to a class
+            that has a foreign key. In the entities, that means that the
+            class (in our case, <strong>Contact</strong>) has a property
+            that is an instance of another class (in our case,
+            <strong>City</strong>). Let’s see how to proceed in this
+            situation.</p>
+            <p>First, in the <strong>ContactController</strong> class we
+            add the lines:</p>
+            <div class="sourceCode" id="cb56"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity\<span class="cn">C</span>ity<span class="ot">;</span></span></code></pre></div>
+            <p>And in the update and insert methods add the new property
+            retrieving a city object from the database (by its
+            <code>id</code>) and then using the new <code>setCity</code>
+            method:</p>
+            <div class="sourceCode" id="cb57"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ity::<span class="kw">class</span>)-&gt;find(<span class="va">$id_city</span>)<span class="ot">;</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span>-&gt;setCity(<span class="va">$city</span>)<span class="ot">;</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+            <p>Just by doing <code>persist()</code> and
+            <code>flush()</code> with the contact, the property
+            <em>city</em> will be updated in our database.</p>
+            <div class="sourceCode" id="cb58"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="va">$entityManager</span>-&gt;persist(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span></code></pre></div>
+            <figure>
+            <img src="images/screen56.jpg"
+            alt="Contact added to the database" />
+            <figcaption aria-hidden="true">Contact added to the
+            database</figcaption>
+            </figure>
+            <p>Now, in the contact list we can show the city where the
+            contact lives. We just need to edit the contact list
+            template and add a new column to the table:</p>
+            <div class="sourceCode" id="cb59"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>{{ contact.city.cityname }}<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span></code></pre></div>
+            <figure>
+            <img src="images/screen57.jpg"
+            alt="The city in the contact list" />
+            <figcaption aria-hidden="true">The city in the contact
+            list</figcaption>
+            </figure>
+            <p>We should change the updating form and the contact card
+            as well in order to modify / show the city.</p>
+            <h3 data-number="6.1.5"
+            id="retrieving-data-using-the-primary-key---foreign-key-link."><span
+            class="header-section-number">6.1.5</span> Retrieving data
+            using the primary key - foreign key link.</h3>
+            <p>Now we know how to enter the city where a new contact
+            lives. When we show the contact list, the city where every
+            contact lives will appear.</p>
+            <p>Now, let’s try something different. We want to show, in
+            every city card, a list of the contacts that live there.
+            How?</p>
+            <p>First, we need to remember that, when we created the
+            relationship, we said that we wanted the link to work in
+            both directions. That means that we have a
+            <strong><em><code>getCity()</code></em></strong> method in
+            the <strong>Contact</strong> class, but we have a
+            <strong><em><code>getContact()</code></em></strong> in the
+            <strong>City</strong> class as well.</p>
+            <div class="sourceCode" id="cb60"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@return</span><span class="co"> Collection</span><span class="kw">&lt;int</span><span class="ot">, Contact</span><span class="kw">&gt;</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getContacts()<span class="ot">:</span> <span class="cn">C</span>ollection {</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;contacts<span class="ot">;</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Let’s create a twig template to show the content of a
+            city, and a controller method to render that template.</p>
+            <p>This is the method we have to recover a city given its
+            id:</p>
+            <div class="sourceCode" id="cb61"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/city/{id&lt;id\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcitybyid&#39;</span>)<span class="at">]</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getCityById(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$city</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ity::<span class="kw">class</span>)-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;city/city.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;city&#39;</span> =&gt; <span class="va">$city</span><span class="ot">,</span></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The twig template:</p>
+            <div class="sourceCode" id="cb62"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>{% extends &#39;base.html.twig&#39; %}</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>{% block title %}{{ title }}{% endblock %}</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span>: <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span>: <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span>: <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span>: <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span>: <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span>: <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;example-wrapper&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>{{ title }}<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>    {% if city %}</span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Id:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ city.id }}<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Postal Code:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ city.postalcode }}<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>City Name:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ city.cityname }}<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>    {% else %}</span>
+<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>The city doesn&#39;t exist<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a>    {% endif %}</span>
+<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
+            <p>As a result, we get:</p>
+            <figure>
+            <img src="images/screen58.jpg" alt="The city card" />
+            <figcaption aria-hidden="true">The city card</figcaption>
+            </figure>
+            <p>And finally let’s see how to show the contacts. It’s very
+            easy, because we have the
+            <strong><code>getContacts()</code></strong> method in the
+            <strong>City</strong> class, as we saw above. Thus, as we
+            know, we can use <code>city.contacts</code> in the twig to
+            get the list of the contacts that live in the city.</p>
+            <p>So, we add to the twig template a <code>for</code> loop
+            to go over the contact list that belongs to the city we are
+            displaying. This is the modified template:</p>
+            <div class="sourceCode" id="cb63"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>{% extends &#39;base.html.twig&#39; %}</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>{% block title %}{{ title }}{% endblock %}</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>{{ title }}<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h4</span><span class="dt">&gt;</span>Postal code: {{ city.postalcode }}<span class="dt">&lt;/</span><span class="kw">h4</span><span class="dt">&gt;</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h4</span><span class="dt">&gt;</span>City name: {{ city.cityname }}<span class="dt">&lt;/</span><span class="kw">h4</span><span class="dt">&gt;</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h4</span><span class="dt">&gt;</span>Contact list: <span class="dt">&lt;/</span><span class="kw">h4</span><span class="dt">&gt;</span></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>{% for contact in city.contacts %} </span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Name:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ contact.name }} </span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Phone:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ contact.phone }} </span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Email:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ contact.email }}</span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">/&gt;</span></span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>{% endfor %}</span>
+<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
+            <p>And when we go to the city card, this is the result we
+            get:</p>
+            <figure>
+            <img src="images/screen59.jpg"
+            alt="City with their contacts" />
+            <figcaption aria-hidden="true">City with their
+            contacts</figcaption>
+            </figure>
+            <h3 data-number="6.1.6"
+            id="adding-a-new-entity-in-both-classes."><span
+            class="header-section-number">6.1.6</span> Adding a new
+            entity in both classes.</h3>
+            <p>Let’s suppose that we want to add a new contact, and this
+            contact lives in a city that doesn’t exist in our
+            database.</p>
+            <p>We can add both objects to the database in the same
+            method, but first we need to persist the referred object,
+            and then the object with the foreign key.</p>
+            <p>In our example:</p>
+            <div class="sourceCode" id="cb64"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co">// we create the new city</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">C</span>ity()<span class="ot">;</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span>-&gt;setPostalcode(...)<span class="ot">;</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span>-&gt;setCityname(...)<span class="ot">;</span></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="co">//we create the contact</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span>-&gt;setName(...)<span class="ot">;</span></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span>-&gt;setPhone(...)<span class="ot">;</span></span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span>-&gt;setEmail(...)<span class="ot">;</span></span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="co">// we assign the city to the contact</span></span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span>-&gt;setCity(<span class="va">$city</span>)<span class="ot">;</span></span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a><span class="co">// and now first we persist the city</span></span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a><span class="va">$entityManager</span>-&gt;persist(<span class="va">$city</span>)<span class="ot">;</span></span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a><span class="co">// then the contact</span></span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a><span class="va">$entityManager</span>-&gt;persist(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a><span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span></code></pre></div>
+            <h2 data-number="6.2"
+            id="other-association-types-11-mm"><span
+            class="header-section-number">6.2</span> Other association
+            types (1:1, M:M)</h2>
+            <p>The relationships <strong>1:1</strong> and
+            <strong>M:M</strong> work the same way that
+            <strong>1:M</strong>.</p>
+            <p>If the relationship is <strong>1:1</strong>, we will get
+            in both classes an object of the other class.</p>
+            <p>If the relationship is <strong>M:M</strong>, we will get
+            in both classes a collection of objects of the other
+            class.</p>
+            <p>More about mapping relationships in Doctrine.</p>
+            <p><a
+            href="https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/association-mapping.html">Association
+            mapping in Doctrine</a></p>
+            <p><a
+            href="https://symfony.com/doc/current/doctrine.html">Symfony
+            Doctrine documentation</a></p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
