@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />        <title>Unit 12. Databases with Doctrine. Guided example.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 12. Databases with Doctrine. Guided
+example.</h1>
+            <!---->
+            <!--  -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#overview" id="toc-overview"><span
+class="toc-section-number">1</span> Overview</a></li>
+<li><a href="#database-connection-configuration"
+id="toc-database-connection-configuration"><span
+class="toc-section-number">2</span> Database connection
+configuration</a></li>
+<li><a href="#models" id="toc-models"><span
+class="toc-section-number">3</span> Models</a></li>
+<li><a href="#queries" id="toc-queries"><span
+class="toc-section-number">4</span> Queries</a>
+<ul>
+<li><a href="#select-queries" id="toc-select-queries"><span
+class="toc-section-number">4.1</span> Select queries</a>
+<ul>
+<li><a href="#searching-contacts" id="toc-searching-contacts"><span
+class="toc-section-number">4.1.1</span> Searching contacts</a></li>
+</ul></li>
+<li><a href="#inserts" id="toc-inserts"><span
+class="toc-section-number">4.2</span> Inserts</a>
+<ul>
+<li><a href="#adding-a-new-contact" id="toc-adding-a-new-contact"><span
+class="toc-section-number">4.2.1</span> Adding a new contact</a></li>
+<li><a href="#adding-a-new-phone" id="toc-adding-a-new-phone"><span
+class="toc-section-number">4.2.2</span> Adding a new phone</a></li>
+</ul></li>
+<li><a href="#updates" id="toc-updates"><span
+class="toc-section-number">4.3</span> Updates</a></li>
+<li><a href="#deletions" id="toc-deletions"><span
+class="toc-section-number">4.4</span> Deletions</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <p>In this example we’re going to do the model part and
+            database connection of the Contacts application. It follows
+            the last guided practice.</p>
+            <h1 data-number="1" id="overview"><span
+            class="header-section-number">1</span> Overview</h1>
+            <p>The diagram entity-relationship of our database is:</p>
+            <figure>
+            <img src="images/contacts-symfony.drawio.png"
+            alt="Contacts database" />
+            <figcaption aria-hidden="true">Contacts
+            database</figcaption>
+            </figure>
+            <p>Each contact can have 0 or more phones and each phone
+            must belong to a contact.</p>
+            <p>As we need the <strong>Doctrine ORM</strong> packet on
+            our project, install it using Composer:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require symfony/orm-pack</span></code></pre></div>
+            <h1 data-number="2"
+            id="database-connection-configuration"><span
+            class="header-section-number">2</span> Database connection
+            configuration</h1>
+            <p>First of all, we need to create a <code>.env.local</code>
+            file in our project root folder. The purpose of this file is
+            to write the configurations needed to connect to the local
+            database, including passwords.</p>
+            <p>This file <strong>must be listed in the
+            <code>.gitignore</code> file</strong> because we don’t want
+            to upload it to the version control. Please, check it
+            carefully.</p>
+            <p>The content of the .env.local file should have the
+            line:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_URL</span><span class="op">=</span><span class="st">&quot;mysql://contactsymfony:contacts@127.0.0.1:3306/contactsymfony?serverVersion=8&amp;charset=utf8mb4&quot;</span></span></code></pre></div>
+            <p>Check your server version. You can change your user and
+            password if you want.</p>
+            <p>As you should know, the user used to operate with the
+            database must be a user with permissions only to that
+            database. So it’s better if you create the database and the
+            user needed before. You can do that operation with
+            PhpMyAdmin or in the MySql console:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">&#39;contactsymfony&#39;</span>@<span class="st">&#39;%&#39;</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">&#39;contacts&#39;</span>;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> `contactsymfony`;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> `contactsymfony`.<span class="op">*</span> <span class="kw">TO</span> <span class="st">&#39;contactsymfony&#39;</span>@<span class="st">&#39;%&#39;</span>;</span></code></pre></div>
+            <h1 data-number="3" id="models"><span
+            class="header-section-number">3</span> Models</h1>
+            <p>To create the Contact model, run the next command in the
+            project folder:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console make:entity Contact</span></code></pre></div>
+            <p>And answer the questions:</p>
+            <pre><code>New property name (press &lt;return&gt; to stop adding fields):
+&gt; title
+
+Field type (enter ? to see all types) [string]:
+&gt; 
+
+Field length [255]:
+&gt; 5
+
+Can this field be null in the database (nullable) (yes/no) [no]:
+&gt; 
+
+updated: src/Entity/Contact.php
+
+Add another property? Enter the property name (or press &lt;return&gt; to stop adding fields):
+&gt; name
+
+Field type (enter ? to see all types) [string]:
+&gt; 
+
+Field length [255]:
+&gt; 100
+
+Can this field be null in the database (nullable) (yes/no) [no]:
+&gt; no
+
+updated: src/Entity/Contact.php</code></pre>
+            <pre><code>Add another property? Enter the property name (or press &lt;return&gt; to stop adding fields):
+&gt; surname
+
+Field type (enter ? to see all types) [string]:
+&gt; 
+
+Field length [255]:
+&gt; 100
+
+Can this field be null in the database (nullable) (yes/no) [no]:
+&gt; yes
+
+updated: src/Entity/Contact.php
+
+Add another property? Enter the property name (or press &lt;return&gt; to stop adding fields):
+&gt; birthdate
+
+Field type (enter ? to see all types) [string]:
+&gt; date
+
+Can this field be null in the database (nullable) (yes/no) [no]:
+&gt; 
+
+updated: src/Entity/Contact.php
+
+Add another property? Enter the property name (or press &lt;return&gt; to stop adding fields):
+&gt; email
+
+Field type (enter ? to see all types) [string]:
+&gt; 
+
+Field length [255]:
+&gt; 50
+
+Can this field be null in the database (nullable) (yes/no) [no]:
+&gt; yes
+
+updated: src/Entity/Contact.php</code></pre>
+            <p>And the Phone model:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console make:entity Phone</span></code></pre></div>
+            <pre><code> New property name (press &lt;return&gt; to stop adding fields):
+ &gt; id_contact
+
+ Field type (enter ? to see all types) [string]:
+ &gt; relation
+
+ What class should this entity be related to?:
+ &gt; Contact
+
+What type of relationship is this?
+ ------------ ------------------------------------------------- 
+  Type         Description                                                          
+ ------------ ------------------------------------------------- 
+  ManyToOne    Each Phone relates to (has) one Contact.                             
+               Each Contact can relate to (can have) many Phone objects.            
+                                                                                    
+  OneToMany    Each Phone can relate to (can have) many Contact objects.            
+               Each Contact relates to (has) one Phone.                             
+                                                                                    
+  ManyToMany   Each Phone can relate to (can have) many Contact objects.            
+               Each Contact can also relate to (can also have) many Phone objects.  
+                                                                                    
+  OneToOne     Each Phone relates to (has) exactly one Contact.                     
+               Each Contact also relates to (has) exactly one Phone.                
+ ------------ ------------------------------------------------- 
+
+ Relation type? [ManyToOne, OneToMany, ManyToMany, OneToOne]:
+ &gt; ManyToOne
+
+ Is the Phone.id_contact property allowed to be null (nullable)? (yes/no) [yes]:
+ &gt; no
+
+ Do you want to add a new property to Contact so that you can access/update Phone objects from it - e.g. $contact-&gt;getPhones()? (yes/no) [yes]:
+ &gt; yes
+
+ A new property will also be added to the Contact class so that you can access the related Phone objects from it.
+
+ New field name inside Contact [phones]:
+ &gt; phones
+
+ Do you want to activate orphanRemoval on your relationship?
+ A Phone is &quot;orphaned&quot; when it is removed from its related Contact.
+ e.g. $contact-&gt;removePhone($phone)</code></pre>
+            <pre><code> NOTE: If a Phone may *change* from one Contact to another, answer &quot;no&quot;.
+
+ Do you want to automatically delete orphaned App\Entity\Phone objects (orphanRemoval)? (yes/no) [no]:
+ &gt; no
+
+ updated: src/Entity/Phone.php
+ updated: src/Entity/Contact.php
+
+ Add another property? Enter the property name (or press &lt;return&gt; to stop adding fields):
+ &gt; number
+
+ Field type (enter ? to see all types) [string]:
+ &gt; 
+
+ Field length [255]:
+ &gt; 20
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ &gt; no
+
+ updated: src/Entity/Phone.php
+
+ Add another property? Enter the property name (or press &lt;return&gt; to stop adding fields):
+ &gt; type
+
+ Field type (enter ? to see all types) [string]:
+ &gt; 
+
+ Field length [255]:
+ &gt; 10
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ &gt; 
+
+ updated: src/Entity/Phone.php</code></pre>
+            <p>Before doing the migration, let’s change the models so
+            that they match our requirements.</p>
+            <p>In the <code>Contact</code> class file, we need to add
+            the default option to the <code>title</code> property:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">5</span><span class="ot">,</span> options<span class="ot">:</span> [<span class="st">&quot;default&quot;</span>=&gt; <span class="st">&quot;Mr.&quot;</span>])<span class="at">]</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$title</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span></code></pre></div>
+            <p>Do the same in the <code>Phone</code> class with the
+            <code>type</code> property:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">10</span><span class="ot">,</span> options<span class="ot">:</span> [<span class="st">&quot;default&quot;</span>=&gt; <span class="st">&quot;Mobile&quot;</span>])<span class="at">]</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$type</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span></code></pre></div>
+            <p>In <code>Phone</code>, to make the primary key the
+            combination of the properties <code>id_contact</code> and
+            <code>number</code>, first we delete the <code>id</code>
+            property that has been created by the maker. Then, add the
+            <code>#[ORM\Id]</code> attribute to the properties:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">I</span>d<span class="at">]</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">M</span>anyToOne(inversedBy<span class="ot">:</span> <span class="st">&#39;phones&#39;</span>)<span class="at">]</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">J</span>oinColumn(nullable<span class="ot">:</span> <span class="kw">false</span>)<span class="at">]</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="cn">C</span>ontact <span class="va">$id_contact</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">I</span>d<span class="at">]</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">20</span>)<span class="at">]</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$number</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span></code></pre></div>
+            <p>Now, we are ready to do the migration:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console make:migration</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console doctrine:migrations:migrate</span></code></pre></div>
+            <p>We can check that the tables in our database have been
+            created according to our schema:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mysql<span class="op">&gt;</span> describe contact;</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">-----------+--------------+------+-----+---------+----------------+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>| Field     | <span class="kw">Type</span>         | <span class="kw">Null</span> | <span class="kw">Key</span> | <span class="kw">Default</span> | Extra          |</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">-----------+--------------+------+-----+---------+----------------+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>| <span class="kw">id</span>        | <span class="dt">int</span>          | <span class="kw">NO</span>   | PRI | <span class="kw">NULL</span>    | auto_increment |</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>| title     | <span class="dt">varchar</span>(<span class="dv">5</span>)   | <span class="kw">NO</span>   |     | Mr.     |                |</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>| name      | <span class="dt">varchar</span>(<span class="dv">100</span>) | <span class="kw">NO</span>   |     | <span class="kw">NULL</span>    |                |</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>| surname   | <span class="dt">varchar</span>(<span class="dv">100</span>) | YES  |     | <span class="kw">NULL</span>    |                |</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>| birthdate | <span class="dt">date</span>         | <span class="kw">NO</span>   |     | <span class="kw">NULL</span>    |                |</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>| email     | <span class="dt">varchar</span>(<span class="dv">50</span>)  | YES  |     | <span class="kw">NULL</span>    |                |</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">-----------+--------------+------+-----+---------+----------------+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>mysql<span class="op">&gt;</span> describe phone;</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">---------------+-------------+------+-----+---------+-------+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>| Field         | <span class="kw">Type</span>        | <span class="kw">Null</span> | <span class="kw">Key</span> | <span class="kw">Default</span> | Extra |</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">---------------+-------------+------+-----+---------+-------+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>| <span class="dt">number</span>        | <span class="dt">varchar</span>(<span class="dv">20</span>) | <span class="kw">NO</span>   | PRI | <span class="kw">NULL</span>    |       |</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>| id_contact_id | <span class="dt">int</span>         | <span class="kw">NO</span>   | PRI | <span class="kw">NULL</span>    |       |</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>| <span class="kw">type</span>          | <span class="dt">varchar</span>(<span class="dv">10</span>) | <span class="kw">NO</span>   |     | Mobile  |       |</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="op">+</span><span class="co">---------------+-------------+------+-----+---------+-------+</span></span></code></pre></div>
+            <h1 data-number="4" id="queries"><span
+            class="header-section-number">4</span> Queries</h1>
+            <p>Before doing the select queries, you can import the
+            sample data to the database:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> `contact` (`id`, `title`, `name`, `surname`, `birthdate`, `email`) <span class="kw">VALUES</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">9</span>, <span class="st">&#39;Miss&#39;</span>, <span class="st">&#39;Lory&#39;</span>, <span class="st">&#39;Grimes&#39;</span>, <span class="st">&#39;1967-02-08&#39;</span>, <span class="st">&#39;logrimes@mail.com&#39;</span>),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>(<span class="dv">11</span>, <span class="st">&#39;Mr.&#39;</span>, <span class="st">&#39;Mike&#39;</span>, <span class="st">&#39;Molina&#39;</span>, <span class="st">&#39;1975-10-21&#39;</span>, <span class="st">&#39;molina@mail.com&#39;</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>(<span class="dv">12</span>, <span class="st">&#39;Mrs.&#39;</span>, <span class="st">&#39;Mary Jane&#39;</span>, <span class="st">&#39;Smith&#39;</span>, <span class="st">&#39;1986-05-22&#39;</span>, <span class="st">&#39;mj@mail.com&#39;</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>(<span class="dv">13</span>, <span class="st">&#39;Mr.&#39;</span>, <span class="st">&#39;Arthur&#39;</span>, <span class="st">&#39;McFly&#39;</span>, <span class="st">&#39;1990-08-14&#39;</span>, <span class="st">&#39;mcfly@mail.com&#39;</span>);</span></code></pre></div>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> `phone` (`number`, `id_contact_id`, `type`) <span class="kw">VALUES</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>(<span class="st">&#39;664444666&#39;</span>, <span class="dv">9</span>, <span class="st">&#39;Work&#39;</span>),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>(<span class="st">&#39;667889888&#39;</span>, <span class="dv">9</span>, <span class="st">&#39;Mobile&#39;</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>(<span class="st">&#39;295667788&#39;</span>, <span class="dv">11</span>, <span class="st">&#39;Landline&#39;</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>(<span class="st">&#39;666557744&#39;</span>, <span class="dv">11</span>, <span class="st">&#39;Mobile&#39;</span>),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>(<span class="st">&#39;667889900&#39;</span>, <span class="dv">13</span>, <span class="st">&#39;Work&#39;</span>);</span></code></pre></div>
+            <h2 data-number="4.1" id="select-queries"><span
+            class="header-section-number">4.1</span> Select queries</h2>
+            <p>First, we’ll modify the controller to select a contact
+            from the database by its <code>Id</code>. Go to the
+            <code>ContactsController</code> class and remove the
+            <code>App\Service\ContactData</code> use and add the classes
+            <code>Contact</code> and <code>Phone</code>. We also need
+            the <code>EntityManagerInterface</code> interface from
+            Doctrine:</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">D</span>octrine\<span class="cn">ORM</span>\<span class="cn">E</span>ntityManagerInterface<span class="ot">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity\<span class="cn">C</span>ontact<span class="ot">;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity\<span class="cn">P</span>hone<span class="ot">;</span></span></code></pre></div>
+            <p>In the <code>contact</code> function we create a
+            persistent object named <code>$entityManager</code> via
+            <em>dependency injection</em> (we pass a
+            <code>EntityManagerInterface</code> object as argument to
+            the function), get a <code>Contact</code> class repository
+            from it (with the method <code>getRepository</code>) and
+            find the contact by its <code>Id</code>:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;single_contact&#39;</span>)<span class="at">]</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> contact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contacts/contact.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - Contact&#39;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We need to modify the Twig template so that the birth
+            date could be shown properly using a date filter:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode html"><code class="sourceCode html"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Birthdate:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> {{ contact.birthdate|date(&#39;Y-m-d&#39;) }}<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span></code></pre></div>
+            <p>These are the only changes we need to do in the
+            template.</p>
+            <p>Modify the contactList function is even easier:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact_list&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;contact_list&#39;</span>)<span class="at">]</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> contactList(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contacts/list.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)-&gt;findAll()<span class="ot">,</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - Contact List&#39;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h3 data-number="4.1.1" id="searching-contacts"><span
+            class="header-section-number">4.1.1</span> Searching
+            contacts</h3>
+            <p>We can search a contact in the database by its name or
+            surname. In the <code>ContactsController</code> class we
+            need a new route and a function to handle it. Then, we pass
+            to the <code>list</code> template a list of contacts
+            obtained by a new method,
+            <code>findByNameOrSurname</code>:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/search/{search_string}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;search_contact&#39;</span>)<span class="at">]</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> searchContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$search_string</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contacts/list.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>            -&gt;findByNameOrSurname(<span class="va">$search_string</span>)<span class="ot">,</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - Search results&#39;</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Now, in the <code>ContactRepository</code> class, we can
+            make the new method:</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> findByNameOrSurname(<span class="va">$value</span>)<span class="ot">:</span> <span class="ot">?</span><span class="dt">array</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;createQueryBuilder(<span class="st">&#39;contact&#39;</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        -&gt;andWhere(<span class="st">&#39;contact.name LIKE :val OR contact.surname LIKE :val&#39;</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        -&gt;setParameter(<span class="st">&#39;val&#39;</span><span class="ot">,</span> <span class="st">&#39;%&#39;</span><span class="op">.</span><span class="va">$value</span><span class="op">.</span><span class="st">&#39;%&#39;</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        -&gt;getQuery()</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        -&gt;getArrayResult()</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Try to search by a complete name or by letters.</p>
+            <h2 data-number="4.2" id="inserts"><span
+            class="header-section-number">4.2</span> Inserts</h2>
+            <h3 data-number="4.2.1" id="adding-a-new-contact"><span
+            class="header-section-number">4.2.1</span> Adding a new
+            contact</h3>
+            <p>For adding a new contact we create a new method in the
+            <code>ContactsController</code> class. The route will be
+            <code>/contact/test/new</code> (we use the <code>test</code>
+            route for testing, the actual inserts, update and deletes
+            will be done in the next unit). At this moment we will add a
+            contact manually, but in the next Unit we will learn how to
+            retrieve the data to be added via API.</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/test/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;new_contact&#39;</span>)<span class="at">]</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>) <span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setTitle(<span class="st">&quot;Mrs.&quot;</span>)<span class="ot">;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setName(<span class="st">&quot;Carla&quot;</span>)<span class="ot">;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setSurname(<span class="st">&quot;Fontana&quot;</span>)<span class="ot">;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setBirthdate(<span class="fu">date_create</span>(<span class="st">&quot;1980-01-30&quot;</span>))<span class="ot">;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setEmail(<span class="st">&quot;carlafon@mail.com&quot;</span>)<span class="ot">;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span>-&gt;persist(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">$action</span> <span class="op">=</span> (<span class="va">$contact</span> <span class="ot">?</span> <span class="st">&#39;New contact added&#39;</span> <span class="ot">:</span> <span class="st">&#39;Failed to add contact&#39;</span>)<span class="ot">;</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contacts/new_edit_contact.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - New contact&#39;</span><span class="ot">,</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;action&#39;</span> =&gt; <span class="va">$action</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Once the contact has been inserted, we show a message
+            with the data added. To do that, we can modify a copy of the
+            contact template or we can modify the contact template for
+            working with the 2 routes, adding more parameters. In this
+            case we’ve tried to do the first option, but adding a new
+            parameter, <code>action</code>, for showing a message with
+            the action done. You can see the template code in the GitHub
+            repository.</p>
+            <figure>
+            <img src="images/new_contact.png" width="400"
+            alt="New contact view with the data inserted to the database" />
+            <figcaption aria-hidden="true">New contact view with the
+            data inserted to the database</figcaption>
+            </figure>
+            <h3 data-number="4.2.2" id="adding-a-new-phone"><span
+            class="header-section-number">4.2.2</span> Adding a new
+            phone</h3>
+            <p>For adding a new phone to an existing contact, we need to
+            make a new controller:</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>symfony console make<span class="ot">:</span>controller <span class="cn">P</span>honeController</span></code></pre></div>
+            <p>In the controller, make sure you import the
+            <code>App\Entity\Phone</code> and <code>Contact</code>
+            classes.</p>
+            <p>Then, modify the route, the route name and the method
+            name. The code is similar to the previous one, but in this
+            case we want to check if the id belongs to a valid
+            contact:</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/phone/test/new/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;new_phone&#39;</span>)<span class="at">]</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newPhone(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$contact</span> <span class="op">==</span> <span class="kw">null</span>) {</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;phone/new_edit_phone.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;contact&#39;</span>=&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;phone&#39;</span> =&gt; <span class="kw">null</span><span class="ot">,</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;action&#39;</span> =&gt; <span class="st">&#39;Contact not found&#39;</span><span class="ot">,</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - New phone&#39;</span><span class="ot">,</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phone</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">P</span>hone()<span class="ot">;</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phone</span>-&gt;setIdContact(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phone</span>-&gt;setNumber(<span class="st">&quot;656565652&quot;</span>)<span class="ot">;</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phone</span>-&gt;<span class="fu">setType</span>(<span class="st">&quot;Mobile&quot;</span>)<span class="ot">;</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;persist(<span class="va">$phone</span>)<span class="ot">;</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">$action</span> <span class="op">=</span> (<span class="va">$phone</span> <span class="ot">?</span> <span class="st">&#39;New phone added&#39;</span> <span class="ot">:</span> <span class="st">&#39;Failed to add phone&#39;</span>)<span class="ot">;</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;phone/new_edit_phone.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;phone&#39;</span> =&gt; <span class="va">$phone</span><span class="ot">,</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;action&#39;</span> =&gt; <span class="va">$action</span><span class="ot">,</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - New phone&#39;</span><span class="ot">,</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We pass the contact <code>id</code> as a parameter to the
+            route and retrieve the contact from the database. If it
+            exists, insert the phone and show the data. Otherwise, show
+            an error message:</p>
+            <figure>
+            <img src="images/new_phone.png" width="400"
+            alt="New phone added" />
+            <figcaption aria-hidden="true">New phone added</figcaption>
+            </figure>
+            <h2 data-number="4.3" id="updates"><span
+            class="header-section-number">4.3</span> Updates</h2>
+            <p>Using Doctrine to edit an existing item consists of three
+            steps:</p>
+            <ol type="1">
+            <li>fetching the object from Doctrine;</li>
+            <li>modifying the object;</li>
+            <li>calling flush() on the entity manager.</li>
+            </ol>
+            <p>We create a new route and method to update a single
+            contact:</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/test/edit/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;contact_edit&#39;</span>)<span class="at">]</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> updateContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span><span class="op">=</span><span class="st">&#39;&#39;</span>) <span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$contact</span>) {</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$action</span> <span class="op">=</span> <span class="st">&quot;Contact updated&quot;</span><span class="ot">;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setName(<span class="st">&quot;New Name&quot;</span>)<span class="ot">;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$action</span> <span class="op">=</span> <span class="st">&quot;Failed to modify contact&quot;</span><span class="ot">;</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contacts/new_edit_contact.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - Update contact&#39;</span><span class="ot">,</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;action&#39;</span> =&gt; <span class="va">$action</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We reuse the same template but with a different action
+            message.</p>
+            <figure>
+            <img src="images/update_contact.png" width="400"
+            alt="Update contact" />
+            <figcaption aria-hidden="true">Update contact</figcaption>
+            </figure>
+            <p>Updating a phone is the same procedure, but we need the
+            contact id and the phone number to find the required
+            phone:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/phone/test/edit/{id&lt;\d+&gt;}/{number}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;phone_edit&#39;</span>)<span class="at">]</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> updatePhone(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$number</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$contact</span> <span class="op">==</span> <span class="kw">null</span>) {</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;phone/new_edit_phone.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;contact&#39;</span>=&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;phone&#39;</span> =&gt; <span class="kw">null</span><span class="ot">,</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - New phone&#39;</span><span class="ot">,</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;action&#39;</span> =&gt; <span class="st">&#39;Failed to modify phone: no contact found&#39;</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phone</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">P</span>hone::<span class="kw">class</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>            -&gt;findOneBy([<span class="st">&#39;number&#39;</span>=&gt;<span class="va">$number</span><span class="ot">,</span> <span class="st">&#39;id_contact&#39;</span>=&gt;<span class="va">$id</span>])<span class="ot">;</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="va">$phone</span>) {</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>            <span class="va">$phone</span>-&gt;setNumber(<span class="st">&quot;686868680&quot;</span>)<span class="ot">;</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>            <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>            <span class="va">$action</span> <span class="op">=</span> <span class="st">&quot;Phone updated&quot;</span><span class="ot">;</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>            <span class="va">$action</span> <span class="op">=</span> <span class="st">&quot;Failed to modify phone&quot;</span><span class="ot">;</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;phone/new_edit_phone.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;phone&#39;</span> =&gt; <span class="va">$phone</span><span class="ot">,</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - Update phone&#39;</span><span class="ot">,</span></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;action&#39;</span> =&gt; <span class="va">$action</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Note that we are fetching the phone with
+            <code>findOneBy</code> instead of with
+            <code>find</code>.</p>
+            <figure>
+            <img src="images/update_phone.png" width="400"
+            alt="Update phone" />
+            <figcaption aria-hidden="true">Update phone</figcaption>
+            </figure>
+            <h2 data-number="4.4" id="deletions"><span
+            class="header-section-number">4.4</span> Deletions</h2>
+            <p>Deletions are similar to updates, but they require a call
+            to the method <code>remove</code>.</p>
+            <p>When we delete a contact we delete the associated phones
+            too.</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/test/delete/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;contact_delete&#39;</span>)<span class="at">]</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> deleteContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$contact</span>) {</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">//Remove the phones</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phones</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">P</span>hone::<span class="kw">class</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>            -&gt;findBy([<span class="st">&#39;id_contact&#39;</span>=&gt;<span class="va">$id</span>])<span class="ot">;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">foreach</span> (<span class="va">$phones</span> <span class="kw">as</span> <span class="va">$phone</span>){</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>            <span class="va">$entityManager</span>-&gt;remove(<span class="va">$phone</span>)<span class="ot">;</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;remove(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$action</span> <span class="op">=</span> <span class="st">&quot;Contact deleted&quot;</span><span class="ot">;</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">$action</span> <span class="op">=</span> <span class="st">&quot;Failed to delete contact&quot;</span><span class="ot">;</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contacts/new_edit_contact.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - Delete contact&#39;</span><span class="ot">,</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;action&#39;</span> =&gt; <span class="va">$action</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <figure>
+            <img src="images/delete_contact.png" width="400"
+            alt="Delete contact" />
+            <figcaption aria-hidden="true">Delete contact</figcaption>
+            </figure>
+            <p>Deleting a phone is similar to updating it:</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/phone/test/delete/{id&lt;\d+&gt;}/{number}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;phone_delete&#39;</span>)<span class="at">]</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> deletePhone(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$number</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$contact</span> <span class="op">==</span> <span class="kw">null</span>) {</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;phone/new_edit_phone.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;contact&#39;</span>=&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;phone&#39;</span> =&gt; <span class="kw">null</span><span class="ot">,</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - New phone&#39;</span><span class="ot">,</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;action&#39;</span> =&gt; <span class="st">&#39;Failed to delete phone: no contact found&#39;</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phone</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">P</span>hone::<span class="kw">class</span>)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>            -&gt;findOneBy([<span class="st">&#39;number&#39;</span>=&gt;<span class="va">$number</span><span class="ot">,</span> <span class="st">&#39;id_contact&#39;</span>=&gt;<span class="va">$id</span>])<span class="ot">;</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="va">$phone</span>) {</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>            <span class="va">$entityManager</span>-&gt;remove(<span class="va">$phone</span>)<span class="ot">;</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>            <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>            <span class="va">$action</span> <span class="op">=</span> <span class="st">&quot;Phone deleted&quot;</span><span class="ot">;</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>            <span class="va">$action</span> <span class="op">=</span> <span class="st">&quot;Failed to delete phone&quot;</span><span class="ot">;</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;phone/new_edit_phone.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;phone&#39;</span> =&gt; <span class="va">$phone</span><span class="ot">,</span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;page_title&#39;</span> =&gt; <span class="st">&#39;My Contacts App - Delete phone&#39;</span><span class="ot">,</span></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;action&#39;</span> =&gt; <span class="va">$action</span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <figure>
+            <img src="images/delete_phone.png" width="400"
+            alt="Delete phone" />
+            <figcaption aria-hidden="true">Delete phone</figcaption>
+            </figure>
+            <p>You can get all the code from the <a
+            href="https://github.com/ricardoprofe/contacts_symfony-u12">GitHub
+            repository</a>.</p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
