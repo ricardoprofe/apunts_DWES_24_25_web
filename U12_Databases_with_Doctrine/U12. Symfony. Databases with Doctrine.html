@@ -34,7 +34,7 @@
         }
         @media print {
         pre > code.sourceCode { white-space: pre-wrap; }
-        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
         }
         pre.numberSource code
           { counter-reset: source-line 0; }
@@ -390,26 +390,26 @@ sudo apt-get install pdo-mysql</code></pre>
             <div class="sourceCode" id="cb9"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity<span class="ot">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> App\Entity<span class="ot">;</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">R</span>epository\<span class="cn">C</span>ontactRepository<span class="ot">;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">D</span>octrine\<span class="cn">ORM</span>\<span class="cn">M</span>apping <span class="kw">as</span> <span class="cn">ORM</span><span class="ot">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> App\Repository\ContactRepository<span class="ot">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Doctrine\<span class="cn">ORM</span>\Mapping <span class="kw">as</span> <span class="cn">ORM</span><span class="ot">;</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">E</span>ntity(repositoryClass<span class="ot">:</span> <span class="cn">C</span>ontactRepository::<span class="kw">class</span>)<span class="at">]</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontact</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\Entity(repositoryClass<span class="ot">:</span> ContactRepository::<span class="kw">class</span>)<span class="at">]</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Contact</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">I</span>d<span class="at">]</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">G</span>eneratedValue<span class="at">]</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn<span class="at">]</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\Id<span class="at">]</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\GeneratedValue<span class="at">]</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\Column<span class="at">]</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">int</span> <span class="va">$id</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">30</span>)<span class="at">]</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\Column(length<span class="ot">:</span> <span class="dv">30</span>)<span class="at">]</span></span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$name</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">15</span>)<span class="at">]</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\Column(length<span class="ot">:</span> <span class="dv">15</span>)<span class="at">]</span></span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$phone</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">30</span><span class="ot">,</span> nullable<span class="ot">:</span> <span class="kw">true</span>)<span class="at">]</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\Column(length<span class="ot">:</span> <span class="dv">30</span><span class="ot">,</span> nullable<span class="ot">:</span> <span class="kw">true</span>)<span class="at">]</span></span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$email</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getId()<span class="ot">:</span> <span class="ot">?</span><span class="dt">int</span></span>
@@ -553,7 +553,7 @@ sudo apt-get install pdo-mysql</code></pre>
             will form the new primary key.</p></li>
             </ul>
             <div class="sourceCode" id="cb14"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">I</span>d<span class="at">]</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\Id<span class="at">]</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="va">$newId</span><span class="ot">;</span></span></code></pre></div>
             <h1 data-number="5" id="operating-with-our-database"><span
             class="header-section-number">5</span> Operating with our
@@ -578,20 +578,20 @@ sudo apt-get install pdo-mysql</code></pre>
             use the <strong>Entity Manager Interface</strong> as
             well.</p>
             <div class="sourceCode" id="cb15"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">B</span>undle\<span class="cn">F</span>rameworkBundle\<span class="cn">C</span>ontroller\<span class="cn">A</span>bstractController<span class="ot">;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">H</span>ttpFoundation\<span class="cn">R</span>esponse<span class="ot">;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">R</span>outing\<span class="cn">A</span>ttribute\<span class="cn">R</span>oute<span class="ot">;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity\<span class="cn">C</span>ontact<span class="ot">;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">D</span>octrine\<span class="cn">ORM</span>\<span class="cn">E</span>ntityManagerInterface<span class="ot">;</span></span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Symfony\Bundle\FrameworkBundle\Controller\AbstractController<span class="ot">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Symfony\Component\HttpFoundation\Response<span class="ot">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Symfony\Component\Routing\Attribute\Route<span class="ot">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> App\Entity\Contact<span class="ot">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Doctrine\<span class="cn">ORM</span>\EntityManagerInterface<span class="ot">;</span></span></code></pre></div>
             <p>Now we can create the new method. The route will be
             <code>/contact/new</code>. The method receives an object of
             the <strong>ManagerRegistryInterface</strong> class, and
             returns a <strong>Response</strong>.</p>
             <div class="sourceCode" id="cb16"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ContactController <span class="kw">extends</span> AbstractController</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span>Route(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(EntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> Response</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    }</span>
@@ -602,12 +602,12 @@ sudo apt-get install pdo-mysql</code></pre>
             the primary key is an autoincrement column in the database,
             so the id will be automatically assigned.</p>
             <div class="sourceCode" id="cb17"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ContactController <span class="kw">extends</span> AbstractController</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span>Route(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(EntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> Response</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> Contact()<span class="ot">;</span></span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setName(<span class="st">&quot;Eduardo Gómez&quot;</span>)<span class="ot">;</span></span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setPhone(<span class="st">&quot;23454321&quot;</span>)<span class="ot">;</span></span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setEmail(<span class="st">&quot;eduardogomez@gmail.com&quot;</span>)<span class="ot">;</span> </span>
@@ -627,12 +627,12 @@ sudo apt-get install pdo-mysql</code></pre>
             query,</li>
             </ul>
             <div class="sourceCode" id="cb18"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ContactController <span class="kw">extends</span> AbstractController</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span>Route(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(EntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> Response</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> Contact()<span class="ot">;</span></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setName(<span class="st">&quot;Eduardo Gómez&quot;</span>)<span class="ot">;</span></span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setPhone(<span class="st">&quot;23454321&quot;</span>)<span class="ot">;</span></span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setEmail(<span class="st">&quot;eduardogomez@gmail.com&quot;</span>)<span class="ot">;</span> </span>
@@ -663,8 +663,8 @@ sudo apt-get install pdo-mysql</code></pre>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span>: <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span>: <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span>: <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span>: <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span>: <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span>: <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span><span class="ch">:</span> <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span><span class="ch">:</span> <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span><span class="ch">:</span> <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;example-wrapper&quot;</span><span class="dt">&gt;</span></span>
@@ -674,12 +674,12 @@ sudo apt-get install pdo-mysql</code></pre>
             <p>And then the method (change the data not to repeat the
             same contact):</p>
             <div class="sourceCode" id="cb20"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactController <span class="kw">extends</span> <span class="cn">A</span>bstractController</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ContactController <span class="kw">extends</span> AbstractController</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span>Route(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> newContact(EntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> Response</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> Contact()<span class="ot">;</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setName(<span class="st">&quot;Eduardo Gómez&quot;</span>)<span class="ot">;</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setPhone(<span class="st">&quot;23454321&quot;</span>)<span class="ot">;</span></span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setEmail(<span class="st">&quot;eduardogomez@gmail.com&quot;</span>)<span class="ot">;</span> </span>
@@ -706,10 +706,10 @@ sudo apt-get install pdo-mysql</code></pre>
             to use an API to introduce data. By now, we can specify that
             information by adding parameters to our URL.</p>
             <div class="sourceCode" id="cb21"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new/{name}/{phone}/{email}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact_param&#39;</span>)<span class="at">]</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newContactParam(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$phone</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$email</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/new/{name}/{phone}/{email}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact_param&#39;</span>)<span class="at">]</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newContactParam(EntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$phone</span><span class="op">=</span><span class="st">&#39;&#39;</span><span class="ot">,</span> <span class="va">$email</span><span class="op">=</span><span class="st">&#39;&#39;</span>)<span class="ot">:</span> Response</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> Contact()<span class="ot">;</span></span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setName(<span class="va">$name</span>)<span class="ot">;</span></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setPhone(<span class="va">$phone</span>)<span class="ot">;</span></span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setEmail(<span class="va">$email</span>)<span class="ot">;</span> </span>
@@ -777,8 +777,8 @@ sudo apt-get install pdo-mysql</code></pre>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span>: <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span>: <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span>: <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span>: <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span>: <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span>: <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span><span class="ch">:</span> <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span><span class="ch">:</span> <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span><span class="ch">:</span> <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;example-wrapper&quot;</span><span class="dt">&gt;</span></span>
@@ -794,10 +794,10 @@ sudo apt-get install pdo-mysql</code></pre>
             an id as a parameter, finds the contact in the database, and
             then sends the retrieved contact to the view.</p>
             <div class="sourceCode" id="cb23"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getContactById(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span> <span class="op">=</span> <span class="st">&#39;&#39;</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getContactById(EntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span> <span class="op">=</span> <span class="st">&#39;&#39;</span>)<span class="ot">:</span> Response</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span> <span class="op">=</span> <span class="va">$rep</span>-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contact.html.twig&#39;</span><span class="ot">,</span> [</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
@@ -805,7 +805,7 @@ sudo apt-get install pdo-mysql</code></pre>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>With the line:</p>
             <div class="sourceCode" id="cb24"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)</span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)</span></code></pre></div>
             <p>we create a repository for our class
             <em><code>Contact</code></em>. And then with the line:</p>
             <div class="sourceCode" id="cb25"><pre
@@ -858,9 +858,9 @@ sudo apt-get install pdo-mysql</code></pre>
             <code>findOneBy</code>. Let’s see how to find a contact by
             its name:</p>
             <div class="sourceCode" id="cb27"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyname&#39;</span>)<span class="at">]</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getcontactbyname(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>) {</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyname&#39;</span>)<span class="at">]</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getcontactbyname(EntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span><span class="op">=</span><span class="st">&#39;&#39;</span>) {</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="va">$rep</span>-&gt;findOneBy([<span class="st">&quot;name&quot;</span>=&gt;<span class="va">$name</span>])<span class="ot">;</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contact.html.twig&#39;</span><span class="ot">,</span> [</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
@@ -883,12 +883,12 @@ sudo apt-get install pdo-mysql</code></pre>
             id must be changed in order to add the requirement.</p>
             </blockquote>
             <div class="sourceCode" id="cb28"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span></code></pre></div>
             <p>Of course, we can also rename both routes to avoid
             duplicates.</p>
             <div class="sourceCode" id="cb29"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/byid/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/byname/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyname&#39;</span>)<span class="at">]</span></span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/byid/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/byname/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyname&#39;</span>)<span class="at">]</span></span></code></pre></div>
             <p>The <code>findOneBy</code> method accepts more than one
             condition. The conditions are separated by commas.</p>
             <div class="sourceCode" id="cb30"><pre
@@ -918,8 +918,8 @@ sudo apt-get install pdo-mysql</code></pre>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span>: <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span>: <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span>: <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span>: <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span>: <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span>: <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span><span class="ch">:</span> <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span><span class="ch">:</span> <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span><span class="ch">:</span> <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;example-wrapper&quot;</span><span class="dt">&gt;</span></span>
@@ -940,9 +940,9 @@ sudo apt-get install pdo-mysql</code></pre>
             <p>Then the controller gets the contact list and renders the
             view.</p>
             <div class="sourceCode" id="cb33"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyname&#39;</span>)<span class="at">]</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getcontactbyname(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span>) {</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyname&#39;</span>)<span class="at">]</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getcontactbyname(EntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span>) {</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findBy([<span class="st">&quot;name&quot;</span>=&gt;<span class="va">$name</span>])<span class="ot">;</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactlist.html.twig&#39;</span><span class="ot">,</span> [</span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$contacts</span><span class="ot">,</span></span>
@@ -960,10 +960,10 @@ sudo apt-get install pdo-mysql</code></pre>
             <strong>contactlist.html.twig</strong> template to show
             them.</p>
             <div class="sourceCode" id="cb34"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_contacts&#39;</span>)<span class="at">]</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> contacts(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_contacts&#39;</span>)<span class="at">]</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> contacts(EntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> Response</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactlist.html.twig&#39;</span><span class="ot">,</span> [</span>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contacts&#39;</span> =&gt; <span class="va">$contacts</span><span class="ot">,</span></span>
@@ -987,8 +987,8 @@ sudo apt-get install pdo-mysql</code></pre>
             <code>EntityValueResolver</code> to do the query
             automatically. You can simplify the controller to:</p>
             <div class="sourceCode" id="cb35"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> contact(<span class="cn">C</span>ontact <span class="va">$contact</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcontactbyid&#39;</span>)<span class="at">]</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> contact(Contact <span class="va">$contact</span>)<span class="ot">:</span> Response</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contact.html.twig&#39;</span><span class="ot">,</span> [</span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;contact&#39;</span> =&gt; <span class="va">$contact</span><span class="ot">,</span></span>
@@ -1081,9 +1081,9 @@ sudo apt-get install pdo-mysql</code></pre>
             that receives an id from the route
             <em><code>/contact/remove</code></em>:</p>
             <div class="sourceCode" id="cb38"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/remove/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_deletecontact&#39;</span>)<span class="at">]</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> deleteContact(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span>) {</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/remove/{id}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_deletecontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> deleteContact(EntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span>) {</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// we find the contact with the given id</span></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="va">$rep</span>-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// if it exists, we remove it</span></span>
@@ -1109,7 +1109,7 @@ sudo apt-get install pdo-mysql</code></pre>
             retrieve the objects that we want to delete, we can solve
             the problem in the controller method.</p>
             <div class="sourceCode" id="cb39"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">// we retrieve the contacts that match the condition</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findBy(...write the condition here<span class="op">..</span>)<span class="ot">;</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$contacts</span>) {</span>
@@ -1168,9 +1168,9 @@ sudo apt-get install pdo-mysql</code></pre>
             method that receives a partial name as a parameter and then
             removes any contact that match the name pattern:</p>
             <div class="sourceCode" id="cb42"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/remove/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_deletecontactbyname&#39;</span>)<span class="at">]</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> deleteContactByName(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span>) {</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/remove/{name}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_deletecontactbyname&#39;</span>)<span class="at">]</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> deleteContactByName(EntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$name</span>) {</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$deleted</span><span class="op">=</span><span class="va">$rep</span>-&gt;deleteByName(<span class="va">$name</span>)<span class="ot">;</span></span>
 <span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">// now we refresh the contact list</span></span>
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
@@ -1198,7 +1198,7 @@ sudo apt-get install pdo-mysql</code></pre>
             <li>a call to <code>flush()</code></li>
             </ul>
             <div class="sourceCode" id="cb43"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span> <span class="op">=</span> <span class="va">$rep</span>-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$contact</span>) {</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setName(<span class="va">$newname</span>)<span class="ot">;</span> <span class="co">// we change the name</span></span>
@@ -1228,9 +1228,9 @@ sudo apt-get install pdo-mysql</code></pre>
             <p>Let’s add a “96” area code to every phone in our contact
             table:</p>
             <div class="sourceCode" id="cb44"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/add/{code}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;addareacode&#39;</span>)<span class="at">]</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> addAreaCode(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span><span class="va">$code</span>) {</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/add/{code}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;addareacode&#39;</span>)<span class="at">]</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> addAreaCode(EntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span><span class="va">$code</span>) {</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contacts</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$contacts</span> <span class="kw">as</span> <span class="va">$contact</span>) {</span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$phoneNumber</span><span class="op">=</span><span class="va">$contact</span>-&gt;getPhone()<span class="ot">;</span></span>
@@ -1280,9 +1280,9 @@ sudo apt-get install pdo-mysql</code></pre>
             <p>And now let’s change the code in our controller method
             to:</p>
             <div class="sourceCode" id="cb46"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/add/{code}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;addareacode&#39;</span>)<span class="at">]</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> addAreaCode(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span><span class="va">$code</span>) {</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span>entityManager-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/contact/add/{code}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;addareacode&#39;</span>)<span class="at">]</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> addAreaCode(EntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span><span class="va">$code</span>) {</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span>entityManager-&gt;getRepository(Contact::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contactstochange</span><span class="op">=</span><span class="va">$rep</span>-&gt;findByAreaCodeNOT(<span class="va">$code</span>)<span class="ot">;</span></span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span>(<span class="va">$contactstochange</span> <span class="kw">as</span> <span class="va">$contact</span>) {</span>
@@ -1429,23 +1429,23 @@ $ symfony console doctrine:migrations:migrate</code></pre>
             <div class="sourceCode" id="cb49"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity<span class="ot">;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> App\Entity<span class="ot">;</span></span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">R</span>epository\<span class="cn">C</span>ityRepository<span class="ot">;</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">D</span>octrine\<span class="cn">ORM</span>\<span class="cn">M</span>apping <span class="kw">as</span> <span class="cn">ORM</span><span class="ot">;</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> App\Repository\CityRepository<span class="ot">;</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Doctrine\<span class="cn">ORM</span>\Mapping <span class="kw">as</span> <span class="cn">ORM</span><span class="ot">;</span></span>
 <span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">E</span>ntity(repositoryClass<span class="ot">:</span> <span class="cn">C</span>ityRepository::<span class="kw">class</span>)<span class="at">]</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ity</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\Entity(repositoryClass<span class="ot">:</span> CityRepository::<span class="kw">class</span>)<span class="at">]</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> City</span>
 <span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">I</span>d<span class="at">]</span></span>
-<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">G</span>eneratedValue<span class="at">]</span></span>
-<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn<span class="at">]</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\Id<span class="at">]</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\GeneratedValue<span class="at">]</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\Column<span class="at">]</span></span>
 <span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">int</span> <span class="va">$id</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
 <span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">5</span>)<span class="at">]</span></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\Column(length<span class="ot">:</span> <span class="dv">5</span>)<span class="at">]</span></span>
 <span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$postalCode</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
 <span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">50</span>)<span class="at">]</span></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">#[</span><span class="cn">ORM</span>\Column(length<span class="ot">:</span> <span class="dv">50</span>)<span class="at">]</span></span>
 <span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$cityName</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
 <span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> getId()<span class="ot">:</span> <span class="ot">?</span><span class="dt">int</span></span>
@@ -1548,14 +1548,14 @@ OneToOne    Each Contact relates to (has) exactly one city.
             a result, we get a new property (city) in our contact class
             with its methods get and set:</p>
             <div class="sourceCode" id="cb51"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">M</span>anyToOne(inversedBy<span class="ot">:</span> <span class="st">&#39;contacts&#39;</span>)<span class="at">]</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="cn">C</span>ity <span class="va">$city</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\ManyToOne(inversedBy<span class="ot">:</span> <span class="st">&#39;contacts&#39;</span>)<span class="at">]</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span>City <span class="va">$city</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getCity()<span class="ot">:</span> <span class="ot">?</span><span class="cn">C</span>ity {</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getCity()<span class="ot">:</span> <span class="ot">?</span>City {</span>
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;city<span class="ot">;</span></span>
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> setCity(<span class="ot">?</span><span class="cn">C</span>ity <span class="va">$city</span>)<span class="ot">:</span> <span class="kw">static</span> {</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> setCity(<span class="ot">?</span>City <span class="va">$city</span>)<span class="ot">:</span> <span class="kw">static</span> {</span>
 <span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$this</span>-&gt;city <span class="op">=</span> <span class="va">$city</span><span class="ot">;</span></span>
 <span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
 <span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
@@ -1564,17 +1564,17 @@ OneToOne    Each Contact relates to (has) exactly one city.
             to the city, and a method to remove a contact from the
             city:</p>
             <div class="sourceCode" id="cb52"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">O</span>neToMany(mappedBy<span class="ot">:</span> <span class="st">&#39;city&#39;</span><span class="ot">,</span> targetEntity<span class="ot">:</span> <span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="at">]</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="cn">C</span>ollection <span class="va">$contacts</span><span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\OneToMany(mappedBy<span class="ot">:</span> <span class="st">&#39;city&#39;</span><span class="ot">,</span> targetEntity<span class="ot">:</span> Contact::<span class="kw">class</span>)<span class="at">]</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> Collection <span class="va">$contacts</span><span class="ot">;</span></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>...</span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@return</span><span class="co"> Collection</span><span class="kw">&lt;int</span><span class="ot">, Contact</span><span class="kw">&gt;</span></span>
 <span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getContacts()<span class="ot">:</span> <span class="cn">C</span>ollection {</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getContacts()<span class="ot">:</span> Collection {</span>
 <span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;contacts<span class="ot">;</span></span>
 <span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> addContact(<span class="cn">C</span>ontact <span class="va">$contact</span>)<span class="ot">:</span> <span class="kw">static</span> {</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> addContact(Contact <span class="va">$contact</span>)<span class="ot">:</span> <span class="kw">static</span> {</span>
 <span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="va">$this</span>-&gt;contacts-&gt;contains(<span class="va">$contact</span>)) {</span>
 <span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$this</span>-&gt;contacts-&gt;add(<span class="va">$contact</span>)<span class="ot">;</span></span>
 <span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span>-&gt;setCity(<span class="va">$this</span>)<span class="ot">;</span></span>
@@ -1582,7 +1582,7 @@ OneToOne    Each Contact relates to (has) exactly one city.
 <span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
 <span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> removeContact(<span class="cn">C</span>ontact <span class="va">$contact</span>)<span class="ot">:</span> <span class="kw">static</span> {</span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> removeContact(Contact <span class="va">$contact</span>)<span class="ot">:</span> <span class="kw">static</span> {</span>
 <span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="va">$this</span>-&gt;contacts-&gt;removeElement(<span class="va">$contact</span>)) {</span>
 <span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>        <span class="co">// set the owning side to null (unless already changed)</span></span>
 <span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="va">$contact</span>-&gt;getCity() <span class="op">===</span> <span class="va">$this</span>) {</span>
@@ -1618,9 +1618,9 @@ OneToOne    Each Contact relates to (has) exactly one city.
             <strong><em><code>index()</code></em></strong> method as
             follows:</p>
             <div class="sourceCode" id="cb54"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/city&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_city&#39;</span>)<span class="at">]</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ity::<span class="kw">class</span>)<span class="ot">;</span></span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/city&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_city&#39;</span>)<span class="at">]</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> index(EntityManagerInterface <span class="va">$entityManager</span>)<span class="ot">:</span> Response {</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$entityManager</span>-&gt;getRepository(City::<span class="kw">class</span>)<span class="ot">;</span></span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$cities</span><span class="op">=</span><span class="va">$rep</span>-&gt;findAll()<span class="ot">;</span></span>
 <span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;city/index.html.twig&#39;</span><span class="ot">,</span> [</span>
 <span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;cities&#39;</span> =&gt; <span class="va">$cities</span><span class="ot">,</span></span>
@@ -1682,14 +1682,14 @@ OneToOne    Each Contact relates to (has) exactly one city.
             <p>First, in the <strong>ContactController</strong> class we
             add the lines:</p>
             <div class="sourceCode" id="cb56"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity\<span class="cn">C</span>ity<span class="ot">;</span></span></code></pre></div>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> App\Entity\City<span class="ot">;</span></span></code></pre></div>
             <p>And in the update and insert methods add the new property
             retrieving a city object from the database (by its
             <code>id</code>) and then using the new <code>setCity</code>
             method:</p>
             <div class="sourceCode" id="cb57"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ity::<span class="kw">class</span>)-&gt;find(<span class="va">$id_city</span>)<span class="ot">;</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(City::<span class="kw">class</span>)-&gt;find(<span class="va">$id_city</span>)<span class="ot">;</span></span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span>-&gt;setCity(<span class="va">$city</span>)<span class="ot">;</span></span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
             <p>Just by doing <code>persist()</code> and
@@ -1738,7 +1738,7 @@ OneToOne    Each Contact relates to (has) exactly one city.
             class="sourceCode php"><code class="sourceCode php"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@return</span><span class="co"> Collection</span><span class="kw">&lt;int</span><span class="ot">, Contact</span><span class="kw">&gt;</span></span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getContacts()<span class="ot">:</span> <span class="cn">C</span>ollection {</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getContacts()<span class="ot">:</span> Collection {</span>
 <span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;contacts<span class="ot">;</span></span>
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
             <p>Let’s create a twig template to show the content of a
@@ -1746,10 +1746,10 @@ OneToOne    Each Contact relates to (has) exactly one city.
             <p>This is the method we have to recover a city given its
             id:</p>
             <div class="sourceCode" id="cb61"><pre
-            class="sourceCode php"><code class="sourceCode php"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/city/{id&lt;id\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcitybyid&#39;</span>)<span class="at">]</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getCityById(<span class="cn">E</span>ntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+            class="sourceCode php"><code class="sourceCode php"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>Route(<span class="st">&#39;/city/{id&lt;id\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_getcitybyid&#39;</span>)<span class="at">]</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getCityById(EntityManagerInterface <span class="va">$entityManager</span><span class="ot">,</span> <span class="va">$id</span>)<span class="ot">:</span> Response</span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$city</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(<span class="cn">C</span>ity::<span class="kw">class</span>)-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$city</span> <span class="op">=</span> <span class="va">$entityManager</span>-&gt;getRepository(City::<span class="kw">class</span>)-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
 <span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;city/city.html.twig&#39;</span><span class="ot">,</span> [</span>
 <span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;city&#39;</span> =&gt; <span class="va">$city</span><span class="ot">,</span></span>
 <span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
@@ -1762,8 +1762,8 @@ OneToOne    Each Contact relates to (has) exactly one city.
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>{% block body %}</span>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span>: <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span>: <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span>: <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span>: <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span>: <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span>: <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> { <span class="kw">margin</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">width</span><span class="ch">:</span> <span class="dv">95</span><span class="dt">%</span><span class="op">;</span> <span class="kw">font</span><span class="ch">:</span> <span class="dv">18</span><span class="dt">px</span>/<span class="dv">1.5</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.example-wrapper</span> code { <span class="kw">background</span><span class="ch">:</span> <span class="cn">#F5F5F5</span><span class="op">;</span> <span class="kw">padding</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span> }</span>
 <span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
 <span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;example-wrapper&quot;</span><span class="dt">&gt;</span></span>
@@ -1828,11 +1828,11 @@ OneToOne    Each Contact relates to (has) exactly one city.
             <p>In our example:</p>
             <div class="sourceCode" id="cb64"><pre
             class="sourceCode php"><code class="sourceCode php"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co">// we create the new city</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">C</span>ity()<span class="ot">;</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span> <span class="op">=</span> <span class="kw">new</span> City()<span class="ot">;</span></span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span>-&gt;setPostalcode(...)<span class="ot">;</span></span>
 <span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="va">$city</span>-&gt;setCityname(...)<span class="ot">;</span></span>
 <span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="co">//we create the contact</span></span>
-<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span> <span class="op">=</span> <span class="kw">new</span> Contact()<span class="ot">;</span></span>
 <span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span>-&gt;setName(...)<span class="ot">;</span></span>
 <span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span>-&gt;setPhone(...)<span class="ot">;</span></span>
 <span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span>-&gt;setEmail(...)<span class="ot">;</span></span>
