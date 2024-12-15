@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />        <title>Unit 13c. Symfony deployment. Guided example.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 13c. Symfony deployment. Guided
+example.</h1>
+            <!---->
+            <!--  -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#setting-up-the-server"
+id="toc-setting-up-the-server"><span class="toc-section-number">1</span>
+Setting up the server</a>
+<ul>
+<li><a href="#installing-the-required-dependencies"
+id="toc-installing-the-required-dependencies"><span
+class="toc-section-number">1.1</span> Installing the required
+dependencies</a></li>
+<li><a href="#configuring-the-services"
+id="toc-configuring-the-services"><span
+class="toc-section-number">1.2</span> Configuring the services</a></li>
+</ul></li>
+<li><a href="#deploying-the-app" id="toc-deploying-the-app"><span
+class="toc-section-number">2</span> Deploying the App</a>
+<ul>
+<li><a href="#upload-the-code" id="toc-upload-the-code"><span
+class="toc-section-number">2.1</span> Upload the code</a></li>
+<li><a href="#installing-vendor-dependencies"
+id="toc-installing-vendor-dependencies"><span
+class="toc-section-number">2.2</span> Installing vendor
+dependencies</a></li>
+<li><a href="#checking-your-env-variables"
+id="toc-checking-your-env-variables"><span
+class="toc-section-number">2.3</span> Checking your env
+variables</a></li>
+<li><a href="#migrate-your-database"
+id="toc-migrate-your-database"><span
+class="toc-section-number">2.4</span> Migrate your database</a></li>
+<li><a href="#generating-the-jwt-keys"
+id="toc-generating-the-jwt-keys"><span
+class="toc-section-number">2.5</span> Generating the JWT keys</a></li>
+<li><a href="#configuring-the-apache-virtual-server"
+id="toc-configuring-the-apache-virtual-server"><span
+class="toc-section-number">2.6</span> Configuring the Apache virtual
+server</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <p>In this guided example we are going to deploy the
+            Contacts app.</p>
+            <h1 data-number="1" id="setting-up-the-server"><span
+            class="header-section-number">1</span> Setting up the
+            server</h1>
+            <p>There are several ways to deploy a Symfony app:</p>
+            <ol type="1">
+            <li>Dedicated server: a full server with the only purpose of
+            hosting our app. The server can be a physical server (very
+            expensive) or a virtual server (AWS, Azure, OVH, etc).</li>
+            <li>PaaS (platform as a service): using some of the PaaS
+            services available: AWS Elastic Beanstalk, Azure App
+            Service, etc.</li>
+            <li>In Docker containers, that actually run in virtual
+            servers and PaaS services.</li>
+            </ol>
+            <p>We will take the first approach and deploy our app in a
+            Dedicated server in a virtual machine, because this way you
+            can follow all the process more easily.</p>
+            <h2 data-number="1.1"
+            id="installing-the-required-dependencies"><span
+            class="header-section-number">1.1</span> Installing the
+            required dependencies</h2>
+            <p>Our server operating system is a Ubuntu server 22.10, but
+            you can use the operative system and server of your choice
+            (IIS, Nginx, etc). Do not deploy the app to a XAMPP server
+            because it’s not used in real environments.</p>
+            <p>Let’s install all the required packets:</p>
+            <p><strong>Apache and PHP</strong>:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install apache2</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install php</span></code></pre></div>
+            <p><strong>PHP modules</strong>:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install php8.1-cli php8.1-common php8.1-mysql php8.1-zip php8.1-gd php8.1-mbstring php8.1-curl php8.1-xml php8.1-bcmath php8.1-cgi</span></code></pre></div>
+            <p>Check the status of the installed software:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> service apache2 status</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">-v</span></span></code></pre></div>
+            <p><strong>MySQL</strong>:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install mysql-server</span></code></pre></div>
+            <p><strong>Composer</strong>:</p>
+            <p>Follow the Composer installation guide: <a
+            href="https://getcomposer.org/download/">https://getcomposer.org/download/</a></p>
+            <p>Check the installation:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> <span class="at">-V</span></span></code></pre></div>
+            <p><strong>Symfony CLI</strong>:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://get.symfony.com/cli/installer <span class="at">-O</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">bash</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv .symfony5/bin/symfony /usr/local/bin/symfony</span></code></pre></div>
+            <p>Check the installation:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> <span class="at">-V</span></span></code></pre></div>
+            <p>Check the Symfony requirements and install the not
+            installed ones (in this example, the <code>intl</code>
+            extension):</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> check:requirements</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install php-intl</span></code></pre></div>
+            <p>After installing the requirements, run again
+            <code>symfony check:requirements</code> until all the
+            dependencies are satisfied.</p>
+            <p><strong>Git</strong>:</p>
+            <p>If you plan to upload the app using another way, like scp
+            or rsync, you don’t need to do this step.</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git</span></code></pre></div>
+            <p>Configure the access to your GitHub account following the
+            <a
+            href="https://docs.github.com/es/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">guide</a>.</p>
+            <h2 data-number="1.2" id="configuring-the-services"><span
+            class="header-section-number">1.2</span> Configuring the
+            services</h2>
+            <p><strong>Apache</strong>:</p>
+            <p>Enable the <code>rewrite</code> module:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> a2enmod rewrite</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> service apache2 restart</span></code></pre></div>
+            <p><strong>MySQL</strong>:</p>
+            <p>First, create an admin user to manage the entire
+            DBMS:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mysql</span></code></pre></div>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mysql<span class="op">&gt;</span> <span class="kw">create</span> <span class="fu">user</span> <span class="st">&#39;admin&#39;</span>@<span class="st">&#39;localhost&#39;</span> <span class="kw">identified</span> <span class="kw">by</span> <span class="st">&#39;yourpassword&#39;</span>;</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mysql<span class="op">&gt;</span> <span class="kw">grant</span> <span class="kw">all</span> <span class="kw">privileges</span> <span class="kw">on</span> <span class="op">*</span>.<span class="op">*</span> <span class="kw">to</span> <span class="st">&#39;admin&#39;</span>@<span class="st">&#39;localhost&#39;</span> <span class="kw">with</span> <span class="kw">grant</span> <span class="kw">option</span>;</span></code></pre></div>
+            <p>Then, create the database and the user for the Symfony
+            app. Here you can use the same connection string of your
+            local server (user, password and database name) or change
+            it:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mysql<span class="op">&gt;</span> <span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">&#39;contactsymfony&#39;</span>@<span class="st">&#39;localhost&#39;</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">&#39;yourpassword&#39;</span>;</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mysql<span class="op">&gt;</span> <span class="kw">CREATE</span> <span class="kw">DATABASE</span> `contactsymfony`;</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>mysql<span class="op">&gt;</span> <span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> `contactsymfony`.<span class="op">*</span> <span class="kw">TO</span> <span class="st">&#39;contactsymfony&#39;</span>@<span class="st">&#39;localhost&#39;</span>;</span></code></pre></div>
+            <h1 data-number="2" id="deploying-the-app"><span
+            class="header-section-number">2</span> Deploying the
+            App</h1>
+            <h2 data-number="2.1" id="upload-the-code"><span
+            class="header-section-number">2.1</span> Upload the
+            code</h2>
+            <p>Use git for downloading your repository code from GitHub
+            (or from another git repo):</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone your_repo_url</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv contacts_symfony /var/www/html</span></code></pre></div>
+            <p>Upload or write your <code>.env.local</code> file with
+            the database connection string and other variables:</p>
+            <p>On your local computer:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> your_contacts_app_folder</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> .env.local your_server_user@your_server_url_or_ip:</span></code></pre></div>
+            <p>On the server:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv ~/.env.local /var/www/html/contacts_symfony/</span></code></pre></div>
+            <h2 data-number="2.2"
+            id="installing-vendor-dependencies"><span
+            class="header-section-number">2.2</span> Installing vendor
+            dependencies</h2>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /var/www/html/contacts_symfony/</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">APP_ENV</span><span class="op">=</span>prod</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> install <span class="at">--no-dev</span> <span class="at">--optimize-autoloader</span></span></code></pre></div>
+            <p>The <code>--optimize-autoloader</code> flag improves
+            Composer’s autoloader performance by building a “class map”.
+            The <code>--no-dev</code> flag ensures that development
+            packages are not installed in the production
+            environment.</p>
+            <blockquote>
+            <p>If you get a <strong>“class not found”</strong> error
+            during this step, you may need to run
+            <code>export APP_ENV=prod</code> before running this command
+            so that the <code>post-install-cmd</code> scripts run in the
+            prod environment.</p>
+            </blockquote>
+            <p>If everything is ok, clear your Symfony cache:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="va">APP_ENV</span><span class="op">=</span>prod <span class="va">APP_DEBUG</span><span class="op">=</span>0 <span class="ex">php</span> bin/console cache:clear</span></code></pre></div>
+            <h2 data-number="2.3" id="checking-your-env-variables"><span
+            class="header-section-number">2.3</span> Checking your env
+            variables</h2>
+            <p>Edit your <code>.env</code> and <code>.env.local</code>
+            to change or update your variables.</p>
+            <p>In <code>.env</code>, change the <code>APP_ENV</code>
+            variable from <code>dev</code> (development) to
+            <code>prod</code> (production):</p>
+            <pre><code>APP_ENV=prod</code></pre>
+            <h2 data-number="2.4" id="migrate-your-database"><span
+            class="header-section-number">2.4</span> Migrate your
+            database</h2>
+            <p>Execute the Doctrine migration command:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console doctrine:migration:migrate</span></code></pre></div>
+            <p>Now, you can insert your database data.</p>
+            <h2 data-number="2.5" id="generating-the-jwt-keys"><span
+            class="header-section-number">2.5</span> Generating the JWT
+            keys</h2>
+            <p>We need to generate again the JWT public and private keys
+            because they are not uploaded to our git repository:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">symfony</span> console lexik:jwt:generate-keypair</span></code></pre></div>
+            <h2 data-number="2.6"
+            id="configuring-the-apache-virtual-server"><span
+            class="header-section-number">2.6</span> Configuring the
+            Apache virtual server</h2>
+            <p>In your app folder (typically
+            <code>/var/www/html/your_app_name</code>) run:</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /var/www/html/your_app_name</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require symfony/apache-pack</span></code></pre></div>
+            <p>This pack installs a <code>.htaccess</code> file in the
+            <code>public/</code> directory that contains the rewrite
+            rules needed to serve the Symfony application.</p>
+            <p>Copy the <code>.htaccess</code> contents inside the
+            <code>&lt;Directory&gt;</code> configuration associated to
+            the Symfony application <code>public/</code> directory, and
+            replace <code>AllowOverride All</code> by
+            <code>AllowOverride None</code>:</p>
+            <pre><code>&lt;VirtualHost *:80&gt;
+    # ...
+    DocumentRoot /var/www/your_project/public
+
+    &lt;Directory /var/www/your_project/public&gt;
+        AllowOverride None
+
+        # Copy .htaccess contents here
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</code></pre>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> public/.htaccess <span class="co"># copy the content</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/apache2/sites-available/000-default.conf</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Change DocumentRoot, &lt;Directory&gt; and AllowOverride</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># and paste the content inside &lt;Directory&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> service apache2 restart</span></code></pre></div>
+            <p>Done! Now it’s time to check that everything is ok,
+            including the API.</p>
+            <p>But don’t forget that your app sends and receives
+            credentials in plain text via the Internet, so your next
+            step should be to create an HTTPS secure server and to
+            redirect all the requests sent to the 80 port to the 443
+            port.</p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
