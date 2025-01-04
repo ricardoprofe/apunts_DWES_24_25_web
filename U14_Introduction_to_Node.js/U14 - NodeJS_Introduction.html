@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 14. Node.js. Introduction</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 14. Node.js. Introduction</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#node.js" id="toc-node.js"><span
+class="toc-section-number">1</span> Node.js</a>
+<ul>
+<li><a href="#main-features" id="toc-main-features"><span
+class="toc-section-number">1.1</span> Main features</a></li>
+<li><a href="#installation" id="toc-installation"><span
+class="toc-section-number">1.2</span> Installation</a></li>
+<li><a href="#a-hello-world-app" id="toc-a-hello-world-app"><span
+class="toc-section-number">1.3</span> A Hello world app</a></li>
+</ul></li>
+<li><a href="#node-libraries" id="toc-node-libraries"><span
+class="toc-section-number">2</span> Node libraries</a>
+<ul>
+<li><a href="#using-node-libraries" id="toc-using-node-libraries"><span
+class="toc-section-number">2.1</span> Using Node libraries</a>
+<ul>
+<li><a href="#guided-practice" id="toc-guided-practice"><span
+class="toc-section-number">2.1.1</span> Guided practice</a></li>
+<li><a href="#practice" id="toc-practice"><span
+class="toc-section-number">2.1.2</span> Practice</a></li>
+</ul></li>
+<li><a href="#creating-our-own-libraries"
+id="toc-creating-our-own-libraries"><span
+class="toc-section-number">2.2</span> Creating our own libraries</a>
+<ul>
+<li><a href="#including-an-entire-folder-of-modules"
+id="toc-including-an-entire-folder-of-modules"><span
+class="toc-section-number">2.2.1</span> Including an entire folder of
+modules</a></li>
+<li><a href="#sharing-information-between-modules-with-json"
+id="toc-sharing-information-between-modules-with-json"><span
+class="toc-section-number">2.2.2</span> Sharing information between
+modules with Json</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#third-party-libraries"
+id="toc-third-party-libraries"><span class="toc-section-number">3</span>
+Third party libraries</a>
+<ul>
+<li><a href="#install-a-module-locally"
+id="toc-install-a-module-locally"><span
+class="toc-section-number">3.1</span> Install a module locally</a>
+<ul>
+<li><a href="#example" id="toc-example"><span
+class="toc-section-number">3.1.1</span> Example</a></li>
+</ul></li>
+<li><a href="#uninstall-a-module" id="toc-uninstall-a-module"><span
+class="toc-section-number">3.2</span> Uninstall a module</a></li>
+<li><a href="#managing-versions" id="toc-managing-versions"><span
+class="toc-section-number">3.3</span> Managing versions</a></li>
+<li><a href="#editing-package.json" id="toc-editing-package.json"><span
+class="toc-section-number">3.4</span> Editing package.json</a></li>
+<li><a href="#install-a-module-globally"
+id="toc-install-a-module-globally"><span
+class="toc-section-number">3.5</span> Install a module globally</a></li>
+<li><a href="#exercise" id="toc-exercise"><span
+class="toc-section-number">3.6</span> Exercise</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="node.js"><span
+            class="header-section-number">1</span> Node.js</h1>
+            <p><strong>Node.js</strong> is a server-side runtime
+            environment built using the Google Chrome JavaScript engine,
+            called V8. Node adds to Javascript the ability to work with
+            local files, access databases, handle client
+            requests/responses and execute a lot of server-side
+            tasks.</p>
+            <p>The main advantage of <strong>node.js</strong> is that,
+            since it is based on JavaScript, which is a client language,
+            we don’t need to learn two languages ​​to develop an entire
+            application in a Client/Server environment.</p>
+            <h2 data-number="1.1" id="main-features"><span
+            class="header-section-number">1.1</span> Main features</h2>
+            <p>Among the main features of node.js, we can highlight
+            these ones:</p>
+            <ul>
+            <li><p><strong><em>Asynchronism</em></strong>. Node.js
+            offers an asynchronous API, so the main program doesn’t
+            block when we call its methods and the application is
+            waiting for a response.</p></li>
+            <li><p><strong><em>Event driven</em></strong>. The
+            application is able to collect a response when it happens,
+            without blocking the program while waiting for that
+            response.</p></li>
+            <li><p><strong><em>Fast execution and high
+            efficiency</em></strong> because is implemented using
+            C++</p></li>
+            <li><p><strong><em>Single processing</em></strong> A Node.js
+            app runs in a single process, without creating a new thread
+            for every request. When an operation interrupts another (for
+            instance, when we launch a database query), instead of
+            blocking the thread and wasting CPU cycles waiting, Node.js
+            will resume the main operation when the response comes
+            back.</p>
+            <p>This allows Node.js to handle thousands of concurrent
+            connections with a single server without introducing the
+            burden of managing thread concurrency, which could be a
+            significant source of bugs.</p></li>
+            <li><p><strong><em>Compatibility</em></strong> The client
+            code is compatible with any browser.</p></li>
+            </ul>
+            <h2 data-number="1.2" id="installation"><span
+            class="header-section-number">1.2</span> Installation</h2>
+            <p>We can install Node.js in different ways. The most common
+            is by using <code>nvm</code> (Node Version Manager), a tool
+            that allows to install Node automatically and manage
+            different versions at the same time.</p>
+            <p>Installing nvm with curl:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-o-</span> https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div>
+            <p>With wget:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-qO-</span> https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div>
+            <p>Close the terminal and open again. Nom we can try:</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvm</span> ls-remote</span></code></pre></div>
+            <p>to check the versions available. We will install the LTS
+            latest. At this moment, it’s v22.12.0. We can just ask for
+            the latest version by doing</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvm</span> install 22.12.0</span></code></pre></div>
+            <p>And check the node installation and version:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">-v</span></span></code></pre></div>
+            <p>If you experience some problems with the installation,
+            you can check the <a
+            href="https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating">nvm
+            documentation</a>.</p>
+            <p>To install Node on <strong>Windows</strong> you can
+            install install first nvm and then Node: <a
+            href="https://github.com/coreybutler/nvm-windows">https://github.com/coreybutler/nvm-windows</a>.</p>
+            <p>Or you can install directly Node using the Windows
+            installer (msi): <a
+            href="https://nodejs.org/en/download">https://nodejs.org/en/download</a>.</p>
+            <h2 data-number="1.3" id="a-hello-world-app"><span
+            class="header-section-number">1.3</span> A Hello world
+            app</h2>
+            <p>First, create a folder to save our Node projects. For
+            instance, to execute a node script, let’s create a file
+            <code>example01.js</code> with Visual Studio Code with this
+            content:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> message<span class="op">=</span><span class="st">&quot;Hello, world!&quot;</span><span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(message)<span class="op">;</span></span></code></pre></div>
+            <p>Now we can open a new terminal in VSCode and run the
+            script. We should get the message “Hello, world!”.</p>
+            <figure>
+            <img src="images/screen01.png"
+            alt="Our first Node script" />
+            <figcaption aria-hidden="true">Our first Node
+            script</figcaption>
+            </figure>
+            <p>At this point, you probably know enough the fundamentals
+            of JavaScript. It’s important to know about functions, arrow
+            and anonymous functions, and promises. Just in case, here’s
+            a link to a guide.</p>
+            <p><a href="https://javascript.info/js">JavaScript
+            guide</a></p>
+            <h1 data-number="2" id="node-libraries"><span
+            class="header-section-number">2</span> Node libraries</h1>
+            <p>Node.js is very modular. We can use a lot of different
+            components named <strong>libraries</strong> or
+            <strong>packages</strong>. Some libraries are incorporated
+            to Node by default, while others (<strong>third party
+            libraries/packages</strong>) might be installed when we need
+            them. The user can also create his of her own libraries.</p>
+            <h2 data-number="2.1" id="using-node-libraries"><span
+            class="header-section-number">2.1</span> Using Node
+            libraries</h2>
+            <p>To use a library, we must require it.</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></span></code></pre></div>
+            <p>In the example, we are creating an object <code>fs</code>
+            to work with the file system. We need the library
+            <code>fs</code>, which is native to Node but we have to
+            require it anyway.</p>
+            <p>Now we can use the file handler to list the files in a
+            certain folder. For instance:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> route <span class="op">=</span> <span class="st">&#39;/home/fidel/projectesNode&#39;</span><span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>fs<span class="op">.</span><span class="fu">readdirSync</span>(route)<span class="op">.</span><span class="fu">forEach</span>(file<span class="kw">=&gt;</span>{<span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(file)<span class="op">;</span>})<span class="op">;</span></span></code></pre></div>
+            <p>If we run the script in a VSCode terminal, we will
+            get:</p>
+            <figure>
+            <img src="images/screen02.png" alt="example02.js" />
+            <figcaption aria-hidden="true">example02.js</figcaption>
+            </figure>
+            <blockquote>
+            <p>Sometimes you will probably find the notation
+            <code>import fs from 'fs'</code>, which is equivalent to
+            <code>const fs = require('fs')</code></p>
+            </blockquote>
+            <p>Another example:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> user <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;os&#39;</span>)<span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Hello, &quot;</span><span class="op">+</span>user<span class="op">.</span><span class="fu">userInfo</span>()<span class="op">.</span><span class="at">username</span>)<span class="op">;</span></span></code></pre></div>
+            <figure>
+            <img src="images/screen03.png" alt="example03.js" />
+            <figcaption aria-hidden="true">example03.js</figcaption>
+            </figure>
+            <p>You can find info about most of Node libraries in the
+            following link:</p>
+            <p><a href="https://nodejs.org/api/">Node libraries
+            documentation</a></p>
+            <h3 data-number="2.1.1" id="guided-practice"><span
+            class="header-section-number">2.1.1</span> Guided
+            practice</h3>
+            <p>Let’s create a little server in node using the library
+            <code>http</code>.</p>
+            <ul>
+            <li>Create the script <code>nodepractice01.js</code></li>
+            <li>Import the library <code>http</code></li>
+            </ul>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> http <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;http&#39;</span>)<span class="op">;</span></span></code></pre></div>
+            <ul>
+            <li>Now we create the server</li>
+            </ul>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> server <span class="op">=</span> http<span class="op">.</span><span class="fu">createServer</span>(req<span class="op">,</span>res) <span class="kw">=&gt;</span> {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <ul>
+            <li>We must create a header to our response (parameter
+            <code>res</code>) using the method <code>writeHead</code> of
+            the <code>server</code> object. In this example, we will
+            return a json object.</li>
+            </ul>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> server <span class="op">=</span> http<span class="op">.</span><span class="fu">createServer</span>((req<span class="op">,</span>res) <span class="kw">=&gt;</span> {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    res<span class="op">.</span><span class="fu">writeHead</span>(<span class="dv">200</span><span class="op">,</span> { <span class="st">&#39;Content-Type&#39;</span><span class="op">:</span> <span class="st">&#39;application/json&#39;</span> })<span class="op">;</span>    </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <ul>
+            <li>Finally, we fill the body of our response with a message
+            “Hello world!”</li>
+            </ul>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> server <span class="op">=</span> http<span class="op">.</span><span class="fu">createServer</span>((req<span class="op">,</span>res) <span class="kw">=&gt;</span> {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    res<span class="op">.</span><span class="fu">writeHead</span>(<span class="dv">200</span><span class="op">,</span> { <span class="st">&#39;Content-Type&#39;</span><span class="op">:</span> <span class="st">&#39;application/json&#39;</span> })<span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    res<span class="op">.</span><span class="fu">end</span>(<span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>({<span class="dt">message</span><span class="op">:</span><span class="st">&quot;Hello world!&quot;</span>}))<span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <ul>
+            <li>The server must listen through a port</li>
+            </ul>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>server<span class="op">.</span><span class="fu">listen</span>(<span class="dv">8001</span>)<span class="op">;</span></span></code></pre></div>
+            <p>Now, if we run the script from the VSCode terminal, seems
+            as if nothing happens…</p>
+            <figure>
+            <img src="images/screen04.png" alt="nodepractice01.js" />
+            <figcaption
+            aria-hidden="true">nodepractice01.js</figcaption>
+            </figure>
+            <p>But if we open our browser and we go to 127.0.0.1:8001 we
+            will get the json message</p>
+            <figure>
+            <img src="images/screen05.png" alt="nodepractice01.js" />
+            <figcaption
+            aria-hidden="true">nodepractice01.js</figcaption>
+            </figure>
+            <h3 data-number="2.1.2" id="practice"><span
+            class="header-section-number">2.1.2</span> Practice</h3>
+            <p>Copy the script <code>nodepractice01.js</code> to
+            <code>nodepractice02.js</code> and made changes so the
+            returned json includes the name of your system user and the
+            name of your homedir.</p>
+            <figure>
+            <img src="images/screen06.png" alt="nodepractice02.js" />
+            <figcaption
+            aria-hidden="true">nodepractice02.js</figcaption>
+            </figure>
+            <p>Upload the <code>nodepractice02.js</code> to Aules when
+            it’s finished.</p>
+            <h2 data-number="2.2" id="creating-our-own-libraries"><span
+            class="header-section-number">2.2</span> Creating our own
+            libraries</h2>
+            <p>We can use <code>require</code> to include a file in
+            another file, just as <code>include</code> did for PHP
+            scripts. We must specify the relative path of the file we
+            want to be included.</p>
+            <p>Let’s create a script named <code>operations.js</code>
+            with this content:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> add_op <span class="op">=</span> (num1<span class="op">,</span> num2) <span class="kw">=&gt;</span> num1 <span class="op">+</span> num2<span class="op">;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> sub_op <span class="op">=</span> (num1<span class="op">,</span> num2) <span class="kw">=&gt;</span> num1 <span class="op">-</span> num2<span class="op">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> mul_op <span class="op">=</span> (num1<span class="op">,</span> num2) <span class="kw">=&gt;</span> num1 <span class="op">*</span> num2<span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> div_op <span class="op">=</span> (num1<span class="op">,</span> num2) <span class="kw">=&gt;</span> num1 <span class="op">/</span> num2<span class="op">;</span></span></code></pre></div>
+            <p>Now, to include this operations in other script using
+            <code>require</code>, we must export them</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">sumar</span><span class="op">:</span> add_op<span class="op">,</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">restar</span><span class="op">:</span> sub_op<span class="op">,</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">multiplicar</span><span class="op">:</span> mul_op<span class="op">,</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dividir</span><span class="op">:</span> div_op</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+            <p>Now, in a new script named <code>example04.js</code> we
+            can import the <code>operations.js</code> library, and then
+            call the functions defined on it.</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> operations <span class="op">=</span> <span class="pp">require</span>( <span class="st">&#39;./operations.js&#39;</span>)<span class="op">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> a <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> b <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(operations<span class="op">.</span><span class="fu">sumar</span>(a<span class="op">,</span>b))<span class="op">;</span></span></code></pre></div>
+            <p>If we run the script in the VSCode terminal, we should
+            get a 15.</p>
+            <p>Now, try this:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> operations <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;./operations.js&#39;</span>)<span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> a <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> b <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(operations<span class="op">.</span><span class="fu">dividir</span>(a<span class="op">,</span>b))<span class="op">;</span></span></code></pre></div>
+            <p>We will get <em>Infinity</em> as a result, because it’s
+            not possible to divide by zero. How can we display a message
+            if the second parameter is zero? We must change the original
+            function in <code>operations.js</code>.</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> div_op <span class="op">=</span> (num1<span class="op">,</span> num2) <span class="kw">=&gt;</span> num2 <span class="op">===</span> <span class="dv">0</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>            <span class="op">?</span> <span class="st">&quot;It&#39;s not possible to divide by 0&quot;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>            <span class="op">:</span> num1 <span class="op">/</span> num2<span class="op">;</span></span></code></pre></div>
+            <p>If num2 is equal to zero, then we will return a message.
+            If not, we will return the division.</p>
+            <p>Try now and see what happens.</p>
+            <figure>
+            <img src="images/screen07.png" alt="example04.js" />
+            <figcaption aria-hidden="true">example04.js</figcaption>
+            </figure>
+            <h3 data-number="2.2.1"
+            id="including-an-entire-folder-of-modules"><span
+            class="header-section-number">2.2.1</span> Including an
+            entire folder of modules</h3>
+            <p>It is possible to include an entire folder of modules,
+            following a specific nomenclature. To include a whole folder
+            do these steps:</p>
+            <ul>
+            <li>Add all the modules we want to export (.js files) inside
+            a folder</li>
+            <li>Create a file called index.js in the same folder</li>
+            <li>Inside this index.js file, include (with require ) all
+            the other modules in the folder that we want to export</li>
+            </ul>
+            <p>For instance, if we create a folder
+            <code>languages</code> with these files:</p>
+            <p><code>es.js</code></p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">saludo</span> <span class="op">:</span> <span class="st">&quot;Hola&quot;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+            <p><code>en.js</code></p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">saludo</span> <span class="op">:</span> <span class="st">&quot;Hello&quot;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+            <p>Now we can create an <code>index.js</code> file with this
+            content:</p>
+            <p><code>index.js</code></p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> en <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;./en&#39;</span>)<span class="op">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> es <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;./es&#39;</span>)<span class="op">;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">es</span> <span class="op">:</span> es<span class="op">,</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">en</span> <span class="op">:</span> en</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+            <p>Now, in the root folder of the project, we can create a
+            file, for instance <code>example05.js</code>, with this
+            content:</p>
+            <p><code>example05.js</code></p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> languages <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;./languages&#39;</span>)<span class="op">;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;English:&quot;</span><span class="op">,</span> languages<span class="op">.</span><span class="at">en</span><span class="op">.</span><span class="at">saludo</span>)<span class="op">;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Español:&quot;</span><span class="op">,</span> languages<span class="op">.</span><span class="at">es</span><span class="op">.</span><span class="at">saludo</span>)<span class="op">;</span></span></code></pre></div>
+            <figure>
+            <img src="images/screen08.png" alt="example05.js" />
+            <figcaption aria-hidden="true">example05.js</figcaption>
+            </figure>
+            <h3 data-number="2.2.2"
+            id="sharing-information-between-modules-with-json"><span
+            class="header-section-number">2.2.2</span> Sharing
+            information between modules with Json</h3>
+            <p>In the previous example, we saved the shared information
+            in a json file.</p>
+            <p><code>languages.json</code></p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;es&quot;</span> <span class="fu">:</span> <span class="st">&quot;Hola&quot;</span><span class="fu">,</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;en&quot;</span> <span class="fu">:</span> <span class="st">&quot;Hello&quot;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+            <p>Now, our file <code>es.js</code>:</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> texts <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;./languages.json&#39;</span>)<span class="op">;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">saludo</span> <span class="op">:</span> texts<span class="op">.</span><span class="at">es</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+            <p>And <code>en.js</code>:</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> texts <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;./languages.json&#39;</span>)<span class="op">;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">saludo</span> <span class="op">:</span> texts<span class="op">.</span><span class="at">en</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+            <p>The files <code>index.js</code> and
+            <code>example05.js</code> remain the same.</p>
+            <blockquote>
+            <p>If we execute a script from a different folder than the
+            one that contains the script, we will get an error in the
+            require. It’s a good practice to do</p>
+            <p><code>require(__dirname + '/module_name')</code></p>
+            <p>in order to access to the module from every place in our
+            project. The <code>__dirname</code> variable makes reference
+            to the folder containing the invoked script, wherever we
+            are.</p>
+            </blockquote>
+            <h1 data-number="3" id="third-party-libraries"><span
+            class="header-section-number">3</span> Third party
+            libraries</h1>
+            <p>By now we are using only node libraries, but we can
+            download and install on our JavaScript applications other
+            modules or libraries that have nothing to do with Node, such
+            as for example <strong><em>Bootstrap</em></strong> or
+            <strong><em>jQuery</em></strong>. To do this we will use
+            <code>npm</code>.</p>
+            <p><code>npm</code> (Node Package Manager) is a package
+            manager for Javascript, and is installed automatically when
+            we install Node.js. We can check that we have it installed,
+            and what specific version we have, using the command
+            <code>npm -v</code> or <code>npm --version</code>. The
+            registry of libraries or modules managed by NPM is on the <a
+            href="https://www.npmjs.com/">npmjs.com</a> website.</p>
+            <p>The package manager can be used to install some packages
+            in a certain project, or globally.</p>
+            <h2 data-number="3.1" id="install-a-module-locally"><span
+            class="header-section-number">3.1</span> Install a module
+            locally</h2>
+            <p>The information about the configuration of a project is
+            saved in the file <code>package.json</code>. The file must
+            be created with <code>npm</code> inside the folder of our
+            project:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> init</span></code></pre></div>
+            <p>Then <code>npm</code> will ask for the package name (by
+            default, the name of the folder), the version (by default,
+            1.0.0), a description, the entry point (by default
+            index.js), the test command (a command to be executed if we
+            run <code>npm test</code>), the git repository, the
+            keywords, the author and the license. If we confirm the
+            data, we will get the <code>package.json</code> file. It
+            should look like this:</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;testnpm&quot;</span><span class="fu">,</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Testing npm&quot;</span><span class="fu">,</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;main&quot;</span><span class="fu">:</span> <span class="st">&quot;index.js&quot;</span><span class="fu">,</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;scripts&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;test&quot;</span><span class="fu">:</span> <span class="st">&quot;echo </span><span class="ch">\&quot;</span><span class="st">Error: no test specified</span><span class="ch">\&quot;</span><span class="st"> &amp;&amp; exit 1&quot;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;author&quot;</span><span class="fu">:</span> <span class="st">&quot;Fidel Oltra&quot;</span><span class="fu">,</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;license&quot;</span><span class="fu">:</span> <span class="st">&quot;ISC&quot;</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+            <p>Now we can add to the <code>package.json</code> file the
+            modules we need to be installed and used in our project. We
+            don’t do this editing the json file, but using
+            <code>npm install</code>.</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install module_name</span></code></pre></div>
+            <p>If we install an external module, the information about
+            that module will be included in the
+            <strong><em>dependencies</em></strong> section of the
+            <code>package.json</code> file.</p>
+            <p>We can load the installed modules using
+            <code>require</code>, as if they were native modules.</p>
+            <h3 data-number="3.1.1" id="example"><span
+            class="header-section-number">3.1.1</span> Example</h3>
+            <p>Let’s install the module <code>lodash</code> in our
+            project.</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install lodash</span></code></pre></div>
+            <p>Let’s see how our <code>package.json</code> has
+            changed:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;testnpm&quot;</span><span class="fu">,</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Testing npm&quot;</span><span class="fu">,</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;main&quot;</span><span class="fu">:</span> <span class="st">&quot;index.js&quot;</span><span class="fu">,</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;scripts&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;test&quot;</span><span class="fu">:</span> <span class="st">&quot;echo </span><span class="ch">\&quot;</span><span class="st">Error: no test specified</span><span class="ch">\&quot;</span><span class="st"> &amp;&amp; exit 1&quot;</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;author&quot;</span><span class="fu">:</span> <span class="st">&quot;Fidel Oltra&quot;</span><span class="fu">,</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;license&quot;</span><span class="fu">:</span> <span class="st">&quot;ISC&quot;</span><span class="fu">,</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;dependencies&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;lodash&quot;</span><span class="fu">:</span> <span class="st">&quot;^4.17.21&quot;</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+            <p>The <code>lodash</code> module has a method called
+            <code>join</code> to convert the elements in an array into a
+            string with a separator. Let’s load the module and use it in
+            a example:</p>
+            <p><code>example06.js</code></p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> lds <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;lodash&#39;</span>)<span class="op">;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> names <span class="op">=</span> [<span class="st">&quot;Fidel&quot;</span><span class="op">,</span><span class="st">&quot;David&quot;</span><span class="op">,</span><span class="st">&quot;Mercedes&quot;</span><span class="op">,</span><span class="st">&quot;Antonio&quot;</span><span class="op">,</span><span class="st">&quot;Jaume&quot;</span><span class="op">,</span><span class="st">&quot;Pilar&quot;</span>]<span class="op">;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> namesString <span class="op">=</span> lds<span class="op">.</span><span class="fu">join</span>(names)<span class="op">;</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(namesString)<span class="op">;</span></span></code></pre></div>
+            <p>The result:</p>
+            <figure>
+            <img src="images/screen09.png" alt="example06.js" />
+            <figcaption aria-hidden="true">example06.js</figcaption>
+            </figure>
+            <h2 data-number="3.2" id="uninstall-a-module"><span
+            class="header-section-number">3.2</span> Uninstall a
+            module</h2>
+            <p>We can uninstall a module from our project by doing</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> uninstall module_name</span></code></pre></div>
+            <h2 data-number="3.3" id="managing-versions"><span
+            class="header-section-number">3.3</span> Managing
+            versions</h2>
+            <p>We can edit the <strong><em>dependencies</em></strong>
+            section of our <code>package.json</code> file in order to
+            declare specific versions for each module. This way, we can
+            be sure that our application will work with compatible
+            versions of the external modules. Let’s see some examples
+            using the <code>lodash</code> module:</p>
+            <ul>
+            <li><code>"lodash": "1.0.0"</code> our application only
+            works with the 1.0.0 version</li>
+            <li><code>"lodash": "1.0.x"</code> our application works
+            with any version beginning with 1.0</li>
+            <li><code>"lodash": "*"</code> our application will get
+            always the latest version of the module</li>
+            <li><code>"lodash": "&gt;= 1.0.2"</code> the application
+            works with any version from 1.0.2.</li>
+            <li><code>"lodash": "&lt; 1.0.9"</code> the application only
+            works with versions below 1.0.9</li>
+            <li><code>"lodash": "&gt;= 1.0.2 &lt; 1.0.9"</code> versions
+            from 1.0.2 to 1.0.9 (not included)</li>
+            <li><code>"lodash": "^1.2.3"</code> allows changes that do
+            not modify the left-most non-zero element (in this case
+            equivalent to <code>&gt;=1.2.3 &lt;2.0.0-0</code>).</li>
+            </ul>
+            <p>See <a
+            href="https://github.com/npm/node-semver#versions">Node
+            semantic versions</a>.</p>
+            <h2 data-number="3.4" id="editing-package.json"><span
+            class="header-section-number">3.4</span> Editing
+            package.json</h2>
+            <p>We can edit package.json manually to add or remove
+            dependencies.</p>
+            <p>Once we have added a new dependency, o remove and old
+            one, we must execute <code>npm install</code>.</p>
+            <p>We can also use <code>npm install</code> to deploy the
+            application in another computer without copying the
+            <code>node_modules</code> folder. In fact is a good practice
+            not to copy this folder to the final user and install the
+            modules using <code>npm install</code> and the
+            <code>package.json</code> file.</p>
+            <h2 data-number="3.5" id="install-a-module-globally"><span
+            class="header-section-number">3.5</span> Install a module
+            globally</h2>
+            <p>For some modules that are called from the console may be
+            interesting install them globally in order to use them
+            within any project.</p>
+            <p>When we install a module globally, the
+            <code>package.json</code> file is not modified. The command
+            is:</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> module_name</span></code></pre></div>
+            <p>These modules can’t be loaded with <code>require</code>
+            in a specific project.</p>
+            <p>Let’s see how the installation of globally scoped modules
+            works with a really useful one: the <strong>nodemon</strong>
+            module. This module operates through the terminal and is
+            used to monitor the execution of a Node application. In the
+            event of any changes to the application, it automatically
+            restarts and runs it again for us, eliminating the need to
+            re-enter the ‘node’ command in the terminal. You can find
+            information about nodemon here.</p>
+            <p>To install nodemon globally, we use the following command
+            (with administrator permissions):</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> nodemon</span></code></pre></div>
+            <blockquote>
+            <p>On Linux you probably must use <code>sudo</code> to
+            install global modules with <code>npm</code>.</p>
+            </blockquote>
+            <p>Once installed globally, the <code>nodemon</code> command
+            will be added to the same folder where the ‘node’ or ‘npm’
+            commands reside. To use it, simply navigate to the project
+            folder you want to test and use this command instead of
+            ‘node’ to launch the application:</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nodemon</span> index.js</span></code></pre></div>
+            <p>Several information messages will automatically appear on
+            the screen, along with the result of running our program.
+            With every change we make, this process will restart,
+            executing the program again.</p>
+            <p>To end the execution of <code>nodemon</code> (and
+            therefore the application being monitored), simply press
+            Control+C in the terminal.</p>
+            <p>To uninstall a globally installed module, use the
+            following command:</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> uninstall <span class="at">-g</span> module_name</span></code></pre></div>
+            <h2 data-number="3.6" id="exercise"><span
+            class="header-section-number">3.6</span> Exercise</h2>
+            <ul>
+            <li>Create a new folder <code>exercice14_01</code> and then
+            create the <code>package.json</code> with
+            <code>npm</code>.</li>
+            <li>Install the package <code>moment</code> using
+            <code>npm</code>.</li>
+            <li>Create an <code>index.js</code> file and load the
+            <code>moment</code> package with <code>require</code>.</li>
+            <li>Create a variable with the current date and hour.</li>
+            </ul>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> now <span class="op">=</span> <span class="fu">moment</span>()<span class="op">;</span></span></code></pre></div>
+            <ul>
+            <li>Create a variable with a date of 2022, for instance</li>
+            </ul>
+            <div class="sourceCode" id="cb39"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> longago <span class="op">=</span> <span class="fu">moment</span>(<span class="st">&quot;01/09/2022&quot;</span><span class="op">,</span><span class="st">&quot;DD/MM/YYYY&quot;</span>)<span class="op">;</span></span></code></pre></div>
+            <ul>
+            <li>Create a variable with a date of 2024, for instance</li>
+            </ul>
+            <div class="sourceCode" id="cb40"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> faraway <span class="op">=</span> <span class="fu">moment</span>(<span class="st">&quot;31/07/2024&quot;</span><span class="op">,</span><span class="st">&quot;DD/MM/YYYY&quot;</span>)<span class="op">;</span></span></code></pre></div>
+            <ul>
+            <li><p>Find information about the method
+            <code>duration</code> of <code>moment</code>. Use the method
+            to display the difference, in years, months and days,
+            between the dates <code>longago</code> and
+            <code>faraway</code>.</p></li>
+            <li><p>Find information about the method <code>add</code> of
+            <code>moment</code> to add 1 year to the current date
+            (<code>now</code>).</p></li>
+            <li><p>Find information about the method <code>format</code>
+            of <code>moment</code> to display the new date
+            (<code>now</code> + 1 year) on the screen with the format
+            “DD/MM/YYYY”.</p></li>
+            </ul>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
