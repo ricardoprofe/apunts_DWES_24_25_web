@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 13b. Symfony. Forms.</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 13b. Symfony. Forms.</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#creating-forms" id="toc-creating-forms"><span
+class="toc-section-number">1</span> Creating forms</a>
+<ul>
+<li><a href="#creating-a-form-in-the-controller"
+id="toc-creating-a-form-in-the-controller"><span
+class="toc-section-number">1.1</span> Creating a form in the
+controller</a></li>
+<li><a href="#displaying-a-form" id="toc-displaying-a-form"><span
+class="toc-section-number">1.2</span> Displaying a form</a></li>
+<li><a href="#submitting-the-form" id="toc-submitting-the-form"><span
+class="toc-section-number">1.3</span> Submitting the form</a></li>
+<li><a href="#inserting-a-new-contact-using-the-form"
+id="toc-inserting-a-new-contact-using-the-form"><span
+class="toc-section-number">1.4</span> Inserting a new contact using the
+form</a></li>
+<li><a href="#updating-a-contact-using-the-form"
+id="toc-updating-a-contact-using-the-form"><span
+class="toc-section-number">1.5</span> Updating a contact using the
+form</a></li>
+<li><a href="#creating-a-form-in-a-form-class"
+id="toc-creating-a-form-in-a-form-class"><span
+class="toc-section-number">1.6</span> Creating a form in a Form
+class</a></li>
+<li><a href="#relations-in-forms" id="toc-relations-in-forms"><span
+class="toc-section-number">1.7</span> Relations in forms</a></li>
+<li><a href="#adding-bootstrap-styles"
+id="toc-adding-bootstrap-styles"><span
+class="toc-section-number">1.8</span> Adding Bootstrap styles</a></li>
+</ul></li>
+<li><a href="#form-validation" id="toc-form-validation"><span
+class="toc-section-number">2</span> Form validation</a>
+<ul>
+<li><a href="#disabling-client-side-validation"
+id="toc-disabling-client-side-validation"><span
+class="toc-section-number">2.1</span> Disabling client-side
+validation</a></li>
+<li><a href="#troubleshooting-with-validation"
+id="toc-troubleshooting-with-validation"><span
+class="toc-section-number">2.2</span> Troubleshooting with
+validation</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="creating-forms"><span
+            class="header-section-number">1</span> Creating forms</h1>
+            <p>A form type describes the form fields related to a model.
+            It does the data conversion between the form fields and the
+            model class properties.</p>
+            <p>To create the form, we have two options. One is using the
+            <strong><code>createFormBuilder()</code></strong> method of
+            the <strong><code>AbstractController</code></strong> class.
+            As our controller inherits the
+            <code>AbstractController</code> class, we can use the method
+            in the controller. Thus, we need to create an object of the
+            model class prior to create the form.</p>
+            <p>The other method is creating a specific form class.
+            That’s the option that Symfony recommends, because we don’t
+            want to put too much logic in our controllers.</p>
+            <h2 data-number="1.1"
+            id="creating-a-form-in-the-controller"><span
+            class="header-section-number">1.1</span> Creating a form in
+            the controller</h2>
+            <p>Run this command to install the form feature before using
+            it:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require symfony/form</span></code></pre></div>
+            <p>Before create the form we need a to instantiate an object
+            used to store and retrieve the data:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span> <span class="op">=</span> <span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span></code></pre></div>
+            <p>And then, we can create the form. Let’s do it in a new
+            method that we call <strong>contactForm</strong>, associated
+            with the route <code>/contactform</code>.</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contactform&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_contactform&#39;</span>)<span class="at">]</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> contactForm() {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span> <span class="op">=</span> <span class="va">$this</span>-&gt;createFormBuilder(<span class="va">$contact</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span> <span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;save&#39;</span><span class="ot">,</span> <span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> [</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;label&#39;</span> =&gt; <span class="st">&#39;Submit&#39;</span><span class="ot">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            ])</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        -&gt;getForm()<span class="ot">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>As you can see, the <code>createFormBuilder</code> method
+            receives an object as a parameter, and then we can add the
+            fields and the type of every field. These are some of the
+            available types:</p>
+            <table>
+            <colgroup>
+            <col style="width: 30%" />
+            <col style="width: 70%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Class</th>
+            <th style="text-align: left;">Content</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td>TextType</td>
+            <td style="text-align: left;">An input of type text</td>
+            </tr>
+            <tr class="even">
+            <td>TextAreaType</td>
+            <td style="text-align: left;">An input of type textarea
+            (multiple lines)</td>
+            </tr>
+            <tr class="odd">
+            <td>IntegerType</td>
+            <td style="text-align: left;">An input of type integer</td>
+            </tr>
+            <tr class="even">
+            <td>NumberType</td>
+            <td style="text-align: left;">An input of type number</td>
+            </tr>
+            <tr class="odd">
+            <td>PasswordType</td>
+            <td style="text-align: left;">An input of type password</td>
+            </tr>
+            <tr class="even">
+            <td>DateType</td>
+            <td style="text-align: left;">An input of type date</td>
+            </tr>
+            <tr class="odd">
+            <td>CheckBoxType</td>
+            <td style="text-align: left;">An input of type checkbox</td>
+            </tr>
+            <tr class="even">
+            <td>RadioType</td>
+            <td style="text-align: left;">An input of type
+            radiobutton</td>
+            </tr>
+            <tr class="odd">
+            <td>ChoiceType</td>
+            <td style="text-align: left;">A multi-purpose field used to
+            allow the user to “choose” one or more options. It can be
+            rendered as a select tag, radio buttons, or checkboxes.</td>
+            </tr>
+            <tr class="even">
+            <td>EmailType</td>
+            <td style="text-align: left;">An input of type email</td>
+            </tr>
+            <tr class="odd">
+            <td>HiddenType</td>
+            <td style="text-align: left;">An input of type hidden</td>
+            </tr>
+            <tr class="even">
+            <td>EntityType</td>
+            <td style="text-align: left;">An input to select a value
+            from other entity</td>
+            </tr>
+            <tr class="odd">
+            <td>SubmitType</td>
+            <td style="text-align: left;">A submit button</td>
+            </tr>
+            <tr class="even">
+            <td>ButtonType</td>
+            <td style="text-align: left;">A generic button</td>
+            </tr>
+            <tr class="odd">
+            <td>FormType</td>
+            <td style="text-align: left;">A form with another inputs
+            inside</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>An array with a value for the property
+            <strong>label</strong> can be included in every form item.
+            If not, the default label value will be the name of the
+            model attribute specified in the <strong>add</strong>
+            method.</p>
+            <p>We need to import the used form types in our controller
+            class. So, in this case, we will add these <code>use</code>
+            lines:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">E</span>xtension\<span class="cn">C</span>ore\<span class="cn">T</span>ype\<span class="cn">T</span>extType<span class="ot">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">E</span>xtension\<span class="cn">C</span>ore\<span class="cn">T</span>ype\<span class="cn">E</span>mailType<span class="ot">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">E</span>xtension\<span class="cn">C</span>ore\<span class="cn">T</span>ype\<span class="cn">S</span>ubmitType<span class="ot">;</span></span></code></pre></div>
+            <p>It’s important to say that, in Symfony, all of these are
+            “form types”:</p>
+            <ul>
+            <li>a single <code>&lt;input type="text"&gt;</code> form
+            field is a “form type” (<code>TextType</code>)</li>
+            <li>a group of HTML fields is a “form type”
+            (e.g. <code>DateTimeType</code>)</li>
+            <li>an entire <code>&lt;form&gt;</code> with multiple fields
+            is a “form type”.</li>
+            </ul>
+            <p>This may be confusing at first, but it simplifies code
+            and makes “composing” and “embedding” form fields much
+            easier to implement. For instance, you can embed a form in
+            another form as a <strong><em>subform</em></strong>.</p>
+            <p>More about form types in Symfony following this link:</p>
+            <p><a
+            href="https://symfony.com/doc/current/reference/forms/types.html">Form
+            Types Reference</a></p>
+            <h2 data-number="1.2" id="displaying-a-form"><span
+            class="header-section-number">1.2</span> Displaying a
+            form</h2>
+            <p>As we know, we can’t display anything in a controller.
+            The user interface is always displayed in a view. So a form
+            has to be rendered to a view in order to be displayed.</p>
+            <p>First, let’s prepare the view. Is very easy to display a
+            form. In a template named <code>contactform.html.twig</code>
+            we write this:</p>
+            <pre class="twig"><code>{% extends &#39;base.html.twig&#39; %}
+
+{% block title %}New Contact{% endblock %}
+{% block body %}
+    &lt;h1&gt;New Contact&lt;/h1&gt;
+    {{ form(form) }}
+{% endblock %}</code></pre>
+            <p>That’s enough to show the form, but we need to render the
+            from to the view from the controller. So we add these line
+            to the controller method:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactform.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;form&#39;</span> =&gt; <span class="va">$form</span>-&gt;createView()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>])<span class="ot">;</span></span></code></pre></div>
+            <p>We render the template sending the form as a parameter to
+            the view.</p>
+            <p>Now, let’s go to the route <code>/contactform</code> to
+            see if it works:</p>
+            <figure>
+            <img src="images/screen42.jpg" alt="Our form on screen" />
+            <figcaption aria-hidden="true">Our form on
+            screen</figcaption>
+            </figure>
+            <p>The <code>EmailType</code> avoids entering a string that
+            doesn’t meet the email format.</p>
+            <figure>
+            <img src="images/screen43.jpg" alt="Invalid email" />
+            <figcaption aria-hidden="true">Invalid email</figcaption>
+            </figure>
+            <h2 data-number="1.3" id="submitting-the-form"><span
+            class="header-section-number">1.3</span> Submitting the
+            form</h2>
+            <p>By default, the form sends the data to the same
+            controller method where has been called from. So when we
+            click on the <strong>Submit</strong> button, the form
+            appears again.</p>
+            <p>If we want to do something with the data sent by the
+            form, we need to handle the received request. So, in the
+            controller, we need to import the Request class:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">H</span>ttpFoundation\<span class="cn">R</span>equest<span class="ot">;</span></span></code></pre></div>
+            <p>Then we will pass a Request object as a parameter to the
+            method:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> functionName(<span class="cn">R</span>equest <span class="va">$request</span>) {</span></code></pre></div>
+            <p>Now we can handle the request in our method:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">$form</span>-&gt;handleRequest(<span class="va">$request</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>And then we will ask if the form has been submitted and
+            validated:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$form</span>-&gt;isSubmitted() <span class="op">&amp;&amp;</span> <span class="va">$form</span>-&gt;isValid()) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Now we can read the data to an object of the associated
+            class:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span><span class="op">=</span><span class="va">$form</span>-&gt;getData()<span class="ot">;</span></span></code></pre></div>
+            <p>Finally, we can do whatever we want with the submitted
+            contact: insert, remove, update, show the contact card…</p>
+            <h2 data-number="1.4"
+            id="inserting-a-new-contact-using-the-form"><span
+            class="header-section-number">1.4</span> Inserting a new
+            contact using the form</h2>
+            <p>Let’s go back to our <code>/contact/new</code> route. At
+            the moment we have this code:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new/{name}/{phone}/{email}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact_param&#39;</span>)<span class="at">]</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newContactParam(<span class="cn">M</span>anagerRegistry <span class="va">$doctrine</span><span class="ot">,</span><span class="va">$name</span><span class="ot">,</span><span class="va">$phone</span><span class="ot">,</span><span class="va">$email</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setName(<span class="va">$name</span>)<span class="ot">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setPhone(<span class="va">$phone</span>)<span class="ot">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span>-&gt;setEmail(<span class="va">$email</span>)<span class="ot">;</span> </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span><span class="op">=</span><span class="va">$doctrine</span>-&gt;getManager()<span class="ot">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span>-&gt;persist(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/new.html.twig&#39;</span><span class="ot">,</span> [])<span class="ot">;</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Let’s change the method to insert the contact submitted
+            by a form. First, let’s remove the parameters from the
+            route.</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">M</span>anagerRegistry <span class="va">$doctrine</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span></code></pre></div>
+            <p>Now, we create a new contact and a form associated with
+            the object, and then we render the previously created
+            view:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">M</span>anagerRegistry <span class="va">$doctrine</span>)<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span> <span class="op">=</span> <span class="va">$this</span>-&gt;createFormBuilder(<span class="va">$contact</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span> <span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;save&#39;</span><span class="ot">,</span> <span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> [<span class="st">&#39;label&#39;</span> =&gt; <span class="st">&#39;Submit&#39;</span>])</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        -&gt;getForm()<span class="ot">;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactform.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;form&#39;</span> =&gt; <span class="va">$form</span>-&gt;createView()</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>But now we need to read the data submitted by the form,
+            so we ask for the request and check if the form has been
+            submitted and is valid. If so, we read the contact submitted
+            by the form. Note that we have added the parameter
+            <strong>Request $request</strong> to the function.
+            Previously, we added the <strong>use</strong> clause for the
+            import of the <code>Request</code> class.</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newContact(<span class="cn">M</span>anagerRegistry <span class="va">$doctrine</span><span class="ot">,</span> <span class="cn">R</span>equest <span class="va">$request</span>)<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span> <span class="op">=</span> <span class="va">$this</span>-&gt;createFormBuilder(<span class="va">$contact</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span> <span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;save&#39;</span><span class="ot">,</span> <span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> [<span class="st">&#39;label&#39;</span> =&gt; <span class="st">&#39;Submit&#39;</span>])</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        -&gt;getForm()<span class="ot">;</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span>-&gt;handleRequest(<span class="va">$request</span>)<span class="ot">;</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$form</span>-&gt;isSubmitted() <span class="op">&amp;&amp;</span> <span class="va">$form</span>-&gt;isValid()) {</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="va">$form</span>-&gt;getData()<span class="ot">;</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactform.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;form&#39;</span> =&gt; <span class="va">$form</span>-&gt;createView()</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>And finally, if we want to insert the contact into the
+            table, we proceed as usual. This is how the method looks at
+            the end of the whole process.</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newcontact(<span class="cn">M</span>anagerRegistry <span class="va">$doctrine</span><span class="ot">,</span> <span class="cn">R</span>equest <span class="va">$request</span>)<span class="ot">:</span> <span class="cn">R</span>esponse {</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ontact()<span class="ot">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span> <span class="op">=</span> <span class="va">$this</span>-&gt;createFormBuilder(<span class="va">$contact</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span> <span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;save&#39;</span><span class="ot">,</span> <span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> [<span class="st">&#39;label&#39;</span> =&gt; <span class="st">&#39;Submit&#39;</span>])</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        -&gt;getForm()<span class="ot">;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span>-&gt;handleRequest(<span class="va">$request</span>)<span class="ot">;</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$form</span>-&gt;isSubmitted() <span class="op">&amp;&amp;</span> <span class="va">$form</span>-&gt;isValid()) {</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="va">$form</span>-&gt;getData()<span class="ot">;</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span><span class="op">=</span><span class="va">$doctrine</span>-&gt;getManager()<span class="ot">;</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;persist(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;redirectToRoute(<span class="st">&#39;app_contacts&#39;</span>)<span class="ot">;</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactform.html.twig&#39;</span><span class="ot">,</span> [</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;form&#39;</span> =&gt; <span class="va">$form</span>-&gt;createView()</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>With the line</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="va">$this</span>-&gt;redirectToRoute(<span class="st">&#39;app_contacts&#39;</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>We are calling the method that show the contact list. We
+            can’t render the twig directly because the view needs the
+            <code>$contac</code>t array that the method sends. So we use
+            the function <strong>redirectToRoute</strong> to call a
+            controller using the attribute <strong>name</strong> of the
+            associated route.</p>
+            <p>Finally, let’s go to the <code>/contact/new</code> route.
+            The form appears, and we enter the new contact:</p>
+            <figure>
+            <img src="images/screen44.jpg"
+            alt="Entering a new contact" />
+            <figcaption aria-hidden="true">Entering a new
+            contact</figcaption>
+            </figure>
+            <p>Now we press the Submit button and…</p>
+            <figure>
+            <img src="images/screen45.jpg"
+            alt="Contact added to the list" />
+            <figcaption aria-hidden="true">Contact added to the
+            list</figcaption>
+            </figure>
+            <h2 data-number="1.5"
+            id="updating-a-contact-using-the-form"><span
+            class="header-section-number">1.5</span> Updating a contact
+            using the form</h2>
+            <p>To update a contact, as we know, we just need to recover
+            the contact from the database, then we change the required
+            data, and finally with the <strong>flush()</strong> method
+            the changes are saved to the database.</p>
+            <p>The only thing we need to change in our updating method
+            is that the new data will be read from the form instead of
+            manually written.</p>
+            <p>First, let’s go to our update method. Now it’s associated
+            to the route <code>/contact/update/{id}/{newname}</code>,
+            but we are going to change that as you can see below:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/change/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_changecontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> changecontact(<span class="cn">M</span>anagerRegistry <span class="va">$doctrine</span><span class="ot">,</span> <span class="cn">R</span>equest <span class="va">$request</span><span class="ot">,</span> <span class="va">$id</span>) {</span></code></pre></div>
+            <p>Then we create the repository and search the contact with
+            the <code>$id</code> primary key.</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="va">$rep</span><span class="op">=</span><span class="va">$doctrine</span>-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span><span class="op">=</span><span class="va">$rep</span>-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>Now we create the form with the <code>$contact</code>
+            object. In this case, as we are updating, we need to include
+            the <code>$id</code> as a hidden field in the form.</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="va">$form</span> <span class="op">=</span> <span class="va">$this</span>-&gt;createFormBuilder(<span class="va">$contact</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;id&#39;</span><span class="ot">,</span> <span class="cn">H</span>iddenType::<span class="kw">class</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span> <span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;save&#39;</span><span class="ot">,</span> <span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> <span class="dt">array</span>(<span class="st">&#39;label&#39;</span> =&gt; <span class="st">&#39;Submit&#39;</span>))</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    -&gt;getForm()<span class="ot">;</span></span></code></pre></div>
+            <p>We need to add a <strong><code>setId</code></strong>
+            method in the entity, as well. So in the
+            <code>Contact.php</code> file we add the method:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> setId(<span class="dt">int</span> <span class="va">$id</span>)<span class="ot">:</span> <span class="kw">self</span> {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$this</span>-&gt;id <span class="op">=</span> <span class="va">$id</span><span class="ot">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span><span class="ot">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Finally, in the controller again, we need to read the
+            request and, if the form has been submitted and is valid, do
+            the update operation as usual:</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="va">$form</span>-&gt;handleRequest(<span class="va">$request</span>)<span class="ot">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$form</span>-&gt;isSubmitted() <span class="op">&amp;&amp;</span> <span class="va">$form</span>-&gt;isValid()) {</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="va">$form</span>-&gt;getData()<span class="ot">;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span><span class="op">=</span><span class="va">$doctrine</span>-&gt;getManager()<span class="ot">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;redirectToRoute(<span class="st">&#39;contact&#39;</span>)<span class="ot">;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The last line in the method is the rendering of the view
+            with the form.</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactform.html.twig&#39;</span><span class="ot">,</span> <span class="dt">array</span>(<span class="st">&#39;form&#39;</span> =&gt; <span class="va">$form</span>-&gt;createView()))<span class="ot">;</span></span></code></pre></div>
+            <p>This is how the method looks at the end:</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/contact/change/{id&lt;\d+&gt;}&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_changecontact&#39;</span>)<span class="at">]</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> changeContact(<span class="cn">M</span>anagerRegistry <span class="va">$doctrine</span><span class="ot">,</span> <span class="cn">R</span>equest <span class="va">$request</span><span class="ot">,</span> <span class="va">$id</span>) {</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$rep</span><span class="op">=</span><span class="va">$this</span>-&gt;getDoctrine()-&gt;getRepository(<span class="cn">C</span>ontact::<span class="kw">class</span>)<span class="ot">;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$contact</span><span class="op">=</span><span class="va">$rep</span>-&gt;find(<span class="va">$id</span>)<span class="ot">;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span> <span class="op">=</span> <span class="va">$this</span>-&gt;createFormBuilder(<span class="va">$contact</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;id&#39;</span><span class="ot">,</span> <span class="cn">H</span>iddenType::<span class="kw">class</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span> <span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;save&#39;</span><span class="ot">,</span> <span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> <span class="dt">array</span>(<span class="st">&#39;label&#39;</span> =&gt; <span class="st">&#39;Submit&#39;</span>))</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        -&gt;getForm()<span class="ot">;</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span>-&gt;handleRequest(<span class="va">$request</span>)<span class="ot">;</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$form</span>-&gt;isSubmitted() <span class="op">&amp;&amp;</span> <span class="va">$form</span>-&gt;isValid()) {</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">$contact</span><span class="op">=</span><span class="va">$form</span>-&gt;getData()<span class="ot">;</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span><span class="op">=</span><span class="va">$this</span>-&gt;getDoctrine()-&gt;getManager()<span class="ot">;</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;redirectToRoute(<span class="st">&#39;contact&#39;</span>)<span class="ot">;</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactform.html.twig&#39;</span><span class="ot">,</span> <span class="dt">array</span>(<span class="st">&#39;form&#39;</span> =&gt; <span class="va">$form</span>-&gt;createView()))<span class="ot">;</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Just a little detail: let’s change the title in the view
+            with the form to show a different message when we are adding
+            a new contact and when we are updating an existing one. So
+            in the <code>contactform.html.twig</code> template we change
+            the title block:</p>
+            <pre class="twig"><code>{% block title %}{{ title }}{% endblock %}</code></pre>
+            <p>and the h1 tag:</p>
+            <pre class="twig"><code>&lt;h1&gt;{{ title }}&lt;/h1&gt;</code></pre>
+            <p>So now we need to give a value to the title parameter
+            when we render the view.</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;contact/contactform.html.twig&#39;</span><span class="ot">,</span> <span class="dt">array</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;form&#39;</span> =&gt; <span class="va">$form</span>-&gt;createView()<span class="ot">,</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;title&#39;</span>=&gt; <span class="st">&quot;Updating contact&quot;</span>))<span class="ot">;</span></span></code></pre></div>
+            <p>Now let’s modify a contact.</p>
+            <figure>
+            <img src="images/screen46.jpg" alt="Updating a contact" />
+            <figcaption aria-hidden="true">Updating a
+            contact</figcaption>
+            </figure>
+            <p>We change the name:</p>
+            <figure>
+            <img src="images/screen47.jpg" alt="Changing the name" />
+            <figcaption aria-hidden="true">Changing the
+            name</figcaption>
+            </figure>
+            <p>And submit the changes:</p>
+            <figure>
+            <img src="images/screen48.jpg"
+            alt="The contact has been updated!" />
+            <figcaption aria-hidden="true">The contact has been
+            updated!</figcaption>
+            </figure>
+            <h2 data-number="1.6"
+            id="creating-a-form-in-a-form-class"><span
+            class="header-section-number">1.6</span> Creating a form in
+            a Form class</h2>
+            <p>Form classes are form types that implement
+            <strong><em><code>FormTypeInterface</code></em></strong>.
+            However, it’s better to extend from
+            <strong><em><code>AbstractType</code></em></strong>, which
+            already implements the interface and provides some
+            additional utilities.</p>
+            <p>We can create a Form class with the
+            <code>make:form</code> and
+            <code>make:registration-form</code> commands. If we do</p>
+            <pre class="shell"><code>symfony console make:form</code></pre>
+            <p>We’ll be asked for the form name and the name of the
+            entity associated to the form.</p>
+            <pre class="shell"><code> The name of the form class (e.g. BraveGnomeType):
+ &gt; Contact
+
+ The name of Entity or fully qualified model class name that the new form will be bound to (empty for none):
+ &gt; Contact</code></pre>
+            <p>We get a new folder named <code>Form</code> and this
+            <strong><em><code>ContactType</code></em></strong> php
+            file:</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">F</span>orm<span class="ot">;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity\<span class="cn">C</span>ontact<span class="ot">;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">A</span>bstractType<span class="ot">;</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">F</span>ormBuilderInterface<span class="ot">;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">O</span>ptionsResolver\<span class="cn">O</span>ptionsResolver<span class="ot">;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactType <span class="kw">extends</span> <span class="cn">A</span>bstractType {</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> buildForm(<span class="cn">F</span>ormBuilderInterface <span class="va">$builder</span><span class="ot">,</span> <span class="dt">array</span> <span class="va">$options</span>)<span class="ot">:</span> <span class="dt">void</span> {</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">$builder</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>            -&gt;add(<span class="st">&#39;name&#39;</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>            -&gt;add(<span class="st">&#39;phone&#39;</span>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>            -&gt;add(<span class="st">&#39;email&#39;</span>)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>        <span class="ot">;</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> configureOptions(<span class="cn">O</span>ptionsResolver <span class="va">$resolver</span>)<span class="ot">:</span> <span class="dt">void</span> {</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">$resolver</span>-&gt;setDefaults([</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;data_class&#39;</span> =&gt; <span class="cn">C</span>ontact::<span class="kw">class</span><span class="ot">,</span></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We should add the field types, import them with the
+            <code>use</code> clauses, and the Save button:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> <span class="cn">A</span>pp\<span class="cn">F</span>orm<span class="ot">;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity\<span class="cn">C</span>ontact<span class="ot">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">A</span>bstractType<span class="ot">;</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">F</span>ormBuilderInterface<span class="ot">;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">O</span>ptionsResolver\<span class="cn">O</span>ptionsResolver<span class="ot">;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">E</span>xtension\<span class="cn">C</span>ore\<span class="cn">T</span>ype\<span class="cn">E</span>mailType<span class="ot">;</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">E</span>xtension\<span class="cn">C</span>ore\<span class="cn">T</span>ype\<span class="cn">S</span>ubmitType<span class="ot">;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">F</span>orm\<span class="cn">E</span>xtension\<span class="cn">C</span>ore\<span class="cn">T</span>ype\<span class="cn">T</span>extType<span class="ot">;</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="cn">C</span>ontactType <span class="kw">extends</span> <span class="cn">A</span>bstractType</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> buildForm(<span class="cn">F</span>ormBuilderInterface <span class="va">$builder</span><span class="ot">,</span> <span class="dt">array</span> <span class="va">$options</span>)<span class="ot">:</span> <span class="dt">void</span> {</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">$builder</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>            -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span><span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>            -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span><span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>            -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span><span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>            -&gt;add(<span class="st">&#39;Save&#39;</span><span class="ot">,</span><span class="cn">S</span>ubmitType::<span class="kw">class</span>)</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>        <span class="ot">;</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">function</span> configureOptions(<span class="cn">O</span>ptionsResolver <span class="va">$resolver</span>)<span class="ot">:</span> <span class="dt">void</span> {</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">$resolver</span>-&gt;setDefaults([</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;data_class&#39;</span> =&gt; <span class="cn">C</span>ontact::<span class="kw">class</span><span class="ot">,</span></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>        ])<span class="ot">;</span></span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <blockquote>
+            <p><strong>Note</strong>: If you don’t write the type class
+            for each field, Symfony can guess the type of your
+            field.</p>
+            </blockquote>
+            <p>And then, in the controller, instead of creating the form
+            doing this:</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="va">$form</span> <span class="op">=</span> <span class="va">$this</span>-&gt;createFormBuilder(<span class="va">$contact</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span> <span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;save&#39;</span><span class="ot">,</span> <span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> [<span class="st">&#39;label&#39;</span> =&gt; <span class="st">&#39;Submit&#39;</span>])</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    -&gt;getForm()<span class="ot">;</span></span></code></pre></div>
+            <p>We just create the form with this single line:</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="va">$form</span><span class="op">=</span><span class="va">$this</span>-&gt;createForm(<span class="cn">C</span>ontactType::<span class="kw">class</span><span class="ot">,</span> <span class="va">$contact</span>)<span class="ot">;</span></span></code></pre></div>
+            <p>More information about forms with classes following <a
+            href="https://symfony.com/doc/6.0/forms.html#creating-form-classes">this
+            link</a></p>
+            <h2 data-number="1.7" id="relations-in-forms"><span
+            class="header-section-number">1.7</span> Relations in
+            forms</h2>
+            <p>Let’s make a new form for the <em>city</em> entity. Let’s
+            make a controller method to add a new city with a form.</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">R</span>oute(<span class="st">&#39;/city/new&#39;</span><span class="ot">,</span> name<span class="ot">:</span> <span class="st">&#39;app_newcity&#39;</span>)<span class="at">]</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> newCity(<span class="cn">M</span>anagerRegistry <span class="va">$doctrine</span><span class="ot">,</span> <span class="cn">R</span>equest <span class="va">$request</span>)<span class="ot">:</span> <span class="cn">R</span>esponse</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$city</span><span class="op">=</span><span class="kw">new</span> <span class="cn">C</span>ity()<span class="ot">;</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span> <span class="op">=</span> <span class="va">$this</span>-&gt;createFormBuilder(<span class="va">$city</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;postalcode&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span><span class="ot">,</span> </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">array</span>(<span class="st">&#39;attr&#39;</span> =&gt; [<span class="st">&#39;pattern&#39;</span> =&gt; <span class="st">&#39;[0-9]{5}&#39;</span><span class="ot">,</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;maxlength&#39;</span> =&gt; <span class="dv">5</span>]<span class="ot">,</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;label&#39;</span>=&gt;<span class="st">&#39;Postal Code&#39;</span>))</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;cityname&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span><span class="ot">,</span> <span class="dt">array</span>(<span class="st">&#39;label&#39;</span>=&gt;<span class="st">&quot;City name&quot;</span>))</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;save&#39;</span><span class="ot">,</span> <span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> <span class="dt">array</span>(<span class="st">&#39;label&#39;</span> =&gt; <span class="st">&#39;Submit&#39;</span>))</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>        -&gt;getForm()<span class="ot">;</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">$form</span>-&gt;handleRequest(<span class="va">$request</span>)<span class="ot">;</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$form</span>-&gt;isSubmitted() <span class="op">&amp;&amp;</span> <span class="va">$form</span>-&gt;isValid()) {</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">$city</span><span class="op">=</span><span class="va">$form</span>-&gt;getData()<span class="ot">;</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span><span class="op">=</span><span class="va">$doctrine</span>-&gt;getManager()<span class="ot">;</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;persist(<span class="va">$city</span>)<span class="ot">;</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;redirectToRoute(<span class="st">&#39;app_city&#39;</span>)<span class="ot">;</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$this</span>-&gt;render(<span class="st">&#39;city/cityform.html.twig&#39;</span><span class="ot">,</span> <span class="dt">array</span>(</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;form&#39;</span> =&gt; <span class="va">$form</span>-&gt;createView()<span class="ot">,</span></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;title&#39;</span>=&gt; <span class="st">&quot;New city&quot;</span>))<span class="ot">;</span></span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>The template with the form:</p>
+            <pre class="twig"><code>{% extends &#39;base.html.twig&#39; %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+    &lt;h1&gt;{{ title }}&lt;/h1&gt;
+{{ form(form) }}
+{% endblock %}</code></pre>
+            <p>Now, by calling the URL
+            <code>localhost:8000/city/new</code>, or through a link in
+            the cities list, we add a new city and then the updated list
+            appears.</p>
+            <figure>
+            <img src="images/screen52.jpg" alt="Adding a new city" />
+            <figcaption aria-hidden="true">Adding a new
+            city</figcaption>
+            </figure>
+            <figure>
+            <img src="images/screen53.jpg" alt="Cities list" />
+            <figcaption aria-hidden="true">Cities list</figcaption>
+            </figure>
+            <p>Go to the <strong>Contact</strong> class and add the
+            lines:</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">A</span>pp\<span class="cn">E</span>ntity\<span class="cn">C</span>ity<span class="ot">;</span></span></code></pre></div>
+            <p>Now, in the <strong>City</strong> class we add a new
+            method called <code>__toString</code> that returns the value
+            we want to show in our form when we choose a city. In our
+            case, <em>cityname</em>.</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> <span class="bu">__toString</span>()<span class="ot">:</span> <span class="dt">String</span> {</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$this</span>-&gt;cityname<span class="ot">;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>And now, in our <strong>Contact</strong> form, we add a
+            new property: the city.</p>
+            <p>If you are working in the controller, with
+            <code>createFormBuilder</code>, do this:</p>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="va">$form</span> <span class="op">=</span> <span class="va">$this</span>-&gt;createFormBuilder(<span class="va">$contact</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span> <span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// this is the new line</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;city&#39;</span><span class="ot">,</span> <span class="cn">E</span>ntityType::<span class="kw">class</span><span class="ot">,</span> <span class="dt">array</span>(<span class="st">&#39;class&#39;</span> =&gt; <span class="cn">C</span>ity::<span class="kw">class</span>))</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">//</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    -&gt;add(<span class="st">&#39;save&#39;</span><span class="ot">,</span> <span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> <span class="dt">array</span>(<span class="st">&#39;label&#39;</span> =&gt; <span class="st">&#39;Submit&#39;</span>))</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    -&gt;getForm()<span class="ot">;</span></span></code></pre></div>
+            <p>In case that you are using a Form class, do this in the
+            <code>\src\Form\ContactType.php</code> file:</p>
+            <div class="sourceCode" id="cb39"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="kw">function</span> buildForm(<span class="cn">F</span>ormBuilderInterface <span class="va">$builder</span><span class="ot">,</span> <span class="dt">array</span> <span class="va">$options</span>)<span class="ot">:</span> <span class="dt">void</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$builder</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;name&#39;</span><span class="ot">,</span><span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;phone&#39;</span><span class="ot">,</span><span class="cn">T</span>extType::<span class="kw">class</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span><span class="cn">E</span>mailType::<span class="kw">class</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;city&#39;</span><span class="ot">,</span><span class="cn">E</span>ntityType::<span class="kw">class</span> [<span class="st">&#39;class&#39;</span>=&gt;<span class="cn">C</span>ity::<span class="kw">class</span>]) <span class="co">// THIS </span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;Save&#39;</span><span class="ot">,</span><span class="cn">S</span>ubmitType::<span class="kw">class</span>)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">;</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>We have created a new form property, called ‘city’. This
+            property will be an object of the <strong>City</strong>
+            class that we will be able to select with a form selector.
+            Let’s see how it works:</p>
+            <figure>
+            <img src="images/screen54.jpg"
+            alt="Selecting the city for our new contact" />
+            <figcaption aria-hidden="true">Selecting the city for our
+            new contact</figcaption>
+            </figure>
+            <p>Just by doing <code>persist()</code> with the new
+            contact, the property <em>city</em> will be updated in our
+            database.</p>
+            <div class="sourceCode" id="cb40"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="va">$contact</span><span class="op">=</span><span class="va">$form</span>-&gt;getData()<span class="ot">;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="va">$entityManager</span><span class="op">=</span><span class="va">$this</span>-&gt;getDoctrine()-&gt;getManager()<span class="ot">;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="va">$entityManager</span>-&gt;persist(<span class="va">$contact</span>)<span class="ot">;</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="va">$entityManager</span>-&gt;<span class="fu">flush</span>()<span class="ot">;</span></span></code></pre></div>
+            <figure>
+            <img src="images/screen55.jpg" alt="New contact" />
+            <figcaption aria-hidden="true">New contact</figcaption>
+            </figure>
+            <figure>
+            <img src="images/screen56.jpg"
+            alt="Contact added to the database" />
+            <figcaption aria-hidden="true">Contact added to the
+            database</figcaption>
+            </figure>
+            <p>Now, in the contact list we can show the city where the
+            contact lives. We just need to edit the contact list
+            template and add a new column to the table:</p>
+            <pre class="twig"><code>&lt;td&gt;{{ contact.city }}&lt;/td&gt;</code></pre>
+            <p>The property <em>city</em> will return the name of the
+            city, because that is what the method
+            <strong><code>__toString()</code></strong> of the
+            <strong>City</strong> class is returning.</p>
+            <figure>
+            <img src="images/screen57.jpg"
+            alt="The city in the contact list" />
+            <figcaption aria-hidden="true">The city in the contact
+            list</figcaption>
+            </figure>
+            <p>We should change the updating form and the contact card
+            as well in order to modify / show the city.</p>
+            <h2 data-number="1.8" id="adding-bootstrap-styles"><span
+            class="header-section-number">1.8</span> Adding Bootstrap
+            styles</h2>
+            <p>The Symfony rendering way is not very flexible. Usually,
+            you’ll need more control about how the entire form or some
+            of its fields look. Luckily, <strong>Bootstrap</strong> has
+            a good integration with Symfony forms. You can set this
+            option to generate forms compatible with the Bootstrap 5 CSS
+            framework in the <code>config/packages/twig.yaml</code>
+            config file:</p>
+            <div class="sourceCode" id="cb42"><pre
+            class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># config/packages/twig.yaml</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">twig</span><span class="kw">:</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">form_themes</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&#39;bootstrap_5_layout.html.twig&#39;</span><span class="kw">]</span></span></code></pre></div>
+            <p>Then, add the bootstrap links to your base template:</p>
+            <pre class="twig"><code>{# templates/base.html.twig #}
+
+{# beware that the blocks in your template may be named different #}
+{% block stylesheets %}
+    &lt;!-- Copy CSS from https://getbootstrap.com/docs/5.0/getting-started/introduction/#css --&gt;
+    &lt;!-- Link to your styles here --&gt;
+{% endblock %}
+{% block javascripts %}
+    &lt;!-- Copy JavaScript from https://getbootstrap.com/docs/5.0/getting-started/introduction/#js --&gt;
+{% endblock %}</code></pre>
+            <p><a
+            href="https://symfony.com/doc/current/forms.html">Symfony
+            forms documentation</a></p>
+            <h1 data-number="2" id="form-validation"><span
+            class="header-section-number">2</span> Form validation</h1>
+            <p>In Symfony, the validation is done in the underlying
+            objects (<code>$contact</code> and <code>$city</code> in
+            this example). Symfony checks if they are valid after the
+            form has applied the submitted data to it. Calling
+            <code>$form-&gt;isValid()</code> is a shortcut that asks the
+            object if it has valid data.</p>
+            <p>If you have created your project as a <em>full
+            webapp</em>, you have already the validation support
+            installed. Otherwise, add it by doing:</p>
+            <div class="sourceCode" id="cb44"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> require symfony/validator</span></code></pre></div>
+            <p>Validation is done by adding a set of rules, called
+            <strong><em>constraints</em></strong>, to a class. You can
+            add them either to the entity class or to the form
+            class.</p>
+            <p>We are going to do so in the classes. The first thing is
+            to import the validation constraints:</p>
+            <div class="sourceCode" id="cb45"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="cn">S</span>ymfony\<span class="cn">C</span>omponent\<span class="cn">V</span>alidator\<span class="cn">C</span>onstraints <span class="kw">as</span> <span class="fu">Assert</span><span class="ot">;</span></span></code></pre></div>
+            <p>Then, add the constraints as
+            <strong><em>asserts</em></strong> to each property with
+            annotations:</p>
+            <div class="sourceCode" id="cb46"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">50</span>)<span class="at">]</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="fu">Assert</span>\<span class="cn">N</span>otBlank<span class="at">]</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$name</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">15</span>)<span class="at">]</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="fu">Assert</span>\<span class="cn">N</span>otBlank<span class="at">]</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$phone</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">60</span>)<span class="at">]</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="fu">Assert</span>\<span class="cn">E</span>mail<span class="at">]</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$email</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span></code></pre></div>
+            <div class="sourceCode" id="cb47"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">5</span>)<span class="at">]</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="fu">Assert</span>\<span class="cn">N</span>otBlank<span class="at">]</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="fu">Assert</span>\<span class="cn">R</span>egex(<span class="st">&#39;/[0-9]{5}/&#39;</span>)<span class="at">]</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$postalcode</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="cn">ORM</span>\<span class="cn">C</span>olumn(length<span class="ot">:</span> <span class="dv">50</span>)<span class="at">]</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="fu">Assert</span>\<span class="cn">N</span>otBlank<span class="at">]</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$cityname</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span></code></pre></div>
+            <p>Done! If you submit the form with invalid data, you’ll
+            see the corresponding errors printed out with the form.</p>
+            <p>If you want you can customize the error message:</p>
+            <div class="sourceCode" id="cb48"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span><span class="fu">Assert</span>\<span class="cn">E</span>mail(</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    message<span class="ot">:</span> <span class="st">&#39;The email {{ value }} is not a valid email.&#39;</span><span class="ot">,</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>)<span class="at">]</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="ot">?</span><span class="dt">string</span> <span class="va">$email</span> <span class="op">=</span> <span class="kw">null</span><span class="ot">;</span></span></code></pre></div>
+            <p>Here, a list of all the constraints: <a
+            href="https://symfony.com/doc/current/validation.html#constraints">Symfony
+            validation constraints</a></p>
+            <h2 data-number="2.1"
+            id="disabling-client-side-validation"><span
+            class="header-section-number">2.1</span> Disabling
+            client-side validation</h2>
+            <p>Generated forms take full advantage of the client-side
+            validation done in the browsers. Symfony automatically adds
+            the HTML validation attributes and types
+            (<code>'required'</code>, <code>type='email'</code>…). This
+            feature will cause you to never see the server-side error
+            messages. This is especially useful when you want to test
+            your server-side validation constraints.</p>
+            <p>The client-side validation can be disabled by adding the
+            <code>novalidate</code> attribute to the
+            <code>&lt;form&gt;</code> tag or <code>formnovalidate</code>
+            to the <code>submit</code> tag or the
+            <code>'required' =&gt; false</code> option to the form type
+            class. Let’s see one example for each one:</p>
+            <pre class="twig"><code>{# Disabling validation in the template #}
+{{ form_start(form, {&#39;attr&#39;: {&#39;novalidate&#39;: &#39;novalidate&#39;}}) }}
+    {{ form_widget(form) }}
+{{ form_end(form) }}</code></pre>
+            <div class="sourceCode" id="cb50"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Disabling validation when building the form</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="va">$builder</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>        <span class="co">//this only works for this button</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>        -&gt;add(<span class="st">&#39;Save&#39;</span><span class="ot">,</span><span class="cn">S</span>ubmitType::<span class="kw">class</span><span class="ot">,</span> [</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;attr&#39;</span> =&gt; [</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;formnovalidate&#39;</span> =&gt; <span class="st">&#39;formnovalidate&#39;</span><span class="ot">,</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>            ]</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>        ])</span></code></pre></div>
+            <div class="sourceCode" id="cb51"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ContactType class</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> configureOptions(<span class="cn">O</span>ptionsResolver <span class="va">$resolver</span>)<span class="ot">:</span> <span class="dt">void</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$resolver</span>-&gt;setDefaults([</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;data_class&#39;</span> =&gt; <span class="cn">C</span>ontact::<span class="kw">class</span><span class="ot">,</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;required&#39;</span> =&gt; <span class="kw">false</span><span class="ot">,</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    ])<span class="ot">;</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <h2 data-number="2.2"
+            id="troubleshooting-with-validation"><span
+            class="header-section-number">2.2</span> Troubleshooting
+            with validation</h2>
+            <p>If you get an error message like:
+            <em><code>Expected argument of type "string", "null" given at property path...</code></em>
+            the reason is because Symfony tries to use a getter method
+            that not accepts <code>null</code> values. Try to change the
+            type of the argument to <code>null</code> or
+            <code>string</code>:</p>
+            <div class="sourceCode" id="cb52"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> setName(<span class="ot">?</span><span class="dt">string</span> <span class="va">$name</span>)</span></code></pre></div>
+            <p>If you get an error of type
+            <em><code>SQL exception</code></em>, use
+            <code>try-catch</code> to manage the exception and to change
+            the types to the correct ones.</p>
+            <p>Another problem could happen when you try to validate an
+            email in the server but you can’t because the input is of
+            type <em>email</em>. You can solve this by changing the type
+            in the <code>Type</code> class to <code>TextType</code>
+            instead of <code>EmailType</code>:</p>
+            <div class="sourceCode" id="cb53"><pre
+            class="sourceCode php"><code class="sourceCode php"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>-&gt;add(<span class="st">&#39;email&#39;</span><span class="ot">,</span> <span class="cn">T</span>extType::<span class="kw">class</span>)</span></code></pre></div>
+            <p>More information about validation in form classes:</p>
+            <p><a
+            href="https://symfony.com/doc/6.0/forms.html#validating-forms">Validating
+            forms</a></p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
