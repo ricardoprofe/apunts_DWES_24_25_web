@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 15. Annex MongoDB</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 15. Annex MongoDB</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#the-nosql-movement" id="toc-the-nosql-movement"><span
+class="toc-section-number">1</span> The NoSQL movement</a></li>
+<li><a href="#mongodb" id="toc-mongodb"><span
+class="toc-section-number">2</span> MongoDB</a>
+<ul>
+<li><a href="#mongodb-features" id="toc-mongodb-features"><span
+class="toc-section-number">2.1</span> MongoDB features</a>
+<ul>
+<li><a href="#example" id="toc-example"><span
+class="toc-section-number">2.1.1</span> Example</a></li>
+</ul></li>
+<li><a href="#getting-started-with-mongodb"
+id="toc-getting-started-with-mongodb"><span
+class="toc-section-number">2.2</span> Getting started with MongoDB</a>
+<ul>
+<li><a href="#install-mongodb-on-ubuntu-24.04"
+id="toc-install-mongodb-on-ubuntu-24.04"><span
+class="toc-section-number">2.2.1</span> Install MongoDB on Ubuntu
+24.04</a></li>
+<li><a href="#install-mongodb-on-windows"
+id="toc-install-mongodb-on-windows"><span
+class="toc-section-number">2.2.2</span> Install MongoDB on
+Windows</a></li>
+<li><a href="#using-a-docker-image" id="toc-using-a-docker-image"><span
+class="toc-section-number">2.2.3</span> Using a Docker image</a></li>
+</ul></li>
+<li><a href="#basic-instructions" id="toc-basic-instructions"><span
+class="toc-section-number">2.3</span> Basic instructions</a></li>
+<li><a href="#working-with-documents"
+id="toc-working-with-documents"><span
+class="toc-section-number">2.4</span> Working with documents</a>
+<ul>
+<li><a href="#some-considerations-about-data-types"
+id="toc-some-considerations-about-data-types"><span
+class="toc-section-number">2.4.1</span> Some considerations about data
+types</a></li>
+<li><a href="#document-operations" id="toc-document-operations"><span
+class="toc-section-number">2.4.2</span> Document operations</a></li>
+<li><a href="#adding-a-new-document-to-the-collection"
+id="toc-adding-a-new-document-to-the-collection"><span
+class="toc-section-number">2.4.3</span> Adding a new document to the
+collection</a></li>
+<li><a href="#batch-insert" id="toc-batch-insert"><span
+class="toc-section-number">2.4.4</span> Batch insert</a></li>
+<li><a href="#deleting-documents" id="toc-deleting-documents"><span
+class="toc-section-number">2.4.5</span> Deleting documents</a></li>
+<li><a href="#updating-documents" id="toc-updating-documents"><span
+class="toc-section-number">2.4.6</span> Updating documents</a></li>
+<li><a href="#upserts" id="toc-upserts"><span
+class="toc-section-number">2.4.7</span> Upserts</a></li>
+<li><a href="#comparison-operators" id="toc-comparison-operators"><span
+class="toc-section-number">2.4.8</span> Comparison operators</a></li>
+<li><a href="#asking-for-conditions-in-an-array"
+id="toc-asking-for-conditions-in-an-array"><span
+class="toc-section-number">2.4.9</span> Asking for conditions in an
+array</a></li>
+</ul></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="the-nosql-movement"><span
+            class="header-section-number">1</span> The NoSQL
+            movement</h1>
+            <p>The predominant technology in the market today, in terms
+            of data storage systems, is still DBMS (relational
+            databases), based on the use of tables to store data and the
+            relationships between them, as well as the use of the query
+            language and SQL data manipulation.</p>
+            <p>In any case, over time other database paradigms have
+            appeared, such as those oriented to objects or based on XML
+            storage, whose characteristics have been absorbed by the
+            DBMSs themselves.</p>
+            <p>For some time now, the <strong>NoSQL</strong> movement
+            has been gaining momentum, with the emergence of new
+            alternative databases to traditional relational systems.</p>
+            <p>Some of the reasons that supporters of the
+            <strong>NoSQL</strong> movement argue for the use of this
+            type of database are:</p>
+            <ul>
+            <li>less complexity</li>
+            <li>performance improvements</li>
+            <li>horizontal scalability</li>
+            <li>less hardware requirements</li>
+            <li>relational mapping is eliminated, since the stored data
+            structures are much closer to those of OOP languages,
+            particularly in applications with key-value structures</li>
+            <li>better performance in distributed databases</li>
+            </ul>
+            <p>In this unit we will focus on the document-oriented
+            database <strong>MongoDB</strong>, for being one of the most
+            used today.</p>
+            <h1 data-number="2" id="mongodb"><span
+            class="header-section-number">2</span> MongoDB</h1>
+            <p><strong>MongoDB</strong> is a document-oriented database,
+            based on the storage of its data structures in JSON-type
+            documents with a dynamic schema. Although it started
+            development by the <em>10gen</em> company, today it’s an
+            open source project with a large community of users.</p>
+            <p>A MongoDB server can have several databases, and each of
+            them has a set of collections, which we could equate to
+            tables in a relational DB. Each collection stores a set of
+            JSON documents, made up of key-value attributes, which would
+            become the records of a relational database.</p>
+            <p>Broadly speaking, we could establish the following
+            relationships:</p>
+            <table>
+            <thead>
+            <tr class="header">
+            <th>Relational model</th>
+            <th>MongoDB</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td>Relational BD</td>
+            <td>BD Oriented to documents</td>
+            </tr>
+            <tr class="even">
+            <td>Table</td>
+            <td>Collection</td>
+            </tr>
+            <tr class="odd">
+            <td>Record/Queue</td>
+            <td>JSON Document</td>
+            </tr>
+            <tr class="even">
+            <td>Attributes/Columns</td>
+            <td>JSON Document Keys</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>Let’s see an example:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">_id</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="er">episode</span><span class="fu">:</span> <span class="st">&quot;IV&quot;</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">title</span><span class="fu">:</span> <span class="st">&quot;A new Hope&quot;</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">year</span><span class="fu">:</span> <span class="dv">1977</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="er">director</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="er">name</span><span class="fu">:</span> <span class="st">&quot;George&quot;</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="er">surname</span><span class="fu">:</span>  <span class="st">&quot;Lucas&quot;</span><span class="fu">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="er">birthdate</span><span class="fu">:</span> <span class="dv">1944</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span><span class="er">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>     <span class="er">_id</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="er">title</span><span class="fu">:</span> <span class="st">&quot;Rogue One. A Star Wars Story.&quot;</span><span class="fu">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="er">year</span><span class="fu">:</span> <span class="dv">2016</span><span class="fu">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="er">director</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="er">name</span><span class="fu">:</span> <span class="st">&quot;Gareth&quot;</span><span class="fu">,</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="er">surname</span><span class="fu">:</span>  <span class="st">&quot;Edwards&quot;</span><span class="fu">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="er">birthday</span><span class="fu">:</span> <span class="dv">1975</span><span class="fu">,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="er">country</span><span class="fu">:</span> <span class="st">&quot;UK&quot;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+            <p>As we can see, each movie type document has its own
+            attributes, which do not have to match each other. Another
+            characteristic is that, as we can see, we have the
+            information about the director in the document itself, and
+            not in another related document, as would be the case with
+            SQL tables.</p>
+            <h2 data-number="2.1" id="mongodb-features"><span
+            class="header-section-number">2.1</span> MongoDB
+            features</h2>
+            <p>The main features of MongoDB are:</p>
+            <ul>
+            <li><strong>document-oriented</strong> database: different
+            documents or database objects can be easily mapped to
+            application objects. In addition, the fact of being able to
+            have documents embedded within others (like a director
+            within a film), means that we don’t need JOINs in queries.
+            The dynamic scheme (that a document can have different
+            fields to others) makes polymorphism simpler</li>
+            <li><strong>high performance</strong> as nested documents
+            make reads and writes faster, indexes can include nested
+            document keys and vectors, and in addition
+            <em>streaming</em> (real-time data intake) writes can be
+            performed when commits are not required the end of
+            writing</li>
+            <li><strong>high availability</strong>, with replicated
+            servers with automatic system failure management</li>
+            <li><strong>easy scalability</strong> with automatic
+            <em>sharding</em> that distributes a collection’s data
+            across multiple machines, and reads can be distributed
+            across replicated servers</li>
+            </ul>
+            <p>Differences between MongoDB and Relational Databases:</p>
+            <ul>
+            <li><strong>greater flexibility</strong>, not being subject
+            to the strict definition of a schema. For example, when in a
+            DBMS we need a new field for a specific row, we need to
+            incorporate the field in all rows, while in MongoDB when we
+            need to add a field to a document, we only need to add it to
+            the document itself, without the others being altered</li>
+            <li><strong>SQL language is not used</strong> to make
+            queries, while a JSON is passed as a parameter that
+            describes what you want to retrieve</li>
+            <li><strong>Mongo does not support JOINS</strong>, offering
+            multidimensional data types instead, such as arrays or other
+            documents within the document itself. For example, a
+            document can have an array with all related objects in
+            another collection</li>
+            <li><strong>Mongo does not offer transactions</strong>, as
+            each independent operation is performed atomically</li>
+            </ul>
+            <h3 data-number="2.1.1" id="example"><span
+            class="header-section-number">2.1.1</span> Example</h3>
+            <p>Let’s say we want to have a database with information
+            about movies and their directors. A movie can be directed by
+            some directors, and a director may have directed a lot of
+            movies. So, we have a M:M relation between the two entities,
+            <code>Movie</code> and <code>Director</code>.</p>
+            <p>In a relational database we would had <code>Movie</code>
+            and <code>Director</code> tables, with a third intermediate
+            table representing the many-to-many relationship. This
+            intermediate table would be composed of the two primary keys
+            of the <code>Movie</code> and <code>Director</code> tables,
+            being foreign keys to these tables.</p>
+            <p>In MongoDB we could have two collections:
+            <code>Movies</code> and <code>Directors</code>, and
+            depending on how we are going to access the data, we can
+            directly save one, the other or both.</p>
+            <p>For example, we could have a structure for movies, which
+            contains a list of people who have participated in its
+            direction:</p>
+            <p><strong><em>Collection Movies</em></strong></p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">_id</span><span class="fu">:</span> <span class="dv">10</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="er">Title</span><span class="fu">:</span> <span class="st">&quot;Solo. A Star Wars Story&quot;</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">Year</span><span class="fu">:</span> <span class="st">&quot;2018&quot;</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">Director</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="er">Name</span><span class="fu">:</span> <span class="st">&quot;Irvin Kershner&quot;</span><span class="fu">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            <span class="er">Birthday</span><span class="fu">:</span> <span class="dv">1923</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="er">Name</span><span class="fu">:</span> <span class="st">&quot;George Lucas&quot;</span><span class="fu">,</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            <span class="er">Birthday</span><span class="fu">:</span> <span class="dv">1944</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+            <p>This way, we would access the information about the
+            directors of a movie using dot notation; for example:
+            <code>movie.Director[0].Name</code></p>
+            <p>On the other hand, we could also do the storage in
+            reverse: store the directors, and inside them an array with
+            the movies:</p>
+            <p><strong><em>Collection Directors</em></strong></p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">_id</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="er">Name</span><span class="fu">:</span> <span class="st">&quot;George Lucas&quot;</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">Birthday</span><span class="fu">:</span> <span class="st">&quot;1944&quot;</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">Movies</span><span class="fu">:</span><span class="ot">[</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            <span class="er">Title</span><span class="fu">:</span> <span class="st">&quot;A new hope&quot;</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            <span class="er">Year</span><span class="fu">:</span> <span class="dv">1977</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            <span class="er">Title</span><span class="fu">:</span> <span class="st">&quot;Return of the Jedi&quot;</span><span class="fu">,</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="er">Year</span><span class="fu">:</span> <span class="dv">1984</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="er">...</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+            <h2 data-number="2.2"
+            id="getting-started-with-mongodb"><span
+            class="header-section-number">2.2</span> Getting started
+            with MongoDB</h2>
+            <p>Mongo is available on several platforms: Linux, Solaris,
+            MacOS X, and Windows. The project website is <a
+            href="https://www.mongodb.org">www.mongodb.org</a>. There is
+            a web <a
+            href="https://learn.mongodb.com/">learn.mongodb.com</a> with
+            free courses to train in MongoDB. You can also find some
+            MongoDB courses in <a
+            href="https://openwebinars.net/academia/catalogo/">Open
+            Webinars</a>.</p>
+            <p>There are two main MongoDB versions: The
+            <em>Community</em>, with which we will work, and the
+            <em>Enterprise</em> version, which requires a subscription
+            and provides more advanced features and support. On the web,
+            we are also told about <em>MongoDB Atlas</em>, a cloud
+            computing service for MongoDB. We can try it for free in the
+            MongoDB web.</p>
+            <p>To work in our local system, we have two options: install
+            MongoDB or use a Docker image.</p>
+            <h3 data-number="2.2.1"
+            id="install-mongodb-on-ubuntu-24.04"><span
+            class="header-section-number">2.2.1</span> Install MongoDB
+            on Ubuntu 24.04</h3>
+            <p>We are going to install MongoDB Community Edition using
+            the apt package manager.</p>
+            <p>From a terminal, install <code>gnupg</code> and
+            <code>curl</code> if they are not already available:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install gnupg curl</span></code></pre></div>
+            <p>Import the MongoDB public GPG key:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://www.mongodb.org/static/pgp/server-8.0.asc <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">sudo</span> gpg <span class="at">-o</span> /usr/share/keyrings/mongodb-server-8.0.gpg <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">--dearmor</span></span></code></pre></div>
+            <p>Create the list file
+            <code>/etc/apt/sources.list.d/mongodb-org-8.0.list</code>:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse&quot;</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/mongodb-org-8.0.list</span></code></pre></div>
+            <p>Update the local repository and install MongoDB:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install <span class="at">-y</span> mongodb-org</span></code></pre></div>
+            <p>For some reason, you need to restart the MongoDB service
+            to make it available:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart mongod</span></code></pre></div>
+            <p>The detailed steps are at:</p>
+            <p><a
+            href="https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/">Install
+            MongoDB in Ubuntu</a></p>
+            <p>You can use the command <code>mongosh</code> to query
+            your local MongoDB server.</p>
+            <h3 data-number="2.2.2"
+            id="install-mongodb-on-windows"><span
+            class="header-section-number">2.2.2</span> Install MongoDB
+            on Windows</h3>
+            <p>Download the MongoDB Community Windows x64
+            <code>.msi</code> installer from the following link:</p>
+            <p><a
+            href="https://www.mongodb.com/try/download/community?tck=docs_server">MongoDB
+            Download Center</a></p>
+            <p>And follow the instructions.</p>
+            <p>During the installation choose the options: Complete
+            installation, install as a service and run as a Network
+            service user.</p>
+            <figure>
+            <img src="images/windows-installer.png" width="400"
+            alt="Windows installation" />
+            <figcaption aria-hidden="true">Windows
+            installation</figcaption>
+            </figure>
+            <p>You also can install Mongo Shell from the following link:
+            <a
+            href="https://www.mongodb.com/docs/mongodb-shell/install/">mongosh</a></p>
+            <h3 data-number="2.2.3" id="using-a-docker-image"><span
+            class="header-section-number">2.2.3</span> Using a Docker
+            image</h3>
+            <p>If you want to use a Docker image. Follow these
+            steps:</p>
+            <ul>
+            <li>Pull the MongoDB Docker image</li>
+            </ul>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> pull mongodb/mongodb-community-server</span></code></pre></div>
+            <ul>
+            <li>Create a Docker volume to persist the MongoDB data</li>
+            </ul>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> volume create mongodata</span></code></pre></div>
+            <ul>
+            <li>Run the image</li>
+            </ul>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--name</span> mongo <span class="at">-v</span> mongodata:/data/db <span class="at">-p</span> 27017:27017 <span class="at">-d</span> mongodb/mongodb-community-server:latest</span></code></pre></div>
+            <ul>
+            <li>Check that the container is running</li>
+            </ul>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> ps</span></code></pre></div>
+            <p>Now that the container is running, we can access to it
+            with</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker exec <span class="at">-it</span> mongo mongosh</span></code></pre></div>
+            <p>We are now in the mongo shell of our container.</p>
+            <figure>
+            <img src="images/image01.png" alt="MongoDB shell" />
+            <figcaption aria-hidden="true">MongoDB shell</figcaption>
+            </figure>
+            <p>The MongoDB shell is based on javascript, so we can run
+            javascript code directly from it, use its libraries or
+            define functions.</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="kw">let</span> a<span class="op">=</span><span class="dv">10</span><span class="op">;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> a</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="kw">let</span> b<span class="op">=</span>a<span class="op">+</span><span class="dv">5</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> b</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="dv">15</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(<span class="dv">100</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="kw">let</span> today<span class="op">=</span><span class="kw">new</span> <span class="bu">Date</span>()<span class="op">;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> today</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ISODate</span>(<span class="st">&quot;2023-12-14T18:20:42.522Z&quot;</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="kw">function</span> <span class="fu">add</span>(a<span class="op">,</span> b){</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="op">...</span> <span class="cf">return</span> a<span class="op">+</span>b<span class="op">;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="op">...</span> }</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">add</span>(<span class="dv">4</span><span class="op">,</span><span class="dv">4</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span></span></code></pre></div>
+            <h2 data-number="2.3" id="basic-instructions"><span
+            class="header-section-number">2.3</span> Basic
+            instructions</h2>
+            <p>By default, we work with the database <code>test</code>.
+            We can change the database (or create one if it doesn’t
+            exist) with the instruction <code>use</code>.</p>
+            <pre class="mongodb"><code>test&gt; use cinema
+switched to db cinema
+cinema&gt; </code></pre>
+            <p>The prompt has changed to <code>cinema&gt;</code></p>
+            <ul>
+            <li>Check the collections in our database:</li>
+            </ul>
+            <pre class="mongodb"><code>db.getCollectionNames();</code></pre>
+            <p>We don’t have any collection in the database. Let’s
+            create one called <code>movies</code></p>
+            <pre class="mongodb"><code>db.createCollection(&quot;movies&quot;);</code></pre>
+            <p>If we run <code>db.getCollectionNames()</code> again,
+            we’ll get the name of our new collection.</p>
+            <p>Collections are the equivalent of tables in the
+            relational model, with the difference that collections have
+            a dynamic schema, whereby documents in the same collection
+            can have different structure from each other.</p>
+            <p>Collection names must be subject to certain
+            restrictions:</p>
+            <ul>
+            <li>We cannot use the empty string (““), or the null
+            character</li>
+            <li>We cannot create collections starting with “system.”, as
+            this is a prefix for internal system collections</li>
+            <li>A collection name can’t contain the $ character</li>
+            </ul>
+            <h2 data-number="2.4" id="working-with-documents"><span
+            class="header-section-number">2.4</span> Working with
+            documents</h2>
+            <p>The unit of information inside a MongoDB collection is
+            the <strong>document</strong>, which would be the equivalent
+            of a row in a relational model. These are JSON documents,
+            made up of key-value pairs, and which represent information
+            in a fairly intuitive way.</p>
+            <p>In order to form a JSON document for MongoDB, there are a
+            few things to keep in mind:</p>
+            <ul>
+            <li><p><strong>Regarding keys</strong>:</p>
+            <ul>
+            <li>They cannot be null,</li>
+            <li>They can be formed by any UTF-8 character, except the
+            characters . or $.</li>
+            <li>They are case-sensitive</li>
+            <li>They must be unique within the same document</li>
+            </ul></li>
+            <li><p><strong>Regarding their values</strong>:</p>
+            <ul>
+            <li>They can be of any permitted type</li>
+            </ul></li>
+            </ul>
+            <table>
+            <colgroup>
+            <col style="width: 36%" />
+            <col style="width: 63%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Type</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><strong>null</strong></td>
+            <td>Represents both the null value and a field that does not
+            exist</td>
+            </tr>
+            <tr class="even">
+            <td><strong>boolean</strong></td>
+            <td>It allows the values ​​<em>true</em> and
+            <em>false</em>,</td>
+            </tr>
+            <tr class="odd">
+            <td><strong>number</strong></td>
+            <td>They represent numerical values ​​in floating point
+            (Float). If we want to use integer or float types, we must
+            use our own classes: <code>NumberInt("3")</code> or
+            <code>NumberLong("3")</code></td>
+            </tr>
+            <tr class="even">
+            <td><strong>string</strong></td>
+            <td>They represent any valid UTF-8 text string.</td>
+            </tr>
+            <tr class="odd">
+            <td><strong>date</strong></td>
+            <td>Represents dates, expressed in milliseconds</td>
+            </tr>
+            <tr class="even">
+            <td><strong>array</strong></td>
+            <td>These are lists of values ​​that are represented as
+            vectors in Mongo</td>
+            </tr>
+            <tr class="odd">
+            <td><strong>embedded documents</strong></td>
+            <td>Documents can have other documents embedded in them</td>
+            </tr>
+            <tr class="even">
+            <td><strong>ObjectId</strong></td>
+            <td>This is the default type for _id fields, and is designed
+            to easily generate unique values ​​globally</td>
+            </tr>
+            </tbody>
+            </table>
+            <ul>
+            <li><p><strong>Regarding the document</strong>:</p>
+            <ul>
+            <li>It must have a <code>_id</code> field, with a unique
+            value, which will act as the ID of the document. If we do
+            not specify this key, MongoDB will generate it
+            automatically, with an object of type ObjectId.</li>
+            </ul></li>
+            </ul>
+            <h3 data-number="2.4.1"
+            id="some-considerations-about-data-types"><span
+            class="header-section-number">2.4.1</span> Some
+            considerations about data types</h3>
+            <p>Let’s look at some interesting peculiarities about some
+            of these types.</p>
+            <p><strong><em>The Date Type</em></strong></p>
+            <p>Mongo uses Javascript’s <code>Date</code> type. When we
+            generate a new object of type <code>Date</code>, it is
+            necessary to make use of the operator <code>new</code>,
+            because otherwise we would get a representation of the date
+            in the form of <em>string</em>:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> today <span class="op">=</span> <span class="kw">new</span> <span class="bu">Date</span>()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> today</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ISODate</span>(<span class="st">&#39;2023-12-15T18:33:21.946Z&#39;</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> today<span class="op">=</span><span class="bu">Date</span>()</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>Fri Dec <span class="dv">15</span> <span class="dv">2023</span> <span class="dv">18</span><span class="op">:</span><span class="dv">53</span><span class="op">:</span><span class="dv">08</span> GMT<span class="op">+</span><span class="dv">0000</span> (Coordinated Universal Time)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> today</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>Fri Dec <span class="dv">15</span> <span class="dv">2023</span> <span class="dv">18</span><span class="op">:</span><span class="dv">53</span><span class="op">:</span><span class="dv">08</span> GMT<span class="op">+</span><span class="dv">0000</span> (Coordinated Universal Time)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p><strong><em>Arrays</em></strong></p>
+            <p>Arrays can be used to represent ordered collections, such
+            as lists or queues, or unordered, such as sets. As in
+            Javascript, and unlike other languages such as Java, each
+            element of the vector can have a different data type, even
+            other objects of type array.</p>
+            <p>The way to access its elements will be as we have seen
+            with vectors and objects with Javascript. Let’s see some
+            examples:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> v<span class="op">=</span>{<span class="dt">objects</span><span class="op">:</span> [<span class="st">&quot;temperature&quot;</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> {<span class="dt">text</span><span class="op">:</span> <span class="st">&quot;hello&quot;</span>}<span class="op">,</span> <span class="kw">false</span>] }</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>{ <span class="dt">objects</span><span class="op">:</span> [ <span class="st">&#39;temperature&#39;</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> { <span class="dt">text</span><span class="op">:</span> <span class="st">&#39;hello&#39;</span> }<span class="op">,</span> <span class="kw">false</span> ] }</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> v</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>{ <span class="dt">objects</span><span class="op">:</span> [ <span class="st">&#39;temperature&#39;</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> { <span class="dt">text</span><span class="op">:</span> <span class="st">&#39;hello&#39;</span> }<span class="op">,</span> <span class="kw">false</span> ] }</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> v<span class="op">.</span><span class="at">objects</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>[ <span class="st">&#39;temperature&#39;</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> { <span class="dt">text</span><span class="op">:</span> <span class="st">&#39;hello&#39;</span> }<span class="op">,</span> <span class="kw">false</span> ]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> v<span class="op">.</span><span class="at">objects</span>[<span class="dv">0</span>]</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>temperature</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> v<span class="op">.</span><span class="at">objects</span>[<span class="dv">1</span>]</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> v<span class="op">.</span><span class="at">objects</span>[<span class="dv">2</span>]</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>{ <span class="dt">text</span><span class="op">:</span> <span class="st">&#39;hello&#39;</span> }</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> v<span class="op">.</span><span class="at">objects</span>[<span class="dv">2</span>]<span class="op">.</span><span class="at">text</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>hello</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p><strong><em>About ObjectIds</em></strong></p>
+            <p>The <em>ObjectId</em> class uses 12 bytes, organized as
+            follows:</p>
+            <figure>
+            <img src="images/image02.png" alt="ObjectId structure" />
+            <figcaption aria-hidden="true">ObjectId
+            structure</figcaption>
+            </figure>
+            <ul>
+            <li><strong>Timestamp (bytes 0-3)</strong>: The timestamp in
+            seconds since January 1, 1970.</li>
+            <li><strong>Machine (bytes 4-6)</strong>: The machine’s
+            unique identifier, usually a hash of its hostname</li>
+            <li><strong>PID (bytes 7-8)</strong>: Identifier of the
+            process that generates the ObjectID, to guarantee uniqueness
+            within the same machine</li>
+            <li><strong>Increment (bytes 9-11</strong>):
+            Auto-incremental value, in order to guarantee uniqueness in
+            the same second, machine and process</li>
+            </ul>
+            <p>As we can see, this is a more robust mechanism than a
+            simple autoincremental field as in MySQL. This corresponds
+            to the distributed nature of MongoDB, so that objects can be
+            generated in a multi-host environment.</p>
+            <h3 data-number="2.4.2" id="document-operations"><span
+            class="header-section-number">2.4.2</span> Document
+            operations</h3>
+            <table>
+            <colgroup>
+            <col style="width: 25%" />
+            <col style="width: 40%" />
+            <col style="width: 34%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Operator</th>
+            <th>Meaning</th>
+            <th>Example</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><strong>insertOne(document)</strong></td>
+            <td>Add a document to the collection</td>
+            <td><code>db.movies.insertOne(movie)</code></td>
+            </tr>
+            <tr class="even">
+            <td><strong>insertMany([ &lt;document 1&gt; , &lt;document
+            2&gt;, … ])</strong></td>
+            <td>Add multiple documents to the collection</td>
+            <td><code>db.movies.insertMany(movie1, movie2, movie3...)</code></td>
+            </tr>
+            <tr class="odd">
+            <td><strong>replaceOne(filter, document,
+            options)</strong></td>
+            <td>Replaces a single document within the collection based
+            on the filter. If in the options we set the parameter
+            <code>upsert</code> to <code>true</code>, the document will
+            be inserted if it doesn’t exist</td>
+            <td><code>db.movies.replaceOne(filter, movie, {upsert: true})</code></td>
+            </tr>
+            <tr class="even">
+            <td><strong>updateOne(filter, changes,
+            options)</strong></td>
+            <td>Updates a single all documents in the collection that
+            match the filter. The parameter <code>changes</code> might
+            contain a full document or only the changes we want to
+            make</td>
+            <td><code>db.movies.updateOne({Title: "My movie"}, changes)</code></td>
+            </tr>
+            <tr class="odd">
+            <td><strong>updateMany(filter, changes,
+            options)</strong></td>
+            <td>Updates a document in the collection based on the
+            filter. The parameter <code>changes</code> might contain a
+            full document or only the changes we want to make</td>
+            <td><code>&gt;db.movies.updateMany({Title: "My movie"}, changes)</code></td>
+            </tr>
+            <tr class="even">
+            <td><strong>find(pattern)</strong></td>
+            <td>Gets all documents in a collection that match the given
+            pattern</td>
+            <td><code>&gt; db.movies.find({title: "My first document"});</code></td>
+            </tr>
+            <tr class="odd">
+            <td><strong>find()</strong></td>
+            <td>Gets all documents in a collection</td>
+            <td><code>&gt; db.movies.find();</code></td>
+            </tr>
+            <tr class="even">
+            <td><strong>findOne(pattern)</strong></td>
+            <td>Gets an element of the collection matching the
+            pattern</td>
+            <td><code>db.movies.findOne();</code></td>
+            </tr>
+            <tr class="odd">
+            <td><strong>deleteOne(pattern)</strong></td>
+            <td>Deletes a document from a collection that matches the
+            pattern</td>
+            <td><code>&gt; db.movies.deleteOne({title: "My post"})</code></td>
+            </tr>
+            <tr class="even">
+            <td><strong>deleteMany(pattern)</strong></td>
+            <td>Deletes all the documents from a collection that match
+            the pattern</td>
+            <td><code>&gt; db.movies.deleteMany({title: "My post"})</code></td>
+            </tr>
+            </tbody>
+            </table>
+            <h3 data-number="2.4.3"
+            id="adding-a-new-document-to-the-collection"><span
+            class="header-section-number">2.4.3</span> Adding a new
+            document to the collection</h3>
+            <p>The natural way to add items to the database is through
+            the <code>insert</code> method, available in all
+            collections.</p>
+            <p>Let’s add a film to our <code>movies</code> collection.
+            First, we create the JSON document:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> <span class="kw">let</span> newMovie <span class="op">=</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>     <span class="dt">_id</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>     <span class="dt">Title</span><span class="op">:</span> <span class="st">&quot;Solo. A Star Wars Story&quot;</span><span class="op">,</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>     <span class="dt">Year</span><span class="op">:</span> <span class="st">&quot;2018&quot;</span><span class="op">,</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>     <span class="dt">Director</span><span class="op">:</span> [</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>         {</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>             <span class="dt">Name</span><span class="op">:</span> <span class="st">&quot;Irvin Kershner&quot;</span><span class="op">,</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>             <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1923</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>         }<span class="op">,</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>         {</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>             <span class="dt">Name</span><span class="op">:</span> <span class="st">&quot;George Lucas&quot;</span><span class="op">,</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>             <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>         }<span class="op">,</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>     ]</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="op">...</span> }</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span></span></code></pre></div>
+            <p>Now we can add the document <code>newMovie</code> to the
+            <code>movies</code> collection:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">insertOne</span>(newMovie)<span class="op">;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>{ <span class="dt">acknowledged</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">insertedIds</span><span class="op">:</span> { <span class="st">&#39;0&#39;</span><span class="op">:</span> <span class="dv">11</span> } }</span></code></pre></div>
+            <p>In this case, we have provided the _id, but it may be
+            generated automatically. Let’s try this one:</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> <span class="kw">let</span> newMovie <span class="op">=</span> {</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span> <span class="dt">Title</span><span class="op">:</span> <span class="st">&quot;The Phantom Menace&quot;</span><span class="op">,</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="op">...</span> <span class="dt">Year</span><span class="op">:</span> <span class="st">&quot;1999&quot;</span><span class="op">,</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="op">...</span> <span class="dt">Director</span><span class="op">:</span> [</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>  {</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>   <span class="dt">Name</span><span class="op">:</span> <span class="st">&quot;George Lucas&quot;</span><span class="op">,</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>   <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="op">...</span>  }<span class="op">,</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="op">...</span> ]<span class="op">,</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="op">...</span> }</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span>db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">insertOne</span>(newMovie)<span class="op">;</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  acknowledged<span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  insertedId<span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d7d643c2e412cb7592dab&#39;</span>)</span></code></pre></div>
+            <p>The movie has no predefined identifier, so Mongo has
+            assigned a random one.</p>
+            <p>If we list the movies of our collection we can see the
+            new movie with the automatic id:</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">find</span>()<span class="op">;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>[</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;Solo. A Star Wars Story&#39;</span><span class="op">,</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;2018&#39;</span><span class="op">,</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;Irvin Kershner&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1923</span> }<span class="op">,</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> }</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="dv">11</span><span class="op">,</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;The Empire strikes back&#39;</span><span class="op">,</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1980&#39;</span><span class="op">,</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [ { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;Irvin Kershner&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="st">&#39;1923&#39;</span> } ]</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d7d643c2e412cb7592dab&#39;</span>)<span class="op">,</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;The Phantom Menace&#39;</span><span class="op">,</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1999&#39;</span><span class="op">,</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [ { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> } ]</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>We can assign the ids manually as long as we don’t repeat
+            them (the **_id** is the <em>primary key</em>). If we try to
+            add the same movie again, we will get a duplicate key
+            message.</p>
+            <p>As you see in the list, the documents in the collection
+            are not forced to have the same structure. The first movie
+            has two directors, the other two movies have only one. We
+            can even add a movie with no directors.</p>
+            <h3 data-number="2.4.4" id="batch-insert"><span
+            class="header-section-number">2.4.4</span> Batch insert</h3>
+            <p>MongoDB allows to add multiple documents at a time using
+            insertMany instead of insertOne.</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="kw">let</span> movie1<span class="op">=</span>{<span class="dt">Title</span><span class="op">:</span> <span class="st">&quot;Star Wars. A new Hope&quot;</span><span class="op">,</span> <span class="dt">Year</span><span class="op">:</span> <span class="st">&quot;1977&quot;</span>}<span class="op">;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="kw">let</span> movie2<span class="op">=</span>{<span class="dt">Title</span><span class="op">:</span> <span class="st">&quot;Empire Strikes Back&quot;</span><span class="op">,</span> <span class="dt">Year</span><span class="op">:</span> <span class="st">&quot;1981&quot;</span>}<span class="op">;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="kw">let</span> movie3<span class="op">=</span>{<span class="dt">Title</span><span class="op">:</span> <span class="st">&quot;Return of the Jedi&quot;</span><span class="op">,</span> <span class="dt">Year</span><span class="op">:</span> <span class="st">&quot;1984&quot;</span>}<span class="op">;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">insertMany</span>([movie1<span class="op">,</span> movie2<span class="op">,</span> movie3])<span class="op">;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">acknowledged</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">insertedIds</span><span class="op">:</span> {</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;0&#39;</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d840395c28fa22d088ba3&#39;</span>)<span class="op">,</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;1&#39;</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d840395c28fa22d088ba4&#39;</span>)<span class="op">,</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;2&#39;</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d840395c28fa22d088ba5&#39;</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>If one document fails in being added to the collection,
+            the rest of the documents won’t be added either.</p>
+            <h3 data-number="2.4.5" id="deleting-documents"><span
+            class="header-section-number">2.4.5</span> Deleting
+            documents</h3>
+            <p>To remove a document from a collection we use the
+            <code>remove</code> method, passing as a parameter a JSON
+            document with the condition(s) of the documents that will be
+            removed.</p>
+            <p>Deleting a document using the id
+            (<code>deleteOne</code>):</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">deleteOne</span>({<span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d840395c28fa22d088ba5&#39;</span>)})<span class="op">;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>{ <span class="dt">acknowledged</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">deletedCount</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>Delete the documents using a condition. Let’s remove the
+            movies with the word <code>strikes</code> in the title:</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">deleteMany</span>({<span class="dt">Title</span><span class="op">:</span> <span class="ss">/strikes/</span>})<span class="op">;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>{ <span class="dt">acknowledged</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">deletedCount</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>As you can see, the movie with the word
+            <code>Strikes</code> has not been deleted, because the
+            pattern is case sensitive.</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">find</span>()<span class="op">;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>[</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;Solo. A Star Wars Story&#39;</span><span class="op">,</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;2018&#39;</span><span class="op">,</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;Irvin Kershner&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1923</span> }<span class="op">,</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> }</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d7d643c2e412cb7592dab&#39;</span>)<span class="op">,</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;The Phantom Menace&#39;</span><span class="op">,</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1999&#39;</span><span class="op">,</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [ { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> } ]</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d840395c28fa22d088ba3&#39;</span>)<span class="op">,</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;Star Wars. A new Hope&#39;</span><span class="op">,</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1977&#39;</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d840395c28fa22d088ba4&#39;</span>)<span class="op">,</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;Empire Strikes Back&#39;</span><span class="op">,</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1981&#39;</span></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>Deleting all the movies of 1981:</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">deleteMany</span>({<span class="dt">Year</span><span class="op">:</span> <span class="st">&quot;1981&quot;</span>})<span class="op">;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>{ <span class="dt">acknowledged</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">deletedCount</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>We can remove the whole collection with the method
+            <code>drop</code>.</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="fu">getCollectionNames</span>()<span class="op">;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>[ <span class="st">&#39;movies&#39;</span> ]</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="fu">createCollection</span>(<span class="st">&quot;test2024&quot;</span>)<span class="op">;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>{ <span class="dt">ok</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="fu">getCollectionNames</span>()<span class="op">;</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>[ <span class="st">&#39;test2024&#39;</span><span class="op">,</span> <span class="st">&#39;movies&#39;</span> ]</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">test2024</span><span class="op">.</span><span class="fu">drop</span>()<span class="op">;</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="kw">true</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="fu">getCollectionNames</span>()<span class="op">;</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>[ <span class="st">&#39;movies&#39;</span> ]</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <h3 data-number="2.4.6" id="updating-documents"><span
+            class="header-section-number">2.4.6</span> Updating
+            documents</h3>
+            <p>We can update only a document with
+            <code>updateOne</code>, or all the documents that match a
+            condition with <code>updateMany()</code>.</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">updateOne</span>({<span class="st">&quot;Title&quot;</span><span class="op">:</span> <span class="st">&quot;Solo. A Star Wars Story&quot;</span>}<span class="op">,</span>{<span class="dt">$set</span><span class="op">:</span> {<span class="st">&quot;Title&quot;</span><span class="op">:</span><span class="st">&#39;Hans Solo. A Star Wars Story&#39;</span>}})<span class="op">;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">acknowledged</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">insertedId</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">matchedCount</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">modifiedCount</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">upsertedCount</span><span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>We use <code>$set</code> to made the changes. Other
+            operators are</p>
+            <table>
+            <colgroup>
+            <col style="width: 28%" />
+            <col style="width: 71%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Name</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>$currentDate</code></td>
+            <td>Sets the value of a field to current date, either as a
+            Date or a Timestamp</td>
+            </tr>
+            <tr class="even">
+            <td><code>$inc</code></td>
+            <td>Increments the value of the field by the specified
+            amount</td>
+            </tr>
+            <tr class="odd">
+            <td><code>$min</code></td>
+            <td>Only updates the field if the specified value is less
+            than the existing field value</td>
+            </tr>
+            <tr class="even">
+            <td><code>$max</code></td>
+            <td>Only updates the field if the specified value is greater
+            than the existing field value</td>
+            </tr>
+            <tr class="odd">
+            <td><code>$mul</code></td>
+            <td>Multiplies the value of the field by the specified
+            amount</td>
+            </tr>
+            <tr class="even">
+            <td><code>$rename</code></td>
+            <td>Renames a field</td>
+            </tr>
+            <tr class="odd">
+            <td><code>$setOnInsert</code></td>
+            <td>Sets the value of a field if an update results in an
+            insert of a document. Has no effect on update operations
+            that modify existing documents</td>
+            </tr>
+            <tr class="even">
+            <td><code>$unset</code></td>
+            <td>Removes the specified field from a document</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>If a field in the document is an array, we can operate
+            over the array too:</p>
+            <table>
+            <colgroup>
+            <col style="width: 28%" />
+            <col style="width: 71%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Name</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>$</code></td>
+            <td>Acts as a placeholder to update the first element that
+            matches the query condition</td>
+            </tr>
+            <tr class="even">
+            <td><code>$[]</code></td>
+            <td>Acts as a placeholder to update all elements in an array
+            for the documents that match the query condition</td>
+            </tr>
+            <tr class="odd">
+            <td><code>$['&lt;identifier&gt;']</code></td>
+            <td>Acts as a placeholder to update all elements that match
+            the arrayFilters condition for the documents that match the
+            query condition</td>
+            </tr>
+            <tr class="even">
+            <td><code>$addToSet</code></td>
+            <td>Adds elements to an array only if they do not already
+            exist in the set</td>
+            </tr>
+            <tr class="odd">
+            <td><code>$pop</code></td>
+            <td>Removes the first or last item of an array</td>
+            </tr>
+            <tr class="even">
+            <td><code>$pull</code></td>
+            <td>Removes all array elements that match a specified
+            query</td>
+            </tr>
+            <tr class="odd">
+            <td><code>$push</code></td>
+            <td>Adds an item to an array</td>
+            </tr>
+            <tr class="even">
+            <td><code>$pullAll</code></td>
+            <td>Removes all matching values from an array</td>
+            </tr>
+            </tbody>
+            </table>
+            <p><a
+            href="https://www.mongodb.com/docs/manual/reference/operator/update/#std-label-update-operators">More
+            info in the official MongoDB documentation</a></p>
+            <h3 data-number="2.4.7" id="upserts"><span
+            class="header-section-number">2.4.7</span> Upserts</h3>
+            <p>If no document matches the condition, no update will be
+            done. There is an option to create a new document, when
+            doing an update, if no document matches the condition. We
+            must use <strong>upserts</strong>. The easy way is to put a
+            third parameter equals to <code>true</code> in the update.
+            For instance:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">updateMany</span>({<span class="st">&quot;Title&quot;</span><span class="op">:</span><span class="st">&quot;The return of the Jedi&quot;</span>}<span class="op">,</span>{<span class="dt">$set</span><span class="op">:</span> {<span class="st">&quot;Title&quot;</span><span class="op">:</span><span class="st">&quot;The Return of the Jedi&quot;</span><span class="op">,</span><span class="st">&quot;Year&quot;</span><span class="op">:</span><span class="st">&quot;1984&quot;</span>}})<span class="op">;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">acknowledged</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">insertedId</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">matchedCount</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">modifiedCount</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">upsertedCount</span><span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>No document has been updated because the movie with the
+            given title doesn’t exist. If we put the upsert to true:</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">updateOne</span>({<span class="st">&quot;Title&quot;</span><span class="op">:</span><span class="st">&quot;The return of the Jedi&quot;</span>}<span class="op">,</span>{<span class="dt">$set</span><span class="op">:</span> {<span class="st">&quot;Title&quot;</span><span class="op">:</span><span class="st">&quot;The Return of the Jedi&quot;</span><span class="op">,</span><span class="st">&quot;Year&quot;</span><span class="op">:</span><span class="st">&quot;1984&quot;</span>}}<span class="op">,</span>{<span class="st">&quot;upsert&quot;</span><span class="op">:</span><span class="kw">true</span>})<span class="op">;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">acknowledged</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">insertedId</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d92b602135f6a9d9ed74a&#39;</span>)<span class="op">,</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">matchedCount</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">modifiedCount</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">upsertedCount</span><span class="op">:</span> <span class="dv">1</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>A new document has been inserted to the collection.</p>
+            <h3 data-number="2.4.8" id="comparison-operators"><span
+            class="header-section-number">2.4.8</span> Comparison
+            operators</h3>
+            <table>
+            <colgroup>
+            <col style="width: 37%" />
+            <col style="width: 62%" />
+            </colgroup>
+            <thead>
+            <tr class="header">
+            <th>Operator</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd">
+            <td><code>$eq</code></td>
+            <td>Matches values that are equal to a specified value</td>
+            </tr>
+            <tr class="even">
+            <td><code>$gt</code></td>
+            <td>Matches values that are greater than a specified
+            value</td>
+            </tr>
+            <tr class="odd">
+            <td><code>$gte</code></td>
+            <td>Matches values that are greater than or equal to a
+            specified value</td>
+            </tr>
+            <tr class="even">
+            <td><code>$in</code></td>
+            <td>Matches any of the values specified in an array</td>
+            </tr>
+            <tr class="odd">
+            <td><code>$lt</code></td>
+            <td>Matches values that are less than a specified value</td>
+            </tr>
+            <tr class="even">
+            <td><code>$lte</code></td>
+            <td>Matches values that are less than or equal to a
+            specified value</td>
+            </tr>
+            <tr class="odd">
+            <td><code>$ne</code></td>
+            <td>Matches all values that are not equal to a specified
+            value</td>
+            </tr>
+            <tr class="even">
+            <td><code>$nin</code></td>
+            <td>Matches none of the values specified in an array</td>
+            </tr>
+            </tbody>
+            </table>
+            <p>Let’s find the movies filmed after 1990:</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">find</span>({<span class="st">&quot;Year&quot;</span><span class="op">:</span>{<span class="dt">$gte</span><span class="op">:</span> <span class="st">&quot;1990&quot;</span>}})<span class="op">;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>[</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;Hans Solo. A Star Wars Story&#39;</span><span class="op">,</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;2018&#39;</span><span class="op">,</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;Irvin Kershner&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1923</span> }<span class="op">,</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> }</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d7d643c2e412cb7592dab&#39;</span>)<span class="op">,</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;The Phantom Menace&#39;</span><span class="op">,</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1999&#39;</span><span class="op">,</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [ { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> } ]</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>Let’s find the movies filmed between 1980 and 1990:</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">find</span>({<span class="st">&quot;Year&quot;</span><span class="op">:</span>{<span class="dt">$gte</span><span class="op">:</span> <span class="st">&quot;1980&quot;</span><span class="op">,</span><span class="dt">$lte</span><span class="op">:</span><span class="st">&quot;1990&quot;</span>}})<span class="op">;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>[</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d92b602135f6a9d9ed74a&#39;</span>)<span class="op">,</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;The Return of the Jedi&#39;</span><span class="op">,</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1984&#39;</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>When we apply two conditions, by default we are asking
+            for the documents that match both conditions (AND). We can
+            use the OR operator too.</p>
+            <p>Let’s find the movies filmed before 1980 or after
+            2000.</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">find</span>({<span class="dt">$or</span><span class="op">:</span> [{<span class="st">&quot;Year&quot;</span><span class="op">:</span>{<span class="dt">$gte</span><span class="op">:</span> <span class="st">&quot;2000&quot;</span>}}<span class="op">,</span>{<span class="st">&quot;Year&quot;</span><span class="op">:</span>{<span class="dt">$lte</span><span class="op">:</span><span class="st">&quot;1980&quot;</span>}}]})<span class="op">;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>[</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;Hans Solo. A Star Wars Story&#39;</span><span class="op">,</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;2018&#39;</span><span class="op">,</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;Irvin Kershner&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1923</span> }<span class="op">,</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> }</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d840395c28fa22d088ba3&#39;</span>)<span class="op">,</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;Star Wars. A new Hope&#39;</span><span class="op">,</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1977&#39;</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <p>Let’s find the movies filmed in 1977 or in 1999. In this
+            case we can use the operator <code>$in</code>:</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">find</span>({<span class="st">&quot;Year&quot;</span><span class="op">:</span>{<span class="dt">$in</span><span class="op">:</span> [<span class="st">&quot;1977&quot;</span><span class="op">,</span><span class="st">&quot;1999&quot;</span>]}})<span class="op">;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>[</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d7d643c2e412cb7592dab&#39;</span>)<span class="op">,</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;The Phantom Menace&#39;</span><span class="op">,</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1999&#39;</span><span class="op">,</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [ { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> } ]</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d840395c28fa22d088ba3&#39;</span>)<span class="op">,</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;Star Wars. A new Hope&#39;</span><span class="op">,</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1977&#39;</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+            <h3 data-number="2.4.9"
+            id="asking-for-conditions-in-an-array"><span
+            class="header-section-number">2.4.9</span> Asking for
+            conditions in an array</h3>
+            <p>There are a lot of options. Let’s find the movies
+            directed by George Lucas. We will use the operator
+            <code>$elemMatch</code>.</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> db<span class="op">.</span><span class="at">movies</span><span class="op">.</span><span class="fu">find</span>({<span class="dt">Director</span><span class="op">:</span> { <span class="dt">$elemMatch</span><span class="op">:</span> { <span class="dt">Name</span><span class="op">:</span> <span class="st">&quot;George Lucas&quot;</span> } } })<span class="op">;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>[</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;Hans Solo. A Star Wars Story&#39;</span><span class="op">,</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;2018&#39;</span><span class="op">,</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;Irvin Kershner&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1923</span> }<span class="op">,</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> }</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;659d7d643c2e412cb7592dab&#39;</span>)<span class="op">,</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Title</span><span class="op">:</span> <span class="st">&#39;The Phantom Menace&#39;</span><span class="op">,</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Year</span><span class="op">:</span> <span class="st">&#39;1999&#39;</span><span class="op">,</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Director</span><span class="op">:</span> [ { <span class="dt">Name</span><span class="op">:</span> <span class="st">&#39;George Lucas&#39;</span><span class="op">,</span> <span class="dt">Birthday</span><span class="op">:</span> <span class="dv">1944</span> } ]</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>cinema<span class="op">&gt;</span> </span></code></pre></div>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 15. Node.js i MongoDB</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 15. Node.js i MongoDB</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#node.js-and-mongodb.-installing-moongose."
+id="toc-node.js-and-mongodb.-installing-moongose."><span
+class="toc-section-number">1</span> Node.js and MongoDB. Installing
+Moongose.</a></li>
+<li><a href="#schemes-and-models" id="toc-schemes-and-models"><span
+class="toc-section-number">2</span> Schemes and models</a>
+<ul>
+<li><a href="#defining-schemas" id="toc-defining-schemas"><span
+class="toc-section-number">2.1</span> Defining Schemas</a></li>
+<li><a href="#applying-the-schema-to-a-model"
+id="toc-applying-the-schema-to-a-model"><span
+class="toc-section-number">2.2</span> Applying the Schema to a
+Model</a></li>
+<li><a href="#constraints-and-validations"
+id="toc-constraints-and-validations"><span
+class="toc-section-number">2.3</span> Constraints and
+Validations</a></li>
+</ul></li>
+<li><a href="#adding-documents" id="toc-adding-documents"><span
+class="toc-section-number">3</span> Adding Documents</a>
+<ul>
+<li><a href="#about-the-automatic-id"
+id="toc-about-the-automatic-id"><span
+class="toc-section-number">3.1</span> About the Automatic ID</a></li>
+</ul></li>
+<li><a href="#finding-documents" id="toc-finding-documents"><span
+class="toc-section-number">4</span> Finding Documents</a>
+<ul>
+<li><a href="#generic-search-with-find"
+id="toc-generic-search-with-find"><span
+class="toc-section-number">4.1</span> Generic Search with
+<code>find</code></a></li>
+<li><a href="#parameterized-search-with-find"
+id="toc-parameterized-search-with-find"><span
+class="toc-section-number">4.2</span> Parameterized Search with
+find</a></li>
+<li><a href="#other-options-findone-or-findbyid"
+id="toc-other-options-findone-or-findbyid"><span
+class="toc-section-number">4.3</span> Other Options:
+<code>findOne</code> or <code>findById</code></a></li>
+</ul></li>
+<li><a href="#deleting-documents" id="toc-deleting-documents"><span
+class="toc-section-number">5</span> Deleting Documents</a>
+<ul>
+<li><a href="#the-deleteone-and-deletemany-methods"
+id="toc-the-deleteone-and-deletemany-methods"><span
+class="toc-section-number">5.1</span> The <code>deleteOne</code> and
+<code>deleteMany</code> Methods</a></li>
+<li><a href="#the-findoneanddelete-and-findbyidanddelete-methods"
+id="toc-the-findoneanddelete-and-findbyidanddelete-methods"><span
+class="toc-section-number">5.2</span> The <code>findOneAndDelete</code>
+and <code>findByIdAndDelete</code> Methods</a></li>
+</ul></li>
+<li><a href="#document-modifications-or-updates"
+id="toc-document-modifications-or-updates"><span
+class="toc-section-number">6</span> Document Modifications or
+Updates</a>
+<ul>
+<li><a href="#the-findbyidandupdate-method"
+id="toc-the-findbyidandupdate-method"><span
+class="toc-section-number">6.1</span> The <code>findByIdAndUpdate</code>
+Method</a></li>
+<li><a href="#the-updateone-and-updatemany-methods"
+id="toc-the-updateone-and-updatemany-methods"><span
+class="toc-section-number">6.2</span> The <code>updateOne</code> and
+<code>updateMany</code> Methods</a></li>
+<li><a href="#update-document-version"
+id="toc-update-document-version"><span
+class="toc-section-number">6.3</span> Update Document Version</a></li>
+</ul></li>
+<li><a href="#mongoose-and-promises"
+id="toc-mongoose-and-promises"><span class="toc-section-number">7</span>
+Mongoose and Promises</a>
+<ul>
+<li><a href="#calls-as-simple-asynchronous-functions"
+id="toc-calls-as-simple-asynchronous-functions"><span
+class="toc-section-number">7.1</span> Calls as Simple Asynchronous
+Functions</a></li>
+<li><a href="#calls-as-promises" id="toc-calls-as-promises"><span
+class="toc-section-number">7.2</span> Calls as Promises</a></li>
+<li><a href="#calls-with-asyncawait"
+id="toc-calls-with-asyncawait"><span
+class="toc-section-number">7.3</span> Calls with Async/Await</a></li>
+<li><a href="#which-one-to-choose" id="toc-which-one-to-choose"><span
+class="toc-section-number">7.4</span> Which One to Choose?</a></li>
+</ul></li>
+<li><a href="#collection-relationships"
+id="toc-collection-relationships"><span
+class="toc-section-number">8</span> Collection Relationships</a>
+<ul>
+<li><a href="#define-a-simple-relationship"
+id="toc-define-a-simple-relationship"><span
+class="toc-section-number">8.1</span> Define a Simple
+Relationship</a></li>
+<li><a href="#defining-a-multiple-relationship"
+id="toc-defining-a-multiple-relationship"><span
+class="toc-section-number">8.2</span> Defining a Multiple
+Relationship</a></li>
+<li><a href="#inserting-related-elements"
+id="toc-inserting-related-elements"><span
+class="toc-section-number">8.3</span> Inserting Related
+Elements</a></li>
+<li><a href="#on-referential-integrity"
+id="toc-on-referential-integrity"><span
+class="toc-section-number">8.4</span> On Referential Integrity</a></li>
+</ul></li>
+<li><a href="#subdocuments" id="toc-subdocuments"><span
+class="toc-section-number">9</span> Subdocuments</a>
+<ul>
+<li><a href="#inserting-documents-with-subdocuments"
+id="toc-inserting-documents-with-subdocuments"><span
+class="toc-section-number">9.1</span> Inserting documents with
+subdocuments</a></li>
+<li><a href="#when-to-define-relationships-and-when-to-use-subdocuments"
+id="toc-when-to-define-relationships-and-when-to-use-subdocuments"><span
+class="toc-section-number">9.2</span> When to define relationships and
+when to use subdocuments?</a></li>
+</ul></li>
+<li><a href="#advanced-queries" id="toc-advanced-queries"><span
+class="toc-section-number">10</span> Advanced Queries</a>
+<ul>
+<li><a href="#populations-populate" id="toc-populations-populate"><span
+class="toc-section-number">10.1</span> Populations
+(<code>populate</code>)</a></li>
+<li><a href="#queries-that-involve-multiple-collections"
+id="toc-queries-that-involve-multiple-collections"><span
+class="toc-section-number">10.2</span> Queries that involve multiple
+collections</a></li>
+<li><a href="#other-options-in-queries"
+id="toc-other-options-in-queries"><span
+class="toc-section-number">10.3</span> Other Options in Queries</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1"
+            id="node.js-and-mongodb.-installing-moongose."><span
+            class="header-section-number">1</span> Node.js and MongoDB.
+            Installing Moongose.</h1>
+            <p>In this unit we are going to learn how to connect and
+            work with a MongoDB Database from Node.</p>
+            <p>If we are working with Docker we just need to start the
+            container:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> start mongo</span></code></pre></div>
+            <p>If you don’t have the container, create it with:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--name</span> mongo <span class="at">-v</span> mongodata:/data/db </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>           <span class="ex">-d</span> mongodb/mongodb-community-server:latest</span></code></pre></div>
+            <p>Now, let’s create a folder for our project. For instance,
+            <code>contacts_Mongo</code>. Inside this folder, we will
+            install the library <code>Mongoose</code>, that makes our
+            work with MongoDB easier. You can find a lot of information
+            about <code>Moongoose</code> in the official web.</p>
+            <p><a href="https://mongoosejs.com/">mongoose official
+            page</a></p>
+            <p>To install <code>Moongose</code> in our project, we must
+            create the project and the <code>package.json</code> file in
+            the project folder (<code>contactMongo</code>) using
+            <code>npm init</code>.</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fidel@fidel-DWES:~/projectesNode/contactMongo$</span> npm init</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">This</span> utility will walk you through creating a package.json file.</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">It</span> only covers the most common items, and tries to guess sensible defaults.</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">See</span> <span class="kw">`</span><span class="ex">npm</span> help init<span class="kw">`</span> for definitive documentation on these fields</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">and</span> exactly what they do.</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Use</span> <span class="kw">`</span><span class="ex">npm</span> install <span class="op">&lt;</span>pkg<span class="op">&gt;</span><span class="kw">`</span> afterwards to install a package and</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">save</span> it as a dependency in the package.json file.</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Press</span> ^C at any time to quit.</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">package</span> name: <span class="er">(</span><span class="ex">contactmongo</span><span class="kw">)</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">version:</span> <span class="er">(</span><span class="ex">1.0.0</span><span class="kw">)</span> </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ex">description:</span> Contacts with MongoDB</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ex">entry</span> point: <span class="er">(</span><span class="ex">index.js</span><span class="kw">)</span> </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">test</span> command: </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> repository: </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ex">keywords:</span> </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ex">author:</span> Fidel Oltra</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ex">license:</span> <span class="er">(</span><span class="ex">ISC</span><span class="kw">)</span> </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="ex">About</span> to write to /home/fidel/projectesNode/contactMongo/package.json:</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span><span class="ex">:</span> <span class="st">&quot;contactmongo&quot;</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;version&quot;</span><span class="ex">:</span> <span class="st">&quot;1.0.0&quot;</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;description&quot;</span><span class="ex">:</span> <span class="st">&quot;Contacts with MongoDB&quot;</span>,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;main&quot;</span><span class="ex">:</span> <span class="st">&quot;index.js&quot;</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;scripts&quot;</span><span class="ex">:</span> {</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;test&quot;</span><span class="ex">:</span> <span class="st">&quot;echo </span><span class="dt">\&quot;</span><span class="st">Error: no test specified</span><span class="dt">\&quot;</span><span class="st"> &amp;&amp; exit 1&quot;</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="ex">},</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;author&quot;</span><span class="ex">:</span> <span class="st">&quot;Fidel Oltra&quot;</span>,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;license&quot;</span><span class="ex">:</span> <span class="st">&quot;ISC&quot;</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="ex">Is</span> this OK<span class="pp">?</span> <span class="er">(</span><span class="fu">yes</span><span class="kw">)</span> </span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> notice </span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> notice New patch version of npm available! 10.2.3 <span class="at">-</span><span class="op">&gt;</span> 10.2.5</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> notice Changelog: https://github.com/npm/cli/releases/tag/v10.2.5</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> notice Run npm install <span class="at">-g</span> npm@10.2.5 to update!</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> notice </span></code></pre></div>
+            <p>Now let’s install <code>mongoose</code>:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fidel@fidel-DWES:~/projectesNode/contactMongo$</span> npm install mongoose</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">added</span> 22 packages, and audited 23 packages in 7s</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">1</span> package is looking for funding</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">run</span> <span class="kw">`</span><span class="ex">npm</span> fund<span class="kw">`</span> for details</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">found</span> 0 vulnerabilities</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ex">fidel@fidel-DWES:~/projectesNode/contactMongo$</span> </span></code></pre></div>
+            <p>Now, we need to import the library <code>mongoose</code>
+            in our project. For instance, creating and
+            <code>index.js</code> document and adding the line:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mongoose <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;mongoose&#39;</span>)<span class="op">;</span></span></code></pre></div>
+            <p>To connect to the Mongo server (assuming it’s already
+            running), we need to call a method called
+            <code>connect</code> within the <code>mongoose</code> object
+            that we have imported. We will pass the database URL as the
+            first parameter and, optionally, a second parameter with an
+            object containing connection properties. Including this
+            second object is necessary in certain versions of Mongoose
+            to specify some additional options, and in fact, we may see
+            a warning when running the application, but generally, we
+            can connect directly with the connection URL as the first
+            and only parameter.</p>
+            <p>In the case of accessing a local MongoDB server, we can
+            use a URL like this:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mongoose<span class="op">.</span><span class="fu">connect</span>(<span class="st">&#39;mongodb://127.0.0.1:27017/contacts&#39;</span>)<span class="op">;</span></span></code></pre></div>
+            <blockquote>
+            <p>NOTE: In certain versions, Mongoose also accepts
+            connecting to localhost as the local server name, but in
+            others, it has restricted it to the local IP 127.0.0.1.</p>
+            </blockquote>
+            <h1 data-number="2" id="schemes-and-models"><span
+            class="header-section-number">2</span> Schemes and
+            models</h1>
+            <p>To work with our database using <code>Moongose</code> we
+            need to define <code>schemas</code> and <code>modules</code>
+            (associated to collections).</p>
+            <h2 data-number="2.1" id="defining-schemas"><span
+            class="header-section-number">2.1</span> Defining
+            Schemas</h2>
+            <p>To define a schema, we need to create an instance of the
+            Mongoose Schema class. Therefore, we’ll create this object
+            and define the attributes that the corresponding collection
+            will have, along with the data type of each attribute. It is
+            also advisable to separate these definitions into separate
+            files. We can create a subfolder called <code>models</code>
+            and store our database schemas and models in it.</p>
+            <p>For the proposed contacts database in these tests, we can
+            define a schema to store the data for each contact: name,
+            phone number, and age, for example. We would do this in a
+            file called “contact.js” inside the “models” subfolder of
+            our project:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// models/contact.js</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mongoose <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;mongoose&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contactSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">age</span><span class="op">:</span> <span class="bu">Number</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>The available data types to define the schema are:</p>
+            <ul>
+            <li>Text (String)</li>
+            <li>Numbers (Number)</li>
+            <li>Dates (Date)</li>
+            <li>Booleans (Boolean)</li>
+            <li>Arrays (Array)</li>
+            <li>Others: Buffer, Mixed, ObjectId…</li>
+            </ul>
+            <h2 data-number="2.2"
+            id="applying-the-schema-to-a-model"><span
+            class="header-section-number">2.2</span> Applying the Schema
+            to a Model</h2>
+            <p>Once the schema is defined, we need to apply it to a
+            model to associate it with a collection in the database. For
+            this, we have the <strong><code>model</code></strong> method
+            in Mongoose. As the first parameter, we’ll indicate the name
+            of the collection to which to associate the schema. As the
+            second parameter, we’ll specify the schema to apply (an
+            object of type <code>Schema</code> created previously). We
+            would add these lines <strong>at the end</strong> of our
+            “<code>models/contact.js</code>” file:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Contact <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&#39;contacts&#39;</span><span class="op">,</span> contactSchema)<span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> Contact<span class="op">;</span></span></code></pre></div>
+            <blockquote>
+            <p>NOTE: If we specify a singular model name, Mongoose will
+            automatically create the collection with the pluralized
+            name. This pluralization may not always be correct, as it
+            simply adds an “s” to the end of the model name if we
+            haven’t added it ourselves. For this reason, it is
+            recommended to create models with collection names already
+            in plural.</p>
+            </blockquote>
+            <h2 data-number="2.3" id="constraints-and-validations"><span
+            class="header-section-number">2.3</span> Constraints and
+            Validations</h2>
+            <p>If we define a simple schema like the example of contacts
+            above, we allow any type of value to be added to the fields
+            of the documents. Thus, for example, we could have contacts
+            without names or with negative ages. But with Mongoose, we
+            can provide validation mechanisms that automatically discard
+            documents that do not meet the specifications.</p>
+            <p>In the <a
+            href="https://mongoosejs.com/docs/validation.html">official
+            Mongoose documentation</a>, we can find a detailed
+            description of the different validators we can apply. Here,
+            we will only to describe the most important or common
+            ones:</p>
+            <ul>
+            <li>The <code>required</code> validator allows defining that
+            a certain field is mandatory.</li>
+            <li>The <code>default</code> validator allows specifying a
+            default value for the field if none is specified.</li>
+            <li>The <code>min</code> and <code>max</code> validators are
+            used to define a range of allowed values (minimum and/or
+            maximum) for numeric data (inclusive).</li>
+            <li>The <code>minlength</code> and <code>maxlength</code>
+            validators are used to define a minimum or maximum size of
+            characters for text strings.</li>
+            <li>The <code>unique</code> validator indicates that the
+            field in question does not allow duplicates (like an
+            alternative key in a relational system). The Mongoose
+            documentation specifies that this is not properly a
+            validator but a helper for indexing, and depending on when
+            it is indexed, it may not work properly.</li>
+            <li>The <code>match</code> validator is used to specify a
+            regular expression that the field must comply with.</li>
+            </ul>
+            <p>We also can use the <a
+            href="https://github.com/validatorjs/validator.js">validator
+            library</a> which provides a good number of methods to
+            validate common expressions like emails, urls, etc. We will
+            use it later.</p>
+            <p>Let’s go back to our contacts schema. We will establish
+            that the name and phone are mandatory, and we will only
+            allow ages between 18 and 120 years (inclusive). Also, the
+            name will have a minimum length of 1 character, and the
+            phone will consist of 9 digits, using a regular expression,
+            and it will be a unique key. We can use some more
+            validators, such as <code>trim</code>, to clean up leading
+            and trailing whitespace in text data. With all these
+            constraints, the associated schema and model look like
+            this:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// models/contact.js</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mongoose <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;mongoose&#39;</span>)<span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contactSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> {</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">minlength</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">trim</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> {</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">unique</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">trim</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">match</span><span class="op">:</span> <span class="ss">/</span><span class="sc">^\d{9}$</span><span class="ss">/</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">age</span><span class="op">:</span> {</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">Number</span><span class="op">,</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">min</span><span class="op">:</span> <span class="dv">18</span><span class="op">,</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">max</span><span class="op">:</span> <span class="dv">120</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Contact <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&#39;contacts&#39;</span><span class="op">,</span> contactSchema)<span class="op">;</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> Contact<span class="op">;</span></span></code></pre></div>
+            <p>At this point, we have established the connection to the
+            database and the schema for the data we are going to use.
+            Now, we can add the model to our main file
+            “<code>index.js</code>”, and we can start performing some
+            basic operations against the database.</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// index.js</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mongoose <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;mongoose&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Contact <span class="op">=</span> <span class="pp">require</span>(<span class="bu">__dirname</span> <span class="op">+</span> <span class="st">&quot;/models/contact&quot;</span>)<span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>mongoose<span class="op">.</span><span class="fu">connect</span>(<span class="st">&#39;mongodb://127.0.0.1:27017/contacts&#39;</span>)<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Now we can perform operations against the database</span></span></code></pre></div>
+            <h1 data-number="3" id="adding-documents"><span
+            class="header-section-number">3</span> Adding Documents</h1>
+            <p>If we want to insert a document into a collection, we
+            must create an object of the corresponding model and call
+            its <code>save</code> method. This method returns a promise,
+            so we will use:</p>
+            <ul>
+            <li>A <strong><code>then</code></strong> code block for when
+            the operation has been successful. In this block, we will
+            receive the inserted object as a result, allowing us to
+            examine its data if desired.</li>
+            <li>A <strong><code>catch</code></strong> code block for
+            when the operation could not be completed. We will receive
+            an object with the error as a parameter, which we can
+            examine for more information about it.</li>
+            </ul>
+            <p>This same <code>then-catch</code> pattern will also be
+            used with the rest of the operations later (searches,
+            deletions, or modifications), although the returned result
+            in each case will vary.</p>
+            <p>So, we would add a new contact to our test collection
+            like this:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Adding a new contact</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contact1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Contact</span>({</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Mike&quot;</span><span class="op">,</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> <span class="st">&quot;966112233&quot;</span><span class="op">,</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">age</span><span class="op">:</span> <span class="dv">45</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>contact1<span class="op">.</span><span class="fu">save</span>()<span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Contact added:&quot;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR adding contact:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>Add this code to the “<code>index.js</code>” file of our
+            project, after connecting to the database. Run the
+            application, and take a look at the result returned when
+            everything works correctly. It will be something like
+            this:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mike&#39;</span><span class="op">,</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">phone</span><span class="op">:</span> <span class="st">&#39;966112233&#39;</span><span class="op">,</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">age</span><span class="op">:</span> <span class="dv">45</span><span class="op">,</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">_id</span><span class="op">:</span> <span class="kw">new</span> <span class="fu">ObjectId</span>(<span class="st">&quot;5a12a2e0e6219d68c00c6a00&quot;</span>)<span class="op">,</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">__v</span><span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+            <p>Note that we get the same fields that we defined in the
+            schema (name, phone, and age), and two additional fields
+            that we haven’t specified:</p>
+            <ul>
+            <li><strong><code>__v</code></strong> refers to the
+            document’s version. Initially, all documents start with
+            version 0 when inserted, and this version can be modified
+            when we update the document, as we will see later.</li>
+            <li><strong><code>_id</code></strong> is an auto-generated
+            code by Mongo for any document in any collection.</li>
+            </ul>
+            <p>Now, let’s go to the <code>mongosh</code> console and
+            examine the databases in the left panel:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mongosh</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">test</span><span class="op">&gt;</span> use contacts</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">switched</span> to db contacts</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">contacts</span><span class="op">&gt;</span> db.contacts.find<span class="er">(</span><span class="kw">)</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">[</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    _id: ObjectId<span class="er">(</span><span class="st">&#39;65a42fa2c08351c80636c8eb&#39;</span><span class="er">)</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="er">name:</span> <span class="er">&#39;Mike&#39;,</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">phone:</span> <span class="st">&#39;966112233&#39;</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">age:</span> 45,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">__v:</span> 0</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="er">}</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="ex">]</span></span></code></pre></div>
+            <p>If we attempt to insert an incorrect contact, we will
+            jump to the catch block. For example, this contact is too
+            old according to the schema definition:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contact2 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Contact</span>({</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Oldman&quot;</span><span class="op">,</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> <span class="st">&quot;965123456&quot;</span><span class="op">,</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">age</span><span class="op">:</span> <span class="dv">200</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>contact2<span class="op">.</span><span class="fu">save</span>()<span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Contact added:&quot;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR adding contact:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>If we take a look at the produced error, we will see a
+            lot of information, but among all that information, there is
+            a <code>ValidatorError</code> message with details about the
+            error:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ValidatorError<span class="op">:</span> <span class="fu">Path</span> <span class="vs">`age`</span> (<span class="dv">200</span>) is more than the maximum allowed <span class="fu">value</span> (<span class="dv">120</span>)</span></code></pre></div>
+            <p>This error tells us that the value provided for the “age”
+            field (200) exceeds the maximum allowed value of 120
+            according to the schema definition.</p>
+            <h2 data-number="3.1" id="about-the-automatic-id"><span
+            class="header-section-number">3.1</span> About the Automatic
+            ID</h2>
+            <p>As seen in the previous insertion tests, each time a
+            document is added to a collection, it is automatically
+            assigned a property called <code>_id</code> with an
+            autogenerated code. Unlike other database management systems
+            (such as MariaDB/MySQL, for example), this code is not
+            auto-incrementing but is a string. In fact, it is a 12-byte
+            text that stores important information:</p>
+            <ul>
+            <li>The document’s creation time (timestamp), allowing us to
+            obtain the exact moment (date and time) of its
+            creation.</li>
+            <li>The computer that created the document. This is
+            particularly useful when scaling the application, and we
+            have different Mongo servers accessing the same database. We
+            can identify which of all the servers created the
+            document.</li>
+            <li>The specific process of the system that created the
+            document.</li>
+            <li>A random counter used to avoid any duplication in case
+            the three previous values coincide in time.</li>
+            </ul>
+            <p>There are specific methods to extract part of this
+            information, specifically the creation moment, but we won’t
+            use them in this course.</p>
+            <p>Despite having this significant advantage with this
+            autogenerated ID, we can choose to create our own IDs and
+            not use Mongo’s (although this is not a good idea):</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contactX <span class="op">=</span> <span class="kw">new</span> <span class="fu">Contact</span>({<span class="dt">_id</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;John&quot;</span><span class="op">,</span> <span class="dt">age</span><span class="op">:</span> <span class="dv">70</span><span class="op">,</span> <span class="dt">phone</span><span class="op">:</span> <span class="st">&quot;611885599&quot;</span>})<span class="op">;</span></span></code></pre></div>
+            <h1 data-number="4" id="finding-documents"><span
+            class="header-section-number">4</span> Finding
+            Documents</h1>
+            <p>If we want to search for any document or set of documents
+            in a collection, we can use various methods.</p>
+            <h2 data-number="4.1" id="generic-search-with-find"><span
+            class="header-section-number">4.1</span> Generic Search with
+            <code>find</code></h2>
+            <p>The most general way to obtain documents is to use the
+            static <code>find</code> method associated with the model in
+            question. We can use it without parameters resulting in all
+            documents of the collection as the promise result:</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Find all the documents</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>()<span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(result)<span class="op">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <h2 data-number="4.2"
+            id="parameterized-search-with-find"><span
+            class="header-section-number">4.2</span> Parameterized
+            Search with find</h2>
+            <p>We can also pass a set of search criteria as a parameter
+            to find. For example, to search for contacts with the name
+            “Mary” and age 29, we would do this:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Find by name and age</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>({<span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mary&#39;</span><span class="op">,</span> <span class="dt">age</span><span class="op">:</span> <span class="dv">29</span>})<span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(result)<span class="op">;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>Any call to <code>find</code> <strong>will return an
+            array of results</strong>, even if only one or none is
+            found. It is important to keep this in mind to know how to
+            access a specific element of that result. Not getting
+            results will not trigger an error (it won’t jump to the
+            catch in that case).</p>
+            <p>We can also use some comparison operators in case we are
+            not looking for exact data. For example, this query
+            retrieves all contacts with the name “Mary” and ages between
+            18 and 40:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>({<span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mary&#39;</span><span class="op">,</span> <span class="dt">age</span><span class="op">:</span> {<span class="dt">$gte</span><span class="op">:</span> <span class="dv">18</span><span class="op">,</span> <span class="dt">$lte</span><span class="op">:</span> <span class="dv">40</span>}})</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Search result:&#39;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;ERROR:&#39;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p><a
+            href="https://www.mongodb.com/docs/manual/reference/operator/query/">Here</a>
+            you can find a detailed list of operators you can use in
+            searches.</p>
+            <p>Moreover, parameterized search with find supports other
+            syntax variants, such as using chained methods like where,
+            limit, sort, etc., until you get the desired results in the
+            desired order and quantity. For example, this query shows
+            the first 10 contacts who are of legal age, sorted from
+            oldest to youngest:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">where</span>(<span class="st">&#39;age&#39;</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">gte</span>(<span class="dv">18</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">sort</span>(<span class="st">&#39;-age&#39;</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">limit</span>(<span class="dv">10</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+            <h2 data-number="4.3"
+            id="other-options-findone-or-findbyid"><span
+            class="header-section-number">4.3</span> Other Options:
+            <code>findOne</code> or <code>findById</code></h2>
+            <p>There are other alternatives we can use to search for
+            specific documents (and not a set or list of them). These
+            are the <code>findOne</code> and <code>findById</code>
+            methods. The first one is used similarly to
+            <code>find</code>, with the same filtering parameters, but
+            it only returns one (arbitrary) document that matches those
+            criteria (not an array). For example:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Find one contact</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findOne</span>({<span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mike&#39;</span><span class="op">,</span> <span class="dt">age</span><span class="op">:</span> <span class="dv">39</span>})</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Search result:&#39;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;ERROR:&#39;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>The <code>findById</code> method is used, as the name
+            suggests, to search for a document given its id. For
+            example:</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Find by id</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findById</span>(<span class="st">&#39;5ab2dfb06cf5de1d626d5c09&#39;</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Search result by ID:&#39;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;ERROR:&#39;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>In these methods, if the query produces no result, we
+            will get <code>null</code> as a response, but the
+            <code>catch</code> clause will not be triggered.</p>
+            <h1 data-number="5" id="deleting-documents"><span
+            class="header-section-number">5</span> Deleting
+            Documents</h1>
+            <p>To delete documents from a collection, we can use
+            different methods depending on the number of documents we
+            want to delete and the conditions for deletion.</p>
+            <h2 data-number="5.1"
+            id="the-deleteone-and-deletemany-methods"><span
+            class="header-section-number">5.1</span> The
+            <code>deleteOne</code> and <code>deleteMany</code>
+            Methods</h2>
+            <p>These methods delete documents that meet a certain
+            filtering condition. The first one deletes the first
+            document it finds, and the second one deletes all documents
+            that meet the condition.</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Delete all contacts named Mike</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">deleteMany</span>({<span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mike&#39;</span>})<span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(result<span class="op">.</span><span class="at">deletedCount</span><span class="op">,</span> <span class="st">&quot;documents deleted&quot;</span>)<span class="op">;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span> (error <span class="kw">=&gt;</span> {</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>As seen in the example, both methods return an object
+            with a property called <code>deletedCount</code>, which
+            shows how many documents have been deleted.</p>
+            <blockquote>
+            <p><strong>Important</strong>: If we use
+            <code>deleteMany</code> without specifying any condition,
+            ALL documents in the affected collection will be
+            deleted.</p>
+            </blockquote>
+            <h2 data-number="5.2"
+            id="the-findoneanddelete-and-findbyidanddelete-methods"><span
+            class="header-section-number">5.2</span> The
+            <code>findOneAndDelete</code> and
+            <code>findByIdAndDelete</code> Methods</h2>
+            <p>The <code>findOneAndDelete</code> method searches for the
+            document that meets the specified pattern (or the first one
+            it finds that meets it) and deletes it. Additionally, it
+            retrieves the deleted document in the result, so we could
+            undo the operation afterward by adding it again.</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Find one by name and delete</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findOneAndDelete</span>({<span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mike&#39;</span>})</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Contact deleted:&quot;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span> (error <span class="kw">=&gt;</span> {</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>In this case, the result parameter is directly the
+            deleted object. The <code>findByIdAndDelete</code> method
+            searches for the document with the specified id and deletes
+            it. It also gets the deleted object as a result.</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Find one by id and delete</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findByIdAndDelete</span>(<span class="st">&#39;5a16fed09ed79f03e490a648&#39;</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Contact deleted:&quot;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span> (error <span class="kw">=&gt;</span> {</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>In the case of these two methods, if no element is found
+            that meets the filtering criterion, <code>null</code> will
+            be returned as the result. In other words, the catch clause
+            will not be triggered for this reason. The catch clause
+            would be triggered, for example, if we specify an id with an
+            invalid format (not having 12 bytes).</p>
+            <blockquote>
+            <p>NOTE: In earlier versions of Mongoose, these methods were
+            named <code>findOneAndRemove</code> and
+            <code>findByIdAndRemove</code>, respectively, and were
+            replaced by these others in more recent versions.</p>
+            </blockquote>
+            <h1 data-number="6"
+            id="document-modifications-or-updates"><span
+            class="header-section-number">6</span> Document
+            Modifications or Updates</h1>
+            <p>To make modifications to a document in a collection, we
+            can also use various static methods.</p>
+            <h2 data-number="6.1"
+            id="the-findbyidandupdate-method"><span
+            class="header-section-number">6.1</span> The
+            <code>findByIdAndUpdate</code> Method</h2>
+            <p>The <code>findByIdAndUpdate</code> method will search for
+            the document with the specified <code>id</code> and replace
+            the fields based on the criteria we provide as the second
+            parameter.</p>
+            <p>In this <a
+            href="https://www.mongodb.com/docs/manual/reference/operator/update/">link</a>
+            you can check the update operators that we can use in the
+            second parameter of this method.</p>
+            <p>The most common of all is <code>$set</code>, which takes
+            an object with key-value pairs that we want to modify in the
+            original document. For example, here we replace the name and
+            age of a contact with a specific <code>id</code>, leaving
+            the phone unchanged:</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Find by ID and update</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findByIdAndUpdate</span>(<span class="st">&#39;5a0e1991075e9407c4da8b0a&#39;</span><span class="op">,</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">$set</span><span class="op">:</span> {<span class="dt">name</span><span class="op">:</span><span class="st">&#39;Mike Smith&#39;</span><span class="op">,</span> <span class="dt">age</span><span class="op">:</span> <span class="dv">40</span>}}<span class="op">,</span> {<span class="kw">new</span><span class="op">:</span><span class="kw">true</span>})</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Modified contact:&quot;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span> (error <span class="kw">=&gt;</span> {</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>As an alternative to the above code, we can omit the
+            <code>$set</code> keyword, and the code would look like
+            this:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Find by ID and update</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findByIdAndUpdate</span>(<span class="st">&#39;5a0e1991075e9407c4da8b0a&#39;</span><span class="op">,</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mike Smith&#39;</span><span class="op">,</span> <span class="dt">age</span><span class="op">:</span> <span class="dv">40</span> } <span class="op">,</span> { <span class="kw">new</span><span class="op">:</span> <span class="kw">true</span> })</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Modified contact:&quot;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span> (error <span class="kw">=&gt;</span> {</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>The third parameter that <code>findByIdAndUpdate</code>
+            receives is a set of additional options. For example, the
+            <code>new</code> option used in this example indicates
+            whether we want to get the new modified object as a result
+            (true) or the old one before modification (false, useful for
+            undo operations). We can also pass the
+            <code>runValidators</code> option as the third parameter,
+            which allows us to validate the fields we modify. By
+            default, this option is disabled, and to validate the
+            fields, we must set it to true.</p>
+            <p>With <code>runValidators</code>, when trying to modify a
+            contact with an incorrect age, it jumps to the catch block.
+            For example, this contact is too young, according to the
+            schema definition:</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Find by ID and update with validation</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findByIdAndUpdate</span>(<span class="st">&#39;5a0e1991075e9407c4da8b0a&#39;</span><span class="op">,</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mary Ann&#39;</span><span class="op">,</span> <span class="dt">age</span><span class="op">:</span> <span class="dv">10</span> } <span class="op">,</span> { <span class="kw">new</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">runValidators</span><span class="op">:</span> <span class="kw">true</span> })</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Modified contact:&quot;</span><span class="op">,</span> result)<span class="op">;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span> (error <span class="kw">=&gt;</span> {</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;ERROR:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <h2 data-number="6.2"
+            id="the-updateone-and-updatemany-methods"><span
+            class="header-section-number">6.2</span> The
+            <code>updateOne</code> and <code>updateMany</code>
+            Methods</h2>
+            <p>These methods can be used to update the data of the first
+            document that matches the search condition or all documents
+            that match that condition, respectively. For example, the
+            following statement sets the age to 20 for the first contact
+            found with the name “Mike”:</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">updateOne</span>({<span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mike&#39;</span>}<span class="op">,</span> {<span class="dt">$set</span><span class="op">:</span> {<span class="dt">age</span><span class="op">:</span> <span class="dv">20</span>}})</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+            <p><code>updateMany</code> updates the data for all contacts
+            with that name:</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">updateMany</span>({<span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mike&#39;</span>}<span class="op">,</span> {<span class="dt">$set</span><span class="op">:</span> {<span class="dt">age</span><span class="op">:</span> <span class="dv">20</span>}})</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+            <p>Both methods are useful if we want to search for
+            documents based on fields other than their primary
+            identifier. Otherwise, it is preferable to use
+            <code>findByIdAndUpdate</code>.</p>
+            <h2 data-number="6.3" id="update-document-version"><span
+            class="header-section-number">6.3</span> Update Document
+            Version</h2>
+            <p>We have seen that, among the attributes of a document, in
+            addition to the id autogenerated by Mongo, a version number
+            is created in an attribute <code>__v</code>. This version
+            number refers to the version of the document itself so that,
+            if it is later modified (for example, with a call to
+            <code>findByIdAndUpdate</code>), it can also be indicated
+            with a change in version that this document has changed
+            since its original version. If we wanted to do that with the
+            previous example, it would be enough to add the
+            <code>$inc</code> operator to indicate that it increases the
+            version number, for example, by one:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findByIdAndUpdate</span>(<span class="st">&#39;5a0e1991075e9407c4da8b0a&#39;</span><span class="op">,</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">$set</span><span class="op">:</span> {<span class="dt">name</span><span class="op">:</span><span class="st">&#39;Mike Smith&#39;</span><span class="op">,</span> <span class="dt">age</span><span class="op">:</span> <span class="dv">40</span>}<span class="op">,</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$inc</span><span class="op">:</span> {<span class="dt">__v</span><span class="op">:</span> <span class="dv">1</span>}}<span class="op">,</span> {<span class="kw">new</span><span class="op">:</span><span class="kw">true</span>})</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+            <h1 data-number="7" id="mongoose-and-promises"><span
+            class="header-section-number">7</span> Mongoose and
+            Promises</h1>
+            <p>Previously, we mentioned that operations like
+            <code>find</code>, <code>save</code>, and the other methods
+            we’ve used with Mongoose return a promise, but that’s not
+            entirely accurate. What these methods return is a
+            <code>thenable</code>, an object that can be treated with
+            the corresponding <code>then</code> method. However, there
+            are alternative ways to call these methods, and we can use
+            one or the other as needed.</p>
+            <h2 data-number="7.1"
+            id="calls-as-simple-asynchronous-functions"><span
+            class="header-section-number">7.1</span> Calls as Simple
+            Asynchronous Functions</h2>
+            <p>The methods provided by Mongoose are simply asynchronous
+            tasks, this is to say we can call them and define a response
+            callback that will be executed when the task is completed.
+            To do this, we add an additional parameter to the method,
+            the callback, with two parameters: the error that will occur
+            if the method does not run successfully, and the returned
+            result if the method runs without issues. These two
+            parameters must be indicated in this same order (first the
+            error, and then the correct result). If, for example, we
+            want to search for a contact by its ID, we can do something
+            like this:</p>
+            <div class="sourceCode" id="cb32"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findById</span>(<span class="st">&#39;35893ad987af7e87aa5b113c&#39;</span><span class="op">,</span> (error<span class="op">,</span> contact) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (error)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Error:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(contact)<span class="op">;</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>Now, let’s do something more complex: we search for the
+            contact by its ID, once completed, we increase its age by
+            one year, and save the changes. In this case, the code might
+            look like this:</p>
+            <div class="sourceCode" id="cb33"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findById</span>(<span class="st">&#39;35893ad987af7e87aa5b113c&#39;</span><span class="op">,</span> (error<span class="op">,</span> contact) <span class="kw">=&gt;</span> {</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (error)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Error:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        contact<span class="op">.</span><span class="at">age</span><span class="op">++;</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        contact<span class="op">.</span><span class="fu">save</span>((error2<span class="op">,</span> contact2) <span class="kw">=&gt;</span> {</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (error2)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Error:&quot;</span><span class="op">,</span> error2)<span class="op">;</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>                <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(contact2)<span class="op">;</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>        })<span class="op">;</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>As we can see, when linking an asynchronous call
+            (<code>findById</code>) with another (<code>save</code>),
+            what happens is a <strong>nesting of callbacks</strong>,
+            with their corresponding if..else structures. This
+            phenomenon is known as <strong><em>callback
+            hell</em></strong> or <strong><em>pyramid of
+            doom</em></strong> because it produces a rotated pyramid on
+            the left side of the code (with its peak pointing to the
+            right), which will be larger as we add more calls. In other
+            words, we will be indenting the code more and more by
+            nesting calls within calls, and this management can become
+            difficult to handle.</p>
+            <h2 data-number="7.2" id="calls-as-promises"><span
+            class="header-section-number">7.2</span> Calls as
+            Promises</h2>
+            <p>Let’s go back to what we know how to do. How would we
+            link the two previous operations using promises? Remember:
+            find a contact by its ID and increase its age by one
+            year.</p>
+            <p>We could also create a callback hell by nesting then
+            clauses, with something like this:</p>
+            <div class="sourceCode" id="cb34"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findById</span>(<span class="st">&#39;35893ad987af7e87aa5b113c&#39;</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(contact <span class="kw">=&gt;</span> {</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    contact<span class="op">.</span><span class="at">age</span><span class="op">++;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    contact<span class="op">.</span><span class="fu">save</span>()</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">then</span>(contact2 <span class="kw">=&gt;</span> {</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(contact2)<span class="op">;</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">catch</span>(error2 <span class="kw">=&gt;</span> {</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Error:&quot;</span><span class="op">,</span> error2)<span class="op">;</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span> (error <span class="kw">=&gt;</span> {</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Error:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>However, promises allow chaining <code>then</code>
+            clauses without nesting them, leaving a single catch block
+            at the end to catch any errors that may occur in any of
+            them. To do this, it is enough that within a
+            <code>then</code>, the result of the next promise is
+            returned. The previous code could be rewritten like
+            this:</p>
+            <div class="sourceCode" id="cb35"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">findById</span>(<span class="st">&#39;35893ad987af7e87aa5b113c&#39;</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(contact <span class="kw">=&gt;</span> {</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    contact<span class="op">.</span><span class="at">age</span><span class="op">++;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> contact<span class="op">.</span><span class="fu">save</span>()<span class="op">;</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">then</span>(contact <span class="kw">=&gt;</span> {</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(contact)<span class="op">;</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">catch</span> (error <span class="kw">=&gt;</span> {</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Error:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>This form is cleaner and clearer when we want to perform
+            complex operations. However, it can be further simplified
+            using <code>async/await</code>.</p>
+            <h2 data-number="7.3" id="calls-with-asyncawait"><span
+            class="header-section-number">7.3</span> Calls with
+            Async/Await</h2>
+            <p>The <strong><code>async/await</code></strong>
+            specification allows calling a series of asynchronous
+            methods synchronously and waiting for them to finish before
+            moving on to the next task. The only requirement to do this
+            is that these calls must be made from within an asynchronous
+            function, declared with the <code>async</code> keyword.</p>
+            <p>To perform the previous example, we need to declare an
+            asynchronous function with any name we want (for example,
+            <code>updateAge</code>), and inside it, call each
+            asynchronous function preceded by the <code>await</code>
+            keyword. If the call is going to return a result (in this
+            case, the result of the promise), it can be assigned to a
+            constant or variable. With this, the code can be rewritten
+            like this, and we simply call the updateAge function when we
+            want to execute it:</p>
+            <div class="sourceCode" id="cb36"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">updateAge</span>() {</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> contact <span class="op">=</span> <span class="cf">await</span> Contact<span class="op">.</span><span class="fu">findById</span>(<span class="st">&#39;35893...&#39;</span>)<span class="op">;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    contact<span class="op">.</span><span class="at">age</span><span class="op">++;</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> savedContact <span class="op">=</span> <span class="cf">await</span> contact<span class="op">.</span><span class="fu">save</span>()<span class="op">;</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(savedContact)<span class="op">;</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">updateAge</span>()<span class="op">;</span></span></code></pre></div>
+            <p>We would still need to handle the error section: in the
+            two previous cases, there was a <code>catch</code> clause or
+            an error parameter to check and display the corresponding
+            error message. How do we manage this with async/await? By
+            using <code>await</code>, we are converting asynchronous
+            code into synchronous code, and therefore, error handling is
+            a simple exception handling with
+            <code>try..catch</code>:</p>
+            <div class="sourceCode" id="cb37"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">updateAge</span>() {</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> {</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> contact <span class="op">=</span> <span class="cf">await</span> Contact<span class="op">.</span><span class="fu">findById</span>(<span class="st">&#39;35893...&#39;</span>)<span class="op">;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        contact<span class="op">.</span><span class="at">age</span><span class="op">++;</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> savedContact <span class="op">=</span> <span class="cf">await</span> contact<span class="op">.</span><span class="fu">save</span>()<span class="op">;</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(savedContact)<span class="op">;</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">catch</span> (error) {</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Error:&quot;</span><span class="op">,</span> error)<span class="op">;</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="fu">updateAge</span>()<span class="op">;</span></span></code></pre></div>
+            <h2 data-number="7.4" id="which-one-to-choose"><span
+            class="header-section-number">7.4</span> Which One to
+            Choose?</h2>
+            <p>Any of these three options can be used in any situation,
+            as needed. In this course, we will use the promise approach
+            for simple tasks, as it allows for a clear separation of
+            correct and incorrect execution code, and we will use the
+            <code>async/await</code> specification for complex or linked
+            tasks, where one method depends on the result of the
+            previous one to start.</p>
+            <h1 data-number="8" id="collection-relationships"><span
+            class="header-section-number">8</span> Collection
+            Relationships</h1>
+            <p>Our contact database is very simple, with only a single
+            collection called <code>contacts</code>, and its documents
+            have three fields: <code>name</code>, <code>phone</code>,
+            and <code>age</code>. We are going to add more information,
+            and for this, we’ll continue working on the
+            <code>ContactsMongo</code> project.</p>
+            <h2 data-number="8.1"
+            id="define-a-simple-relationship"><span
+            class="header-section-number">8.1</span> Define a Simple
+            Relationship</h2>
+            <p>If we want to add, for each contact, their favorite
+            restaurant, so multiple contacts can have the same favorite
+            restaurant. For this, we can define this schema and model
+            (in a file called <code>models/restaurant.js</code>):</p>
+            <div class="sourceCode" id="cb38"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">// models/restaurant.js</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mongoose <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;mongoose&#39;</span>)<span class="op">;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> restaurantSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> {</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">minlength</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">trim</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">address</span><span class="op">:</span> {</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">minlength</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">trim</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> {</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">unique</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">trim</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">match</span><span class="op">:</span> <span class="ss">/</span><span class="sc">^\d{9}$</span><span class="ss">/</span></span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Restaurant <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&#39;restaurants&#39;</span><span class="op">,</span> restaurantSchema)<span class="op">;</span></span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">export</span> <span class="op">=</span> Restaurant<span class="op">;</span></span></code></pre></div>
+            <p>And we associate it with the contact schema with a new
+            field:</p>
+            <div class="sourceCode" id="cb39"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">// models/contact.js</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mongoose <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;mongoose&#39;</span>)<span class="op">;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> restaurants <span class="op">=</span> <span class="pp">require</span>(<span class="bu">__dirname</span> <span class="op">+</span> <span class="st">&quot;/restaurant&quot;</span>)<span class="op">;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contactSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> {</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> {</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">age</span><span class="op">:</span> {</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">favouriteRestaurant</span><span class="op">:</span> {</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> mongoose<span class="op">.</span><span class="at">Schema</span><span class="op">.</span><span class="at">Types</span><span class="op">.</span><span class="at">ObjectId</span><span class="op">,</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">ref</span><span class="op">:</span> <span class="st">&#39;restaurants&#39;</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Contact <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&#39;contacts&#39;</span><span class="op">,</span> contactSchema)<span class="op">;</span></span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> Contact<span class="op">;</span></span></code></pre></div>
+            <p>Note that the data type of this new field is
+            <code>ObjectId</code>, indicating that it references an
+            <code>id</code> from a document in this or another
+            collection. Specifically, through the <code>ref</code>
+            property, we indicate which model or collection this id
+            refers to (the restaurants model, which translates to the
+            restaurants collection in MongoDB).</p>
+            <h2 data-number="8.2"
+            id="defining-a-multiple-relationship"><span
+            class="header-section-number">8.2</span> Defining a Multiple
+            Relationship</h2>
+            <p>Let’s take one step further and define a relationship
+            that allows associating multiple elements from one
+            collection with an element from another collection (or the
+            same collection). For example, let’s allow each contact to
+            have a set of pets. We define a new schema for pets, storing
+            their name and type (dog, cat, etc.), in the file
+            <code>models/pet.js</code>.</p>
+            <div class="sourceCode" id="cb40"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">// models/pet.js</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mongoose <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;mongoose&#39;</span>)<span class="op">;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> petSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> {</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">minlength</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">trim</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">type</span><span class="op">:</span> {</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">enum</span><span class="op">:</span> [<span class="st">&#39;dog&#39;</span><span class="op">,</span> <span class="st">&#39;cat&#39;</span><span class="op">,</span> <span class="st">&#39;others&#39;</span>]</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Pet <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&#39;pets&#39;</span><span class="op">,</span> petSchema)<span class="op">;</span></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> Pet<span class="op">;</span></span></code></pre></div>
+            <p>Observe how the <code>enum</code> validator in a schema
+            can be used to force a certain field to only accept certain
+            values.</p>
+            <p>To allow a contact to have multiple pets, we add a new
+            field in the contact schema that will be an array of ids,
+            associated with the previously defined pets model:</p>
+            <div class="sourceCode" id="cb41"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">// models/contact.js</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> pets <span class="op">=</span> <span class="pp">require</span>(<span class="bu">__dirname</span> <span class="op">+</span> <span class="st">&quot;/pet&quot;</span>)<span class="op">;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contactSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> {</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> {</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">age</span><span class="op">:</span> {</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">favouriteRestaurant</span><span class="op">:</span> {</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">pets</span><span class="op">:</span> [{</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> mongoose<span class="op">.</span><span class="at">Schema</span><span class="op">.</span><span class="at">Types</span><span class="op">.</span><span class="at">ObjectId</span><span class="op">,</span></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">ref</span><span class="op">:</span> <span class="st">&#39;pets&#39;</span></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>    }]</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Contact <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&#39;contacts&#39;</span><span class="op">,</span> contactSchema)<span class="op">;</span></span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> Contact<span class="op">;</span></span></code></pre></div>
+            <p>In this case, notice how the way to define the reference
+            to the pets collection is the same (setting the data type as
+            <code>ObjectId</code>, referencing the pets model), but
+            additionally, the data type of this <code>pets</code> field
+            is an array (specified by the brackets when defining
+            it).</p>
+            <h2 data-number="8.3" id="inserting-related-elements"><span
+            class="header-section-number">8.3</span> Inserting Related
+            Elements</h2>
+            <p>If we want to insert a new contact and, at the same time,
+            specify their favorite restaurant and/or pets, we should do
+            it in parts, as would happen in a relational system:</p>
+            <ol type="1">
+            <li>First, we would add the favorite restaurant to the
+            restaurant collection, and/or the pets to the pet collection
+            (unless they already exist, in which case, we would get
+            their id):</li>
+            </ol>
+            <div class="sourceCode" id="cb42"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> restaurant1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Restaurant</span>({</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;La Tagliatella&quot;</span><span class="op">,</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">address</span><span class="op">:</span> <span class="st">&quot;C.C. San Vicente s/n&quot;</span><span class="op">,</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> <span class="st">&quot;965678912&quot;</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>restaurant1<span class="op">.</span><span class="fu">save</span>()<span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pet1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Pet</span>({</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Otto&quot;</span><span class="op">,</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;dog&quot;</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>pet1<span class="op">.</span><span class="fu">save</span>()<span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+            <ol start="2" type="1">
+            <li>Then, we would add the new contact specifying the id of
+            their favorite restaurant, added previously, and/or the ids
+            of their pets in an array:</li>
+            </ol>
+            <div class="sourceCode" id="cb43"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contact1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Contact</span>({</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;John&quot;</span><span class="op">,</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> <span class="dv">677889900</span><span class="op">,</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">age</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">favouriteRestaurant</span><span class="op">:</span> <span class="st">&#39;5acd3c051d694d04fa26dd8b&#39;</span><span class="op">,</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">pets</span><span class="op">:</span> [<span class="st">&#39;5acd3c051d694d04fa26dd90&#39;</span><span class="op">,</span> </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;5acd3c051d694d04fa26dd91&#39;</span>]</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>contact1<span class="op">.</span><span class="fu">save</span>()<span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+            <p>Certainly, in a “real” operation, we won’t have to
+            manually add the ids of related documents. It would be
+            enough to choose them from some dropdown form field to get
+            their id.</p>
+            <h2 data-number="8.4" id="on-referential-integrity"><span
+            class="header-section-number">8.4</span> On Referential
+            Integrity</h2>
+            <p>Referential integrity is a concept related to relational
+            databases, ensuring that the values of a foreign key will
+            always exist in the table it refers to. Applied to a Mongo
+            database, we might think that the ids of a field linked to
+            another collection should exist in that collection, but it
+            doesn’t have to be the case.</p>
+            <p>Continuing with the previous example, if we try to insert
+            a contact with a restaurant id that doesn’t exist in the
+            restaurant collection, it will let us do it, as long as that
+            id is valid (i.e., has a length of 12 bytes). Therefore,
+            it’s up to the programmer to ensure that the ids used in
+            insertions that involve a reference to another collection
+            actually exist. To facilitate the task, there are some
+            libraries on the NPM repository that we can use, such as <a
+            href="https://www.npmjs.com/package/mongoose-id-validator">mongoose-id-validator</a>,
+            although its use goes beyond the contents of this course,
+            and we won’t see it here.</p>
+            <p>In the case of deletion, we might encounter a similar
+            situation: if, following the example of contacts, we want to
+            delete a restaurant, we should be careful with the contacts
+            that have it assigned as their favorite restaurant, as the
+            id will cease to exist in the restaurant collection. Thus,
+            it would be advisable to choose between these two options,
+            although both require manual handling by the programmer:</p>
+            <ul>
+            <li>Deny the operation if there are contacts with the
+            selected restaurant.</li>
+            <li>Reassign (or set to null) the favorite restaurant of
+            those contacts before deleting the selected restaurant.</li>
+            </ul>
+            <h1 data-number="9" id="subdocuments"><span
+            class="header-section-number">9</span> Subdocuments</h1>
+            <p>Mongoose also provides the possibility of defining
+            <strong>subdocuments</strong>. Let’s see a specific example
+            of this, and for that, we are going to create an alternative
+            version of our contacts example. Copy the project folder
+            that we have been working on so far and name the new copy
+            ContactsMongo_v2.</p>
+            <p>In this new project, in our <code>index.js</code> file,
+            let’s connect to a new database, which we’ll call
+            <code>contacts_subdocuments</code>, to avoid interfering
+            with the previous database:</p>
+            <div class="sourceCode" id="cb44"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>mongoose<span class="op">.</span><span class="fu">connect</span>(<span class="st">&#39;mongodb://127.0.0.1:27017/contacts_subdocuments&#39;</span>)<span class="op">;</span></span></code></pre></div>
+            <p>And let’s regroup the three schemas we have created so
+            far (restaurants, pets, and contacts), and merge them into
+            the <code>contacts</code> schema. We will leave only one
+            file in the models folder, which will be
+            <code>contact.js</code>, with this content (we omit some of
+            the code that is the same as the previous example):</p>
+            <div class="sourceCode" id="cb45"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Restaurants</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> restaurantSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span> <span class="co">// Code for the restaurant schema</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Pets</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> petSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span> <span class="co">// Code for the pet schema</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Contacts</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contactSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> {</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> {</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">age</span><span class="op">:</span> {</span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">favouriteRestaurant</span><span class="op">:</span> restaurantSchema<span class="op">,</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">pets</span><span class="op">:</span> [petSchema]</span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Contact <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&#39;contacts&#39;</span><span class="op">,</span> contactSchema)<span class="op">;</span></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> Contact<span class="op">;</span></span></code></pre></div>
+            <p>Notice the lines referring to the
+            <code>favouriteRestaurant</code> and <code>pets</code>
+            properties. This is how you associate an entire schema as
+            the data type of a field in another schema. Thus, we turn
+            the schema into a part of the other, creating
+            <strong>subdocuments</strong> within the main document.
+            Also, note that we haven’t defined models for restaurants or
+            pets since they will not have their own collection now.</p>
+            <p>At first glance, a subdocument may seem somewhat
+            equivalent to defining a relationship between collections.
+            However, the main difference between a subdocument and a
+            relationship between documents from different collections is
+            that the subdocument is embedded within the main document
+            and is different from any other object that may exist in
+            another document, even if their fields are the same. On the
+            contrary, in the simple relationship seen earlier between
+            restaurants and contacts, a favorite restaurant could be
+            shared by multiple contacts simply by linking to the same
+            restaurant id. But this way, we create the restaurant for
+            each contact, differentiating it from other restaurants,
+            even if they are the same. The same would happen with the
+            array of pets: the pets would be different for each contact,
+            even if we wanted them to be the same or shareable.</p>
+            <h2 data-number="9.1"
+            id="inserting-documents-with-subdocuments"><span
+            class="header-section-number">9.1</span> Inserting documents
+            with subdocuments</h2>
+            <p>If we want to create and save a contact that contains the
+            favorite restaurant and pets as subdocuments, we can create
+            the entire object and do a single save:</p>
+            <div class="sourceCode" id="cb46"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> contact1 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Contact</span>({</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Mike&#39;</span><span class="op">,</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">phone</span><span class="op">:</span> <span class="dv">966112233</span><span class="op">,</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">age</span><span class="op">:</span> <span class="dv">39</span><span class="op">,</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">favouriteRestaurant</span><span class="op">:</span> { </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;La Tagliatella&#39;</span><span class="op">,</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">address</span><span class="op">:</span> <span class="st">&#39;C.C. San Vicente s/n&#39;</span><span class="op">,</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">phone</span><span class="op">:</span> <span class="dv">961234567</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>contact1<span class="op">.</span><span class="at">pets</span><span class="op">.</span><span class="fu">push</span>({<span class="dt">name</span><span class="op">:</span><span class="st">&#39;Otto&#39;</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span><span class="st">&#39;dog&#39;</span>})<span class="op">;</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>contact1<span class="op">.</span><span class="at">pets</span><span class="op">.</span><span class="fu">push</span>({<span class="dt">name</span><span class="op">:</span><span class="st">&#39;Piolín&#39;</span><span class="op">,</span> <span class="dt">type</span><span class="op">:</span><span class="st">&#39;others&#39;</span>})<span class="op">;</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>contact1<span class="op">.</span><span class="fu">save</span>()<span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+            <p>In this example, two possible ways of filling in the
+            subdocuments of the main document are shown: on-the-fly when
+            creating the document (case of the restaurant) or afterwards
+            by accessing the fields and assigning them values (case of
+            the pets).</p>
+            <p>In the database, we will see that there is only one
+            collection, contacts, and by examining the inserted
+            elements, we will see that they contain the defined
+            subdocuments embedded.</p>
+            <h2 data-number="9.2"
+            id="when-to-define-relationships-and-when-to-use-subdocuments"><span
+            class="header-section-number">9.2</span> When to define
+            relationships and when to use subdocuments?</h2>
+            <p>The answer to this question may seem complex or evident,
+            depending on how we have understood the concepts seen so
+            far, but let’s try to give some basic rules to find when to
+            use each concept:</p>
+            <ul>
+            <li><p>Use relationships between collections when you want
+            to share the same document from one collection among
+            multiple documents from another. Thus, in the case of
+            favorite restaurants, it seems logical to use a relationship
+            between collections based on the restaurant id, allowing
+            multiple contacts to share the same instance of a favorite
+            restaurant.</p></li>
+            <li><p>Use subdocuments when information sharing does not
+            matter, or when simplicity of defining an object outweighs
+            associativity between collections. In other words, applied
+            to the example of pets, if you want to easily access the
+            pets of a contact, regardless of whether another contact has
+            the same pets, you will use subdocuments.</p></li>
+            </ul>
+            <p>In the case of subdocuments, there is, therefore, a
+            pending subject: the potential duplication of information.
+            If two people have the same pet, we must create two
+            identical objects for both people, thus duplicating the data
+            of the pet. However, this data duplication will make it
+            easier to access the pets of a person without resorting to
+            other tools that we will see next.</p>
+            <h1 data-number="10" id="advanced-queries"><span
+            class="header-section-number">10</span> Advanced
+            Queries</h1>
+            <p>Now that we know how to define different types of linked
+            collections, let’s see how to define queries that use these
+            relationships to extract the information we need. We will
+            continue working with the ContactsMongo_v1 project in this
+            case.</p>
+            <h2 data-number="10.1" id="populations-populate"><span
+            class="header-section-number">10.1</span> Populations
+            (<code>populate</code>)</h2>
+            <p>The act of relating documents from one collection to
+            documents from another through their corresponding ids
+            allows us to obtain, in a single listing, information from
+            both collections, though an intermediate step is needed. For
+            example, if we want to retrieve all information about our
+            contacts, related to the restaurant and pet collections, we
+            can do something like this:</p>
+            <div class="sourceCode" id="cb47"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>()<span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(result)<span class="op">;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>However, this command is limited to displaying the ids of
+            the favorite restaurants and pets, not their complete data.
+            To achieve this, we have to use a very useful method
+            provided by Mongoose called <code>populate</code>. This
+            method allows us to incorporate the information associated
+            with the specified model. For instance, if we want to
+            include all information about the favorite restaurant of
+            each contact in the previous list, we do something like
+            this:</p>
+            <div class="sourceCode" id="cb48"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>()<span class="op">.</span><span class="fu">populate</span>(<span class="st">&#39;favouriteRestaurant&#39;</span>)<span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(result)<span class="op">;</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>If we had more related fields, we could link multiple
+            populate statements, one after another, to populate them
+            all. For example, this is how we would populate both the
+            restaurant and the pets:</p>
+            <div class="sourceCode" id="cb49"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>()</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">populate</span>(<span class="st">&#39;favouriteRestaurant&#39;</span>)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">populate</span>(<span class="st">&#39;pets&#39;</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(result)<span class="op">;</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>There are other options for populating fields. For
+            example, we might want to populate only part of the
+            information, such as just the name of the restaurant. In
+            that case, we use additional parameters in the populate
+            method:</p>
+            <div class="sourceCode" id="cb50"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>()</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">populate</span>(<span class="st">&#39;favouriteRestaurant&#39;</span><span class="op">,</span> <span class="st">&#39;name&#39;</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
+            <h2 data-number="10.2"
+            id="queries-that-involve-multiple-collections"><span
+            class="header-section-number">10.2</span> Queries that
+            involve multiple collections</h2>
+            <p>Establishing a general query on a collection is simple,
+            as we have seen in previous sessions. We can use the find
+            method to retrieve documents that meet certain criteria, or
+            alternatives like <code>findOne</code> or
+            <code>findById</code> to get the document that satisfies the
+            filtering.</p>
+            <p>NoSQL databases, such as MongoDB, are not designed to
+            query information from multiple collections, which, in part,
+            encourages the use of independent collections based on
+            subdocuments to add additional information.</p>
+            <p>Suppose we want to obtain the data of favorite
+            restaurants for contacts who are over 30 years old. If we
+            had an SQL database, we could solve this with a query like
+            the following:</p>
+            <div class="sourceCode" id="cb51"><pre
+            class="sourceCode sql"><code class="sourceCode sql"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> restaurants</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">id</span> <span class="kw">IN</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>(<span class="kw">SELECT</span> favouriteRestaurant <span class="kw">FROM</span> contacts</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> age <span class="op">&gt;</span> <span class="dv">30</span>)</span></code></pre></div>
+            <p>However, this is not possible in MongoDB, or at least not
+            so straightforward. It would be necessary to split this
+            query into two parts: first, get the ids of the restaurants
+            for people over 30 years old, and then, with another query,
+            get the data of those restaurants. It could look something
+            like this:</p>
+            <div class="sourceCode" id="cb52"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>({<span class="dt">age</span><span class="op">:</span> {<span class="dt">$gt</span><span class="op">:</span> <span class="dv">30</span>}})<span class="op">.</span><span class="fu">then</span>(resultContacts <span class="kw">=&gt;</span> {</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> restaurantIds <span class="op">=</span> resultContacts<span class="op">.</span><span class="fu">map</span>(contact <span class="kw">=&gt;</span> contact<span class="op">.</span><span class="at">favouriteRestaurant</span>)<span class="op">;</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    Restaurant<span class="op">.</span><span class="fu">find</span>({<span class="dt">_id</span><span class="op">:</span> {<span class="dt">$in</span><span class="op">:</span> restaurantIds}})</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">then</span>(finalResult <span class="kw">=&gt;</span> {</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(finalResult)<span class="op">;</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>Notice that the first query retrieves all contacts over
+            30 years old. Once obtained, we map to get only the ids of
+            the favorite restaurants, and we use that list of ids in the
+            second query to get the restaurants whose id is in that
+            list.</p>
+            <h2 data-number="10.3" id="other-options-in-queries"><span
+            class="header-section-number">10.3</span> Other Options in
+            Queries</h2>
+            <p>When we use the <code>find</code> method or similar ones,
+            there are additional options that allow specifying which
+            fields to retrieve, sorting criteria, maximum result limits,
+            etc. We have seen some examples about that. Let’s now
+            explore in more detail some of these options:</p>
+            <ul>
+            <li>If we want to specify exactly <strong>which fields to
+            retrieve</strong> in the listing, we can provide a string of
+            field names in the find parameters. Alternatively, we can
+            use the <code>select</code> method, which is chained to the
+            normal find call, specifying the fields to retrieve. The
+            following examples achieve the same result: displaying the
+            name and age of contacts over 30 years old:</li>
+            </ul>
+            <div class="sourceCode" id="cb53"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>({<span class="dt">age</span><span class="op">:</span> {<span class="dt">$gt</span><span class="op">:</span> <span class="dv">30</span>}}<span class="op">,</span> <span class="st">&#39;name age&#39;</span>)<span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>({<span class="dt">age</span><span class="op">:</span> {<span class="dt">$gt</span><span class="op">:</span> <span class="dv">30</span>}})<span class="op">.</span><span class="fu">select</span>(<span class="st">&#39;name age&#39;</span>)<span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+            <ul>
+            <li>To <strong>sort</strong> the listing by a specific
+            criterion, we can chain the find call with the
+            <code>sort</code> method. We specify the field to sort by
+            and the order (1 for ascending order, -1 for descending
+            order). The following listing shows contacts sorted from
+            oldest to youngest. An equivalent alternative is to prepend
+            the minus sign - to the field to indicate descending
+            order:</li>
+            </ul>
+            <div class="sourceCode" id="cb54"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>()<span class="op">.</span><span class="fu">sort</span>({<span class="dt">age</span><span class="op">:</span> <span class="op">-</span><span class="dv">1</span>})<span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>()<span class="op">.</span><span class="fu">sort</span>(<span class="st">&#39;-age&#39;</span>)<span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+            <ul>
+            <li>To <strong>limit</strong> the number of results
+            obtained, we use the <code>limit</code> method, specifying
+            how many documents to retrieve. The following example shows,
+            from oldest to youngest, the first 5 contacts:</li>
+            </ul>
+            <div class="sourceCode" id="cb55"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>Contact<span class="op">.</span><span class="fu">find</span>()<span class="op">.</span><span class="fu">sort</span>(<span class="st">&#39;-age&#39;</span>)<span class="op">.</span><span class="fu">limit</span>(<span class="dv">5</span>)<span class="op">.</span><span class="fu">then</span>(<span class="op">...</span></span></code></pre></div>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
