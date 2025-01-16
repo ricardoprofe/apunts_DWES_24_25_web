@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="generator" content="pandoc" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 15. Node.js i MongoDB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 15. Node.js and MongoDB</title>
     <style>
         code{white-space: pre-wrap;}
         span.smallcaps{font-variant: small-caps;}
@@ -95,7 +95,7 @@
 <body>
     <div id="content">
                  <header id="title-block-header">
-            <h1 class="title">Unit 15. Node.js i MongoDB</h1>
+            <h1 class="title">Unit 15. Node.js and MongoDB</h1>
             <!---->
             <!--         <p class="author">Fidel Oltra, Ricardo
 Sánchez</p>
@@ -1120,7 +1120,7 @@ class="toc-section-number">10.3</span> Other Options in Queries</a></li>
 <span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
 <span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Restaurant <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&#39;restaurants&#39;</span><span class="op">,</span> restaurantSchema)<span class="op">;</span></span>
-<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">export</span> <span class="op">=</span> Restaurant<span class="op">;</span></span></code></pre></div>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> Restaurant<span class="op">;</span></span></code></pre></div>
             <p>And we associate it with the contact schema with a new
             field:</p>
             <div class="sourceCode" id="cb39"><pre
