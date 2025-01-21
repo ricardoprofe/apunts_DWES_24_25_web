@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-UK" xml:lang="en-UK" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Fidel Oltra, Ricardo Sánchez" />        <title>Unit 17. Node.js. Security and middelware</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Unit 17. Node.js. Security and
+middelware</h1>
+            <!---->
+            <!--         <p class="author">Fidel Oltra, Ricardo
+Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                                <h2 id="toc-title">Index</h2>
+                 <ul>
+<li><a href="#middleware" id="toc-middleware"><span
+class="toc-section-number">1</span> Middleware</a>
+<ul>
+<li><a href="#the-use-method" id="toc-the-use-method"><span
+class="toc-section-number">1.1</span> The “use” method</a></li>
+<li><a href="#defining-our-own-middleware"
+id="toc-defining-our-own-middleware"><span
+class="toc-section-number">1.2</span> Defining Our Own
+Middleware</a></li>
+<li><a href="#adding-middleware-to-specific-routers"
+id="toc-adding-middleware-to-specific-routers"><span
+class="toc-section-number">1.3</span> Adding Middleware to Specific
+Routers</a></li>
+</ul></li>
+<li><a href="#security" id="toc-security"><span
+class="toc-section-number">2</span> Security</a>
+<ul>
+<li><a href="#fundamentals-of-token-based-authentication"
+id="toc-fundamentals-of-token-based-authentication"><span
+class="toc-section-number">2.1</span> Fundamentals of Token-Based
+Authentication</a></li>
+<li><a href="#tokens-authentication-in-node.js"
+id="toc-tokens-authentication-in-node.js"><span
+class="toc-section-number">2.2</span> Tokens authentication in
+Node.js</a>
+<ul>
+<li><a href="#the-user-model" id="toc-the-user-model"><span
+class="toc-section-number">2.2.1</span> The User model</a></li>
+<li><a href="#users-registration" id="toc-users-registration"><span
+class="toc-section-number">2.2.2</span> Users registration</a></li>
+<li><a href="#users-authentication" id="toc-users-authentication"><span
+class="toc-section-number">2.2.3</span> Users authentication</a></li>
+</ul></li>
+<li><a href="#authorization" id="toc-authorization"><span
+class="toc-section-number">2.3</span> Authorization</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="middleware"><span
+            class="header-section-number">1</span> Middleware</h1>
+            <p><strong>Middleware</strong> can be defined as the
+            software that runs between two others. In the Node.js
+            context, middleware is a function that handles HTTP requests
+            and responses. It can manipulate them and pass them to the
+            next middleware for further processing or terminate the
+            process and independently send a response to the client.</p>
+            <h2 data-number="1.1" id="the-use-method"><span
+            class="header-section-number">1.1</span> The “use”
+            method</h2>
+            <p>There are different middlewares available in Node
+            modules, such as the <code>express.json()</code> processor
+            we’ve used in previous examples to handle the body of POST
+            requests and access their content more conveniently.
+            Middleware is applied to an application through its
+            <code>use</code> method. So, when we wrote:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">json</span>())<span class="op">;</span></span></code></pre></div>
+            <p>…we were activating the corresponding Express middleware
+            to process request bodies and extract JSON information from
+            them, making it ready to be accessed.</p>
+            <h2 data-number="1.2" id="defining-our-own-middleware"><span
+            class="header-section-number">1.2</span> Defining Our Own
+            Middleware</h2>
+            <p>In addition to this and other examples of third-party
+            middleware that we can incorporate into our projects, we can
+            also define our own middleware functions. We can include it
+            in the request and response processing chain using the
+            application’s <code>use</code> method. For example, the
+            following middleware logs the IP address of the client
+            sending the request to the console:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">use</span>((req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Request from&quot;</span><span class="op">,</span> req<span class="op">.</span><span class="at">ip</span>)<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>As we can see, middleware is nothing more than a function
+            that accepts three parameters: the <em>request</em>, the
+            <em>response</em>, and a reference to the <em>next</em>
+            middleware that must be called <code>next</code>. Any
+            middleware can end the chain by sending something in the
+            response to the client. If it doesn’t, it calls the next
+            middleware.</p>
+            <p>We can use multiple <code>use</code> calls to load
+            different middlewares, and the order in which we make these
+            calls is crucial because it determines the order in which
+            these middlewares will be executed.</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">use</span>(express<span class="op">.</span><span class="fu">json</span>())<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">use</span>(<span class="kw">function</span>(<span class="op">...</span>) { <span class="op">...</span> })<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">use</span>(<span class="op">...</span>)<span class="op">;</span></span></code></pre></div>
+            <p>There are some useful middlewares, such as the mentioned
+            <code>express.json()</code>, or the <code>router</code>,
+            which is typically the last element in the chain. It is used
+            to configure different available request routes and their
+            responses.</p>
+            <h2 data-number="1.3"
+            id="adding-middleware-to-specific-routers"><span
+            class="header-section-number">1.3</span> Adding Middleware
+            to Specific Routers</h2>
+            <p>When we define independent routers in separate files, we
+            can separately add middleware to each router using the
+            router’s own <code>use</code> method. For example, we can
+            add middleware in the <code>routes/contacts.js</code> file
+            that logs the current date to the console:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// routes/contacts.js</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> router <span class="op">=</span> express<span class="op">.</span><span class="fu">Router</span>()<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>router<span class="op">.</span><span class="fu">use</span>((req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="kw">new</span> <span class="bu">Date</span>()<span class="op">.</span><span class="fu">toString</span>())<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
+            <h1 data-number="2" id="security"><span
+            class="header-section-number">2</span> Security</h1>
+            <p>When we want to secure certain routes or sections of a
+            web application, various mechanisms can be used. In the
+            context of <em>traditional</em> web applications (those that
+            serve visible content in a browser, such as HTML content),
+            the traditional authentication mechanism is session-based
+            authentication.</p>
+            <p>However, when we want to extend the web application
+            beyond the use of a browser and allow other types of clients
+            to connect to the backend (e.g., desktop applications or
+            mobile applications), session-based authentication is not
+            the best option. In such cases, it is necessary to use more
+            universal mechanisms like <strong>token-based
+            authentication</strong>, which is the most widely used
+            authentication type in REST services.</p>
+            <h2 data-number="2.1"
+            id="fundamentals-of-token-based-authentication"><span
+            class="header-section-number">2.1</span> Fundamentals of
+            Token-Based Authentication</h2>
+            <p>As we have seen on previous units, a token by itself is a
+            meaningless string of text. However, combined with certain
+            keys, it becomes a mechanism to protect our applications
+            from unauthorized access. Token-based authentication is a
+            method by which we ensure that each request to a server is
+            accompanied by a signed token containing the necessary data
+            to verify that the client has been previously validated.</p>
+            <p>The mechanism used for token-based authentication is as
+            follows:</p>
+            <ol type="1">
+            <li><p>The client sends its authentication data to the
+            server (typically a login and password).</p></li>
+            <li><p>The server validates these credentials against some
+            form of storage (usually a database). If they are correct,
+            it generates a token, an encoded string that identifies the
+            user. This token is sent to the client, typically as
+            response data. Internally, it may contain some data that
+            allows identifying the user, such as their login username or
+            email.</p></li>
+            </ol>
+            <blockquote>
+            <p>Note: It is not recommended to add confidential
+            information, such as the password, in the token, as it can
+            be easily decoded. This doesn’t mean that the token is an
+            insecure authentication mechanism, as the server uses a
+            secret key to encrypt a part of the token, but the rest of
+            the token is more exposed.</p>
+            </blockquote>
+            <ol start="3" type="1">
+            <li>The client receives the token and stores it locally
+            (using mechanisms like <em>localStorage</em> in JavaScript
+            or similar ones in other languages). With each new request,
+            the client resends this token in the request headers,
+            allowing the server to verify that it is an authorized
+            client.</li>
+            </ol>
+            <p>Tokens are usually assigned a lifespan or expiration date
+            (which can be minutes, days, weeks, etc.). With each new
+            connection, the lifespan can be renewed (this is not
+            automatic; we need to do it ourselves). If more than the
+            stipulated time passes without the client attempting to
+            reconnect, they will be asked to authenticate again.</p>
+            <p>The <strong>JSON Web Token (JWT)</strong> standard is
+            commonly used, defining a compact way to transmit this
+            information between the client and the server using JSON
+            objects.</p>
+            <h2 data-number="2.2"
+            id="tokens-authentication-in-node.js"><span
+            class="header-section-number">2.2</span> Tokens
+            authentication in Node.js</h2>
+            <p>In order to implement authentication in our app we
+            need:</p>
+            <ol type="1">
+            <li>A new document (table) in our MongoDB database to store
+            the user’s information and credentials.</li>
+            <li>A registration method to register new users and to
+            generate their hashed passwords.</li>
+            <li>An authentication method that receives the user’s
+            credentials (typically username/email and password), checks
+            them against the database and generates an authentication
+            token which is resent to the user.</li>
+            <li>An authorization method, based on the user’s role. In
+            this step we protect certain routes depending on the user’s
+            role.</li>
+            </ol>
+            <p>The next examples will be done in our contacts
+            application example.</p>
+            <h3 data-number="2.2.1" id="the-user-model"><span
+            class="header-section-number">2.2.1</span> The User
+            model</h3>
+            <p>Create a new entity in the models folder in a file named
+            <code>user.js</code>:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mongoose <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;mongoose&#39;</span>)<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> userSchema <span class="op">=</span> <span class="kw">new</span> mongoose<span class="op">.</span><span class="fu">Schema</span>({    </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">email</span><span class="op">:</span> {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">unique</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">trim</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">match</span><span class="op">:</span> <span class="ss">/</span><span class="sc">^\w+</span><span class="ss">@</span><span class="sc">[a-zA-Z_]+?\.[a-zA-Z]{2,3}$</span><span class="ss">/i</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span>    </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">password</span><span class="op">:</span> {</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">role</span><span class="op">:</span> {</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">default</span><span class="op">:</span> <span class="st">&quot;user&quot;</span><span class="op">,</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">trim</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> User <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&#39;users&#39;</span><span class="op">,</span> userSchema)<span class="op">;</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> User<span class="op">;</span></span></code></pre></div>
+            <p>Instead of use the match operator to validate the email,
+            we can use the <strong>validator</strong> library. To do
+            that, first, install the packet using <code>npm</code>:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install validator</span></code></pre></div>
+            <p>Then, import the library and replace <code>match</code>
+            with <code>validate: validator.isEmail</code>:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> validator <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;validator&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>email<span class="op">:</span> {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">type</span><span class="op">:</span> <span class="bu">String</span><span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unique</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">trim</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">validate</span><span class="op">:</span> validator<span class="op">.</span><span class="at">isEmail</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}<span class="op">,</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
+            <p>As you can see, we will identify the user by its email.
+            Also we assign a basic role with the <code>'user'</code>
+            value.</p>
+            <h3 data-number="2.2.2" id="users-registration"><span
+            class="header-section-number">2.2.2</span> Users
+            registration</h3>
+            <p>To handle user’s registration and authentication, we will
+            do a new route controller named <code>users.js</code> in the
+            <code>routes</code> folder:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// routes/users.js</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> express <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;express&#39;</span>)<span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> Contact <span class="op">=</span> <span class="pp">require</span>(<span class="bu">__dirname</span> <span class="op">+</span> <span class="st">&#39;/../models/user.js&#39;</span>)<span class="op">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> router <span class="op">=</span> express<span class="op">.</span><span class="fu">Router</span>()<span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">// Here will go the routes</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> router<span class="op">;</span></span></code></pre></div>
+            <p>Remember to add the <code>users</code> route in
+            <code>index.js</code>:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// index.js</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">//Routes</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> users <span class="op">=</span> <span class="pp">require</span>(<span class="bu">__dirname</span> <span class="op">+</span> <span class="st">&#39;/routes/users&#39;</span>)<span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Routers for each group of routes</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">use</span>(<span class="st">&#39;/users&#39;</span><span class="op">,</span> users)<span class="op">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
+            <p>We also need the <a
+            href="https://www.npmjs.com/package/bcryptjs">Bcrypt.js
+            module</a> in order to make the hash of the password.
+            Install it with:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>npm install bcryptjs</span></code></pre></div>
+            <p>And add the module to the <code>routes/users.js</code>
+            file:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> express <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;express&#39;</span>)<span class="op">;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> bcrypt <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;bcryptjs&#39;</span>)<span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
+            <p>Now, let’s create the new route. We will use the POST
+            <code>/register</code> route, so the full registration route
+            will be <code>/users/register</code>. In the method, we
+            check if the password has a minimum length of 8 characters
+            (if we do that later, when the password is encrypted, the
+            users could write a password with a length less than 8). If
+            the password has the minimum length, we encrypt it with the
+            <code>bcrypt.hash</code> method (the second parameter,
+            <code>10</code>, is the number of salt rounds used). If
+            successful, create a new user with the hashed password and
+            store it in the database:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// routes/users.js</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">//Register a new user</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>router<span class="op">.</span><span class="fu">post</span>(<span class="st">&#39;/register&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">//Check the password length before cipher</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(req<span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="at">password</span><span class="op">.</span><span class="at">length</span> <span class="op">&lt;</span> <span class="dv">8</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                <span class="dt">error</span><span class="op">:</span> <span class="st">&quot;The password must have at least 8 characters&quot;</span>})<span class="op">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        bcrypt<span class="op">.</span><span class="fu">hash</span>(req<span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="at">password</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> (err<span class="op">,</span> hash) <span class="kw">=&gt;</span> {</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>            <span class="kw">let</span> newUser <span class="op">=</span> <span class="kw">new</span> <span class="fu">User</span>({</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                <span class="dt">email</span><span class="op">:</span> req<span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="at">email</span><span class="op">,</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>                <span class="dt">password</span><span class="op">:</span> hash</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>            })<span class="op">;</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>            newUser<span class="op">.</span><span class="fu">save</span>()<span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>                <span class="co">//Delete the password after saved</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>                newUser<span class="op">.</span><span class="at">password</span> <span class="op">=</span> <span class="st">&quot;SECRET&quot;</span><span class="op">;</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                res<span class="op">.</span><span class="fu">status</span>(<span class="dv">200</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                    <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">result</span><span class="op">:</span> result})<span class="op">;</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>            })<span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>                res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>                    <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">error</span><span class="op">:</span> error})<span class="op">;</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>            })<span class="op">;</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>      })<span class="op">;</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    }    </span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <p>If you send a valid email and password, you will get the
+            result, but with the password changed to “SECRET”, for
+            security reasons:</p>
+            <figure>
+            <img src="images/user_reg_postman.png"
+            alt="Users registration with Postman" />
+            <figcaption aria-hidden="true">Users registration with
+            Postman</figcaption>
+            </figure>
+            <p>You can check that the password has been stored hashed in
+            <em>mongosh</em>:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>contacts<span class="op">&gt;</span> db<span class="op">.</span><span class="at">users</span><span class="op">.</span><span class="fu">find</span>({<span class="dt">email</span><span class="op">:</span> <span class="st">&quot;mike@mail.com&quot;</span>})</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>[</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">_id</span><span class="op">:</span> <span class="fu">ObjectId</span>(<span class="st">&#39;65a7c5b5aa808cde178cacd5&#39;</span>)<span class="op">,</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">email</span><span class="op">:</span> <span class="st">&#39;mike@mail.com&#39;</span><span class="op">,</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">password</span><span class="op">:</span> <span class="st">&#39;$2a$10$a.0KZ4Zoz34qEpaYY/igje9LK9FmGp5Q4eiwR/Ey5ukYP3kPap4n.&#39;</span><span class="op">,</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">role</span><span class="op">:</span> <span class="st">&#39;user&#39;</span><span class="op">,</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">__v</span><span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
+            <h3 data-number="2.2.3" id="users-authentication"><span
+            class="header-section-number">2.2.3</span> Users
+            authentication</h3>
+            <p>To generate JWT token we will need the <a
+            href="https://www.npmjs.com/package/jsonwebtoken"><strong>jsonwebtoken</strong>
+            library</a>. As the library requires a secret token to sign
+            the token, we also need the <a
+            href="https://www.npmjs.com/package/dotenv"><strong>dotenv</strong>
+            library</a> in order to store it in a separate
+            <code>.env</code> file (this file should be in your
+            <code>.gitignore</code> file so as to maintain it secret).
+            First, we install the modules:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install dotenv jsonwebtoken</span></code></pre></div>
+            <p>And import them on the <code>users.js</code> script. We
+            also use the method <code>dotenv.config</code> to get the
+            config variables:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">// routes/users.js</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> jwt <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;jsonwebtoken&#39;</span>)<span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> dotenv <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;dotenv&#39;</span>)<span class="op">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Get config vars</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>dotenv<span class="op">.</span><span class="fu">config</span>()<span class="op">;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
+            <p>As a simple method to generate a secret token, you can do
+            a separate script with the command:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">// generateSecret.js</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="pp">require</span>(<span class="st">&#39;crypto&#39;</span>)<span class="op">.</span><span class="fu">randomBytes</span>(<span class="dv">64</span>)<span class="op">.</span><span class="fu">toString</span>(<span class="st">&#39;hex&#39;</span>))<span class="op">;</span></span></code></pre></div>
+            <p>Execute it writing <code>node generateSecret.js</code> on
+            a console. A 64 bit string will be shown on the console.
+            Copy and paste it on the <code>.env</code> file, and assign
+            it to a variable named <code>TOKEN_SECRET</code>:</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">//.env</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>TOKEN_SECRET<span class="op">=</span><span class="dv">7</span><span class="er">db218ad0b4fcfb58f9e4f</span><span class="op">....</span></span></code></pre></div>
+            <p>We will do a function to generate the tokens in
+            <code>users.js</code>:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> generateToken <span class="op">=</span> login <span class="kw">=&gt;</span> {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> jwt<span class="op">.</span><span class="fu">sign</span>({<span class="dt">login</span><span class="op">:</span> login}<span class="op">,</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">TOKEN_SECRET</span><span class="op">,</span> {<span class="dt">expiresIn</span><span class="op">:</span> <span class="st">&quot;1 hours&quot;</span>})<span class="op">;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+            <p>We pass the login parameter (in our case it will be the
+            user’s email), the secret token stored in <code>.env</code>
+            and a duration of 1 hour.</p>
+            <p>Time to do the POST <code>/login</code> route. First, we
+            get the POST parameters email and password. Then, check if
+            the user identified by its email exists. If so, use the
+            <code>bcrypt.compareSync</code> function to check if the
+            password is correct and then, generate a token with the
+            email as login field:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">// routes/users.js</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">//Login</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>router<span class="op">.</span><span class="fu">post</span>(<span class="st">&#39;/login&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> plainPassword <span class="op">=</span> req<span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="at">password</span><span class="op">;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> email <span class="op">=</span> req<span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="at">email</span><span class="op">;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    User<span class="op">.</span><span class="fu">findOne</span>({<span class="dt">email</span><span class="op">:</span> email})</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(result) {           </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> ( bcrypt<span class="op">.</span><span class="fu">compareSync</span>(plainPassword<span class="op">,</span> result<span class="op">.</span><span class="at">password</span>) ){</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                res<span class="op">.</span><span class="fu">status</span>(<span class="dv">200</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>                    <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">token</span><span class="op">:</span> <span class="fu">generateToken</span>(email)})<span class="op">;</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>            } <span class="cf">else</span> {</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>                res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>                    <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">error</span><span class="op">:</span> <span class="st">&quot;Wrong password&quot;</span>})<span class="op">;</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>            res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>                    <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">error</span><span class="op">:</span> <span class="st">&quot;User not found&quot;</span>})<span class="op">;</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>        res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">error</span><span class="op">:</span> <span class="st">&quot;Login error: &quot;</span> <span class="op">+</span> error})<span class="op">;</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+            <blockquote>
+            <p>NOTE: In a real application, it’s not recommendable to
+            use different message for “User not found” and “Wrong
+            password”, because a hacker can guess if a user is
+            registered. Instead, show something like “User not found or
+            wrong password” for both cases.</p>
+            </blockquote>
+            <p>Now, if you enter a valid email and password you’ll get a
+            token:</p>
+            <figure>
+            <img src="images/login_token.png" alt="Login with token" />
+            <figcaption aria-hidden="true">Login with token</figcaption>
+            </figure>
+            <h2 data-number="2.3" id="authorization"><span
+            class="header-section-number">2.3</span> Authorization</h2>
+            <p>Once a user can register and login, it’s time to apply
+            authorization based on roles.</p>
+            <p>In our case, we can do the next authorization levels:</p>
+            <ul>
+            <li><strong>Unauthenticated users</strong>. Can access only
+            to the <code>/users/register</code> and
+            <code>/users/login</code> routes.</li>
+            <li><strong>Authenticated users</strong> with the role
+            <code>user</code>. Can access to all the GET routes.</li>
+            <li><strong>Admin users</strong> with the role
+            <code>admin</code>. Can access to all the GET, POST, PUT and
+            DELETE routes. It is to say, only admin users can modify the
+            database data.</li>
+            </ul>
+            <p>First of all, we need at least a user with the
+            <code>admin</code> role, because the default role
+            <code>user</code> is assigned to all the registered users.
+            We can modify directly the database in <em>mongosh</em> and
+            assign the role <code>admin</code> to the user you want:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">db.users.updateOne</span><span class="er">(</span><span class="ex">{email:</span> <span class="st">&quot;admin@mail.com&quot;</span>}, {<span class="va">$set</span>: {role: <span class="st">&#39;admin&#39;</span>} }<span class="kw">)</span></span></code></pre></div>
+            <p>To do the authentication we are going to do a custom
+            middleware that will take the user’s role and check if it’s
+            allowed to access certain routes. Create a new script named
+            <code>authorization.js</code> where we write a function
+            named <code>protectRoute</code>. This function take a role
+            as parameter and check its value:</p>
+            <ul>
+            <li>If <code>role</code> is <strong>““</strong> (empty
+            string) the user has access.</li>
+            <li>If <code>role</code> is different from ““, retrieve the
+            user’s email from the token and search for it in the users
+            collection. If the user’s rol is <code>admin</code>, the
+            user has access. Otherwise, check if the value of the
+            <code>role</code> parameters matches the value of the user’s
+            stored role.</li>
+            </ul>
+            <p>For instance, if we pass the parameter “user” to the
+            function, it will grant access to the route for the users
+            with the “user” role.</p>
+            <p>The <code>authorization.js</code> script and the function
+            <code>protectRoute</code> can be as follow:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">// authorization.js</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> jwt <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;jsonwebtoken&#39;</span>)<span class="op">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> dotenv <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;dotenv&#39;</span>)<span class="op">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Get config vars</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>dotenv<span class="op">.</span><span class="fu">config</span>()<span class="op">;</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> User <span class="op">=</span> <span class="pp">require</span>(<span class="bu">__dirname</span> <span class="op">+</span> <span class="st">&#39;/models/user.js&#39;</span>)<span class="op">;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> protectRoute <span class="op">=</span> role <span class="kw">=&gt;</span> {</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> token <span class="op">=</span> req<span class="op">.</span><span class="at">headers</span>[<span class="st">&#39;authorization&#39;</span>]<span class="op">;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (token) {</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>            <span class="co">//We omit the &quot;Bearer &quot; part</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>            token <span class="op">=</span> token<span class="op">.</span><span class="fu">substring</span>(<span class="dv">7</span>)<span class="op">;</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>            <span class="kw">let</span> result <span class="op">=</span> jwt<span class="op">.</span><span class="fu">verify</span>(token<span class="op">,</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">TOKEN_SECRET</span>)<span class="op">;</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            User<span class="op">.</span><span class="fu">findOne</span>({<span class="dt">email</span><span class="op">:</span> result<span class="op">.</span><span class="at">login</span>})</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span><span class="fu">then</span>(result <span class="kw">=&gt;</span> {</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (result <span class="op">&amp;&amp;</span> (result<span class="op">.</span><span class="at">role</span> <span class="op">===</span> <span class="st">&quot;admin&quot;</span> <span class="op">||</span> role <span class="op">===</span> result<span class="op">.</span><span class="at">role</span>))</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>                    res<span class="op">.</span><span class="fu">status</span>(<span class="dv">401</span>)</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>                        <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">error</span><span class="op">:</span> <span class="st">&quot;Unauthorized user&quot;</span>})<span class="op">;</span>  </span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>            })<span class="op">.</span><span class="fu">catch</span>(error <span class="kw">=&gt;</span> {</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>                res<span class="op">.</span><span class="fu">status</span>(<span class="dv">400</span>)</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>                    <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">error</span><span class="op">:</span> <span class="st">&quot;User not found&quot;</span>})<span class="op">;</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>            })<span class="op">;</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (role <span class="op">===</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>                <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span></span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>                res<span class="op">.</span><span class="fu">status</span>(<span class="dv">401</span>)</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>                    <span class="op">.</span><span class="fu">send</span>({<span class="dt">ok</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">error</span><span class="op">:</span> <span class="st">&quot;Unauthorized user&quot;</span>})<span class="op">;</span> </span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>        }                   </span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>exports<span class="op">.</span><span class="at">protectRoute</span> <span class="op">=</span> protectRoute<span class="op">;</span></span></code></pre></div>
+            <p>As you can see, we get the token omitting the first 7
+            characters of the authorization header and verify it with
+            the <code>jwt.verify</code> function. Once the token has
+            been verified, we extract the user and search fot it in the
+            database, allowing access based on the rules previously
+            explained.</p>
+            <p>Now, we can use the <code>protectRoute</code> function in
+            our routes. First, we need to import the script:</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">// routes/contacts.js</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> {protectRoute} <span class="op">=</span> <span class="pp">require</span>(<span class="bu">__dirname</span> <span class="op">+</span> <span class="st">&quot;/../authorization&quot;</span>)<span class="op">;</span></span></code></pre></div>
+            <p>And then, we can use the middleware as argument in the
+            routes. For instance in <code>contacts.js</code>:</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">// routes/contacts.js</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>router<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/&#39;</span><span class="op">,</span> <span class="fu">protectRoute</span>(<span class="st">&quot;user&quot;</span>)<span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>router<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/:id&#39;</span><span class="op">,</span> <span class="fu">protectRoute</span>(<span class="st">&quot;user&quot;</span>)<span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>router<span class="op">.</span><span class="fu">post</span>(<span class="st">&#39;/&#39;</span><span class="op">,</span> <span class="fu">protectRoute</span>(<span class="st">&quot;admin&quot;</span>)<span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>router<span class="op">.</span><span class="fu">put</span>(<span class="st">&#39;/:id&#39;</span><span class="op">,</span> <span class="fu">protectRoute</span>(<span class="st">&quot;admin&quot;</span>)<span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>router<span class="op">.</span><span class="fu">delete</span>(<span class="st">&#39;/:id&#39;</span><span class="op">,</span> <span class="fu">protectRoute</span>(<span class="st">&quot;admin&quot;</span>)<span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span></code></pre></div>
+            <p>In Postman you can check the permissions using tokens of
+            users with different roles. Remember to add the
+            <code>Authorization</code> header with “Bearer” and the
+            token value in the Headers section.</p>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
